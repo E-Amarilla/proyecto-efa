@@ -1,0 +1,26 @@
+.all {
+    width: 100%;
+    padding: 133px 20px 20px 20px;
+    display: flex;
+}
+
+.Izq {
+    width: 25%;
+    height: 100%;
+    margin-right: 20px;
+}
+
+.Med {
+    width: 45%;
+    height: 100%;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Der {
+    width: 30%;
+    height: 100%;
+    margin-left: 20px;
+}

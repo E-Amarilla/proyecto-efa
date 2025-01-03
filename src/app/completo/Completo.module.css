@@ -1,0 +1,81 @@
+.body
+{
+    margin: 133px 20px 20px 20px;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.contenedorImagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #131313;
+    border-radius: 15px;
+    max-width: 80%;
+    max-height: 50%;
+}
+
+.img {
+    position: relative;
+    max-width: auto;
+    height: auto;
+    border-radius: 15px;
+}
+
+.titulo {
+    display: block;
+    text-align: center;
+    margin: 20px;
+    font-size: 2em;
+    color: #8c8c8c;
+}
+
+.contenedorAlertas {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #131313;
+}
+
+.alertasTods {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.alertaIndv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-height: 56px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 2px solid #555555;
+    border-radius: 15px;
+    background-color: #1C1C1C;
+}
+
+.icon
+{
+    max-width: 1.5rem;
+    max-height: 1.5rem;
+    padding-right: 10px;
+    object-fit: contain;
+}
+
+.detallesAlerta {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #FFFFFF;
+}

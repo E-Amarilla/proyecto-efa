@@ -1,0 +1,60 @@
+.datoListContainer {
+    width: 100%;
+    background-color: #131313;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    color: #D9D9D9;
+}
+
+.titleContainer {
+    width: 100%;
+    background-color: #1F1F1F;
+    border-radius: 15px;
+    padding: 10px 20px;
+    color: #D9D9D9;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.datosGen {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    color: #D9D9D9;
+}
+
+.datoList {
+    width: 100%;
+    padding: 10px 20px;
+    margin: 10px 0 0 0;
+    background-color: #1F1F1F;
+    border-radius: 15px;
+}
+
+.detallesDatos {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon {
+    max-width: 20px;
+    max-height: 20px;
+    margin-left: auto;
+}
+
+.texto {
+    font-size: 21px;
+}
+
+.texto h3 {
+    font-size: 16px;
+}
+
+.texto h4 {
+    font-size: 15px;
+}

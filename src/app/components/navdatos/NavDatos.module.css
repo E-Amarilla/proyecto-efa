@@ -1,0 +1,131 @@
+.container {
+    margin: 113px 0 0 18rem;
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.nav {
+    position: fixed;
+    top: 66px;
+    left: 0;
+    width: 18rem;
+    height: calc(100vh - 66px);
+    background-color: #131313;
+    padding: 50px 20px 20px 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.nav hr {
+    max-width: 15rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.navList {
+    list-style: none;
+}
+
+.navItem {
+    margin-bottom: 10px;
+}
+
+.navLink {
+    display: block;
+    padding: 6px;
+    text-align: center;
+    color: #D9D9D9;
+    text-decoration: none;
+    background-color: #1c1c1c;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 2px solid #555555;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navLink:hover {
+    background-color: #2b2b2b;
+}
+
+.active .navLink {
+    background-color: #007bff;
+    color: #D9D9D9;
+    border-color: #0056b3;
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px 0 20px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #131313;
+    color: #D9D9D9;
+    text-align: center;
+    z-index: 999;
+}
+
+.contenedorDatos {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.contenedorDatos p {
+    padding: 10px;
+    font-weight: bold;
+    color: #D9D9D9;
+    display: block;
+    text-align: center;
+    position: center;
+}
+
+@media (min-width: 1432px) {
+    .datosIndv {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        border: 2px solid #555555;
+        border-radius: 15px;
+        background-color: #1C1C1C;
+        max-height: 8vh;
+    }
+
+    .datosTods {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+@media (max-width: 1432px) {
+    .datosIndv {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        max-height: 5.05vh;
+    }
+
+    .datosTods {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        margin-top: 0.3rem;
+    }
+}
+
+.detallesDatos {
+    font-size: 10px;
+}
