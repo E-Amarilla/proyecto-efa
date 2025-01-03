@@ -5,12 +5,15 @@ import Encajonado from "./encajonado/page"
 import Login from "./login/page"
 import RecuperarContra from "./login/recuperarcontraseña/page"
 import Configuraciones from "./configuraciones/page"
+import CiclosProductos from "./components/ciclosproductos/CiclosProductos"
+import CiclosRealizados from "./components/ciclosrealizados/CiclosRealizados"
+import ProductosRealizados from "./components/productosrealizados/ProductosRealizados"
 
 export default function RootLayout() {
   return (
     <html lang="en">
       <body>
-        <Configuraciones />
+        <ProductosRealizados />
       </body>
     </html>
   );

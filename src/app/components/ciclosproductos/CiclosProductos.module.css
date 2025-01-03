@@ -1,0 +1,70 @@
+.prodReal {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: column;
+    color: #fff;
+    background-color: #131313;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 5px;
+}
+
+.contenedorPrinc
+{
+    width: 100%;
+    display: block;
+}
+
+.contenedorPrinc h1
+{
+    width: 100%;
+    font-size: 0.8vw;
+    color: #FFAA44;
+}
+
+.tituloProductos
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+    text-align: left;
+}
+
+.datosTitulo
+{
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    gap: 50px;
+}
+
+.titulo {
+    text-align: left;
+    font-size: 1vw;
+}
+
+.itemLeyenda {
+    display: flex;
+}
+
+.colorMuestra {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin: 4px;
+}
+
+.graf {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.graf img {
+    max-width: 100%;
+    height: auto;
+}
