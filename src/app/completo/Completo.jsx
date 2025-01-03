@@ -1,7 +1,10 @@
+"use client";
+
 // Importar imágenes
-import luzR from '../IMG/semaforo/puntoRojo.png'; 
-import luzV from '../IMG/semaforo/puntoVerde.png'; 
-import LayoutCompleto from './LayoutCompleto/LayoutCompleto'
+import Image from "next/image";
+import luzR from './IMG/puntoRojo.png';
+import luzV from './IMG/puntoVerde.png'; 
+import LayoutCompleto from '../components/layoutCompleto/LayoutCompleto.jsx'
 
 // Importar estilos
 import style from './Completo.module.css';
@@ -30,7 +33,7 @@ const Completo = () => {
     ];
 
     return (
-        <body className={style.body}>
+        <div className={style.body}>
             <div className={style.contenedor}>
                 <div className={style.contenedorImagen}>
                     <LayoutCompleto />
@@ -47,7 +50,7 @@ const Completo = () => {
                         <li key={id} className={style.alertaIndv}>
                             <a className={style.detallesAlerta} href='#'>
                                 {/* Selección de la imagen basada en el estado */}
-                                <img 
+                                <Image 
                                     src={estado === 'rojo' ? luzR : luzV} 
                                     alt={`Estado: ${estado}`} 
                                     className={style.icon} 
@@ -58,7 +61,7 @@ const Completo = () => {
                     ))}
                 </ul>
             </div>
-        </body>
+        </div>
             
     );
 };

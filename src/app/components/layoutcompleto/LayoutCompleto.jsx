@@ -1,7 +1,10 @@
+"use client";
+
+import Image from "next/image";
 import React from "react";
 import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import LayoutIMG from "../../IMG/otros/LAYOUTHOME.png";
-import style from "./LayoutCompleto.module.css";
+import LayoutIMG from './IMG/layoutcompleto.png';
+import style from './LayoutCompleto.module.css';
 
 const LayoutCompleto = () => {
   const sections = [
@@ -49,13 +52,11 @@ const InteractiveImage = ({ sections }) => {
 
   return (
     <div className={style.layoutContainer}>
-      <img src={LayoutIMG} alt="Layout" className={style.backgroundImage} />
+      <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} />
       {sections.map((section) => (
         <div
           key={section.id}
-          className={`${style.interactiveSection} ${
-            style[section.styleClass]
-          }`}
+          className={`${style.interactiveSection} ${style[section.styleClass]}`}
           style={section.position}
           onClick={() => navigate(section.path)}
         >
