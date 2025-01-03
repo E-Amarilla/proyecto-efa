@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import Productividad from '../components/Productividad/Productividad.jsx';
-import Graficos from '../components/Graficos/Graficos.jsx';
-import Layout from '../components/Layout/Layout.jsx'
-import Footer from '../Footer/Footer.jsx'
+import Productividad from '../productividad/Productividad.jsx';
+import Graficos from '../../components/graficos/Graficos.jsx';
+import Layout from '../../components/layout/Layout.jsx'
+import Footer from '../footer/footer.jsx'
 import style from './NavDatos.module.css';
 
 const NavDatos = () => {
@@ -95,7 +97,7 @@ const NavDatos = () => {
                         <ul className={style.datosTods}>
                             {datosTiempoReal.map(({ id, nombre, dato }) => (
                                 <li key={id} className={style.datosIndv}>
-                                    <a className={style.detallesDatos} href='EquipoX'>
+                                    <a className={style.detallesDatos} href='equipox'>
                                         <h3>{nombre}</h3>
                                         <h4>{dato}</h4>
                                     </a>

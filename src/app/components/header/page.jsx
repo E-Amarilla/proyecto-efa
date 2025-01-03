@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 
 import Image from "next/image"
@@ -7,10 +9,10 @@ import campImg from './IMG/campana.png';
 import alarmaImg from './IMG/alarma.png';
 
 // Estilos de Header
-import style from './header.module.css'; 
+import style from './Header.module.css'; 
 
 // Componente SubNav
-import ExeSubNav from './subnav/exesubnav.jsx';
+import ExeSubNav from './SubNav/ExeSubNav.jsx';
 
 const ExeHeader = () => {
     const [menuVisible, setMenuVisible] = useState(false);
@@ -27,11 +29,11 @@ const ExeHeader = () => {
     const opcionesIconos = [
         { id: 1, icon: usuario }, // Este ícono activará el menú
         { id: 2, url: "/", icon: campImg },
-        { id: 3, url: "/", icon: alarmaImg },
+        { id: 3, url: "/tablaalertas", icon: alarmaImg },
     ];
 
     const opcionesMenu = [
-        { id: 1, url: "/home", text: "HOME" },
+        { id: 1, url: "/completo", text: "HOME" },
     ];
 
     return (
@@ -42,7 +44,7 @@ const ExeHeader = () => {
                     {opcionesIconos.map(({ id, url, icon }) => (
                         <div key={id} className={style.contenedorImg}>
                             {id === 1 ? (
-                                <img
+                                <Image
                                     className={style.icon}
                                     src={icon}
                                     alt={`Icono ${id}`}
@@ -50,7 +52,7 @@ const ExeHeader = () => {
                                 />
                             ) : (
                                 <a href={url}>
-                                    <img className={style.icon} src={icon} alt={`Icono ${id}`} />
+                                    <Image className={style.icon} src={icon} alt={`Icono ${id}`} />
                                 </a>
                             )}
                         </div>
@@ -86,7 +88,7 @@ const ExeHeader = () => {
                         ))}
                     </ul>
                     <div className={style.logo}>
-                        <img className={style.img} src={cremImg} alt="Creminox" />
+                        <Image className={style.imgCREM} src={cremImg} alt="Creminox" />
                     </div>
                 </div>
             </nav>

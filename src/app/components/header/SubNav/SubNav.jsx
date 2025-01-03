@@ -1,34 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import style from "./SubNav.module.css";
-import puntoVerde from "../IMG/puntoVerde.png"; // Imagen de punto verde
-import puntoGris from "../IMG/puntoGris.png"; // Imagen de punto gris
+import puntoVerde from "./IMG/puntoVerde.png";
+import puntoGris from "./IMG/puntoGris.png";
 
 const SubNav = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [activeId, setActiveId] = useState(null);
+  const pathname = usePathname();
 
   const opcionesBotones = [
-    { id: 1, path: "/home", text: "COMPLETO" },
+    { id: 1, path: "/completo", text: "COMPLETO" },
     { id: 2, path: "/desmoldeo", text: "DESMOLDEO" },
     { id: 3, path: "/encajonado", text: "ENCAJONADO" },
     { id: 4, path: "/paletizado", text: "PALETIZADO" },
   ];
-
-  // Actualiza el estado al hacer clic
-  const handleClick = (id, path) => {
-    setActiveId(id);
-    navigate(path); // Redirige al path correspondiente
-  };
-
-  // Selecciona automáticamente el activo con base en la URL
-  useEffect(() => {
-    const currentOption = opcionesBotones.find(
-      (option) => option.path === location.pathname
-    );
-    if (currentOption) setActiveId(currentOption.id);
-  }, [location.pathname]);
 
   return (
     <div className={style.contenedor}>
@@ -38,20 +25,20 @@ const SubNav = () => {
             <li
               key={id}
               className={`${style.itemNav} ${
-                activeId === id ? style.active : ""
+                pathname === path ? style.active : ""
               }`}
-              onClick={() => handleClick(id, path)} // Redirige al hacer clic en cualquier parte del contenedor
             >
-              <div className={style.navContent}>
-                {/* Imagen del punto */}
-                <img
-                  className={style.puntosNav}
-                  src={activeId === id ? puntoVerde : puntoGris}
-                  alt="Punto"
-                />
-                <span>{text}</span>
-              </div>
-              {activeId === id && (
+              <Link href={path}>
+                <div className={style.navContent}>
+                  <Image
+                    className={style.puntosNav}
+                    src={pathname === path ? puntoVerde : puntoGris}
+                    alt="Punto"
+                  />
+                  <span>{text}</span>
+                </div>
+              </Link>
+              {pathname === path && (
                 <div className={style.barraSeleccionada}></div>
               )}
             </li>

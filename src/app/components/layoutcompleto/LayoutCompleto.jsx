@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
-import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import LayoutIMG from './IMG/layoutcompleto.png';
 import style from './LayoutCompleto.module.css';
 
@@ -32,25 +32,6 @@ const LayoutCompleto = () => {
   ];
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<InteractiveImage sections={sections} />} />
-        {sections.map((section) => (
-          <Route
-            key={section.id}
-            path={section.path}
-            element={<Sector name={section.name} />}
-          />
-        ))}
-      </Routes>
-    </Router>
-  );
-};
-
-const InteractiveImage = ({ sections }) => {
-  const navigate = useNavigate();
-
-  return (
     <div className={style.layoutContainer}>
       <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} />
       {sections.map((section) => (
@@ -58,20 +39,14 @@ const InteractiveImage = ({ sections }) => {
           key={section.id}
           className={`${style.interactiveSection} ${style[section.styleClass]}`}
           style={section.position}
-          onClick={() => navigate(section.path)}
         >
-          <span className={style.tooltip}>{section.name}</span>
+          <Link href={section.path}>
+            <span className={style.tooltip}>{section.name}</span>
+          </Link>
         </div>
       ))}
     </div>
   );
 };
-
-const Sector = ({ name }) => (
-  <div className={style.sectorContainer}>
-    <h1>{name}</h1>
-    <p>Bienvenido a {name}.</p>
-  </div>
-);
 
 export default LayoutCompleto;

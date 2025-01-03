@@ -1,0 +1,29 @@
+.seccion {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+}
+
+.productividad {
+    width: 80%;
+    background-color: #131313;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.filtro {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.botonesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}

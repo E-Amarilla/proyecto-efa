@@ -1,26 +1,14 @@
+"use client";
+
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SubNav from "./subnav.jsx";
+import SubNav from "./SubNav";
 
-import Home from "../../home/home.jsx";
-import Desmoldeo from "../../Desmoldeo/Desmoldeo.jsx";
-import Encajonado from "../../Encajonado/Encajonado.jsx";
-import Paletizado from "../../Paletizado/Paletizado.jsx";
-
-function ExeSubNav() {
+function ExeSubNav({ children }) {
   return (
-    <Router>
-      {/* Barra de navegación */}
+    <>
       <SubNav />
-
-      {/* Rutas */}
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/desmoldeo" element={<Desmoldeo />} />
-        <Route path="/encajonado" element={<Encajonado />} />
-        <Route path="/paletizado" element={<Paletizado />} />
-      </Routes>
-    </Router>
+      <div>{children}</div>
+    </>
   );
 }
 

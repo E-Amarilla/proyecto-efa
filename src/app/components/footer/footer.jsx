@@ -61,7 +61,7 @@ const Footer = () => {
                     {opcionesIzq.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
                             <Image src={icono} alt={texto} className={style.icon} />
-                            <a href={link} target="_blank" rel="noopener noreferrer">
+                            <a className={style.A} href={link} target="_blank" rel="noopener noreferrer">
                                 {texto}
                             </a>
                         </li>
@@ -70,7 +70,7 @@ const Footer = () => {
 
                 {/* Logo central */}
                 <div className={style.footerLogo}>
-                    <a href="https://creminox.com" target="_blank" rel="noopener noreferrer">
+                    <a className={style.A} href="https://creminox.com" target="_blank" rel="noopener noreferrer">
                         <Image src={cremImg} alt="Creminox logo" className={style.logo} />
                     </a>
                 </div>
@@ -79,7 +79,7 @@ const Footer = () => {
                 <ul className={style.footerDer}>
                     {opcionesDer.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
-                            <a href={link} target="_blank" rel="noopener noreferrer">
+                            <a className={style.A} href={link} target="_blank" rel="noopener noreferrer">
                                 {texto}
                             </a>
                             <Image src={icono} alt={texto} className={style.icon} />
@@ -87,7 +87,7 @@ const Footer = () => {
                     ))}
                 </ul>
             </div>
-            <hr />
+            <hr className={style.HR} />
             <div className={style.footerAbajo}>
                 <p>© 2024 All Rights Reserved Cremona Inoxidable</p>
             </div>

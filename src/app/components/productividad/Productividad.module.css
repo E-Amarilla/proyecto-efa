@@ -1,0 +1,96 @@
+.productividad {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    background-color: #131313;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.titulo {
+    text-align: left;
+    font-size: 1vw;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.metricaContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 50px 0 50px;
+}
+
+.metrica {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.metrica:first-child {
+    margin-left: 0;
+}
+
+.metrica:last-child {
+    margin-right: 0;
+}
+
+.icono {
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.valor {
+    font-size: 2.5vw;
+    font-weight: bold;
+}
+
+.descripcion {
+    font-size: 1vw;
+    color: #aaa;
+}
+
+.barraContainer {
+    margin-top: 20px;
+}
+
+.barra {
+    display: flex;
+    height: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #444;
+    margin-bottom: 15px;
+}
+
+.segmento {
+    height: 100%;
+}
+
+.leyenda {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.itemLeyenda {
+    display: flex;
+    align-items: center;
+    margin: 5px 10px;
+}
+
+.colorMuestra {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.divisor
+{
+    border-top: 4px solid #ccc;
+    border-radius: 15px;
+    margin: 20px auto;
+    width: 70%;
+}
