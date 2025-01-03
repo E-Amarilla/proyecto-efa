@@ -1,0 +1,44 @@
+.selectWrapper {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+.customSelect {
+    appearance: none; /* Elimina el diseño predeterminado del navegador */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #131313; /* Fondo negro */
+    color: #fff; /* Texto blanco */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.customSelect:hover {
+    background-color: #000; /* Fondo más oscuro al pasar el cursor */
+}
+
+.customSelect:focus {
+    outline: none;
+    border: 2px solid #ff6600; /* Resaltado naranja al enfocar */
+}
+
+.customSelect option {
+    background-color: #131313; /* Fondo de las opciones */
+    color: #fff; /* Texto blanco */
+}
+
+/* Flecha personalizada */
+.selectWrapper::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff; /* Flecha blanca */
+    pointer-events: none;
+}
