@@ -1,12 +1,13 @@
 import React from 'react';
-import cremImg from '../IMG/logos/creminox-logo.png';
-import webImg from '../IMG/icons/web.png';
-import linkImg from '../IMG/icons/linkedin.png';
-import ubiImg from '../IMG/icons/ubicacion.png';
-import mailImg from '../IMG/icons/mail.png';
-import fbImg from '../IMG/icons/facebook.png';
+import Image from "next/image"
+import cremImg from './IMG/creminox-logo.png';
+import webImg from './IMG/web.png';
+import linkImg from './IMG/linkedin.png';
+import ubiImg from './IMG/ubicacion.png';
+import mailImg from './IMG/mail.png';
+import fbImg from './IMG/facebook.png';
 
-import style from './Footer.module.css';
+import style from './footer.module.css';
 
 const Footer = () => {
     const opcionesIzq = [
@@ -59,7 +60,7 @@ const Footer = () => {
                 <ul className={style.footerIzq}>
                     {opcionesIzq.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
-                            <img src={icono} alt={texto} className={style.icon} />
+                            <Image src={icono} alt={texto} className={style.icon} />
                             <a href={link} target="_blank" rel="noopener noreferrer">
                                 {texto}
                             </a>
@@ -70,7 +71,7 @@ const Footer = () => {
                 {/* Logo central */}
                 <div className={style.footerLogo}>
                     <a href="https://creminox.com" target="_blank" rel="noopener noreferrer">
-                        <img src={cremImg} alt="Creminox logo" className={style.logo} />
+                        <Image src={cremImg} alt="Creminox logo" className={style.logo} />
                     </a>
                 </div>
 
@@ -81,7 +82,7 @@ const Footer = () => {
                             <a href={link} target="_blank" rel="noopener noreferrer">
                                 {texto}
                             </a>
-                            <img src={icono} alt={texto} className={style.icon} />
+                            <Image src={icono} alt={texto} className={style.icon} />
                         </li>
                     ))}
                 </ul>

@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SubNav from "./SubNav";
+import SubNav from "./subnav.jsx";
 
-import Home from "../../Home/Home.jsx";
+import Home from "../../home/home.jsx";
 import Desmoldeo from "../../Desmoldeo/Desmoldeo.jsx";
 import Encajonado from "../../Encajonado/Encajonado.jsx";
 import Paletizado from "../../Paletizado/Paletizado.jsx";

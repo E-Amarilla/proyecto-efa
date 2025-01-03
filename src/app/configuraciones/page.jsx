@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import maqImg from './IMG/nsd42jps.png';
-import style from './Configuraciones.module.css';
+import style from './configuraciones.module.css';
 
 const Configuraciones = () => {
     return (
