@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import style from "./SubNav.module.css";
-import puntoVerde from "../../IMG/semaforo/puntoVerde.png"; // Imagen de punto verde
-import puntoGris from "../../IMG/semaforo/puntoGris.png"; // Imagen de punto gris
+import puntoVerde from "../IMG/puntoVerde.png"; // Imagen de punto verde
+import puntoGris from "../IMG/puntoGris.png"; // Imagen de punto gris
 
 const SubNav = () => {
   const location = useLocation();

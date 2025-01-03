@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 
-import cremImg from '../IMG/logos/creminox.png'; // Importar imagenes
-import usuario from '../IMG/icons/usuario.png';
-import campImg from '../IMG/icons/campana.png';
-import alarmaImg from '../IMG/icons/alarma.png';
-import style from './Header.module.css'; // Estilos de Header
-import ExeSubNav from './SubNav/ExeSubNav.jsx';
+import Image from "next/image"
+import cremImg from './IMG/creminox.png';
+import usuario from './IMG/usuario.png';
+import campImg from './IMG/campana.png';
+import alarmaImg from './IMG/alarma.png';
+
+// Estilos de Header
+import style from './header.module.css'; 
+
+// Componente SubNav
+import ExeSubNav from './subnav/exesubnav.jsx';
 
 const ExeHeader = () => {
     const [menuVisible, setMenuVisible] = useState(false);

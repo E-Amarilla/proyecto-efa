@@ -1,4 +1,4 @@
-import Completo from './completo/Completo.jsx';
+import Completo from './completo/page.jsx';
 
 export default function Page() {
   return <Completo />;
