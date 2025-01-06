@@ -62,7 +62,6 @@ const NavDatos = () => {
 
     return (
         <>
-        <div className={style.container}>
             <div className={style.nav}>
                 <ul className={style.navList}>
                     {opcionesAlarma.map(({ id, nombre }) => (
@@ -88,21 +87,20 @@ const NavDatos = () => {
 
                 <hr className={style.linea}></hr>
 
-                    <div className={style.contenedorDatos}>
+                <div className={style.contenedorDatos}>
                     <p className={style.datosGen}>DATOS GENERALES</p>
-                        <ul className={style.datosTods}>
-                            {datosTiempoReal.map(({ id, nombre, dato }) => (
-                                <li key={id} className={style.datosIndv}>
-                                    <a className={style.detallesDatos} href='equipox'>
-                                        <h3 className={style.h3}>{nombre}</h3>
-                                        <h4 className={style.h4}>{dato}</h4>
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    <ul className={style.datosTods}>
+                        {datosTiempoReal.map(({ id, nombre, dato }) => (
+                            <li key={id} className={style.datosIndv}>
+                                <a className={style.detallesDatos} href='equipox'>
+                                    <h3 className={style.h3}>{nombre}</h3>
+                                    <h4 className={style.h4}>{dato}</h4>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
-        </div>
         </>
     );
 };
