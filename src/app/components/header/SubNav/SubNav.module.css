@@ -31,7 +31,15 @@
     padding: 0;
 }
 
+.navLinks li {
+    display: flex;
+    align-items: center; /* Alinea el contenido horizontalmente */
+    gap: 0.5rem; /* Ajusta la separación entre icono y texto */
+}
+
 .navLinks li a {
+    display: flex;
+    align-items: center; /* Alinea el contenido horizontalmente */
     text-decoration: none;
     color: #D9D9D9;
     font-size: 15px;

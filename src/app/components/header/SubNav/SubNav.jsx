@@ -29,14 +29,12 @@ const SubNav = () => {
               }`}
             >
               <Link href={path}>
-                <div className={style.navContent}>
-                  <Image
-                    className={style.puntosNav}
-                    src={pathname === path ? puntoVerde : puntoGris}
-                    alt="Punto"
-                  />
-                  <span>{text}</span>
-                </div>
+                <Image
+                  className={style.puntosNav}
+                  src={pathname === path ? puntoVerde : puntoGris}
+                  alt="Punto"
+                />
+                <span>{text}</span>
               </Link>
               {pathname === path && (
                 <div className={style.barraSeleccionada}></div>
