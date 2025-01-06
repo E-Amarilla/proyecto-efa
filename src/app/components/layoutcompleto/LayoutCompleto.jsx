@@ -17,14 +17,14 @@ const LayoutCompleto = () => {
     },
     {
       id: 2,
-      name: "Seccion deshabilitada",
+      name: "Encajonado",
       path: "/encajonado",
       position: { top: "0.3%", left: "35.3%", width: "59.5%", height: "48%" },
       styleClass: "seccionbloqueada",
     },
     {
       id: 3,
-      name: "Seccion deshabilitada",
+      name: "Paletizado",
       path: "/paletizado",
       position: { top: "32.8%", left: "59.8%", width: "37.2%", height: "34%" },
       styleClass: "seccionbloqueada",
@@ -33,17 +33,17 @@ const LayoutCompleto = () => {
 
   return (
     <div className={style.layoutContainer}>
-      <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} />
+      <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} priority={true}/>
       {sections.map((section) => (
+        <Link href={section.path}>
         <div
           key={section.id}
-          className={`${style.interactiveSection} ${style[section.styleClass]}`}
+          className={`${style.interactiveSection} ${style[section.styleClass]}`} // Corrección aquí
           style={section.position}
         >
-          <Link href={section.path}>
             <span className={style.tooltip}>{section.name}</span>
-          </Link>
         </div>
+        </Link>
       ))}
     </div>
   );

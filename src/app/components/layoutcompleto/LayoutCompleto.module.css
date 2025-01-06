@@ -53,14 +53,15 @@
     border: 2px solid green;
 }
 
-.seccionbloqueada {
+  .seccionbloqueada {
     border-radius: 15px;
     background-color: gray;
     border: 1px solid rgb(0, 0, 0);
     opacity: 0.6;
     z-index: 10; /* Asegura que se quede sobre otros elementos */
+    pointer-events: none;
 }
 
-.seccionbloqueada:hover {
+  .seccionbloqueada:hover {
     background-color: rgba(17, 17, 17, 0.815); /* Fondo translúcido al pasar el mouse */
   }
