@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import Image from "next/image"
 import cremImg from './IMG/creminox.png';
 import usuario from './IMG/usuario.png';
-import campImg from './IMG/campana.png';
+import confImg from './IMG/configuracion.png';
 import alarmaImg from './IMG/alarma.png';
 
 // Estilos de Header
@@ -28,8 +28,8 @@ const ExeHeader = () => {
 
     const opcionesIconos = [
         { id: 1, icon: usuario }, // Este ícono activará el menú
-        { id: 2, url: "/", icon: campImg },
-        { id: 3, url: "/tablaalertas", icon: alarmaImg },
+        { id: 2, url: "/tablaalertas", icon: alarmaImg },
+        { id: 3, url: "/", icon: confImg },
     ];
 
     const opcionesMenu = [
@@ -68,6 +68,7 @@ const ExeHeader = () => {
                                 </li>
                             </ul>
                         </div>
+                        
                     )}
                 </div>
                 <div className={style.centerText}>

@@ -1,0 +1,29 @@
+.imagenBoton {
+    position: absolute;
+    right: 5%; /* Esto mueve la imagen a la derecha */
+    top: 50%; /* Esto centra la imagen verticalmente */
+    transform: translateY(-50%); /* Ajusta la posición vertical para que quede centrada */
+}
+
+.textos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.P {
+    position: absolute;
+    text-align: center;
+    margin: 0;
+}
+
+.H2 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.BotonNext {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;    /* Centra verticalmente */
+}
