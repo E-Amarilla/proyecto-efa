@@ -3,9 +3,10 @@ import LayoutCompleto from './components/layoutcompleto/LayoutCompleto.jsx';
 import BotonSonner from './components/notificaciones/page.jsx'
 import {Button} from "@nextui-org/react";
 import Dropdown from "./components/dropdownalarmas/dropdown"
+import ExcelPDF from "./components/filtroperiodo/FiltroPeriodo.jsx";
 
 export default function Page() {
   return (
-    <Dropdown />
+    <ExcelPDF />
   );
 }

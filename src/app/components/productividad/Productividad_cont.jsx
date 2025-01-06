@@ -6,17 +6,14 @@ const Productividad_cont = () => {
         {
             titulo: 'Ciclos totales realizados',
             valor: 15,
-            icono: '♻️'
         },
         {
             titulo: 'Producción total',
             valor: '16,5 Tn',
-            icono: '📦',
         },
         {
             titulo: 'Horas de uso / Horas posibles',
             valor: '12/48',
-            icono: '⏰',
         }
     ];
 
