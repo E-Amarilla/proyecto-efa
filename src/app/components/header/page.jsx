@@ -2,21 +2,27 @@
 
 import React, { useState } from 'react';
 
-import Image from "next/image"
+import Image from "next/image";
 import cremImg from './IMG/creminox.png';
 import usuario from './IMG/usuario.png';
 import confImg from './IMG/configuracion.png';
 import alarmaImg from './IMG/alarma.png';
 import MenuAlarmas from '../../components/dropdownalarmas/dropdown'; // Importa tu componente
+import Desloguear from '../../components/usuario/desloguear'; // Importa tu componente de deslogueo
 import style from './Header.module.css'; 
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
 
 const ExeHeader = () => {
     const [menuVisible, setMenuVisible] = useState(false);
     const [activeLink, setActiveLink] = useState(false); // Manejar el estado del enlace activo
+    const [logoutVisible, setLogoutVisible] = useState(false); // Añadir estado para el logout
 
     const toggleMenu = () => {
         setMenuVisible((prev) => !prev);
+    };
+
+    const toggleLogout = () => {
+        setLogoutVisible(true);
     };
 
     const handleLinkClick = () => {
@@ -24,9 +30,9 @@ const ExeHeader = () => {
     };
 
     const opcionesIconos = [
-        { id: 1, icon: usuario, onClick: toggleMenu }, // Este ícono activará el menú de usuario
+        { id: 1, icon: usuario, onClick: toggleLogout }, // Este ícono activará el componente de deslogueo
         { id: 2, icon: alarmaImg, isDropdown: true }, // Este ícono activará el menú de alarmas
-        { id: 3, url:"/configuraciones", icon: confImg },
+        { id: 3, url: "/configuraciones", icon: confImg },
     ];
 
     const opcionesMenu = [
@@ -42,26 +48,26 @@ const ExeHeader = () => {
                         <div key={id} className={style.contenedorImg}>
                             {isDropdown ? (
                                 <MenuAlarmas icon={icon} /> // Pasa el ícono a tu componente de dropdown
-                            ) : (
+                            ) : onClick ? (
                                 <Image
                                     className={style.icon}
                                     src={icon}
                                     alt={`Icono ${id}`}
                                     onClick={onClick}
                                 />
+                            ) : (
+                                <a href={url}>
+                                    <Image
+                                        className={style.icon}
+                                        src={icon}
+                                        alt={`Icono ${id}`}
+                                    />
+                                </a>
                             )}
                         </div>
                     ))}
-                    {menuVisible && (
-                        <div className={style.dropdownMenu}>
-                            <ul>
-                                <li>
-                                    <a href="/logout">Cerrar sesión</a>
-                                </li>
-                            </ul>
-                        </div>
-                    )}
                 </div>
+                {logoutVisible && <Desloguear />} {/* Renderiza el componente de deslogueo */}
                 <div className={style.centerText}>
                     <p>SDDA - EFA PROYECTO</p>
                 </div>

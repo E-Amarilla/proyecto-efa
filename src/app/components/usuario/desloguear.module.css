@@ -1,0 +1,41 @@
+/* MenuAlarmas.module.css */
+
+.icon {
+    width: 25px;
+    height: 100%;
+    cursor: pointer;
+}
+
+.contenedorItems {
+    margin: 0 !important; /* Asegura que no haya margen */
+    padding: 0 !important; /* Elimina cualquier padding */
+    list-style: none; /* Elimina cualquier estilo de lista */
+}
+
+.items {
+    margin-bottom: 0.2rem !important; /* Asegura que no haya margen en los items */
+    padding: 0.5rem 1rem !important; /* Ajusta el padding según sea necesario */
+    text-align: left;
+    background-color: #d9d9d9;
+}
+
+.buttonContainer {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: none;
+}
+
+.buttonContainer:hover {
+    background-color: transparent !important; /* Asegura que el contenedor no cambie de color en hover */
+    border: none;
+}
+
+.hoverEffect {
+    background-color: red !important; /* Color de fondo en hover */
+    color: white !important; /* Color de texto en hover */
+    border-radius: 9999px; /* Hace el botón redondo */
+}
+
+.hoverEffect:hover {
+    background-color: darkred !important; /* Color de fondo en hover */
+}
