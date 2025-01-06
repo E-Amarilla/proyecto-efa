@@ -1,5 +1,4 @@
-.contenedor
-{
+.contenedor {
     color: #D9D9D9;
     background-color: #131313;
     border-radius: 15px;
@@ -8,8 +7,7 @@
     height: 65%;
 }
 
-.titulo
-{
+.titulo {
     font-size: 1rem;
     text-align: center;
 }

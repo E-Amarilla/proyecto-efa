@@ -1,20 +1,16 @@
-import style from './Productividad_cont.module.css';
+import styleProd from './Productividad.module.css';
 import FiltroPeriodo from '../FiltroPeriodo/FiltroPeriodo.jsx';
-import Botones from '../Botones/Exportar/Grandes/ExportarGrandes.jsx'
 import Productividad_cont from './Productividad_cont.jsx';
 
 const Productividad = () => {
     return (
         <>
-            <div className={style.seccion}>
-                <div className={style.productividad}>
+            <div className={styleProd.seccion}>
+                <div className={styleProd.productividad}>
                     <Productividad_cont />
                 </div>
-                <div className={style.filtro}>
+                <div className={styleProd.filtro}>
                     <FiltroPeriodo />
-                    <div className={style.botonesContainer}>
-                        <Botones />
-                    </div>
                 </div>
             </div>
         </>
