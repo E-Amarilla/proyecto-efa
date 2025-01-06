@@ -7,7 +7,7 @@ import ubiImg from './IMG/ubicacion.png';
 import mailImg from './IMG/mail.png';
 import fbImg from './IMG/facebook.png';
 
-import style from './footer.module.css';
+import style from './Footer.module.css';
 
 const Footer = () => {
     const opcionesIzq = [
