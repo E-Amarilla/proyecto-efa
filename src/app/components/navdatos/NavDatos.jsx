@@ -67,7 +67,7 @@ const NavDatos = () => {
     return (
         <>
         <div className={style.container}>
-            <nav className={style.nav}>
+            <div className={style.nav}>
                 <ul className={style.navList}>
                     {opcionesAlarma.map(({ id, nombre }) => (
                         <li
@@ -90,22 +90,22 @@ const NavDatos = () => {
                     ))}
                 </ul>
 
-                <hr></hr>
+                <hr className={style.linea}></hr>
 
                     <div className={style.contenedorDatos}>
-                    <p>DATOS GENERALES</p>
+                    <p className={style.datosGen}>DATOS GENERALES</p>
                         <ul className={style.datosTods}>
                             {datosTiempoReal.map(({ id, nombre, dato }) => (
                                 <li key={id} className={style.datosIndv}>
                                     <a className={style.detallesDatos} href='equipox'>
-                                        <h3>{nombre}</h3>
-                                        <h4>{dato}</h4>
+                                        <h3 className={style.h3}>{nombre}</h3>
+                                        <h4 className={style.h4}>{dato}</h4>
                                     </a>
                                 </li>
                             ))}
                         </ul>
                     </div>
-            </nav>
+            </div>
 
             <div className={style.sections}>
                 <section id="section1" className={style.section}>

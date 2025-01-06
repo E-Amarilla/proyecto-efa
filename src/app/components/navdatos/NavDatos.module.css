@@ -1,39 +1,79 @@
 .container {
-    margin: 113px 0 0 18rem;
+    margin: 113px 0 0 0;
+    padding: 0;
     display: flex;
     flex-direction: row;
     height: 100vh;
 }
 
 .nav {
+    margin: 0;
+    width: 100%;
     position: fixed;
-    top: 66px;
+    top: 65px;
     left: 0;
     width: 18rem;
-    height: calc(100vh - 66px);
+    bottom: 0;
     background-color: #131313;
     padding: 50px 20px 20px 20px;
-    z-index: 1000;
+    z-index: 998;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
-.nav hr {
-    max-width: 15rem;
-    margin-top: 5px;
+.nav .linea {
     display: block;
+    width: 95%;
 }
 
 .navList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
     list-style: none;
 }
 
 .navItem {
-    margin-bottom: 10px;
+    margin: 0;
+    gap: 10px;
+}
+
+.datosGen {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    color: #D9D9D9;
+    display: block;
+    text-align: center;
+}
+
+.datoList {
+    width: 100%;
+    padding: 10px 20px;
+    margin: 10px 0 0 0;
+    background-color: #1F1F1F;
+    border-radius: 15px;
+}
+
+.detallesDatos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #D9D9D9;
+}
+
+.icon {
+    max-width: 50px;
+    max-height: 50px;
+    margin-left: auto;
 }
 
 .navLink {
+    margin: 0;
+    padding: 0;
     display: block;
     padding: 6px;
     text-align: center;
@@ -80,52 +120,61 @@
     overflow: hidden;
 }
 
-.contenedorDatos p {
-    padding: 10px;
-    font-weight: bold;
-    color: #D9D9D9;
-    display: block;
-    text-align: center;
-    position: center;
+.h3 {
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+}
+
+.h4 {
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
 }
 
 @media (min-width: 1432px) {
+    .datosTods {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
     .datosIndv {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 10px 15px;
-        margin-bottom: 10px;
+        gap: 8px;
         border: 2px solid #555555;
         border-radius: 15px;
         background-color: #1C1C1C;
-        max-height: 8vh;
-    }
-
-    .datosTods {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+        max-height: 5vh;
     }
 }
 
 @media (max-width: 1432px) {
-    .datosIndv {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 8px 12px;
-        margin-bottom: 8px;
-        max-height: 5.05vh;
-    }
-
     .datosTods {
         list-style: none;
         padding: 0;
         margin: 0;
-        margin-top: 0.3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
-}
-
-.detallesDatos {
-    font-size: 10px;
+    
+    .datosIndv {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+        gap: 8px;
+        border: 2px solid #555555;
+        border-radius: 15px;
+        background-color: #1C1C1C;
+        max-height: 5vh;
+    }
+    
 }
