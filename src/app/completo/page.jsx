@@ -4,11 +4,7 @@
 import Image from "next/image";
 import luzR from './IMG/puntoRojo.png';
 import luzV from './IMG/puntoVerde.png'; 
-<<<<<<< HEAD
 import LayoutCompleto from '../components/layoutcompleto/LayoutCompleto.jsx'
-=======
-import LayoutCompleto from '../components/layoutcompleto/LayoutCompleto.jsx';
->>>>>>> dd76671d14914e549b12ac8196da5110e0370bef
 
 // Importar estilos
 import style from './Completo.module.css';

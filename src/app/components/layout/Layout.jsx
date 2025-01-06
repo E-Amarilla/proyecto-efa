@@ -14,21 +14,22 @@ const Layout = () => {
     { id: 4, name: "SDDA", path: "/SDDA", style: { top: "49%", left: "66.2%", width: "15.4%", height: "26.9%" } },
   ];
 
-  return (
-    <div className={style.layoutContainer}>
-      <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} />
-      {sections.map((section) => (
-        <Link key={section.id} href={section.path}>
-          <div
-            className={`${style.interactiveSection} ${style[section.styleclass] || ""}`}
-            style={section.style}
-          >
-            <span className={style.tooltip}>{section.name}</span>
-          </div>
-        </Link>
-      ))}
-    </div>
-  );
+return (
+  <div className={style.layoutContainer}>
+    <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} priority={true}/>
+    {sections.map((section) => (
+      <Link href={section.path}>
+      <div
+        key={section.id}
+        className={`${style.interactiveSection} ${style[section.styleclass] || ""}`}
+        style={section.style}
+      >
+          <span className={style.tooltip}>{section.name}</span>
+      </div>
+      </Link>
+    ))}
+  </div>
+);
 };
 
 const Sector = ({ name }) => (
