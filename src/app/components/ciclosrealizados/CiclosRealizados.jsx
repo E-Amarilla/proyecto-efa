@@ -4,7 +4,7 @@ import style from './CiclosRealizados.module.css';
 import FiltroPeriodo from '../filtroperiodo/FiltroPeriodo.jsx';
 import ProductosRealizados from '../productosrealizados/ProductosRealizados.jsx';
 
-const CiclosRealizados = () => {
+export default function CiclosRealizados() {
     return (
         <>
             <div className={style.seccion}>
@@ -18,5 +18,3 @@ const CiclosRealizados = () => {
         </>
     );
 };
-
-export default CiclosRealizados;
