@@ -7,11 +7,8 @@ import cremImg from './IMG/creminox.png';
 import usuario from './IMG/usuario.png';
 import confImg from './IMG/configuracion.png';
 import alarmaImg from './IMG/alarma.png';
-
-// Estilos de Header
+import MenuAlarmas from '../../components/dropdownalarmas/dropdown'; // Importa tu componente
 import style from './Header.module.css'; 
-
-// Componente SubNav
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
 
 const ExeHeader = () => {
@@ -27,9 +24,9 @@ const ExeHeader = () => {
     };
 
     const opcionesIconos = [
-        { id: 1, icon: usuario }, // Este ícono activará el menú
-        { id: 2, url: "/tablaalertas", icon: alarmaImg },
-        { id: 3, url: "/", icon: confImg },
+        { id: 1, icon: usuario, onClick: toggleMenu }, // Este ícono activará el menú de usuario
+        { id: 2, icon: alarmaImg, isDropdown: true }, // Este ícono activará el menú de alarmas
+        { id: 3, url:"/configuraciones", icon: confImg },
     ];
 
     const opcionesMenu = [
@@ -41,19 +38,17 @@ const ExeHeader = () => {
         <header className={style.contenedor}>
             <nav className={style.navbar}>
                 <div className={style.icons}>
-                    {opcionesIconos.map(({ id, url, icon }) => (
+                    {opcionesIconos.map(({ id, url, icon, onClick, isDropdown }) => (
                         <div key={id} className={style.contenedorImg}>
-                            {id === 1 ? (
+                            {isDropdown ? (
+                                <MenuAlarmas icon={icon} /> // Pasa el ícono a tu componente de dropdown
+                            ) : (
                                 <Image
                                     className={style.icon}
                                     src={icon}
                                     alt={`Icono ${id}`}
-                                    onClick={toggleMenu}
+                                    onClick={onClick}
                                 />
-                            ) : (
-                                <a href={url}>
-                                    <Image className={style.icon} src={icon} alt={`Icono ${id}`} />
-                                </a>
                             )}
                         </div>
                     ))}
@@ -61,14 +56,10 @@ const ExeHeader = () => {
                         <div className={style.dropdownMenu}>
                             <ul>
                                 <li>
-                                    <a href="/configuracion">Configuración</a>
-                                </li>
-                                <li>
                                     <a href="/logout">Cerrar sesión</a>
                                 </li>
                             </ul>
                         </div>
-                        
                     )}
                 </div>
                 <div className={style.centerText}>

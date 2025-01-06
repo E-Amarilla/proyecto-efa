@@ -1,4 +1,8 @@
 "use client";
+
+import React from 'react';
+import Image from "next/image";
+import Link from 'next/link';
 import {
     Dropdown,
     DropdownTrigger,
@@ -6,53 +10,64 @@ import {
     DropdownSection,
     DropdownItem,
     Button,
-    cn,
-  } from "@nextui-org/react";
-  
-  export default function App() {
-    const iconClasses = "text-xl text-default-500 pointer-events-none flex-shrink-0";
-  
+} from "@nextui-org/react";
+import style from './MenuAlarmas.module.css';
+
+const MenuAlarmas = ({ icon }) => {
     return (
-      <Dropdown>
-        <DropdownTrigger>
-          <Button variant="bordered">Open Menu</Button>
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Dropdown menu with description" variant="faded">
-          <DropdownSection showDivider title="Actions">
-            <DropdownItem
-              key="new"
-              description="Create a new file"
-              shortcut="⌘N"
-            >
-              New file
-            </DropdownItem>
-            <DropdownItem
-              key="copy"
-              description="Copy the file link"
-              shortcut="⌘C"
-            >
-              Copy link
-            </DropdownItem>
-            <DropdownItem
-              key="edit"
-              description="Allows you to edit the file"
-              shortcut="⌘⇧E"
-            >
-              Edit file
-            </DropdownItem>
-          </DropdownSection>
-          <DropdownSection title="Danger zone">
-            <DropdownItem
-              key="delete"
-              className="text-danger"
-              color="danger"
-              description="Permanently delete the file"
-              shortcut="⌘⇧D"
-            >
-              Delete file
-            </DropdownItem>
-          </DropdownSection>
-        </DropdownMenu>
-      </Dropdown>
+        <Dropdown>
+            <DropdownTrigger>
+                <Image
+                    className={style.icon}
+                    src={icon}
+                    alt="Alarma Icon"
+                />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Dropdown menu with description" variant="faded">
+                <DropdownSection className={style.contenedorItems}>
+                    <DropdownItem
+                        className={style.items}
+                        key="1"
+                        description="Para de emergencia 'A' activada."
+                    >
+                        {"Alarma"}
+                    </DropdownItem>
+
+                    <DropdownItem
+                        className={style.items}
+                        key="2"
+                        description="Baliza de buzzer abierta."
+                    >
+                        {"Notificacion"}
+                    </DropdownItem>
+
+                    <DropdownItem
+                        className={style.items}
+                        key="3"
+                        description="Puerta principal 'A' abierta."
+                    >
+                        {"Notificación"}
+                    </DropdownItem>
+                </DropdownSection>
+
+                <DropdownItem
+                    className={style.buttonContainer}
+                    key="button"
+                >
+                    <Link href="/tablaalarmas">
+                        <Button
+                            className={`${style.hoverEffect} flex justify-self-center font-bold`}
+                            radius="full"
+                            auto
+                        >
+                            Ver más
+                        </Button>
+                    </Link>
+                </DropdownItem>
+
+            </DropdownMenu>
+        </Dropdown>
     );
-  }
+};
+
+export default MenuAlarmas;
