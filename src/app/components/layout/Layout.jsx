@@ -8,10 +8,12 @@ import style from './Layout.module.css';
 
 const Layout = () => {
   const sections = [
-    { id: 1, name: "BandaB", path: "/BandaB", style: { top: "28.9%", left: "12.6%", width: "21.5%", height: "28.5%" }, styleclass: "rotatedsection1" },
-    { id: 2, name: "KUKA", path: "/KUKA", style: { top: "52.7%", left: "44.7%", width: "10.1%", height: "18.7%" } },
-    { id: 3, name: "BandaA", path: "/BandaA", style: { top: "2.8%", left: "39.6%", width: "15.5%", height: "42.7%" } },
-    { id: 4, name: "SDDA", path: "/SDDA", style: { top: "49%", left: "66.2%", width: "15.4%", height: "26.9%" } },
+    { id: 1, name: "BandaA", path: "/desmoldeo/equipox", style: { top: "22.2%", left: "15.4%", width: "10%", height: "19%" }, styleclass: "BandaAsection" },
+    { id: 2, name: "BandaB", path: "/desmoldeo/equipox", style: { top: "0%", left: "47%", width: "9.5%", height: "29.8%" }, styleclass: "BandaBsection" },
+    { id: 3, name: "KUKA", path: "/desmoldeo/equipox", style: { top: "74%", left: "45.7%", width: "12.2%", height: "23.6%" }, styleclass: "KUKAsection" },
+    { id: 4, name: "Torre", path: "/desmoldeo/equipox", style: { top: "38.9%", left: "68.1%", width: "11.3%", height: "21.6%" }, styleclass: "Torresection" },
+    { id: 5, name: "SDDA", path: "/desmoldeo/equipox", style: { top: "18%", left: "83.6%", width: "6.5%", height: "63.5%" }, styleclass: "SDDAsection" },
+    { id: 6, name: "Estacion Grippers", path: "/desmoldeo/equipox", style: { top: "69%", left: "10%", width: "18.5%", height: "20%" }, styleclass: "Grippersection" },
   ];
 
   return (

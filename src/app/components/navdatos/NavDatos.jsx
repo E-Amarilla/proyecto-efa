@@ -92,7 +92,7 @@ const NavDatos = () => {
                     <ul className={style.datosTods}>
                         {datosTiempoReal.map(({ id, nombre, dato }) => (
                             <li key={id} className={style.datosIndv}>
-                                <a className={style.detallesDatos} href='equipox'>
+                                <a className={style.detallesDatos} href='/desmoldeo/equipox'>
                                     <h3 className={style.h3}>{nombre}</h3>
                                     <h4 className={style.h4}>{dato}</h4>
                                 </a>

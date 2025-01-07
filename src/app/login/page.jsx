@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link"
 import Image from "next/image";
 import cremImg from './IMG/creminox-logo.png';
 import style from './Login.module.css';
@@ -24,7 +25,7 @@ function Login() {
                             type="password" 
                         />
                     </div>
-                    <button className={style.botonIngresar}>Ingresar</button>
+                    <button className={style.botonIngresar}><a href="/completo">Ingresar</a></button>
                     <ul className={style.botonRecuperar}>
                         <li><a href="login/recuperarcontrasena">Recuperar contraseña</a></li>
                     </ul>

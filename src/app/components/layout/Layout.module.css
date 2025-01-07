@@ -6,8 +6,9 @@
   
   .backgroundImage {
     width: 100%;
-    height: auto;
+    height: 39.5vw;
     border-radius: 15px;
+    background-color: #131313;
   }
   
   .interactiveSection {
@@ -46,17 +47,37 @@
     margin-top: 50px;
   }
   
-  .rotatedsection1:hover {
+  .BandaAsection:hover {
     background-color: rgba(255, 255, 255, 0.3); /* Fondo translúcido al pasar el mouse */
     box-shadow: 0px 0px 15px 10px rgba(255, 255, 255, 0.8); /* Sombra más intensa */
   }
   /* Sección rotada */
-  .rotatedsection1 {
-    transform: rotate(-26.3deg); /* Rota la sección */
+  .BandaAsection {
+    transform: rotate(40deg); /* Rota la sección */
     background-color: transparent; /* Sin fondo */
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); /* Sombra visible */
     position: absolute;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10; /* Asegura que se quede sobre otros elementos */
+  }
+  
+  .BandaBsection {
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); /* Sombra visible */
+  }
+
+  .SDDAsection {
+    box-shadow: 0px 0px 10px 5px rgba(7, 222, 136, 0.5); /* Sombra visible */
+  }
+
+  .Torresection {
+    box-shadow: 0px 0px 10px 5px rgba(134, 143, 139, 0.5); /* Sombra visible */
+  }
+
+  .KUKAsection {
+    box-shadow: 0px 0px 10px 5px rgba(222, 154, 7, 0.5); /* Sombra visible */
+  }
+
+  .Grippersection {
+    box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.5); /* Sombra visible */
   }
