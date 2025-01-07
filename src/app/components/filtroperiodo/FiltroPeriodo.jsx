@@ -16,7 +16,9 @@ const FiltroPeriodo = () => {
             popover: style.datePickerPopover,
         }}
         />
-        <Botones />
+        <div className="h-2/4 grid content-center w-full">
+            <Botones />
+        </div>
     </div>
     );
 };

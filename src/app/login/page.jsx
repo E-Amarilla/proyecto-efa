@@ -26,7 +26,7 @@ function Login() {
                     </div>
                     <button className={style.botonIngresar}>Ingresar</button>
                     <ul className={style.botonRecuperar}>
-                        <li><a href="/recuperarcontraseña">Recuperar contraseña</a></li>
+                        <li><a href="login/recuperarcontrasena">Recuperar contraseña</a></li>
                     </ul>
                 </div>
             </body>

@@ -13,7 +13,8 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   const pathname = usePathname();
-  const esDesmoldeo = pathname === '/desmoldeo'; // Ajusta la ruta según tu página
+  const esDesmoldeo = pathname === '/desmoldeo';
+  const esLogin = ['/login', '/login/recuperarcontrasena'].includes(pathname);
 
   return (
     <html lang="en">
@@ -21,11 +22,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         
       </head>
       <body>
-        <Header />
+        {!esLogin && <Header />} {/*CONDICIONAL HEADER, NO BORRAR*/}
         <div>
           {children}
         </div>
-        {esDesmoldeo ? <CustomFooter /> : <DefaultFooter />}
+        {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
       </body>
     </html>
   );
