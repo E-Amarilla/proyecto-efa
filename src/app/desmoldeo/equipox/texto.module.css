@@ -1,0 +1,19 @@
+/* texto.module.css */
+.titulo {
+    font-size: 16px;
+}
+
+.subtitulo {
+    font-size: 12px;
+}
+
+.h4 {
+    font-size: 14px;
+}
+
+.titulo,
+.subtitulo,
+.h4 {
+    margin: 0;
+    padding: 0;
+}

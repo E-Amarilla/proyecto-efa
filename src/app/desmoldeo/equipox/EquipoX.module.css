@@ -2,25 +2,25 @@
     width: 100%;
     padding: 133px 20px 20px 20px;
     display: flex;
+    flex-direction: row;
+    align-items: stretch; /* Asegura que los hijos se estiren para tener la misma altura */
+    height: 100%;
+    margin: 0;
+    gap: 20px;
 }
 
-.Izq {
-    width: 25%;
-    height: 100%;
-    margin-right: 20px;
-}
-
-.Med {
-    width: 45%;
-    height: 100%;
-    margin-left: 20px;
-    margin-right: 20px;
+.Izq,
+.Med,
+.Der {
+    flex: 1; /* Opcional, distribuye proporcionalmente la altura */
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
 }
 
-.Der {
-    width: 30%;
-    height: 100%;
-    margin-left: 20px;
+.datoList {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

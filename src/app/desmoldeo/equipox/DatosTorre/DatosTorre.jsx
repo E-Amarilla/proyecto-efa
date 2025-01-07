@@ -1,5 +1,6 @@
 //styles
 import style from './DatosTorre.module.css';
+import textstyle from '../texto.module.css';
 
 const DatosTorre = () => {
     const datosTorre = [
@@ -37,14 +38,14 @@ const DatosTorre = () => {
     return (
         <>
             <div className={style.datosGen}>
-                <h1 className={style.titulo}>DATOS TORRE</h1>
+                <h1 className={textstyle.titulo}>DATOS TORRE</h1>
                 <div className={style.contenedorDatos}>
                     {datosTorre.map(({ id, texto, dato, icono }) => (
                         <div key={id} className={style.datoList}>
                             <div className={style.detallesDatos}>
                                 <div className={style.texto}>
-                                    <h3>{texto}</h3>
-                                    <h4>{dato}</h4>
+                                    <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                    <h4 className={textstyle.h4}>{dato}</h4>
                                 </div>
                             </div>
                         </div>

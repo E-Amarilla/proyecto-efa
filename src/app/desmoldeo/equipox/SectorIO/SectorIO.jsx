@@ -3,6 +3,7 @@ import puntoGris from './IMG/puntoGris.png';
 
 //styles
 import style from './SectorIO.module.css';
+import textstyle from '../texto.module.css';
 
 const SectorIO = () => {
     const SectorIO = [
@@ -33,14 +34,14 @@ const SectorIO = () => {
     ];
     return (
         <div className={style.datoListContainer}>
-            <h1 className={style.texto}>SECTOR IO</h1>
+            <h1 className={textstyle.titulo}>SECTOR IO</h1>
             <div className={style.datosGen}>
                 {SectorIO.map(({ id, texto, dato, icono }) => (
                     <div key={id} className={style.datoList}>
                         <div className={style.detallesDatos} href='EquipoX'>
                             <div className={style.texto}>
-                                <h3>{texto}</h3>
-                                <h4>{dato}</h4>
+                                <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                <h4 className={textstyle.h4}>{dato}</h4>
                             </div>
                             <img 
                                 src={icono} 

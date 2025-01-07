@@ -5,10 +5,10 @@ import receta2 from './IMG/RECETA2.png';
 import peso from './IMG/PESO.png';
 import estado from './IMG/ESTADO.png';
 import tiempo from './IMG/TIEMPO.png';
-import gripper from './IMG/GRIPPER.png';
 
 //styles
 import style from './DatosGenerales.module.css';
+import textstyle from '../texto.module.css';
 
 
 const DatosGenerales = () => {
@@ -53,26 +53,24 @@ const DatosGenerales = () => {
     return (
         <>
             <div className={style.datosGen}>
-                <div className={style.contenedorDatos}>
-                    <h1 className={style.texto}>DATOS GENERALES</h1>
-                    <ul className={style.lista}>
-                        {datosGenerales.map(({ id, texto, dato, icono }) => (
-                            <li key={id} className={style.datoList}>
-                                <div className={style.detallesDatos} href='EquipoX'>
-                                    <div className={style.texto}>
-                                        <h3>{texto}</h3>
-                                        <h4>{dato}</h4>
-                                    </div>
-                                    <img 
-                                        src={icono} 
-                                        alt={`Estado: ${id}`} 
-                                        className={style.icon} 
-                                    />
+                <h1 className={textstyle.titulo}>DATOS GENERALES</h1>
+                <ul className={style.lista}>
+                    {datosGenerales.map(({ id, texto, dato, icono }) => (
+                        <li key={id} className={style.datoList}>
+                            <div className={style.detallesDatos} href='EquipoX'>
+                                <div className={style.texto}>
+                                    <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                    <h4 className={textstyle.h4}>{dato}</h4>
                                 </div>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                                <img 
+                                    src={icono} 
+                                    alt={`Estado: ${id}`} 
+                                    className={style.icon} 
+                                />
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </>
     );

@@ -1,5 +1,6 @@
 //styles
 import style from './DatosKuka.module.css';
+import textstyle from '../texto.module.css';
 
 const DatosKuka = () => {
     const datosKuka = [
@@ -22,14 +23,14 @@ const DatosKuka = () => {
     return (
         <>
             <div className={style.datosGen}>
-                <h1 className={style.titulo}>DATOS KUKA</h1>
+                <h1 className={textstyle.titulo}>DATOS KUKA</h1>
                 <div className={style.contenedorDatos}>
                     {datosKuka.map(({ id, texto, dato, icono }) => (
                         <div key={id} className={style.datoList}>
                             <div className={style.detallesDatos}>
                                 <div className={style.texto}>
-                                    <h3>{texto}</h3>
-                                    <h4>{dato}</h4>
+                                    <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                    <h4 className={textstyle.h4}>{dato}</h4>
                                 </div>
                             </div>
                         </div>

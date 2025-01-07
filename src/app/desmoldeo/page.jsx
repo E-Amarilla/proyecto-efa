@@ -2,7 +2,6 @@ import NavDatos from '../components/navdatos/NavDatos.jsx';
 import Productividad from '../components/productividad/Productividad.jsx';
 import Graficos from '../components/graficos/Graficos.jsx';
 import Layout from '../components/layout/Layout.jsx';
-import Footer from '../components/footer/footer.jsx';
 
 import style from "./Desmoldeo.module.css";
 

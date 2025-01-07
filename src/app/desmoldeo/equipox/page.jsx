@@ -12,7 +12,7 @@ import style from './EquipoX.module.css';
 const EquipoX = () => {
     return (
         <>
-            <body className={style.all}>
+            <div className={style.all}>
                 <div className={style.Izq}>
                     <DatosGenerales />
                     <SectorIO />
@@ -28,7 +28,7 @@ const EquipoX = () => {
                 <div className={style.Der}>
                     <EquipoXImg />
                 </div>
-            </body>
+            </div>
         </>
     );
 };
