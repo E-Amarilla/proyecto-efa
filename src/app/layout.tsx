@@ -1,23 +1,32 @@
 "use client";
 import '@/app/globals.css';
-
-// components/Layout.js
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import Header from "./components/header/page";
-import DefaultFooter from "./components/footer/footer";
-import CustomFooter from "./components/footer/footer_desmoldeo";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const DefaultFooter = dynamic(() => import('./components/footer/footer'), { ssr: false });
+const CustomFooter = dynamic(() => import('./components/footer/footer_desmoldeo'), { ssr: false });
+
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   const pathname = usePathname();
   const esDesmoldeo = pathname === '/desmoldeo'; // Ajusta la ruta según tu página
 
   return (
     <html lang="en">
-      <Header />
+      <head>
+        
+      </head>
       <body>
-        {children}
+        <Header />
+        <div>
+          {children}
+        </div>
+        {esDesmoldeo ? <CustomFooter /> : <DefaultFooter />}
       </body>
-      { esDesmoldeo ? <CustomFooter /> : <DefaultFooter />}
     </html>
   );
 }

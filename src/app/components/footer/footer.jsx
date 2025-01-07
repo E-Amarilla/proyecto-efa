@@ -1,15 +1,17 @@
+// components/footer/DefaultFooter.jsx
+"use client";
+
 import React from 'react';
-import Image from "next/image"
+import Image from "next/image";
 import cremImg from './IMG/creminox-logo.png';
 import webImg from './IMG/web.png';
 import linkImg from './IMG/linkedin.png';
 import ubiImg from './IMG/ubicacion.png';
 import mailImg from './IMG/mail.png';
 import fbImg from './IMG/facebook.png';
-
 import style from './Footer.module.css';
 
-const Footer = () => {
+const DefaultFooter = () => {
     const opcionesIzq = [
         {
             id: 1,
@@ -55,8 +57,6 @@ const Footer = () => {
     return (
         <footer className={style.footer}>
             <div className={style.contenedor}>
-                
-                {/* Sección izquierda */}
                 <ul className={style.footerIzq}>
                     {opcionesIzq.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
@@ -67,15 +67,11 @@ const Footer = () => {
                         </li>
                     ))}
                 </ul>
-
-                {/* Logo central */}
                 <div className={style.footerLogo}>
                     <a className={style.A} href="https://creminox.com" target="_blank" rel="noopener noreferrer">
                         <Image src={cremImg} alt="Creminox logo" className={style.logo} />
                     </a>
                 </div>
-
-                {/* Sección derecha */}
                 <ul className={style.footerDer}>
                     {opcionesDer.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
@@ -95,4 +91,4 @@ const Footer = () => {
     );
 };
 
-export default Footer;
+export default DefaultFooter;

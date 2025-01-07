@@ -33,19 +33,19 @@ const Footer = () => {
 
     const opcionesDer = [
         {
-            id: 1,
+            id: 4,
             icono: webImg,
             link: 'https://creminox.com',
             texto: 'creminox.com'
         },
         {
-            id: 2,
+            id: 5,
             icono: fbImg,
             link: 'https://facebook.com/creminox',
             texto: '/creminox'
         },
         {
-            id: 3,
+            id: 6,
             icono: linkImg,
             link: 'https://ar.linkedin.com/company/creminox',
             texto: 'Creminox'
