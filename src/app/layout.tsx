@@ -22,7 +22,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body>
         <Header />
-        {children}
+        <div>
+          {children}
+        </div>
+        {esDesmoldeo ? <CustomFooter /> : <DefaultFooter />}
       </body>
     </html>
   );
