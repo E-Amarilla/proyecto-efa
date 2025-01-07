@@ -46,14 +46,9 @@
     margin: 4px;
 }
 
-.graf {
+.grafico {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.graf img {
-    max-width: 100%;
-    height: auto;
 }
