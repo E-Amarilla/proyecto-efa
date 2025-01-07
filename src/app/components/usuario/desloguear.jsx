@@ -16,14 +16,17 @@ const Desloguear = ({ icon }) => {
     const router = useRouter();
 
     const handleLogout = () => {
-        // Lógica de cierre de sesión aquí
         console.log("Deslogueando...");
-        // Redireccionar a la página de inicio de sesión
         router.push('/login');
     };
 
+    const handleChangeUser = () => {
+        console.log("Cambiando de usuario...");
+        router.push('/login'); // Cambia a la URL que desees
+    };
+
     return (
-        <Dropdown>
+        <Dropdown className={style.contenedorDrop}>
             <DropdownTrigger>
                 <Image
                     className={style.icon}
@@ -33,17 +36,21 @@ const Desloguear = ({ icon }) => {
             </DropdownTrigger>
             <DropdownMenu aria-label="Dropdown menu with description" variant="faded">
                 <DropdownItem
-                    className={style.buttonContainer}
-                    key="button"
+                    className={style.items}
+                    key="1"
+                    onClick={handleChangeUser} // Cambiamos la navegación aquí
+                >
+                    Cambiar de usuario
+                </DropdownItem>
+                <DropdownItem
+                
+                    className={`${style.items} ${style.botonCerrar}`}
+                    key="2"
                     onClick={handleLogout} // Añadimos el manejador de clic aquí
                 >
-                    <Button
-                        className={`${style.hoverEffect} flex justify-self-center font-bold`}
-                        radius="full"
-                        auto
-                    > Cerrar sesión
-                    </Button>
+                    <span className={style.textCerrar}>Cerrar sesión</span>
                 </DropdownItem>
+
             </DropdownMenu>
         </Dropdown>
     );

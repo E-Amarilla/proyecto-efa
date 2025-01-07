@@ -86,3 +86,12 @@
     transform: translateX(-50%); /* Centra la barra exactamente */
     transition: all 0.3s ease-in-out; /* Animación de transición */
 }
+
+.seccionbloqueada {
+    color:gray;
+    pointer-events: none;
+}
+
+.secciondesbloqueada {
+    color: #D9D9D9;
+}

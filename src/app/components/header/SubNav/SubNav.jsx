@@ -11,22 +11,22 @@ const SubNav = () => {
   const pathname = usePathname();
 
   const opcionesBotones = [
-    { id: 1, path: "/completo", text: "COMPLETO" },
-    { id: 2, path: "/desmoldeo", text: "DESMOLDEO" },
-    { id: 3, path: "/encajonado", text: "ENCAJONADO" },
-    { id: 4, path: "/paletizado", text: "PALETIZADO" },
+    { id: 1, path: "/completo", text: "COMPLETO", styleClass: style.secciondesbloqueada },
+    { id: 2, path: "/desmoldeo", text: "DESMOLDEO", styleClass: style.secciondesbloqueada },
+    { id: 3, path: "/encajonado", text: "ENCAJONADO", styleClass: style.seccionbloqueada },
+    { id: 4, path: "/paletizado", text: "PALETIZADO", styleClass: style.seccionbloqueada },
   ];
 
   return (
     <div className={style.contenedor}>
       <div className={style.SubNav}>
         <ul className={style.navLinks}>
-          {opcionesBotones.map(({ id, path, text }) => (
+          {opcionesBotones.map(({ id, path, text, styleClass }) => (
             <li
               key={id}
               className={`${style.itemNav} ${
                 pathname === path ? style.active : ""
-              }`}
+              } ${styleClass}`}
             >
               <Link href={path}>
                 <Image
@@ -34,7 +34,7 @@ const SubNav = () => {
                   src={pathname === path ? puntoVerde : puntoGris}
                   alt="Punto"
                 />
-                <span>{text}</span>
+                <span className={styleClass}>{text}</span>
               </Link>
               {pathname === path && (
                 <div className={style.barraSeleccionada}></div>

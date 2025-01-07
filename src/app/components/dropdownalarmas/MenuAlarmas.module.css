@@ -1,9 +1,21 @@
 /* MenuAlarmas.module.css */
+.contenedorDrop {
+    overflow: visible !important; /* Asegura que no bloquee el scroll */
+    max-height: auto; /* Permite que se expanda sin restricciones */
+    margin-top: 2%;
+    background: whitesmoke
+}
 
 .icon {
     width: 25px;
     height: 100%;
     cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transición suave */
+}
+
+.icon:hover {
+    box-shadow: rgba(0, 0, 0, 0.4); /* Sombra negra */
+    transform: scale(1.1); /* Efecto de aumento opcional */
 }
 
 .contenedorItems {
@@ -31,11 +43,14 @@
 }
 
 .hoverEffect {
-    background-color: red !important; /* Color de fondo en hover */
+    background-color: rgb(221, 87, 87) !important; /* Color de fondo en hover */
     color: white !important; /* Color de texto en hover */
     border-radius: 9999px; /* Hace el botón redondo */
 }
 
 .hoverEffect:hover {
-    background-color: darkred !important; /* Color de fondo en hover */
+    background-color: rgb(253, 167, 167) !important; /* Color de fondo en hover */
+    transform: scale(1.01);
+    color: white !important; /* Color de texto en hover */
+    transition: background-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s ease; /* Transición suave */
 }

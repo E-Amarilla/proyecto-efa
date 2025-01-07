@@ -15,7 +15,7 @@ import style from './MenuAlarmas.module.css';
 
 const MenuAlarmas = ({ icon }) => {
     return (
-        <Dropdown>
+        <Dropdown className={style.contenedorDrop}>
             <DropdownTrigger>
                 <Image
                     className={style.icon}
