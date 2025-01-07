@@ -3,12 +3,14 @@ import { createChart } from "lightweight-charts";
 import Image from "next/image";
 import crem from "./IMG/creminox.png";
 
-// Generar colores dinámicos más saturados
+// Generar colores aleatorios en formato hexadecimal #RRGGBB
 const getRandomColor = () => {
-    const r = Math.floor(Math.random() * 156) + 100; // Rojo (100-255)
-    const g = Math.floor(Math.random() * 100); // Verde (0-99)
-    const b = Math.floor(Math.random() * 100); // Azul (0-99)
-    return `rgb(${r}, ${g}, ${b})`;
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
 };
 
 const Graph = ({ products }) => {

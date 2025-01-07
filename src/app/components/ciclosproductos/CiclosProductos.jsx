@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import style from './CiclosProductos.module.css';
-import grafico from './IMG/grafico2.png';
+import Grafico2 from '../grafico_realizados/grafico_realizados';
 
 const CiclosProductos = () => {
     const datos = [
@@ -37,7 +36,7 @@ const CiclosProductos = () => {
                 </div>
 
                 <div className={style.graf}>
-                        <Image src={grafico} alt="grafico" />
+                        <Grafico2 />
                 </div>
             </div>
         </>
