@@ -1,10 +1,11 @@
 //Imagenes
-import receta1 from '../../IMG/icons/receta.png';
-import receta2 from '../../IMG/icons/receta2.png';
-import peso from '../../IMG/icons/peso.png';
-import estado from '../../IMG/icons/estado.png';
-import tiempo from '../../IMG/icons/tiempo.png';
-import gripper from '../../IMG/icons/gripper.png';
+"use client";
+import receta1 from './IMG/RECETA.png';
+import receta2 from './IMG/RECETA2.png';
+import peso from './IMG/PESO.png';
+import estado from './IMG/ESTADO.png';
+import tiempo from './IMG/TIEMPO.png';
+import gripper from './IMG/GRIPPER.png';
 
 //styles
 import style from './DatosGenerales.module.css';

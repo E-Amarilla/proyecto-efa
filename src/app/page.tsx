@@ -6,6 +6,6 @@ import ExcelPDF from "./components/filtroperiodo/FiltroPeriodo.jsx";
 
 export default function Page() {
   return (
-    <ExcelPDF />
+    <Completo />
   );
 }

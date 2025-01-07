@@ -1,7 +1,8 @@
+"use client";
 import { useState } from 'react';
-import Img1 from '../../IMG/otros/Equipox.png';
-import Img2 from '../../IMG/otros/Equipox2.png';
-import Img3 from '../../IMG/otros/Equipox3.png';
+import Img1 from './IMG/EquipoX.png';
+import Img2 from './IMG/EquipoX2.png';
+import Img3 from './IMG/EquipoX3.png';
 import style from './EquipoXImg.module.css';
 
 const images = [

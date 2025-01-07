@@ -1,4 +1,5 @@
-import gripper from '../../IMG/icons/gripper.png';
+"use client";
+import gripper from './IMG/GRIPPER.png';
 
 //styles
 import style from './DatosGripper.module.css';

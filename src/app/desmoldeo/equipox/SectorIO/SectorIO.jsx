@@ -1,4 +1,5 @@
-import puntoGris from '../../IMG/semaforo/puntoGris.png';
+"use client";
+import puntoGris from './IMG/puntoGris.png';
 
 //styles
 import style from './SectorIO.module.css';
