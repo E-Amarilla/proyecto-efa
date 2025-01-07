@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import Image from "next/image";
 import Img1 from './IMG/EquipoX.png';
 import Img2 from './IMG/EquipoX2.png';
 import Img3 from './IMG/EquipoX3.png';
@@ -31,7 +32,7 @@ const EquipoXImg = () => {
             <h1 className={style.title}>Equipo X (Estado)</h1>
             <div className={style.carousel}>
                 <button onClick={prevImage} className={style.button}>❮</button>
-                <img 
+                <Image 
                     src={images[currentIndex].src} 
                     alt={images[currentIndex].alt} 
                     className={style.img} 
