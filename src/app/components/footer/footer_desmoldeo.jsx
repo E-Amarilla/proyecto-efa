@@ -1,17 +1,15 @@
-// components/footer/DefaultFooter.jsx
-"use client";
-
 import React from 'react';
-import Image from "next/image";
+import Image from "next/image"
 import cremImg from './IMG/creminox-logo.png';
 import webImg from './IMG/web.png';
 import linkImg from './IMG/linkedin.png';
 import ubiImg from './IMG/ubicacion.png';
 import mailImg from './IMG/mail.png';
 import fbImg from './IMG/facebook.png';
-import style from './Footer.module.css';
 
-const DefaultFooter = () => {
+import style from './Footer_Desmoldeo.module.css';
+
+const Footer = () => {
     const opcionesIzq = [
         {
             id: 1,
@@ -35,19 +33,19 @@ const DefaultFooter = () => {
 
     const opcionesDer = [
         {
-            id: 1,
+            id: 4,
             icono: webImg,
             link: 'https://creminox.com',
             texto: 'creminox.com'
         },
         {
-            id: 2,
+            id: 5,
             icono: fbImg,
             link: 'https://facebook.com/creminox',
             texto: '/creminox'
         },
         {
-            id: 3,
+            id: 6,
             icono: linkImg,
             link: 'https://ar.linkedin.com/company/creminox',
             texto: 'Creminox'
@@ -57,6 +55,8 @@ const DefaultFooter = () => {
     return (
         <footer className={style.footer}>
             <div className={style.contenedor}>
+                
+                {/* Sección izquierda */}
                 <ul className={style.footerIzq}>
                     {opcionesIzq.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
@@ -67,11 +67,15 @@ const DefaultFooter = () => {
                         </li>
                     ))}
                 </ul>
+
+                {/* Logo central */}
                 <div className={style.footerLogo}>
                     <a className={style.A} href="https://creminox.com" target="_blank" rel="noopener noreferrer">
                         <Image src={cremImg} alt="Creminox logo" className={style.logo} />
                     </a>
                 </div>
+
+                {/* Sección derecha */}
                 <ul className={style.footerDer}>
                     {opcionesDer.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
@@ -91,4 +95,4 @@ const DefaultFooter = () => {
     );
 };
 
-export default DefaultFooter;
+export default Footer;

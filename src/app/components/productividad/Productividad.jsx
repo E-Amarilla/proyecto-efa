@@ -47,7 +47,7 @@ const Productividad = () => {
     ];
 
     return (
-        <>
+        <div className={style.all}>
         <div className={style.productividad}>
             <h2 className={style.titulo}>PRODUCTIVIDAD</h2>
             <div className={style.metricaContainer}>
@@ -92,7 +92,7 @@ const Productividad = () => {
         <div className={style.filtro}>
             <FiltroPeriodo />
         </div>
-    </>
+    </div>
     );
 };
 

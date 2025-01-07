@@ -46,7 +46,7 @@ const NavDatos = () => {
     const handleScrollClick = (id) => {
         const section = document.getElementById(`section${id}`);
         if (section) {
-            const offset = -110;
+            const offset = -133;
             const elementPosition = section.getBoundingClientRect().top + window.scrollY;
             const offsetPosition = elementPosition + offset;
     

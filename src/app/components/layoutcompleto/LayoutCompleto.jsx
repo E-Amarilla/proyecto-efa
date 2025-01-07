@@ -35,14 +35,13 @@ const LayoutCompleto = () => {
     <div className={style.layoutContainer}>
       <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} priority={true}/>
       {sections.map((section) => (
-        <Link href={section.path}>
-        <div
-          key={section.id}
-          className={`${style.interactiveSection} ${style[section.styleClass]}`} // Corrección aquí
-          style={section.position}
-        >
+        <Link href={section.path} key={section.id}>
+          <div
+            className={`${style.interactiveSection} ${style[section.styleClass]}`}
+            style={section.position}
+          >
             <span className={style.tooltip}>{section.name}</span>
-        </div>
+          </div>
         </Link>
       ))}
     </div>
