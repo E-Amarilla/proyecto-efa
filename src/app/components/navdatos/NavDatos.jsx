@@ -1,26 +1,43 @@
 "use client";
 
+import useWebSocket from '../../utils/useWebSocket';
 import React, { useState, useEffect } from 'react';
 import style from './NavDatos.module.css';
 
 const NavDatos = () => {
+    const pollId = "resumen-desmoldeo";
+    const { data, error, isConnected } = useWebSocket(pollId);
+
     const opcionesAlarma = [
         { id: 1, nombre: 'LAYOUT' },
         { id: 2, nombre: 'PRODUCTIVIDAD' },
         { id: 3, nombre: 'GRAFICOS HISTORICOS' },
     ];
 
+    // Desestructurar los datos recibidos
+    const {
+        NombreReceta,
+        RecetaActual,
+        ProximaReceta,
+        NroGriper,
+        PesoTotalProducto,
+        PesoNivelTorreProd,
+        TorreNivelActual,
+        Estado,
+        TiempoTranscurrido
+    } = data || {};  // Si data es null, evita un error de desestructuración
+
     const datosTiempoReal = [
-        { id: 1, nombre: 'Nombre receta', dato: '0' },
-        { id: 2, nombre: 'Receta actual', dato: '0' },
-        { id: 3, nombre: 'Proxima receta', dato: '0' },
-        { id: 4, nombre: 'N° Gripper actual', dato: '0' },
-        { id: 5, nombre: 'Peso total producto', dato: '0' },
-        { id: 6, nombre: 'Torre nivel actual', dato: '0' },
-        { id: 7, nombre: 'N° Torre actual', dato: '0' },
-        { id: 8, nombre: 'Estado', dato: '0' },
-        { id: 9, nombre: 'Tiempo transcurrido', dato: '0' },
-    ];
+        { id: 1, nombre: 'Nombre receta', dato: NombreReceta !== undefined && NombreReceta !== null ? NombreReceta : 'null' },
+        { id: 2, nombre: 'Receta actual', dato: RecetaActual !== undefined && RecetaActual !== null ? RecetaActual : 'null' },
+        { id: 3, nombre: 'Proxima receta', dato: ProximaReceta !== undefined && ProximaReceta !== null ? ProximaReceta : 'null' },
+        { id: 4, nombre: 'N° Gripper actual', dato: NroGriper !== undefined && NroGriper !== null ? NroGriper : 'null' },
+        { id: 5, nombre: 'Peso total producto', dato: PesoTotalProducto !== undefined && PesoTotalProducto !== null ? PesoTotalProducto : 'null' },
+        { id: 6, nombre: 'Torre nivel actual', dato: PesoNivelTorreProd !== undefined && PesoNivelTorreProd !== null ? PesoNivelTorreProd : 'null' },
+        { id: 7, nombre: 'N° Torre actual', dato: TorreNivelActual !== undefined && TorreNivelActual !== null ? TorreNivelActual : 'null' },
+        { id: 8, nombre: 'Estado', dato: Estado !== undefined && Estado !== null ? Estado : 'null' },
+        { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : 'null' },
+    ];       
 
     const [activeSection, setActiveSection] = useState(1); // Inicializamos con la primera sección activa
 
@@ -58,7 +75,6 @@ const NavDatos = () => {
             setActiveSection(id);
         }
     };
-    
 
     return (
         <>
@@ -86,7 +102,7 @@ const NavDatos = () => {
                 </ul>
 
                 <hr className={style.linea}></hr>
-
+                
                 <div className={style.contenedorDatos}>
                     <p className={style.datosGen}>DATOS GENERALES</p>
                     <ul className={style.datosTods}>

@@ -1,51 +1,47 @@
+"use client";
 //styles
 import style from './DatosTorre.module.css';
 import textstyle from '../texto.module.css';
+import useWebSocket from '@/app/utils/useWebSocket';
+import React, { useState, useEffect } from 'react';
 
-const DatosTorre = () => {
-    const datosTorre = [
-        {
-            id: 1,
-            texto: 'N° TORRE ACTUAL',
-            dato: '0',
-        },
-        {
-            id: 2,
-            texto: 'TORRE NIVEL ACTUAL',
-            dato: '0/11',
-        },
-        {
-            id: 3,
-            texto: 'TAG ACTUAL',
-            dato: '0',
-        },
-        {
-            id: 4,
-            texto: 'N° TORRE PROXIMA',
-            dato: '0',
-        },
-        {
-            id: 5,
-            texto: 'TIPO FIN',
-            dato: '0',
-        },
-        {
-            id: 6,
-            texto: 'DESMOLDEO BANDA',
-            dato: '0',
-        }
+const DatosTorreComponent = () => {
+    
+    const initialDatosTorre = [
+        { id: 1, texto: 'N° TORRE ACTUAL', dato: '0'},
+        { id: 2, texto: 'TORRE NIVEL ACTUAL', dato: '0'},
+        { id: 3, texto: 'TAG ACTUAL', dato: '0'},
+        { id: 4, texto: 'N° TORRE PROXIMA', dato: '0'},
+        { id: 5, texto: 'TIPO FIN', dato: '0'},
+        { id: 6, texto: 'DESMOLDEO BANDA', dato: '0'}
     ];
+
+    const [datosTorre, setDatosTorre] = useState(initialDatosTorre);
+
+    const pollId = "lista-tiempo-real";
+    const { data, error, isConnected } = useWebSocket(pollId);
+
+    useEffect(() => {
+        if (data && data.datosTorre) {
+            const updatedDatosTorre = initialDatosTorre.map((item, index) => ({
+                ...item,
+                dato: data.datosTorre[index] !== undefined && data.datosTorre[index] !== null ? data.datosTorre[index] : '0'
+            }));
+            setDatosTorre(updatedDatosTorre);
+        }
+    }, [data]);
+
     return (
         <>
             <div className={style.datosGen}>
                 <h1 className={textstyle.titulo}>DATOS TORRE</h1>
                 <div className={style.contenedorDatos}>
-                    {datosTorre.map(({ id, texto, dato, icono }) => (
+                    {datosTorre.map(({ id, texto, dato }) => (
                         <div key={id} className={style.datoList}>
                             <div className={style.detallesDatos}>
                                 <div className={style.texto}>
                                     <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                    <h4 className={textstyle.h4}>{dato}</h4>
+                                    <h4 className={textstyle.h4}>{dato.toString()}</h4>
                                 </div>
                             </div>
                         </div>
@@ -56,4 +52,4 @@ const DatosTorre = () => {
     );
 };
 
-export default DatosTorre;
+export default DatosTorreComponent;
