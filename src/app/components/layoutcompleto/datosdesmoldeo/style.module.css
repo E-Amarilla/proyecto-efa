@@ -1,0 +1,7 @@
+.datosIndv {
+    display: grid;
+    padding: 10px 15px;
+    border-radius: 15px;
+    background-color: #581420;
+    max-height: auto;
+}

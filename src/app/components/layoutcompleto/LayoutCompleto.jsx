@@ -6,6 +6,10 @@ import React from "react";
 import LayoutIMG from './IMG/layoutcompleto.png';
 import style from './LayoutCompleto.module.css';
 
+import DatosDesmoldeo from "./datosdesmoldeo/datosdesmoldeo"
+import DatosEncajonado from "./datosencajonado/datosencajonado"
+import DatosPaletizado from "./datospaletizado/datospaletizado"
+
 const LayoutCompleto = () => {
   const sections = [
     {
@@ -29,11 +33,18 @@ const LayoutCompleto = () => {
       position: { top: "32.8%", left: "59.8%", width: "37.2%", height: "34%" },
       styleClass: "seccionbloqueada",
     },
+    {
+      id: 4,
+      name: "Datos",
+      path: "/",
+      position: { top: "68.6%", left: "36.5%", width: "61.3%", height: "31.5%" },
+      styleClass: "secciondatos",
+    },
   ];
 
   return (
     <div className={style.layoutContainer}>
-      <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} priority={true}/>
+      <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} priority={true} />
       {sections.map((section) => (
         <Link href={section.path} key={section.id}>
           <div
@@ -44,6 +55,11 @@ const LayoutCompleto = () => {
           </div>
         </Link>
       ))}
+      <div className={`${style.interactiveSection} ${style.secciondatos}`} style={sections[3].position}>
+        <DatosDesmoldeo />
+        <DatosEncajonado />
+        <DatosPaletizado />
+      </div>
     </div>
   );
 };

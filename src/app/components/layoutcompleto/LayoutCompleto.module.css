@@ -65,3 +65,24 @@
 .seccionbloqueada:hover {
   background-color: rgba(17, 17, 17, 0.815); /* Fondo translúcido al pasar el mouse */
 }
+
+.secciondatos {
+  border-radius: 15px;
+  background-color: #1b232c;
+  z-index: 10;
+  padding: 20px;
+  display: flex;
+  gap: 20;
+  overflow: auto;
+  box-shadow: none; /* Elimina la sombra */
+}
+
+.interactiveSection .secciondatos {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interactiveSection .secciondatos:hover {
+  pointer-events: none;
+}
