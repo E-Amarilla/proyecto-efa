@@ -7,7 +7,7 @@ export default function useWebSocket(pollId) {
   const [isConnected, setIsConnected] = useState(false); // Estado de conexión
 
   useEffect(() => {
-    const socket = new WebSocket(`ws://192.168.0.93:8000/ws/${pollId}`);
+    const socket = new WebSocket(`ws://192.168.0.105:8000/ws/${pollId}`);
 
     console.log(socket)
 
