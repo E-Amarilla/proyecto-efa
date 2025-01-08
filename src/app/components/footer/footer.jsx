@@ -22,32 +22,20 @@ const DefaultFooter = () => {
         {
             id: 2,
             icono: mailImg,
-            link: 'mailto:sistemas@creminox.com',
-            texto: 'sistemas@creminox.com'
-        },
-        {
-            id: 3,
-            icono: mailImg,
-            link: 'mailto:ingenieria@creminox.com',
-            texto: 'ingenieria@creminox.com'
+            link: 'mailto:soporte@creminox.com',
+            texto: 'soporte@creminox.com'
         }
     ];
 
     const opcionesDer = [
         {
-            id: 1,
-            icono: webImg,
-            link: 'https://creminox.com',
-            texto: 'creminox.com'
-        },
-        {
-            id: 2,
+            id: 3,
             icono: fbImg,
             link: 'https://facebook.com/creminox',
             texto: '/creminox'
         },
         {
-            id: 3,
+            id: 4,
             icono: linkImg,
             link: 'https://ar.linkedin.com/company/creminox',
             texto: 'Creminox'

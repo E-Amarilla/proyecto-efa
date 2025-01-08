@@ -3,22 +3,26 @@ import { createChart } from "lightweight-charts";
 import Image from "next/image";
 import crem from "./IMG/creminox.png";
 
-// Generar colores aleatorios en formato hexadecimal #RRGGBB
-const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-};
+// Lista de colores diferenciables
+const COLORS = [
+    "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
+    "#33FFF6", "#FFC733", "#A1FF33", "#5733FF", "#FF3333",
+    "#33FFA5", "#FF6F33", "#A6FF33", "#33A1FF", "#FF33F6",
+    "#F6FF33", "#33FFF3", "#FF336F", "#57FF33", "#3333FF"
+];
 
 const Grafico1 = ({ productos }) => {
     const chartContainerRef = useRef(null);
     const chartRef = useRef(null);
     const seriesRef = useRef([]);
-    const productColors = useRef({}); // Almacenar colores únicos para cada producto
-    const [tooltip, setTooltip] = useState({ display: false, x: 0, y: 0, data: [] });
+    const productColors = useRef({});
+    const [tooltip, setTooltip] = useState({
+        display: false,
+        x: 0,
+        y: 0,
+        values: [],
+        date: "",
+    });
 
     useEffect(() => {
         if (!chartContainerRef.current) return;
@@ -51,59 +55,64 @@ const Grafico1 = ({ productos }) => {
         seriesRef.current.forEach((series) => series.destroy());
         seriesRef.current = [];
 
-        productos.forEach((producto) => {
-            if (!productColors.current[producto.nombreProducto]) {
-                productColors.current[producto.nombreProducto] = getRandomColor();
-            }
+        let lastTimestamp = null;
+
+        productos.forEach((producto, index) => {
+            const color = COLORS[index % COLORS.length];
+            productColors.current[producto.nombreProducto] = color;
 
             const lineSeries = chart.addLineSeries({
-                color: productColors.current[producto.nombreProducto],
+                title: "",
+                color,
                 lineWidth: 2,
             });
 
-            // Convertir las fechas a timestamp Unix
-            const seriesData = producto.data.map((point) => ({
-                time: Math.floor(Date.parse(point.x) / 1000), // Convertir a timestamp en segundos
-                value: point.y,
-            }));
-
-            lineSeries.setData(seriesData);
-            seriesRef.current.push(lineSeries);
-        });
-
-        // Actualizar tooltip al mover el crosshair
-        chart.subscribeCrosshairMove((param) => {
-            if (!param || !param.time) {
-                setTooltip((prev) => ({ ...prev, display: false }));
-                return;
-            }
-
-            const time = param.time;
-
-            const newTooltipData = productos.map((producto, index) => {
-                const series = seriesRef.current[index];
-                const dataPoint = param.seriesData.get(series);
+            const seriesData = producto.data.map((point) => {
+                const timestamp = Math.floor(Date.parse(point.x) / 1000);
+                lastTimestamp = Math.max(lastTimestamp || 0, timestamp);
                 return {
-                    name: producto.nombreProducto,
-                    value: dataPoint ? dataPoint.value : 0, // Si no hay valor, mostramos 0
-                    color: productColors.current[producto.nombreProducto],
+                    time: timestamp,
+                    value: point.y,
                 };
             });
 
-            const shiftedCoordinateX = Math.max(
-                0,
-                Math.min(chartContainerRef.current.clientWidth - 100, param.point.x - 50)
-            );
+            lineSeries.setData(seriesData);
+            seriesRef.current.push({ lineSeries, producto });
 
-            const coordinateY = Math.max(0, Math.min(chartContainerRef.current.clientHeight - 80, param.point.y - 80));
+            // Suscribirse al movimiento del crosshair
+            chart.subscribeCrosshairMove((param) => {
+                if (!param || !param.time) {
+                    setTooltip({ display: false, x: 0, y: 0, values: [], date: "" });
+                    return;
+                }
 
-            setTooltip({
-                display: true,
-                x: shiftedCoordinateX,
-                y: coordinateY,
-                data: newTooltipData,
+                const time = new Date(param.time * 1000).toLocaleDateString();
+                const values = seriesRef.current.map(({ lineSeries, producto }) => {
+                    const data = param.seriesData.get(lineSeries);
+                    return {
+                        nombreProducto: producto.nombreProducto,
+                        color: productColors.current[producto.nombreProducto],
+                        value: data ? data.value : 0,
+                    };
+                });
+
+                setTooltip({
+                    display: true,
+                    x: param.point.x,
+                    y: param.point.y,
+                    values,
+                    date: time,
+                });
             });
         });
+
+        // Ajustar el rango visible al último dato
+        if (lastTimestamp) {
+            chart.timeScale().setVisibleRange({
+                from: lastTimestamp - 30 * 24 * 60 * 60, // Últimos 30 días
+                to: lastTimestamp,
+            });
+        }
 
         const handleResize = () => {
             chart.resize(chartContainerRef.current.offsetWidth, 400);
@@ -118,29 +127,47 @@ const Grafico1 = ({ productos }) => {
     }, [productos]);
 
     return (
-        <div style={{ position: "relative", width: "100%", height: "450px" }}>
+        <div className="chart-container" style={{ position: "relative", width: "100%", height: "450px" }}>
             {/* Encabezado con los productos */}
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: "10px",
-                    flexWrap: "wrap",
-                    gap: "15px",
-                }}
-            >
+            <div className="products-header" style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "10px",
+                flexWrap: "wrap",
+                gap: "15px",
+            }}>
                 {productos.map((producto) => (
                     <div
                         key={producto.nombreProducto}
                         style={{
                             color: productColors.current[producto.nombreProducto] || "#ffffff",
-                            fontWeight: "bold",
+                            fontWeight: "normal",
                         }}
                     >
                         {producto.nombreProducto}
                     </div>
                 ))}
+            </div>
+
+            {/* Marca de agua */}
+            <div className="watermark-container" style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: "50%",
+                height: "50%",
+                zIndex: 2,
+                opacity: 0.2,
+                pointerEvents: "none",
+            }}>
+                <Image
+                    src={crem}
+                    alt="Creminox"
+                    layout="fill"
+                    objectFit="contain"
+                />
             </div>
 
             {/* Tooltip */}
@@ -150,43 +177,26 @@ const Grafico1 = ({ productos }) => {
                         position: "absolute",
                         top: tooltip.y,
                         left: tooltip.x,
-                        padding: "10px",
-                        backgroundColor: "#000000", // Fondo opaco
-                        color: "#ffffff",
-                        border: "1px solid #ffffff",
-                        borderRadius: "5px",
-                        fontSize: "12px",
-                        zIndex: 10,
+                        background: "#000",
+                        color: "#fff",
+                        padding: "8px",
+                        borderRadius: "4px",
+                        zIndex: 1000,
                         pointerEvents: "none",
+                        border: "1px solid #fff",
                     }}
                 >
-                    {tooltip.data.map((item) => (
-                        <div key={item.name} style={{ color: item.color }}>
-                            {item.name}: {item.value.toFixed(2)}
+                    <div>{tooltip.date}</div>
+                    {tooltip.values.map(({ nombreProducto, color, value }) => (
+                        <div key={nombreProducto} style={{ color }}>
+                            {nombreProducto}: {value}
                         </div>
                     ))}
                 </div>
             )}
 
-            {/* Contenedor del gráfico */}
-            <div ref={chartContainerRef} style={{ width: "100%", height: "400px" }} />
-
-            {/* Marca de agua */}
-            <div
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    zIndex: 1,
-                    opacity: 0.2,
-                    pointerEvents: "none",
-                    width: "50%",
-                    height: "50%",
-                }}
-            >
-                <Image src={crem} alt="Creminox" layout="fill" objectFit="contain" />
-            </div>
+            {/* Gráfico */}
+            <div ref={chartContainerRef} className="chart-content" style={{ position: "relative", zIndex: 1 }} />
         </div>
     );
 };

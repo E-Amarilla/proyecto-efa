@@ -52,7 +52,7 @@ const productos = [
 const ProductosRealizados = () => {
     return (
         <div className={style.prodReal}>
-            <h1 className={style.titulo}>CICLOS POR PRODUCTO</h1>
+            <h1 className={style.titulo}>PRODUCTOS REALIZADOS</h1>
             <h2 className={style.subtitulo}>POR PERIODO</h2>
             <div className={style.graf}>
                 <Grafico2 productos={productos} />
