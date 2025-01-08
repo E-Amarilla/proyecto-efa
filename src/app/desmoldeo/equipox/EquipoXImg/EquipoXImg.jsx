@@ -29,7 +29,7 @@ const EquipoXImg = () => {
 
     return (
         <div className={style.all}>
-            <h1 className={style.title}>Equipo X (Estado)</h1>
+            <h1 className={style.title}>Equipo X</h1>
             <div className={style.carousel}>
                 <button onClick={prevImage} className={style.button}>❮</button>
                 <Image 
