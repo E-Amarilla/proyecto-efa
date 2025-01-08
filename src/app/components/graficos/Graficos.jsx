@@ -4,7 +4,7 @@ import style from './Graficos.module.css';
 
 const Graficos = () => {
     return (
-        <div classname={style.contenedor}>
+        <div className={style.contenedor}>
             <CiclosProductos />
             <CiclosRealizados />
         </div>
