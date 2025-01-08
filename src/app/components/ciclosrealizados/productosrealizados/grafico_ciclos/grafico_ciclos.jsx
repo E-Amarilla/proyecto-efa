@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
 import Image from "next/image";
 import crem from "./IMG/creminox.png";
@@ -13,11 +13,12 @@ const getRandomColor = () => {
     return color;
 };
 
-const Grafico1 = ({ products }) => {
+const Grafico1 = ({ productos }) => {
     const chartContainerRef = useRef(null);
     const chartRef = useRef(null);
     const seriesRef = useRef([]);
     const productColors = useRef({}); // Almacenar colores por producto
+    const [tooltip, setTooltip] = useState({ display: false, x: 0, y: 0, data: [] });
 
     useEffect(() => {
         if (!chartContainerRef.current) return;
@@ -50,9 +51,9 @@ const Grafico1 = ({ products }) => {
         seriesRef.current.forEach((series) => series.destroy());
         seriesRef.current = [];
 
-        products.forEach((product) => {
+        productos.forEach((producto) => {
             const color = getRandomColor();
-            productColors.current[product.nombreProducto] = color;
+            productColors.current[producto.nombreProducto] = color;
 
             const lineSeries = chart.addLineSeries({
                 title: "",
@@ -60,8 +61,9 @@ const Grafico1 = ({ products }) => {
                 lineWidth: 2,
             });
 
-            const seriesData = product.data.map((point) => ({
-                time: point.x,
+            // Convertir las fechas a timestamp Unix
+            const seriesData = producto.data.map((point) => ({
+                time: Math.floor(Date.parse(point.x) / 1000), // Convertir a timestamp en segundos
                 value: point.y,
             }));
 
@@ -71,8 +73,8 @@ const Grafico1 = ({ products }) => {
 
         // Configurar un rango de tiempo inicial
         const timeScale = chart.timeScale();
-        const firstPoint = products[0]?.data[0]?.x; // Primer punto
-        const lastPoint = products[0]?.data[products[0]?.data.length - 1]?.x; // Último punto
+        const firstPoint = productos[0]?.data[0]?.x; // Primer punto
+        const lastPoint = productos[0]?.data[productos[0]?.data.length - 1]?.x; // Último punto
         if (firstPoint && lastPoint) {
             const range = (new Date(lastPoint) - new Date(firstPoint)) / 2; // Zoom a la mitad del rango
             timeScale.setVisibleRange({
@@ -85,13 +87,47 @@ const Grafico1 = ({ products }) => {
             chart.resize(chartContainerRef.current.offsetWidth, 400);
         };
 
+        // Actualizar tooltip al mover el crosshair
+        chart.subscribeCrosshairMove((param) => {
+            if (!param || !param.time) {
+                setTooltip((prev) => ({ ...prev, display: false }));
+                return;
+            }
+
+            const time = param.time;
+
+            const newTooltipData = productos.map((producto) => {
+                const series = seriesRef.current.find((s) => s.options.color === productColors.current[producto.nombreProducto]);
+                const dataPoint = param.seriesData.get(series); // Aquí obtenemos el punto de la serie correctamente
+                return {
+                    name: producto.nombreProducto,
+                    value: dataPoint ? dataPoint.value : 0, // Si no hay valor, mostramos 0
+                    color: productColors.current[producto.nombreProducto],
+                };
+            });
+
+            const shiftedCoordinateX = Math.max(
+                0,
+                Math.min(chartContainerRef.current.clientWidth - 100, param.point.x - 50)
+            );
+
+            const coordinateY = Math.max(0, Math.min(chartContainerRef.current.clientHeight - 80, param.point.y - 80));
+
+            setTooltip({
+                display: true,
+                x: shiftedCoordinateX,
+                y: coordinateY,
+                data: newTooltipData,
+            });
+        });
+
         window.addEventListener("resize", handleResize);
 
         return () => {
             window.removeEventListener("resize", handleResize);
             chart.remove();
         };
-    }, [products]);
+    }, [productos]);
 
     return (
         <div className="chart-container" style={{ position: "relative", width: "100%", height: "450px" }}>
@@ -104,15 +140,15 @@ const Grafico1 = ({ products }) => {
                 flexWrap: "wrap",
                 gap: "15px",
             }}>
-                {products.map((product) => (
+                {productos.map((producto) => (
                     <div
-                        key={product.nombreProducto}
+                        key={producto.nombreProducto}
                         style={{
-                            color: productColors.current[product.nombreProducto] || "#ffffff",
+                            color: productColors.current[producto.nombreProducto] || "#ffffff",
                             fontWeight: "normal",
                         }}
                     >
-                        {product.nombreProducto}
+                        {producto.nombreProducto}
                     </div>
                 ))}
             </div>
@@ -136,6 +172,30 @@ const Grafico1 = ({ products }) => {
                     objectFit="contain"
                 />
             </div>
+
+            {/* Tooltip */}
+            {tooltip.display && (
+                <div
+                    style={{
+                        position: "absolute",
+                        top: tooltip.y,
+                        left: tooltip.x,
+                        padding: "8px",
+                        backgroundColor: "black",
+                        color: "white",
+                        borderRadius: "5px",
+                        border: "1px solid #2962FF",
+                        zIndex: 1000,
+                        pointerEvents: "none",
+                    }}
+                >
+                    {tooltip.data.map((item) => (
+                        <div key={item.name} style={{ color: item.color }}>
+                            {item.name}: {item.value.toFixed(2)}
+                        </div>
+                    ))}
+                </div>
+            )}
 
             {/* Gráfico */}
             <div ref={chartContainerRef} className="chart-content" style={{ position: "relative", zIndex: 1 }} />
