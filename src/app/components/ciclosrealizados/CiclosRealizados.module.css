@@ -12,7 +12,7 @@
 }
 
 .filtro {
-    width: 20%;
+    width: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;

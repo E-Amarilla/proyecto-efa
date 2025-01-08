@@ -21,7 +21,10 @@
     color: #FFAA44;
 }
 
-.graf {
+.grafico {
     width: 100%;
-    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
