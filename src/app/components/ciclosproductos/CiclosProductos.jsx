@@ -5,23 +5,25 @@ import style from "./CiclosProductos.module.css";
 import Grafico1 from "./grafico_realizados/grafico_realizados";
 
 const CiclosProductos = () => {
-    // Example products array
+    // Datos de ejemplo para los productos
     const productos = [
         {
-            nombreProducto: "Product A",
+            nombreProducto: "Ciclos",
             data: [
                 { x: 1640995200, y: 10 },
                 { x: 1641081600, y: 15 },
                 { x: 1641168000, y: 20 }
-            ]
+            ],
+            color: "orange", // Color para Ciclos
         },
         {
-            nombreProducto: "Product B",
+            nombreProducto: "Peso",
             data: [
                 { x: 1640995200, y: 30 },
                 { x: 1641081600, y: 25 },
                 { x: 1641168000, y: 35 }
-            ]
+            ],
+            color: "blue", // Color para Peso
         }
     ];
 

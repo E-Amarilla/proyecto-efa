@@ -14,8 +14,7 @@
     color: #d9d9d9;
 }
 
-.subtitulo
-{
+.subtitulo {
     width: 100%;
     font-size: 0.8vw;
     color: #FFAA44;
@@ -27,4 +26,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.topLabels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1vw;
+}
+
+.leftLabel, .rightLabel {
+    color: white;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.leftLabel {
+    color: orange; /* Asegúrate de que el color del texto sea naranja */
+}
+
+.rightLabel {
+    color: blue; /* Asegúrate de que el color del texto sea azul */
+}
+
+.verticalText {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    padding-left: 10px;
 }

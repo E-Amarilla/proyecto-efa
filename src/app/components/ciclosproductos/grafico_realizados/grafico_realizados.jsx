@@ -1,130 +1,145 @@
-import React, { useEffect, useRef, useState } from "react";
-import { createChart } from "lightweight-charts";
-import Image from "next/image";
-import crem from "./IMG/creminox.png";
+import { useEffect, useRef, useState } from 'react';
+import { createChart } from 'lightweight-charts';
 
-const Grafico2 = () => {
-    const chartContainerRef = useRef(null);
-    const [isClient, setIsClient] = useState(false); // Track client-side rendering
+const Grafico = () => {
+  const chartContainerRef = useRef(null);
+  const [tooltip, setTooltip] = useState({ display: false, x: 0, y: 0, pesoValue: 0, ciclosValue: 0, date: '' });
 
-    useEffect(() => {
-        setIsClient(true); // Component is now rendered on the client side
-    }, []);
+  useEffect(() => {
+    const chart = createChart(chartContainerRef.current, {
+      width: chartContainerRef.current.offsetWidth,
+      height: 400,
+      layout: {
+        background: { type: 'solid', color: '#131313' },
+        textColor: '#ffffff',
+      },
+      grid: {
+        vertLines: { color: 'rgba(255, 255, 255, 0.1)' },
+        horzLines: { color: 'rgba(255, 255, 255, 0.1)' },
+      },
+      crosshair: {
+        mode: 1,
+      },
+      timeScale: {
+        borderColor: '#ffffff',
+      },
+    });
 
-    useEffect(() => {
-        if (!isClient || !chartContainerRef.current) return;
+    const seriesPeso = chart.addLineSeries({
+      color: 'blue',
+      lineWidth: 2,
+    });
 
-        const chart = createChart(chartContainerRef.current, {
-            width: chartContainerRef.current.offsetWidth || 600,
-            height: 400,
-            layout: {
-                background: { type: "solid", color: "#131313" },
-                textColor: "#ffffff",
-            },
-            grid: {
-                vertLines: { color: "rgba(255, 255, 255, 0.1)" },
-                horzLines: { color: "rgba(255, 255, 255, 0.1)" },
-            },
-            crosshair: {
-                mode: 1,
-            },
-            timeScale: {
-                borderColor: "#ffffff",
-            },
-        });
-        const lineSeries1 = chart.addLineSeries({ color: "blue", lineWidth: 2 });
-        lineSeries1.setData([
-            { time: "2023-01-01", value: 50 },
-            { time: "2023-02-01", value: 80 },
-            { time: "2023-03-01", value: 75 },
-            { time: "2023-04-01", value: 100 },
-            { time: "2023-05-01", value: 90 },
-            { time: "2023-06-01", value: 85 },
-            { time: "2023-07-01", value: 95 },
-            { time: "2023-08-01", value: 110 },
-            { time: "2023-09-01", value: 105 },
-            { time: "2023-10-01", value: 115 },
-            { time: "2023-11-01", value: 120 },
-            { time: "2023-12-01", value: 125 },
-            { time: "2024-01-01", value: 130 },
-            { time: "2024-02-01", value: 135 },
-            { time: "2024-03-01", value: 140 },
-            { time: "2024-04-01", value: 145 },
-            { time: "2024-05-01", value: 150 },
-            { time: "2024-06-01", value: 155 },
-            { time: "2024-07-01", value: 160 },
-            { time: "2024-08-01", value: 165 },
-        ]);
+    const seriesCiclos = chart.addLineSeries({
+      color: 'orange',
+      lineWidth: 2,
+    });
 
-        const lineSeries2 = chart.addLineSeries({ color: "orange", lineWidth: 2 });
-        lineSeries2.setData([
-            { time: "2023-01-01", value: 30 },
-            { time: "2023-02-01", value: 60 },
-            { time: "2023-03-01", value: 55 },
-            { time: "2023-04-01", value: 90 },
-            { time: "2023-05-01", value: 85 },
-            { time: "2023-06-01", value: 80 },
-            { time: "2023-07-01", value: 95 },
-            { time: "2023-08-01", value: 100 },
-            { time: "2023-09-01", value: 105 },
-            { time: "2023-10-01", value: 110 },
-            { time: "2023-11-01", value: 115 },
-            { time: "2023-12-01", value: 120 },
-            { time: "2024-01-01", value: 125 },
-            { time: "2024-02-01", value: 130 },
-            { time: "2024-03-01", value: 135 },
-            { time: "2024-04-01", value: 140 },
-            { time: "2024-05-01", value: 145 },
-            { time: "2024-06-01", value: 150 },
-            { time: "2024-07-01", value: 155 },
-            { time: "2024-08-01", value: 160 },
-        ]);
+    // Datos para las dos series
+    const dataPeso = [
+      { time: 1640995200, value: 70 },
+      { time: 1641081600, value: 72 },
+      { time: 1641168000, value: 74 },
+      // Agrega más datos
+    ];
 
-        // Configurar el rango inicial
-        const timeScale = chart.timeScale();
-        timeScale.setVisibleRange({
-            from: new Date("2023-01-01").getTime() / 1000,
-            to: new Date("2023-06-01").getTime() / 1000,
-        });
+    const dataCiclos = [
+      { time: 1640995200, value: 5 },
+      { time: 1641081600, value: 6 },
+      { time: 1641168000, value: 5.5 },
+      // Agrega más datos
+    ];
 
-        return () => chart.remove();
-        }, [isClient]);
+    seriesPeso.setData(dataPeso);
+    seriesCiclos.setData(dataCiclos);
 
-    if (!isClient) {
-        return null; // Avoid rendering on the server
-    }
+    // Actualizar el tooltip con el movimiento del crosshair
+    chart.subscribeCrosshairMove((param) => {
+      if (!param || !param.time) {
+        setTooltip((prev) => ({ ...prev, display: false }));
+        return;
+      }
 
-    return (
-        <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            <div
-                ref={chartContainerRef}
-                style={{
-                    width: "100%",
-                    height: "100%",
-                }}
-            />
-            <div
-                style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    width: "50%",
-                    height: "50%",
-                    zIndex: 2,
-                    opacity: 0.2,
-                    pointerEvents: "none",
-                }}
-            >
-                <Image
-                    src={crem}
-                    alt="Creminox"
-                    fill
-                    style={{ objectFit: "contain" }}
-                />
-            </div>
+      const time = param.time;
+
+      // Obtener datos de ambas series
+      const dataPesoPoint = param.seriesData.get(seriesPeso);
+      const dataCiclosPoint = param.seriesData.get(seriesCiclos);
+
+      const dateStr = new Date(time * 1000).toLocaleDateString();
+
+      // Obtener valores de ambas series
+      const pesoValue = dataPesoPoint ? dataPesoPoint.value : 0;
+      const ciclosValue = dataCiclosPoint ? dataCiclosPoint.value : 0;
+
+      // Calcular las coordenadas para ambas series
+      const coordinatePeso = seriesPeso.priceToCoordinate(pesoValue);
+      const coordinateCiclos = seriesCiclos.priceToCoordinate(ciclosValue);
+
+      const shiftedCoordinateX = Math.max(
+        0,
+        Math.min(chartContainerRef.current.clientWidth - 100, param.point.x - 50)
+      );
+
+      const coordinateYPeso = coordinatePeso
+        ? Math.max(0, Math.min(chartContainerRef.current.clientHeight - 80, coordinatePeso - 80))
+        : 0;
+
+      const coordinateYCiclos = coordinateCiclos
+        ? Math.max(0, Math.min(chartContainerRef.current.clientHeight - 80, coordinateCiclos - 80))
+        : 0;
+
+      // Mostrar el tooltip con los datos de ambas series
+      setTooltip({
+        display: true,
+        x: shiftedCoordinateX,
+        y: coordinateYPeso, // Usar la coordenada de la serie "Peso" para la posición
+        pesoValue: pesoValue,
+        ciclosValue: ciclosValue,
+        date: dateStr,
+      });
+    });
+
+    return () => {
+      chart.remove();
+    };
+  }, []);
+
+  return (
+    <div style={{ position: 'relative' }} ref={chartContainerRef}>
+      {/* Tooltip */}
+      {tooltip.display && (
+        <div
+        style={{
+          position: 'absolute',
+          top: tooltip.y,
+          left: tooltip.x,
+          width: 'auto',
+          height: 'auto',
+          padding: '8px',
+          boxSizing: 'border-box',
+          fontSize: '16px', // Aumenté el tamaño de la fuente
+          textAlign: 'left',
+          zIndex: 1000,
+          backgroundColor: 'black',
+          color: 'white',
+          border: '1px solid #2962FF',
+          borderRadius: '2px',
+          pointerEvents: 'none',
+        }}
+      >
+        <div style={{ color: '#2962FF' }}>
+          Peso: {Math.round(100 * tooltip.pesoValue) / 100} kg
         </div>
-    );
+        <div style={{ color: '#FFA500' }}>
+          Ciclos: {Math.round(100 * tooltip.ciclosValue) / 100}
+        </div>
+        <div style={{ color: 'white' }}>{tooltip.date}</div>
+      </div>
+      
+      )}
+    </div>
+  );
 };
 
-export default Grafico2;
+export default Grafico;
