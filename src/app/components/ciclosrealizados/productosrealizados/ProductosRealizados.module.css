@@ -9,41 +9,16 @@
     border-radius: 15px;
 }
 
-.contenedorPrinc
-{
-    width: 100%;
-    display: block;
-}
-
-.contenedorPrinc h1
-{
-    width: 100%;
-    font-size: 0.8vw;
-    color: #FFAA44;
-}
-
-.tituloProductos
-{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
 .titulo {
     text-align: left;
     font-size: 1vw;
 }
 
-.itemLeyenda {
-    display: flex;
-}
-
-.colorMuestra {
-    width: 15px;
-    height: 15px;
-    border-radius: 3px;
-    margin: 4px;
+.subtitulo
+{
+    width: 100%;
+    font-size: 0.8vw;
+    color: #FFAA44;
 }
 
 .grafico {

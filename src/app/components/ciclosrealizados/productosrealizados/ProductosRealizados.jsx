@@ -52,24 +52,9 @@ const productos = [
 const ProductosRealizados = () => {
     return (
         <div className={style.prodReal}>
-            <div className={style.contenedorPrinc}>
-                <div className={style.tituloProductos}>
-                    <h2 className={style.titulo}>PRODUCTOS REALIZADOS</h2>
-                    {productos.map((producto, index) => (
-                        <div key={index} className={style.itemLeyenda}>
-                            <span
-                                className={style.colorMuestra}
-                                style={{ backgroundColor: producto.color }}
-                            ></span>
-                            <p>{producto.nombreProducto}</p>
-                        </div>
-                    ))}
-
-                </div>
-                <h1>POR PERIODO</h1>
-            </div>
-
-            <div id={style.graf}>
+            <h1 className={style.titulo}>CICLOS POR PRODUCTO</h1>
+            <h2 className={style.subtitulo}>POR PERIODO</h2>
+            <div className={style.graf}>
                 <Grafico2 products={productos} />
             </div>
         </div>
