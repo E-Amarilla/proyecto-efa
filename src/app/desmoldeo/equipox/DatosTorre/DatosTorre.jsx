@@ -8,12 +8,12 @@ import React, { useState, useEffect } from 'react';
 const DatosTorreComponent = () => {
     
     const initialDatosTorre = [
-        { id: 1, texto: 'N° TORRE ACTUAL', dato: '0'},
-        { id: 2, texto: 'TORRE NIVEL ACTUAL', dato: '0'},
-        { id: 3, texto: 'TAG ACTUAL', dato: '0'},
-        { id: 4, texto: 'N° TORRE PROXIMA', dato: '0'},
-        { id: 5, texto: 'TIPO FIN', dato: '0'},
-        { id: 6, texto: 'DESMOLDEO BANDA', dato: '0'}
+        { id: 1, texto: 'N° TORRE ACTUAL', dato: null},
+        { id: 2, texto: 'TORRE NIVEL ACTUAL', dato: null},
+        { id: 3, texto: 'TAG ACTUAL', dato: null},
+        { id: 4, texto: 'N° TORRE PROXIMA', dato: null},
+        { id: 5, texto: 'TIPO FIN', dato: null},
+        { id: 6, texto: 'DESMOLDEO BANDA', dato: null}
     ];
 
     const [datosTorre, setDatosTorre] = useState(initialDatosTorre);
@@ -25,7 +25,7 @@ const DatosTorreComponent = () => {
         if (data && data.datosTorre) {
             const updatedDatosTorre = initialDatosTorre.map((item, index) => ({
                 ...item,
-                dato: data.datosTorre[index] !== undefined && data.datosTorre[index] !== null ? data.datosTorre[index] : '0'
+                dato: data.datosTorre[index] !== undefined ? data.datosTorre[index] : null
             }));
             setDatosTorre(updatedDatosTorre);
         }
@@ -41,7 +41,7 @@ const DatosTorreComponent = () => {
                             <div className={style.detallesDatos}>
                                 <div className={style.texto}>
                                     <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                    <h4 className={textstyle.h4}>{dato.toString()}</h4>
+                                    <h4 className={textstyle.h4}>{dato === null ? 'null' : dato.toString()}</h4>
                                 </div>
                             </div>
                         </div>
