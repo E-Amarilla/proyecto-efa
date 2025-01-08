@@ -13,15 +13,15 @@ const getRandomColor = () => {
     return color;
 };
 
-const Graph = ({ products }) => {
+const Grafico2 = ({ products }) => {
     const chartContainerRef = useRef(null);
     const chartRef = useRef(null);
     const seriesRef = useRef([]);
+    const productColors = useRef({}); // Almacenar colores por producto
 
     useEffect(() => {
         if (!chartContainerRef.current) return;
 
-        // Crear o reiniciar la instancia del gráfico
         if (chartRef.current) {
             chartRef.current.remove();
         }
@@ -47,20 +47,21 @@ const Graph = ({ products }) => {
 
         chartRef.current = chart;
 
-        // Limpiar series anteriores
         seriesRef.current.forEach((series) => series.destroy());
         seriesRef.current = [];
 
-        // Agregar series dinámicamente basado en los productos
         products.forEach((product) => {
+            const color = getRandomColor();
+            productColors.current[product.nombreProducto] = color;
+
             const lineSeries = chart.addLineSeries({
-                title: `${product.nombreProducto} - Lote ${product.nroLote}`,
-                color: getRandomColor(), // Usar color aleatorio
+                title: "",
+                color,
                 lineWidth: 2,
             });
 
             const seriesData = product.data.map((point) => ({
-                time: point.x, // Formato ISO
+                time: point.x,
                 value: point.y,
             }));
 
@@ -68,7 +69,18 @@ const Graph = ({ products }) => {
             seriesRef.current.push(lineSeries);
         });
 
-        // Ajustar el tamaño del gráfico al redimensionar el contenedor
+        // Configurar un rango de tiempo inicial
+        const timeScale = chart.timeScale();
+        const firstPoint = products[0]?.data[0]?.x; // Primer punto
+        const lastPoint = products[0]?.data[products[0]?.data.length - 1]?.x; // Último punto
+        if (firstPoint && lastPoint) {
+            const range = (new Date(lastPoint) - new Date(firstPoint)) / 2; // Zoom a la mitad del rango
+            timeScale.setVisibleRange({
+                from: new Date(firstPoint).getTime() / 1000, // Timestamp en segundos
+                to: new Date(firstPoint).getTime() / 1000 + range,
+            });
+        }
+
         const handleResize = () => {
             chart.resize(chartContainerRef.current.offsetWidth, 400);
         };
@@ -82,7 +94,30 @@ const Graph = ({ products }) => {
     }, [products]);
 
     return (
-        <div className="chart-container" style={{ position: "relative", width: "100%", height: "400px" }}>
+        <div className="chart-container" style={{ position: "relative", width: "100%", height: "450px" }}>
+            {/* Encabezado con los productos */}
+            <div className="products-header" style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                marginBottom: "10px",
+                flexWrap: "wrap",
+                gap: "15px",
+            }}>
+                {products.map((product) => (
+                    <div
+                        key={product.nombreProducto}
+                        style={{
+                            color: productColors.current[product.nombreProducto] || "#ffffff",
+                            fontWeight: "normal",
+                        }}
+                    >
+                        {product.nombreProducto}
+                    </div>
+                ))}
+            </div>
+
+            {/* Marca de agua */}
             <div className="watermark-container" style={{
                 position: "absolute",
                 top: "50%",
@@ -101,9 +136,11 @@ const Graph = ({ products }) => {
                     objectFit="contain"
                 />
             </div>
+
+            {/* Gráfico */}
             <div ref={chartContainerRef} className="chart-content" style={{ position: "relative", zIndex: 1 }} />
         </div>
     );
 };
 
-export default Graph;
+export default Grafico2;

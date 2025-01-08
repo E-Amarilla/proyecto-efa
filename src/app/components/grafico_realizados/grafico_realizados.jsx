@@ -3,7 +3,7 @@ import { createChart } from "lightweight-charts";
 import Image from "next/image";
 import crem from "./IMG/creminox.png";
 
-const Graph = ({ datos }) => {
+const Grafico1 = ({ datos }) => {
     const chartContainerRef = useRef(null);
     const [isClient, setIsClient] = useState(false); // Track client-side rendering
 
@@ -80,8 +80,15 @@ const Graph = ({ datos }) => {
             { time: "2024-08-01", value: 160 },
         ]);
 
+        // Configurar el rango inicial
+        const timeScale = chart.timeScale();
+        timeScale.setVisibleRange({
+            from: new Date("2023-01-01").getTime() / 1000,
+            to: new Date("2023-06-01").getTime() / 1000,
+        });
+
         return () => chart.remove();
-    }, [isClient]);
+        }, [isClient]);
 
     if (!isClient) {
         return null; // Avoid rendering on the server
@@ -120,4 +127,4 @@ const Graph = ({ datos }) => {
     );
 };
 
-export default Graph;
+export default Grafico1;
