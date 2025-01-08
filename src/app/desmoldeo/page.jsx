@@ -20,10 +20,6 @@ function Desmoldeo() {
                 <section id="section2" className={style.seccion}>
                     <Productividad />
                 </section>
-                <section id="section3" className={style.seccion}>
-                    <CiclosProductos />
-                    <CiclosRealizados />
-                </section>
             </div>
         </div>
     );

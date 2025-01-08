@@ -1,66 +1,66 @@
-/* Estilos del contenedor principal */
 .contenedor {
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    gap: 30px;
+    gap: 20px;
     border-radius: 15px;
     background-color: #131313;
 }
 
-/* Título */
-.titulo {
-    font-size: 24px;
+.BotonesDescarga {
+    min-width: 8rem;
+    width: 14vw;
+    max-width: 100%;
+}
+
+  .titulo {
+    font-size: 1.5rem; /* Tamaño de fuente relativo */
     font-weight: bold;
     color: #d9d9d9;
     margin-bottom: 10px;
     text-align: center;
-}
-
-  /* Personalización del DateRangePicker */
+    word-wrap: break-word; /* Evita que el texto se desborde */
+  }
+  
 .customDateRangePicker {
-    background-color: #1f1f1f !important;
-    border-radius: 10px !important;
-    width: 100% !important;
-    height: 60px !important;
-    color: #303030 !important;
-    border: none !important;
+    min-width: 6rem;
+    width: 13vw;
+    max-width: 100%;
+}
+
+.input {
+    font-size: 0.7rem;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 17px !important;
+    min-width: 1rem;
 }
 
-/* Personalización del botón activador */
-.datePickerTrigger {
-    background-color: #1f1f1f !important;
-    border-radius: 10px !important;
-    color: #393939 !important;
-    border: none !important;
-}
-
-  /* Personalización del popover (calendario desplegable) */
-.datePickerPopover {
-    background-color: #1f1f1f !important;
-    border-radius: 10px !important;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2) !important;
-    padding: 10px !important;
-}
-
-/* Responsividad */
-@media (max-width: 768px) {
-    .contenedor {
-        padding: 10px;
-        gap: 15px;
-    }
-
+  
+  @media (max-width: 768px) {
     .titulo {
-        font-size: 20px;
+      font-size: 1.2rem; /* Reduce el tamaño en pantallas pequeñas */
     }
-
+  
     .customDateRangePicker {
-        max-width: 100%;
+      max-width: 90%; /* Se adapta al ancho del contenedor */
     }
-}
+  
+    .input {
+      font-size: 0.9rem; /* Ajusta el tamaño del input */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .titulo {
+      font-size: 1rem;
+    }
+  
+    .customDateRangePicker {
+      max-width: 100%; /* Asegura que se mantenga responsivo */
+    }
+  
+    .input {
+      font-size: 0.8rem;
+    }
+  }

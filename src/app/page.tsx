@@ -9,6 +9,6 @@ import EquipoX from "./desmoldeo/equipox/page.jsx"
 
 export default function Page() {
   return (
-    <EquipoX />
+    <Completo />
   );
 }
