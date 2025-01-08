@@ -73,7 +73,9 @@ const ExeHeader = () => {
               ))}
             </ul>
             <div className={style.logo}>
+              <a href="https://creminox.com" target="_blank" rel="noopener noreferrer">
               <Image className={style.imgCREM} src={cremImg} alt="Creminox" />
+              </a>
             </div>
           </div>
         </nav>

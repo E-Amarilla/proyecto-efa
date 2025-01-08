@@ -14,4 +14,8 @@ https://www.tradingview.com/lightweight-charts/
 Para poder utilizarlo necesitaremos ejecutar esta linea de comando
 ```bash
 npm install --save lightweight-charts
+
+npm i puppeteer
+npm install express --save
+npm install --save-dev @types/express
 ```
