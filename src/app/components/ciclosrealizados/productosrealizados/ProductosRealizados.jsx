@@ -1,6 +1,6 @@
 "use client";
 import style from './ProductosRealizados.module.css';
-import Grafico from "../grafico_ciclos/grafico_ciclos";
+import Grafico2 from "./grafico_ciclos/grafico_ciclos";
 
 const productos = [
     {
@@ -70,7 +70,7 @@ const ProductosRealizados = () => {
             </div>
 
             <div id={style.graf}>
-                <Grafico products={productos} />
+                <Grafico2 products={productos} />
             </div>
         </div>
     );

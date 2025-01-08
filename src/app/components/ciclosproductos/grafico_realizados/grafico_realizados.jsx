@@ -13,7 +13,7 @@ const getRandomColor = () => {
     return color;
 };
 
-const Grafico2 = ({ products }) => {
+const Grafico1 = ({ products }) => {
     const chartContainerRef = useRef(null);
     const chartRef = useRef(null);
     const seriesRef = useRef([]);
@@ -143,4 +143,4 @@ const Grafico2 = ({ products }) => {
     );
 };
 
-export default Grafico2;
+export default Grafico1;

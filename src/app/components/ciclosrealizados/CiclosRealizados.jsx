@@ -2,7 +2,7 @@
 
 import style from './CiclosRealizados.module.css';
 import FiltroPeriodo from '../filtroperiodo/FiltroPeriodo.jsx';
-import ProductosRealizados from '../productosrealizados/ProductosRealizados.jsx';
+import ProductosRealizados from './productosrealizados/ProductosRealizados.jsx';
 
 export default function CiclosRealizados() {
     return (

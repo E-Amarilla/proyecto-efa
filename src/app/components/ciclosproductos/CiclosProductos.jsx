@@ -2,7 +2,7 @@
 
 import React from "react";
 import style from "./CiclosProductos.module.css";
-import Graph from "../grafico_realizados/grafico_realizados";
+import Grafico1 from "./grafico_realizados/grafico_realizados";
 
 const CiclosProductos = () => {
     return (
@@ -10,7 +10,7 @@ const CiclosProductos = () => {
             <h2 className={style.titulo}>CICLOS POR PRODUCTO</h2>
             <h1>POR PERIODO</h1>
             <div className={style.graf}>
-                <Graph />
+                <Grafico1 />
             </div>
         </div>
         );
