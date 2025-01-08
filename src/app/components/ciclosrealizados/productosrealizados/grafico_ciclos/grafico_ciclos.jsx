@@ -5,8 +5,8 @@ import crem from "./IMG/creminox.png";
 
 // Generar colores aleatorios en formato hexadecimal #RRGGBB
 const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
+    const letters = "0123456789ABCDEF";
+    let color = "#";
     for (let i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
     }
@@ -17,7 +17,7 @@ const Grafico1 = ({ productos }) => {
     const chartContainerRef = useRef(null);
     const chartRef = useRef(null);
     const seriesRef = useRef([]);
-    const productColors = useRef({}); // Almacenar colores por producto
+    const productColors = useRef({}); // Almacenar colores únicos para cada producto
     const [tooltip, setTooltip] = useState({ display: false, x: 0, y: 0, data: [] });
 
     useEffect(() => {
@@ -52,12 +52,12 @@ const Grafico1 = ({ productos }) => {
         seriesRef.current = [];
 
         productos.forEach((producto) => {
-            const color = getRandomColor();
-            productColors.current[producto.nombreProducto] = color;
+            if (!productColors.current[producto.nombreProducto]) {
+                productColors.current[producto.nombreProducto] = getRandomColor();
+            }
 
             const lineSeries = chart.addLineSeries({
-                title: "",
-                color,
+                color: productColors.current[producto.nombreProducto],
                 lineWidth: 2,
             });
 
@@ -71,22 +71,6 @@ const Grafico1 = ({ productos }) => {
             seriesRef.current.push(lineSeries);
         });
 
-        // Configurar un rango de tiempo inicial
-        const timeScale = chart.timeScale();
-        const firstPoint = productos[0]?.data[0]?.x; // Primer punto
-        const lastPoint = productos[0]?.data[productos[0]?.data.length - 1]?.x; // Último punto
-        if (firstPoint && lastPoint) {
-            const range = (new Date(lastPoint) - new Date(firstPoint)) / 2; // Zoom a la mitad del rango
-            timeScale.setVisibleRange({
-                from: new Date(firstPoint).getTime() / 1000, // Timestamp en segundos
-                to: new Date(firstPoint).getTime() / 1000 + range,
-            });
-        }
-
-        const handleResize = () => {
-            chart.resize(chartContainerRef.current.offsetWidth, 400);
-        };
-
         // Actualizar tooltip al mover el crosshair
         chart.subscribeCrosshairMove((param) => {
             if (!param || !param.time) {
@@ -96,9 +80,9 @@ const Grafico1 = ({ productos }) => {
 
             const time = param.time;
 
-            const newTooltipData = productos.map((producto) => {
-                const series = seriesRef.current.find((s) => s.options.color === productColors.current[producto.nombreProducto]);
-                const dataPoint = param.seriesData.get(series); // Aquí obtenemos el punto de la serie correctamente
+            const newTooltipData = productos.map((producto, index) => {
+                const series = seriesRef.current[index];
+                const dataPoint = param.seriesData.get(series);
                 return {
                     name: producto.nombreProducto,
                     value: dataPoint ? dataPoint.value : 0, // Si no hay valor, mostramos 0
@@ -121,6 +105,10 @@ const Grafico1 = ({ productos }) => {
             });
         });
 
+        const handleResize = () => {
+            chart.resize(chartContainerRef.current.offsetWidth, 400);
+        };
+
         window.addEventListener("resize", handleResize);
 
         return () => {
@@ -130,47 +118,29 @@ const Grafico1 = ({ productos }) => {
     }, [productos]);
 
     return (
-        <div className="chart-container" style={{ position: "relative", width: "100%", height: "450px" }}>
+        <div style={{ position: "relative", width: "100%", height: "450px" }}>
             {/* Encabezado con los productos */}
-            <div className="products-header" style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: "10px",
-                flexWrap: "wrap",
-                gap: "15px",
-            }}>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: "10px",
+                    flexWrap: "wrap",
+                    gap: "15px",
+                }}
+            >
                 {productos.map((producto) => (
                     <div
                         key={producto.nombreProducto}
                         style={{
                             color: productColors.current[producto.nombreProducto] || "#ffffff",
-                            fontWeight: "normal",
+                            fontWeight: "bold",
                         }}
                     >
                         {producto.nombreProducto}
                     </div>
                 ))}
-            </div>
-
-            {/* Marca de agua */}
-            <div className="watermark-container" style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)", // Centrar vertical y horizontalmente
-                width: "50%",
-                height: "50%",
-                zIndex: 2, // Aumentar el z-index
-                opacity: 0.2, // Aumentar la opacidad
-                pointerEvents: "none",
-            }}>
-                <Image
-                    src={crem}
-                    alt="Creminox"
-                    layout="fill"
-                    objectFit="contain"
-                />
             </div>
 
             {/* Tooltip */}
@@ -180,12 +150,13 @@ const Grafico1 = ({ productos }) => {
                         position: "absolute",
                         top: tooltip.y,
                         left: tooltip.x,
-                        padding: "8px",
-                        backgroundColor: "black",
-                        color: "white",
+                        padding: "10px",
+                        backgroundColor: "#000000", // Fondo opaco
+                        color: "#ffffff",
+                        border: "1px solid #ffffff",
                         borderRadius: "5px",
-                        border: "1px solid #2962FF",
-                        zIndex: 1000,
+                        fontSize: "12px",
+                        zIndex: 10,
                         pointerEvents: "none",
                     }}
                 >
@@ -197,8 +168,25 @@ const Grafico1 = ({ productos }) => {
                 </div>
             )}
 
-            {/* Gráfico */}
-            <div ref={chartContainerRef} className="chart-content" style={{ position: "relative", zIndex: 1 }} />
+            {/* Contenedor del gráfico */}
+            <div ref={chartContainerRef} style={{ width: "100%", height: "400px" }} />
+
+            {/* Marca de agua */}
+            <div
+                style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    zIndex: 1,
+                    opacity: 0.2,
+                    pointerEvents: "none",
+                    width: "50%",
+                    height: "50%",
+                }}
+            >
+                <Image src={crem} alt="Creminox" layout="fill" objectFit="contain" />
+            </div>
         </div>
     );
 };
