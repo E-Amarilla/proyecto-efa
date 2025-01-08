@@ -3,7 +3,7 @@ import { createChart } from "lightweight-charts";
 import Image from "next/image";
 import crem from "./IMG/creminox.png";
 
-const Grafico1 = ({ datos }) => {
+const Grafico1 = () => {
     const chartContainerRef = useRef(null);
     const [isClient, setIsClient] = useState(false); // Track client-side rendering
 

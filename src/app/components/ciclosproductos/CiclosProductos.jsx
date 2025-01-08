@@ -10,7 +10,7 @@ const CiclosProductos = () => {
             <h2 className={style.titulo}>CICLOS POR PRODUCTO</h2>
             <h1>POR PERIODO</h1>
             <div className={style.graf}>
-            <Graph datos={datos} />
+                <Graph />
             </div>
         </div>
         );
