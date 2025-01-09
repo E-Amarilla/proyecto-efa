@@ -6,9 +6,13 @@ import ExcelPDF from "./components/filtroperiodo/FiltroPeriodo.jsx";
 import Sonner from "./components/notificaciones/page.jsx"
 import NavDatos from "./components/navdatos/NavDatos.jsx"
 import EquipoX from "./desmoldeo/equipox/page.jsx"
+import BotonNoti from "./components/notificaciones/page.jsx"
 
 export default function Page() {
   return (
-    <Completo />
+    <>
+      <Completo />
+      <BotonNoti />
+    </>
   );
 }

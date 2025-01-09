@@ -49,7 +49,7 @@
 .secciondesbloqueda {
   border-radius: 15px;
   background-color: transparent;
-  z-index: 10; /* Asegura que se quede sobre otros elementos */
+  z-index: 1; /* Asegura que se quede sobre otros elementos */
   border: 2px solid green;
 }
 
@@ -58,7 +58,7 @@
   background-color: gray;
   border: 1px solid rgb(0, 0, 0);
   opacity: 0.6;
-  z-index: 10; /* Asegura que se quede sobre otros elementos */
+  z-index: 0; /* Asegura que se quede sobre otros elementos */
   pointer-events: none;
 }
 
@@ -85,4 +85,10 @@
 
 .interactiveSection .secciondatos:hover {
   pointer-events: none;
+}
+
+.DatosEstadoEncajonado {
+  position: absolute;
+  transition: all 0.3s ease;
+  background-color: transparent; /* Sin fondo */
 }

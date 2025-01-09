@@ -1,14 +1,15 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import LayoutIMG from './IMG/layoutcompleto.png';
 import style from './LayoutCompleto.module.css';
-
-import DatosDesmoldeo from "./datosdesmoldeo/datosdesmoldeo"
-import DatosEncajonado from "./datosencajonado/datosencajonado"
-import DatosPaletizado from "./datospaletizado/datospaletizado"
+import DatosDesmoldeo from "./datosdesmoldeo/datosdesmoldeo";
+import DatosEncajonado from "./datosencajonado/datosencajonado";
+import DatosPaletizado from "./datospaletizado/datospaletizado";
+import DatosEstadoDesmoldeo from "./datosdesmoldeo/datosestadodesmoldeo/datosestadodesmoldeo"
+import DatosEstadoEncajonado from "./datosencajonado/datosestadoencajonado/datosestadoencajonado.jsx";
+import DatosEstadoPaletizado from "./datospaletizado/datosestadopaletizado/datosestadopaletizado.jsx"
 
 const LayoutCompleto = () => {
   const sections = [
@@ -44,7 +45,12 @@ const LayoutCompleto = () => {
 
   return (
     <div className={style.layoutContainer}>
-      <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} priority={true} />
+      <Image
+        src={LayoutIMG}
+        alt="Layout"
+        className={style.backgroundImage}
+        priority={true}
+      />
       {sections.map((section) => (
         <Link href={section.path} key={section.id}>
           <div
@@ -52,10 +58,22 @@ const LayoutCompleto = () => {
             style={section.position}
           >
             <span className={style.tooltip}>{section.name}</span>
+            {section.id === 1 && (
+              <DatosEstadoDesmoldeo />
+            )}
+            {section.id === 2 && (
+              <DatosEstadoEncajonado />
+            )}
+            {section.id === 3 && (
+              <DatosEstadoPaletizado />
+            )}
           </div>
         </Link>
       ))}
-      <div className={`${style.interactiveSection} ${style.secciondatos}`} style={sections[3].position}>
+      <div
+        className={`${style.interactiveSection} ${style.secciondatos}`}
+        style={sections[3].position}
+      >
         <DatosDesmoldeo />
         <DatosEncajonado />
         <DatosPaletizado />
@@ -65,3 +83,4 @@ const LayoutCompleto = () => {
 };
 
 export default LayoutCompleto;
+
