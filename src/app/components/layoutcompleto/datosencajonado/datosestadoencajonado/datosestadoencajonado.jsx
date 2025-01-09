@@ -8,7 +8,7 @@ const DatosEstadoEncajonado = () => {
     const { data, error, isConnected } = useWebSocket(pollId);
 
     const {
-        EstadoEncajonado = 'activo',  // Valor por defecto "inactivo" si es null
+        EstadoEncajonado = 'inactivo',  // Valor por defecto "inactivo" si es null
         TiempoTransEncajonado = '00:00hs',  // Valor por defecto "00:00hs" si es null
     } = data || {};  // Si data es null, evita un error de desestructuración
 

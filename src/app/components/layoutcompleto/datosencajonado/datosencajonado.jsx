@@ -15,7 +15,7 @@ const DatosEncajonado = () => {
         //EstadoEncajonado, //
     } = data || {};  // Si data es null, evita un error de desestructuración
 
-    const EstadoEncajonado = "activo";
+    const EstadoEncajonado = "inactivo";
 
     const datosTiempoReal = [
         { id: 1, nombre: 'Encajonado - Dato N°1', dato: EncVariableNN !== undefined && EncVariableNN !== null ? EncVariableNN : '0' },

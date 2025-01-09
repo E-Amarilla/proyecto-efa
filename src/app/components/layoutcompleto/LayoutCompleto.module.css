@@ -8,6 +8,7 @@
   width: 100%;
   height: auto;
   border-radius: 15px;
+  z-index: -10;
 }
 
 .interactiveSection {
@@ -37,27 +38,23 @@
   transition: opacity 0.3s ease;
 }
 
-.interactiveSection:hover .tooltip {
-  opacity: 1;
-}
-
 .sectorContainer {
   text-align: center;
   margin-top: 50px;
 }
 
-.secciondesbloqueda {
-  border-radius: 15px;
+.secciondesbloqueada {
+  border-radius: 20px;
   background-color: transparent;
-  z-index: 1; /* Asegura que se quede sobre otros elementos */
+  z-index: 0; /* Asegura que se quede sobre otros elementos */
   border: 2px solid green;
 }
 
 .seccionbloqueada {
-  border-radius: 15px;
+  border-radius: 20px;
   background-color: gray;
   border: 1px solid rgb(0, 0, 0);
-  opacity: 0.6;
+  opacity: 0.5;
   z-index: 0; /* Asegura que se quede sobre otros elementos */
   pointer-events: none;
 }
@@ -68,7 +65,7 @@
 
 .secciondatos {
   border-radius: 15px;
-  background-color: #1b232c;
+  background-color: transparent;
   z-index: 10;
   padding: 20px;
   display: flex;
@@ -87,8 +84,11 @@
   pointer-events: none;
 }
 
-.DatosEstadoEncajonado {
-  position: absolute;
-  transition: all 0.3s ease;
-  background-color: transparent; /* Sin fondo */
+.noBoxShadow {
+  box-shadow: none !important;
+  cursor: default;
+}
+
+.noBoxShadow:hover {
+  background-color: transparent;
 }

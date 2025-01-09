@@ -27,8 +27,24 @@ const Grafico1 = ({ productos }) => {
     useEffect(() => {
         if (!chartContainerRef.current) return;
 
+        const handleResize = () => {
+            if (chartRef.current) {
+                chartRef.current.resize(chartContainerRef.current.offsetWidth, 400);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+
         if (chartRef.current) {
-            chartRef.current.remove();
+            // Elimina todas las series del gráfico antes de recrearlo
+            try {
+                seriesRef.current.forEach(({ lineSeries }) => {
+                    chartRef.current.removeSeries(lineSeries);
+                });
+                chartRef.current.remove();
+            } catch (error) {
+                console.error("Error removing series:", error);
+            }
         }
 
         const chart = createChart(chartContainerRef.current, {
@@ -51,11 +67,36 @@ const Grafico1 = ({ productos }) => {
         });
 
         chartRef.current = chart;
-
-        seriesRef.current.forEach((series) => series.destroy());
         seriesRef.current = [];
 
         let lastTimestamp = null;
+
+        const handleCrosshairMove = (param) => {
+            if (!param || !param.time) {
+                setTooltip({ display: false, x: 0, y: 0, values: [], date: "" });
+                return;
+            }
+
+            const time = new Date(param.time * 1000).toLocaleDateString();
+            const values = seriesRef.current.map(({ lineSeries, producto }) => {
+                const data = param.seriesData.get(lineSeries);
+                return {
+                    nombreProducto: producto.nombreProducto,
+                    color: productColors.current[producto.nombreProducto],
+                    value: data ? data.value : 0,
+                };
+            });
+
+            setTooltip({
+                display: true,
+                x: param.point.x,
+                y: param.point.y,
+                values,
+                date: time,
+            });
+        };
+
+        chart.subscribeCrosshairMove(handleCrosshairMove);
 
         productos.forEach((producto, index) => {
             const color = COLORS[index % COLORS.length];
@@ -78,32 +119,6 @@ const Grafico1 = ({ productos }) => {
 
             lineSeries.setData(seriesData);
             seriesRef.current.push({ lineSeries, producto });
-
-            // Suscribirse al movimiento del crosshair
-            chart.subscribeCrosshairMove((param) => {
-                if (!param || !param.time) {
-                    setTooltip({ display: false, x: 0, y: 0, values: [], date: "" });
-                    return;
-                }
-
-                const time = new Date(param.time * 1000).toLocaleDateString();
-                const values = seriesRef.current.map(({ lineSeries, producto }) => {
-                    const data = param.seriesData.get(lineSeries);
-                    return {
-                        nombreProducto: producto.nombreProducto,
-                        color: productColors.current[producto.nombreProducto],
-                        value: data ? data.value : 0,
-                    };
-                });
-
-                setTooltip({
-                    display: true,
-                    x: param.point.x,
-                    y: param.point.y,
-                    values,
-                    date: time,
-                });
-            });
         });
 
         // Ajustar el rango visible al último dato
@@ -114,15 +129,20 @@ const Grafico1 = ({ productos }) => {
             });
         }
 
-        const handleResize = () => {
-            chart.resize(chartContainerRef.current.offsetWidth, 400);
-        };
-
-        window.addEventListener("resize", handleResize);
-
         return () => {
             window.removeEventListener("resize", handleResize);
-            chart.remove();
+
+            if (chartRef.current) {
+                try {
+                    chart.unsubscribeCrosshairMove(handleCrosshairMove);
+                    seriesRef.current.forEach(({ lineSeries }) => {
+                        chartRef.current.removeSeries(lineSeries);
+                    });
+                    chartRef.current.remove();
+                } catch (error) {
+                    console.error("Error during cleanup:", error);
+                }
+            }
         };
     }, [productos]);
 

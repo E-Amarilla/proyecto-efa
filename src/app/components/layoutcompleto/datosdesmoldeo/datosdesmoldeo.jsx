@@ -29,7 +29,7 @@ const DatosDesmoldeo = () => {
                 <ul className={style.datosTods}>
                     {datosTiempoReal.map(({ id, nombre, dato }) => (
                         <li key={id} className={EstadoDesmoldeo === 'activo' || EstadoDesmoldeo === 'pausa' ? cont.datosIndvRed : cont.datosIndvGray}>
-                            <a className={style.detallesDatos} href=''> {/* acá se va a incluir /encajonado/equipox. */}
+                            <a className={style.detallesDatos} href='/desmoldeo/equipox'>
                                 {EstadoDesmoldeo === 'activo' || EstadoDesmoldeo === 'pausa' ? (
                                     <div className={style.contenedorActivo}>
                                         <h3 className={style.h3}>{nombre}</h3>

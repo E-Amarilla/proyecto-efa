@@ -7,9 +7,9 @@ import style from './LayoutCompleto.module.css';
 import DatosDesmoldeo from "./datosdesmoldeo/datosdesmoldeo";
 import DatosEncajonado from "./datosencajonado/datosencajonado";
 import DatosPaletizado from "./datospaletizado/datospaletizado";
-import DatosEstadoDesmoldeo from "./datosdesmoldeo/datosestadodesmoldeo/datosestadodesmoldeo"
+import DatosEstadoDesmoldeo from "./datosdesmoldeo/datosestadodesmoldeo/datosestadodesmoldeo";
 import DatosEstadoEncajonado from "./datosencajonado/datosestadoencajonado/datosestadoencajonado.jsx";
-import DatosEstadoPaletizado from "./datospaletizado/datosestadopaletizado/datosestadopaletizado.jsx"
+import DatosEstadoPaletizado from "./datospaletizado/datosestadopaletizado/datosestadopaletizado.jsx";
 
 const LayoutCompleto = () => {
   const sections = [
@@ -17,8 +17,8 @@ const LayoutCompleto = () => {
       id: 1,
       name: "Desmoldeo",
       path: "/desmoldeo",
-      position: { top: "36.2%", left: "0.2%", width: "35.2%", height: "63%" },
-      styleClass: "secciondesbloqueda",
+      position: { top: "36.2%", left: "0%", width: "35.3%", height: "63.8%" },
+      styleClass: "secciondesbloqueada",
     },
     {
       id: 2,
@@ -71,7 +71,7 @@ const LayoutCompleto = () => {
         </Link>
       ))}
       <div
-        className={`${style.interactiveSection} ${style.secciondatos}`}
+        className={`${style.interactiveSection} ${style.secciondatos} ${style.noBoxShadow}`}
         style={sections[3].position}
       >
         <DatosDesmoldeo />
@@ -83,4 +83,3 @@ const LayoutCompleto = () => {
 };
 
 export default LayoutCompleto;
-

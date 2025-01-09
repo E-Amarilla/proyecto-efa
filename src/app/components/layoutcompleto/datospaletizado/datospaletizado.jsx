@@ -15,7 +15,7 @@ const DatosPaletizado = () => {
         // EstadoPaletizado, //
     } = data || {};  // Si data es null, evita un error de desestructuración
 
-    const EstadoPaletizado = "activo";
+    const EstadoPaletizado = "inactivo";
 
     const datosTiempoReal = [
         { id: 1, nombre: 'Paletizado - Dato N°1', dato: PalVariableNN !== undefined && PalVariableNN !== null ? PalVariableNN : '0' },

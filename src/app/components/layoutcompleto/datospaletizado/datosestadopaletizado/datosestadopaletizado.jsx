@@ -8,7 +8,7 @@ const DatosEstadoPaletizado = () => {
     const { data, error, isConnected } = useWebSocket(pollId);
 
     const {
-        EstadoPaletizado = 'activo',  // Valor por defecto "inactivo" si es null
+        EstadoPaletizado = 'inactivo',  // Valor por defecto "inactivo" si es null
         TiempoTransPaletizado = '00:00hs',  // Valor por defecto "00:00hs" si es null
     } = data || {};  // Si data es null, evita un error de desestructuración
 
