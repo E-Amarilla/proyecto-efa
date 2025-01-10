@@ -14,6 +14,7 @@
     justify-content: space-between;
     align-items: center;
     max-height: 227px;
+    min-height: 6vw;
 }
 
 .footerIzq, .footerDer {
@@ -76,6 +77,8 @@
     padding: 0;
     display: flex;
     justify-content: center;
+    text-align: center;
+    margin: 5px;
 }
 
 .footerAbajo p {
