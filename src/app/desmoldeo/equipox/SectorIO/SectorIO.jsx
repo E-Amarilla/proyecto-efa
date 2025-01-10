@@ -9,6 +9,7 @@ import textstyle from '../texto.module.css';
 import React, { useState, useEffect } from 'react';
 
 const SectorIOComponent = () => {
+    
     const initialSectorIO = [
         { id: 1, texto: 'ESTADO', dato: '0', icono: puntoGris, },
         { id: 2, texto: 'IO_YY EQ XX', dato: '0', icono: puntoGris, },
@@ -17,9 +18,6 @@ const SectorIOComponent = () => {
     ];
 
     const [sectorIO, setSectorIO] = useState(initialSectorIO);
-
-    const pollId = "lista-tiempo-real";
-    const { data, error, isConnected } = useWebSocket(pollId);
     
     useEffect(() => {
         if (data && data.sectorIO) {

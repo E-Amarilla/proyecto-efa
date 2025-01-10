@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import maqImg from './IMG/nsd42jps.png';
+import maqImg from './IMG/creminox.png';
 import style from './configuraciones.module.css';
 
 const Configuraciones = () => {
@@ -11,7 +11,7 @@ const Configuraciones = () => {
                 <div className={style.contenedorImagen}>
                     <Image className={style.img} src={maqImg} alt="Creminox" />
                 </div>
-                <h2>CONFIGURACIONES</h2>
+                <h2 className={style.h2}>CONFIGURACIONES</h2>
                 <div>
                 </div>
             </div>
