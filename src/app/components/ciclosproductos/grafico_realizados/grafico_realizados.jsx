@@ -60,24 +60,21 @@ const Grafico = () => {
         seriesPeso.setData(dataPeso);
         seriesCiclos.setData(dataCiclos);
 
-        // Configurar el zoom inicial centrado en los datos más recientes
         const latestTime = Math.max(
             dataPeso[dataPeso.length - 1]?.time,
             dataCiclos[dataCiclos.length - 1]?.time
         );
 
         chart.timeScale().setVisibleRange({
-            from: latestTime - 3600 * 24 * 3, // 3 días antes
-            to: latestTime + 3600 * 24 * 1, // 1 día después
+            from: latestTime - 3600 * 24 * 3,
+            to: latestTime + 3600 * 24 * 1,
         });
 
-        // Obtener valores actuales y actualizar encabezados
         setCurrentValues({
             peso: dataPeso[dataPeso.length - 1]?.value || 0,
             ciclos: dataCiclos[dataCiclos.length - 1]?.value || 0,
         });
 
-        // Actualizar el tooltip con el movimiento del crosshair
         chart.subscribeCrosshairMove((param) => {
             if (!param || !param.time) {
                 setTooltip((prev) => ({ ...prev, display: false }));
@@ -94,15 +91,29 @@ const Grafico = () => {
             const pesoValue = dataPesoPoint ? dataPesoPoint.value : 0;
             const ciclosValue = dataCiclosPoint ? dataCiclosPoint.value : 0;
 
+            const xCoordinate = chart.timeScale().timeToCoordinate(time);
+            const pesoCoordinate = seriesPeso.priceToCoordinate(pesoValue);
+            const ciclosCoordinate = seriesCiclos.priceToCoordinate(ciclosValue);
+
+            if (xCoordinate === null || pesoCoordinate === null || ciclosCoordinate === null) {
+                setTooltip((prev) => ({ ...prev, display: false }));
+                return;
+            }
+
             const shiftedCoordinateX = Math.max(
                 0,
-                Math.min(chartContainerRef.current.clientWidth - 100, param.point?.x - 50 || 0)
+                Math.min(chartContainerRef.current.clientWidth - 100, xCoordinate - 50)
+            );
+
+            const shiftedCoordinateY = Math.max(
+                0,
+                Math.min(chartContainerRef.current.clientHeight - 50, Math.min(pesoCoordinate, ciclosCoordinate) - 50)
             );
 
             setTooltip({
                 display: true,
                 x: shiftedCoordinateX,
-                y: param.point?.y || 0,
+                y: shiftedCoordinateY,
                 pesoValue,
                 ciclosValue,
                 date: dateStr,
@@ -116,7 +127,6 @@ const Grafico = () => {
 
     return (
         <div style={{ position: "relative" }}>
-            {/* Títulos dinámicos con los valores actuales */}
             <div
                 style={{
                     display: "flex",
@@ -124,14 +134,12 @@ const Grafico = () => {
                     gap: "20px",
                     marginBottom: "10px",
                     color: "#ffffff",
-                    fontWeight: "bold",
                 }}
             >
-                <div style={{ color: "blue", fontSize: "25px"  }}>Peso</div>
-                <div style={{ color: "orange", fontSize: "25px" }}>Ciclos</div>
+                <div style={{ color: "blue", fontSize: "20px" }}>Peso</div>
+                <div style={{ color: "orange", fontSize: "20px" }}>Ciclos</div>
             </div>
 
-            {/* Imagen como marca de agua */}
             <Image
                 src={crem}
                 alt="Creminox"
@@ -146,7 +154,6 @@ const Grafico = () => {
                 }}
             />
 
-            {/* Tooltip */}
             {tooltip.display && (
                 <div
                     style={{
