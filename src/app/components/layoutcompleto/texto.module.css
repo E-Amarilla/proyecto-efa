@@ -8,6 +8,7 @@
     padding: 0;
     margin: 0;
     transition: background-color 0.8s ease;
+    font-weight: bold;
 }
 
 .h4 {
