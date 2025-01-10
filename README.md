@@ -13,6 +13,7 @@ npm install express nodemailer body-parser
 ```
     user: 'pruebascremona@gmail.com', // Tu correo de gmail
     pass: 'vgsj thqw thbv zvec' // Tu contraseña de gmail
+    respuesta json datos graficos: ISO 8601
 
 ## Para los graficos se utilizo TradingView
 https://www.tradingview.com/lightweight-charts/

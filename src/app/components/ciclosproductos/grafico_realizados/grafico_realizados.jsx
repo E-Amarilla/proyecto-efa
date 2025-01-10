@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
 import Image from "next/image";
@@ -16,113 +18,118 @@ const Grafico = () => {
     const [currentValues, setCurrentValues] = useState({ peso: 0, ciclos: 0 });
 
     useEffect(() => {
-        const chart = createChart(chartContainerRef.current, {
-            width: chartContainerRef.current.offsetWidth,
-            height: 400,
-            layout: {
-                background: { type: "solid", color: "#131313" },
-                textColor: "#ffffff",
-            },
-            grid: {
-                vertLines: { color: "rgba(255, 255, 255, 0.1)" },
-                horzLines: { color: "rgba(255, 255, 255, 0.1)" },
-            },
-            crosshair: {
-                mode: 1,
-            },
-            timeScale: {
-                borderColor: "#ffffff",
-            },
-        });
+        const fetchData = async () => {
+            try {
+                const response = await fetch("data/cycles.json");
+                const data = await response.json();
 
-        const seriesPeso = chart.addLineSeries({
-            color: "blue",
-            lineWidth: 2,
-        });
+                const dataPeso = [];
+                const dataCiclos = [];
 
-        const seriesCiclos = chart.addLineSeries({
-            color: "orange",
-            lineWidth: 2,
-        });
+                // Leer los datos del archivo JSON
+                data.forEach((recetario) => {
+                    recetario.ciclos.forEach((ciclo) => {
+                        const time = Math.floor(
+                            new Date(ciclo.fecha_fin).getTime() / 1000
+                        );
+                        dataPeso.push({ time, value: ciclo.pesoTotal });
+                        dataCiclos.push({ time, value: ciclo.id_ciclo });
+                    });
+                });
 
-        const dataPeso = [
-            { time: 1640995200, value: 70 },
-            { time: 1641081600, value: 72 },
-            { time: 1641168000, value: 74 },
-        ];
+                // Ordenar los datos por la propiedad 'time'
+                dataPeso.sort((a, b) => a.time - b.time);
+                dataCiclos.sort((a, b) => a.time - b.time);
 
-        const dataCiclos = [
-            { time: 1640995200, value: 5 },
-            { time: 1641081600, value: 6 },
-            { time: 1641168000, value: 5.5 },
-        ];
-
-        seriesPeso.setData(dataPeso);
-        seriesCiclos.setData(dataCiclos);
-
-        const latestTime = Math.max(
-            dataPeso[dataPeso.length - 1]?.time,
-            dataCiclos[dataCiclos.length - 1]?.time
-        );
-
-        chart.timeScale().setVisibleRange({
-            from: latestTime - 3600 * 24 * 3,
-            to: latestTime + 3600 * 24 * 1,
-        });
-
-        setCurrentValues({
-            peso: dataPeso[dataPeso.length - 1]?.value || 0,
-            ciclos: dataCiclos[dataCiclos.length - 1]?.value || 0,
-        });
-
-        chart.subscribeCrosshairMove((param) => {
-            if (!param || !param.time) {
-                setTooltip((prev) => ({ ...prev, display: false }));
-                return;
+                initializeChart(dataPeso, dataCiclos);
+            } catch (error) {
+                console.error("Error loading data:", error);
             }
-
-            const time = param.time;
-
-            const dataPesoPoint = param.seriesData.get(seriesPeso);
-            const dataCiclosPoint = param.seriesData.get(seriesCiclos);
-
-            const dateStr = new Date(time * 1000).toLocaleDateString();
-
-            const pesoValue = dataPesoPoint ? dataPesoPoint.value : 0;
-            const ciclosValue = dataCiclosPoint ? dataCiclosPoint.value : 0;
-
-            const xCoordinate = chart.timeScale().timeToCoordinate(time);
-            const pesoCoordinate = seriesPeso.priceToCoordinate(pesoValue);
-            const ciclosCoordinate = seriesCiclos.priceToCoordinate(ciclosValue);
-
-            if (xCoordinate === null || pesoCoordinate === null || ciclosCoordinate === null) {
-                setTooltip((prev) => ({ ...prev, display: false }));
-                return;
-            }
-
-            const shiftedCoordinateX = Math.max(
-                0,
-                Math.min(chartContainerRef.current.clientWidth - 100, xCoordinate - 50)
-            );
-
-            const shiftedCoordinateY = Math.max(
-                0,
-                Math.min(chartContainerRef.current.clientHeight - 50, Math.min(pesoCoordinate, ciclosCoordinate) - 50)
-            );
-
-            setTooltip({
-                display: true,
-                x: shiftedCoordinateX,
-                y: shiftedCoordinateY,
-                pesoValue,
-                ciclosValue,
-                date: dateStr,
-            });
-        });
-
-        return () => {
-            chart.remove();
         };
+
+        const initializeChart = (dataPeso, dataCiclos) => {
+            const chart = createChart(chartContainerRef.current, {
+                leftPriceScale: {
+                    visible: true,
+                    borderColor: 'rgba(255, 165, 0, 0.5)',
+                },
+                rightPriceScale: {
+                    visible: true,
+                    borderColor: 'rgba(197, 203, 206, 1)',
+                },
+                width: chartContainerRef.current.offsetWidth,
+                height: 400,
+                layout: {
+                    background: { type: "solid", color: "#131313" },
+                    textColor: "#d9d9d9",
+                },
+                grid: {
+                    vertLines: { color: "rgba(255, 255, 255, 0.1)" },
+                    horzLines: { color: "rgba(255, 255, 255, 0.1)" },
+                },
+                crosshair: { mode: 1 },
+                timeScale: { borderColor: "#ffffff" },
+                
+            });
+
+            const seriesPeso = chart.addLineSeries({ color: "blue", lineWidth: 2, priceScaleId: 'right' });
+            const seriesCiclos = chart.addLineSeries({ color: "orange", lineWidth: 2, priceScaleId: 'left' });
+
+            seriesPeso.setData(dataPeso);
+            seriesCiclos.setData(dataCiclos);
+
+            const latestTime = Math.max(
+                dataPeso[dataPeso.length - 1]?.time,
+                dataCiclos[dataCiclos.length - 1]?.time
+            );
+
+            chart.timeScale().setVisibleRange({
+                from: latestTime - 3600 * 24 * 3,
+                to: latestTime + 3600 * 24 * 1,
+            });
+
+            setCurrentValues({
+                peso: dataPeso[dataPeso.length - 1]?.value || 0,
+                ciclos: dataCiclos[dataCiclos.length - 1]?.value || 0,
+            });
+
+            chart.subscribeCrosshairMove((param) => {
+                if (!param || !param.time) {
+                    setTooltip((prev) => ({ ...prev, display: false }));
+                    return;
+                }
+
+                const time = param.time;
+                const dataPesoPoint = param.seriesData.get(seriesPeso);
+                const dataCiclosPoint = param.seriesData.get(seriesCiclos);
+                const dateStr = new Date(time * 1000).toLocaleDateString();
+
+                const pesoValue = dataPesoPoint ? dataPesoPoint.value : 0;
+                const ciclosValue = dataCiclosPoint ? dataCiclosPoint.value : 0;
+
+                const xCoordinate = chart.timeScale().timeToCoordinate(time);
+                const pesoCoordinate = seriesPeso.priceToCoordinate(pesoValue);
+                const ciclosCoordinate = seriesCiclos.priceToCoordinate(ciclosValue);
+
+                if (xCoordinate === null || pesoCoordinate === null || ciclosCoordinate === null) {
+                    setTooltip((prev) => ({ ...prev, display: false }));
+                    return;
+                }
+
+                setTooltip({
+                    display: true,
+                    x: xCoordinate - 50,
+                    y: Math.min(pesoCoordinate, ciclosCoordinate) - 50,
+                    pesoValue,
+                    ciclosValue,
+                    date: dateStr,
+                });
+            });
+
+            return () => chart.remove();
+        };
+
+        fetchData();
     }, []);
 
     return (
@@ -160,18 +167,14 @@ const Grafico = () => {
                         position: "absolute",
                         top: tooltip.y,
                         left: tooltip.x,
-                        width: "auto",
-                        height: "auto",
                         padding: "8px",
-                        boxSizing: "border-box",
                         fontSize: "16px",
-                        textAlign: "left",
-                        zIndex: 1000,
                         backgroundColor: "black",
                         color: "white",
                         border: "1px solid #2962FF",
                         borderRadius: "2px",
                         pointerEvents: "none",
+                        zIndex: 999,
                     }}
                 >
                     <div style={{ color: "#2962FF" }}>

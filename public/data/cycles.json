@@ -1,0 +1,272 @@
+[
+    {
+        "id_recetario": 1,
+        "ciclos": [
+            {
+                "id_ciclo": 492,
+                "pesoTotal": 59.6,
+                "fecha_fin": 1721211479
+            },
+            {
+                "id_ciclo": 774,
+                "pesoTotal": 0.72,
+                "fecha_fin": 1714951043
+            },
+            {
+                "id_ciclo": 553,
+                "pesoTotal": 46.91,
+                "fecha_fin": 1681949379
+            },
+            {
+                "id_ciclo": 422,
+                "pesoTotal": 17.64,
+                "fecha_fin": 1634930498
+            },
+            {
+                "id_ciclo": 532,
+                "pesoTotal": 93.39,
+                "fecha_fin": 1622804902
+            },
+            {
+                "id_ciclo": 779,
+                "pesoTotal": 6.53,
+                "fecha_fin": 1618483576
+            },
+            {
+                "id_ciclo": 933,
+                "pesoTotal": 37.78,
+                "fecha_fin": 1607974169
+            },
+            {
+                "id_ciclo": 913,
+                "pesoTotal": 49.84,
+                "fecha_fin": 1598150584
+            },
+            {
+                "id_ciclo": 214,
+                "pesoTotal": 37.59,
+                "fecha_fin": 1592343833
+            },
+            {
+                "id_ciclo": 52,
+                "pesoTotal": 48.2,
+                "fecha_fin": 1583792305
+            },
+            {
+                "id_ciclo": 659,
+                "pesoTotal": 97.83,
+                "fecha_fin": 1582336569
+            }
+        ]
+    },
+    {
+        "id_recetario": 2,
+        "ciclos": [
+            {
+                "id_ciclo": 458,
+                "pesoTotal": 35.53,
+                "fecha_fin": 1688254489
+            },
+            {
+                "id_ciclo": 449,
+                "pesoTotal": 1.96,
+                "fecha_fin": 1681754064
+            },
+            {
+                "id_ciclo": 517,
+                "pesoTotal": 41.34,
+                "fecha_fin": 1681514970
+            },
+            {
+                "id_ciclo": 541,
+                "pesoTotal": 11.23,
+                "fecha_fin": 1664322502
+            },
+            {
+                "id_ciclo": 553,
+                "pesoTotal": 58.37,
+                "fecha_fin": 1655479661
+            },
+            {
+                "id_ciclo": 566,
+                "pesoTotal": 37.74,
+                "fecha_fin": 1642081280
+            },
+            {
+                "id_ciclo": 857,
+                "pesoTotal": 4.46,
+                "fecha_fin": 1591224153
+            }
+        ]
+    },
+    {
+        "id_recetario": 3,
+        "ciclos": [
+            {
+                "id_ciclo": 503,
+                "pesoTotal": 79.72,
+                "fecha_fin": 1730017579
+            },
+            {
+                "id_ciclo": 644,
+                "pesoTotal": 19.26,
+                "fecha_fin": 1721252137
+            },
+            {
+                "id_ciclo": 955,
+                "pesoTotal": 7.46,
+                "fecha_fin": 1715944060
+            },
+            {
+                "id_ciclo": 740,
+                "pesoTotal": 60.53,
+                "fecha_fin": 1694341107
+            },
+            {
+                "id_ciclo": 875,
+                "pesoTotal": 84.53,
+                "fecha_fin": 1693191402
+            },
+            {
+                "id_ciclo": 7,
+                "pesoTotal": 44.24,
+                "fecha_fin": 1689051613
+            },
+            {
+                "id_ciclo": 541,
+                "pesoTotal": 59.15,
+                "fecha_fin": 1653523426
+            },
+            {
+                "id_ciclo": 826,
+                "pesoTotal": 20.19,
+                "fecha_fin": 1651528791
+            },
+            {
+                "id_ciclo": 555,
+                "pesoTotal": 21.42,
+                "fecha_fin": 1645817621
+            },
+            {
+                "id_ciclo": 853,
+                "pesoTotal": 59.04,
+                "fecha_fin": 1636084147
+            },
+            {
+                "id_ciclo": 15,
+                "pesoTotal": 75.09,
+                "fecha_fin": 1613479461
+            },
+            {
+                "id_ciclo": 135,
+                "pesoTotal": 46.72,
+                "fecha_fin": 1602302041
+            },
+            {
+                "id_ciclo": 768,
+                "pesoTotal": 33.38,
+                "fecha_fin": 1598547796
+            },
+            {
+                "id_ciclo": 871,
+                "pesoTotal": 10.64,
+                "fecha_fin": 1590133249
+            },
+            {
+                "id_ciclo": 744,
+                "pesoTotal": 81.86,
+                "fecha_fin": 1580370419
+            }
+        ]
+    },
+    {
+        "id_recetario": 4,
+        "ciclos": [
+            {
+                "id_ciclo": 545,
+                "pesoTotal": 61.13,
+                "fecha_fin": 1729640084
+            },
+            {
+                "id_ciclo": 209,
+                "pesoTotal": 44.18,
+                "fecha_fin": 1697736428
+            },
+            {
+                "id_ciclo": 199,
+                "pesoTotal": 14.08,
+                "fecha_fin": 1687045542
+            },
+            {
+                "id_ciclo": 508,
+                "pesoTotal": 53.63,
+                "fecha_fin": 1670842936
+            },
+            {
+                "id_ciclo": 462,
+                "pesoTotal": 83.42,
+                "fecha_fin": 1657903618
+            },
+            {
+                "id_ciclo": 770,
+                "pesoTotal": 34.17,
+                "fecha_fin": 1655359050
+            },
+            {
+                "id_ciclo": 885,
+                "pesoTotal": 19.39,
+                "fecha_fin": 1639635204
+            },
+            {
+                "id_ciclo": 998,
+                "pesoTotal": 53.39,
+                "fecha_fin": 1624332321
+            },
+            {
+                "id_ciclo": 26,
+                "pesoTotal": 92.71,
+                "fecha_fin": 1621296532
+            },
+            {
+                "id_ciclo": 646,
+                "pesoTotal": 4.97,
+                "fecha_fin": 1587272524
+            },
+            {
+                "id_ciclo": 313,
+                "pesoTotal": 24.0,
+                "fecha_fin": 1578658079
+            }
+        ]
+    },
+    {
+        "id_recetario": 5,
+        "ciclos": [
+            {
+                "id_ciclo": 970,
+                "pesoTotal": 75.31,
+                "fecha_fin": 1721100268
+            },
+            {
+                "id_ciclo": 966,
+                "pesoTotal": 77.91,
+                "fecha_fin": 1689122035
+            },
+            {
+                "id_ciclo": 414,
+                "pesoTotal": 90.43,
+                "fecha_fin": 1655152337
+            },
+            {
+                "id_ciclo": 385,
+                "pesoTotal": 53.4,
+                "fecha_fin": 1645105488
+            },
+            {
+                "id_ciclo": 38,
+                "pesoTotal": 56.82,
+                "fecha_fin": 1623492431
+            }
+        ]
+    }
+]

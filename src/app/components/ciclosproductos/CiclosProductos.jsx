@@ -1,31 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import style from "./CiclosProductos.module.css";
 import Grafico1 from "./grafico_realizados/grafico_realizados";
 
 const CiclosProductos = () => {
-    // Datos de ejemplo para los productos
-    const productos = [
-        {
-            nombreProducto: "Ciclos",
-            data: [
-                { x: 1640995200, y: 10 },
-                { x: 1641081600, y: 15 },
-                { x: 1641168000, y: 20 }
-            ],
-            color: "orange", // Color para Ciclos
-        },
-        {
-            nombreProducto: "Peso",
-            data: [
-                { x: 1640995200, y: 30 },
-                { x: 1641081600, y: 25 },
-                { x: 1641168000, y: 35 }
-            ],
-            color: "blue", // Color para Peso
-        }
-    ];
+    const [productos, setProductos] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("/data/cycles.json");
+                const data = await response.json();
+
+                const formattedProducts = data.map((recetario) => ({
+                    nombreProducto: `Recetario ${recetario.id_recetario}`,
+                    data: recetario.ciclos.map((ciclo) => ({
+                        x: Math.floor(new Date(ciclo.fecha_fin).getTime() / 1000),
+                        y: ciclo.pesoTotal,
+                    })),
+                    color: `#${Math.floor(Math.random() * 16777215).toString(16)}`, // Color aleatorio
+                }));
+
+                setProductos(formattedProducts);
+            } catch (error) {
+                console.error("Error loading data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div className={style.prodReal}>
