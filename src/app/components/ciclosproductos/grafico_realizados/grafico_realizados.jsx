@@ -72,8 +72,21 @@ const Grafico = () => {
                 
             });
 
-            const seriesPeso = chart.addLineSeries({ color: "blue", lineWidth: 2, priceScaleId: 'right' });
-            const seriesCiclos = chart.addLineSeries({ color: "orange", lineWidth: 2, priceScaleId: 'left' });
+            const seriesPeso = chart.addLineSeries({ 
+                color: "blue", 
+                lineWidth: 2, 
+                priceScaleId: 'right',
+                title:'Tn',
+                fontSize: '18px'
+            });
+            
+                const seriesCiclos = chart.addLineSeries({
+                color: "orange",
+                lineWidth: 2,
+                priceScaleId: 'left',
+                title:'Ciclos',
+                fontSize: '18px'
+            });
 
             seriesPeso.setData(dataPeso);
             seriesCiclos.setData(dataCiclos);
