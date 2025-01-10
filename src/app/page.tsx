@@ -8,11 +8,12 @@ import NavDatos from "./components/navdatos/NavDatos.jsx"
 import EquipoX from "./desmoldeo/equipox/page.jsx"
 import BotonNoti from "./components/notificaciones/page.jsx"
 
+import Login from "./login/page.jsx";
+
 export default function Page() {
   return (
     <>
-      <Completo />
-      <BotonNoti />
+      <Login />
     </>
   );
 }
