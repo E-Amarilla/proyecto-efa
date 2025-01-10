@@ -1,6 +1,6 @@
 "use client";
 import puntoGris from './IMG/puntoGris.png';
-import puntoVerde from './IMG/puntoVerde.png'; // Asumimos que tienes un icono para true
+import puntoVerde from './IMG/puntoVerde.png';
 import useWebSocket from '@/app/utils/useWebSocket';
 import Image from "next/image";
 //styles
@@ -19,6 +19,9 @@ const SectorIOComponent = () => {
 
     const [sectorIO, setSectorIO] = useState(initialSectorIO);
     
+    const pollId = "lista-tiempo-real";
+    const { data, error, isConnected } = useWebSocket(pollId);
+
     useEffect(() => {
         if (data && data.sectorIO) {
             const updatedSectorIO = sectorIO.map((item, index) => ({

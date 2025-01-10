@@ -1,45 +1,45 @@
 "use client";
 
 //styles
-import style from './DatosKuka.module.css';
+import style from './DatosRobot.module.css';
 import textstyle from '../texto.module.css';
 import useWebSocket from '@/app/utils/useWebSocket';
 import React, { useState, useEffect } from 'react';
 
-const DatosKukaComponent = () => {
+const DatosRobotComponent = () => {
 
-    const initialDatosKuka = [
-        { id: 1, texto: 'N° TORRE ACTUAL', dato: null},
-        { id: 2, texto: 'TORRE NIVEL ACTUAL', dato: null},
-        { id: 3, texto: 'TAG ACTUAL', dato: null},
+    const initialDatosRobot = [
+        { id: 1, texto: 'POSICION X', dato: null, texto2: ' mm'},
+        { id: 2, texto: 'POSICION Y', dato: null, texto2: ' mm'},
+        { id: 3, texto: 'POSICION Z', dato: null, texto2: ' mm'},
     ];
 
-    const [datosKuka, setDatosKuka] = useState(initialDatosKuka);
+    const [datosRobot, setDatosRobot] = useState(initialDatosRobot);
 
     const pollId = "lista-tiempo-real";
     const { data, error, isConnected } = useWebSocket(pollId);
 
     useEffect(() => {
-        if (data && data.datosKuka) {
-            const updatedDatosKuka = initialDatosKuka.map((item, index) => ({
+        if (data && data.datosRobot) {
+            const updatedDatosRobot = initialDatosRobot.map((item, index) => ({
                 ...item,
-                dato: data.datosKuka[index] !== undefined ? data.datosKuka[index] : null
+                dato: data.datosRobot[index] !== undefined ? data.datosRobot[index] : null
             }));
-            setDatosKuka(updatedDatosKuka);
+            setDatosRobot(updatedDatosRobot);
         }
     }, [data]);
 
     return (
         <>
             <div className={style.datosGen}>
-                <h1 className={textstyle.titulo}>DATOS KUKA</h1>
+                <h1 className={textstyle.titulo}>DATOS ROBOT</h1>
                 <div className={style.contenedorDatos}>
-                    {datosKuka.map(({ id, texto, dato, icono }) => (
+                    {datosRobot.map(({ id, texto, dato, texto2 }) => (
                         <div key={id} className={style.datoList}>
                             <div className={style.detallesDatos}>
                                 <div className={style.texto}>
                                     <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                    <h4 className={textstyle.h4}>{dato === null ? 'null' : dato.toString()}</h4>
+                                    <h4 className={textstyle.h4}>{dato === null ? 'null' : dato.toString()} {texto2}</h4>
                                 </div>
                             </div>
                         </div>
@@ -50,4 +50,4 @@ const DatosKukaComponent = () => {
     );
 };
 
-export default DatosKukaComponent;
+export default DatosRobotComponent;

@@ -22,11 +22,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         
       </head>
       <body>
+      <div className="scrollablecontent">
         {!esLogin && <Header />} {/*CONDICIONAL HEADER, NO BORRAR*/}
         <div>
           {children}
         </div>
         {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
+      </div>
       </body>
     </html>
   );

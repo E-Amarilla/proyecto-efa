@@ -1,5 +1,6 @@
 "use client";
 
+import {Card, Skeleton} from "@nextui-org/react";
 import useWebSocket from '../../utils/useWebSocket';
 import React, { useState, useEffect } from 'react';
 import style from './NavDatos.module.css';
@@ -21,9 +22,10 @@ const NavDatos = () => {
         NroGriper,
         PesoProducto,
         NivelActual,
+        TotalNiveles,
         torreActual,
         PesoActual,
-        Estado,
+        TipoMolde,
         TiempoTranscurrido
     } = data || {};  // Si data es null, evita un error de desestructuración
 
@@ -34,8 +36,8 @@ const NavDatos = () => {
         { id: 4, nombre: 'Peso producto', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto : 'null' },
         { id: 5, nombre: 'Peso total producto', dato: PesoActual !== undefined && PesoActual !== null ? PesoActual : 'null' },
         { id: 6, nombre: 'N° Torre actual', dato: torreActual !== undefined && torreActual !== null ? torreActual : 'null' },
-        { id: 7, nombre: 'Torre nivel actual', dato: NivelActual !== undefined && NivelActual !== null ? NivelActual : 'null' },
-        { id: 8, nombre: 'Estado', dato: Estado !== undefined && Estado !== null ? Estado : 'null' },
+        { id: 7, nombre: 'Torre nivel actual', dato: (NivelActual !== undefined && NivelActual !== null ? NivelActual : 'null') + "/" + (TotalNiveles !== undefined && TotalNiveles !== null ? TotalNiveles : 'null')},
+        { id: 8, nombre: 'N° Molde', dato: TipoMolde !== undefined && TipoMolde !== null ? TipoMolde : 'null' },
         { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : 'null' },
     ];       
 

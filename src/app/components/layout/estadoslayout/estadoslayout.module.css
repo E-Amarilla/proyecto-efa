@@ -1,0 +1,50 @@
+.contenedorDatos {
+    margin: 0 0 -4 10;;
+}
+
+.contenedores {
+    display: flex;
+    flex-direction: row;
+}
+
+.icon {
+    margin: auto;
+    width: 15px;
+    height: 15px;
+    margin: 5px;
+    margin-left: -5px;
+}
+
+.estadoActivo {
+    margin: 0 0 -6 0;
+    color: green;
+    font-weight: bold;
+}
+
+.estadoPausa {
+    margin: 0 0 -6 0;
+    color: #555555;
+    font-weight: bold;
+}
+
+.estadoInactivo {
+    color: #b92400;
+    font-weight: bold;
+}
+
+.estadoEspera {
+    color: #555555;
+    font-weight: bold;
+    margin-left: -5px;
+}
+
+.tiempo {
+    color: white;
+}
+
+.area {
+    color: white;
+    font-weight: bold;
+    font-size: 2rem;
+    margin: 0 0 -7 0;
+}

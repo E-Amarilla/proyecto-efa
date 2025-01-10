@@ -37,7 +37,7 @@ const DatosDesmoldeo = () => {
                                     </div>
                                 ) : (
                                     <div className={style.contenedorInactivo}>
-                                        <h3 className={style.h3inactivo}>{nombre}</h3> {/* acá se va a incluir {nombre} cuando se definan las variables */}
+                                        <h3 className={style.h3inactivo}>{nombre}</h3>
                                     </div>
                                 )}
                             </a>

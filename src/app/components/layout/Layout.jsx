@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";  // Importa Link de Next.js
 import LayoutIMG from './IMG/LAYOUT.png';
 import style from './Layout.module.css';
+import EstadosLayout from "./estadoslayout/estadoslayout";
 
 const Layout = () => {
   const sections = [
@@ -18,6 +19,9 @@ const Layout = () => {
 
   return (
     <div className={style.layoutContainer}>
+      <div className={style.estadoLayout}>
+        <EstadosLayout />
+      </div>
       <Image src={LayoutIMG} alt="Layout" className={style.backgroundImage} />
       {sections.map((section) => (
         <Link key={section.id} href={section.path}>
@@ -32,12 +36,5 @@ const Layout = () => {
     </div>
   );
 };
-
-const Sector = ({ name }) => (
-  <div className={style.sectorContainer}>
-    <h1>{name}</h1>
-    <p>Bienvenido a {name}.</p>
-  </div>
-);
 
 export default Layout;

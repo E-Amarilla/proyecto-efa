@@ -1,5 +1,6 @@
 "use client";
 
+import {Card, Skeleton} from "@nextui-org/react";
 import receta1 from './IMG/RECETA.png';
 import receta2 from './IMG/RECETA2.png';
 import peso from './IMG/PESO.png';
@@ -33,7 +34,7 @@ const DatosGenerales = () => {
         { id: 3, texto: 'PROXIMA RECETA', dato: ProximaReceta !== undefined && ProximaReceta !== null ? ProximaReceta : 'null', icono:receta2 },
         { id: 4, texto: 'PESO TOTAL PRODUCTO', dato: PesoTotalProducto !== undefined && PesoTotalProducto !== null ? PesoTotalProducto : 'null', icono:peso  },
         { id: 5, texto: 'ESTADO', dato: Estado !== undefined && Estado !== null ? Estado : 'null', icono:estado },
-        { id: 6, texto: 'TIEMPO TRANSCURRIDO', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : 'null', icono:tiempo },
+        { id: 6, texto: 'TIEMPO TRANSCURRIDO', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00hs', icono: tiempo },
     ];       
 
     return (

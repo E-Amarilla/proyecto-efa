@@ -49,7 +49,6 @@ const LayoutCompleto = () => {
         src={LayoutIMG}
         alt="Layout"
         className={style.backgroundImage}
-        priority={true}
       />
       {sections.map((section) => (
         <Link href={section.path} key={section.id}>
