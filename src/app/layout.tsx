@@ -14,7 +14,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   const pathname = usePathname();
   const esDesmoldeo = pathname === '/desmoldeo';
-  const esLogin = ['/login', '/login/recuperarcontrasena'].includes(pathname);
+  const esLogin = ['/', '/signup', '/login', '/login/recuperacion'].includes(pathname);
 
   return (
     <html lang="en">
