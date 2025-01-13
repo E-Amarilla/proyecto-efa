@@ -1,0 +1,92 @@
+[
+  {
+    "nombre": "Pan de molde",
+    "ciclo": [
+      { "id_ciclo": 1, "pesoTotal": 1500, "fecha_fin": 1736564399 },
+      { "id_ciclo": 2, "pesoTotal": 1480, "fecha_fin": 1736751999 },
+      { "id_ciclo": 3, "pesoTotal": 1525, "fecha_fin": 1736939599 },
+      { "id_ciclo": 4, "pesoTotal": 1490, "fecha_fin": 1737127199 },
+      { "id_ciclo": 5, "pesoTotal": 1555, "fecha_fin": 1737314799 },
+      { "id_ciclo": 6, "pesoTotal": 1500, "fecha_fin": 1737502399 },
+      { "id_ciclo": 7, "pesoTotal": 1600, "fecha_fin": 1737689999 },
+      { "id_ciclo": 8, "pesoTotal": 1580, "fecha_fin": 1737877599 },
+      { "id_ciclo": 9, "pesoTotal": 1620, "fecha_fin": 1738065199 },
+      { "id_ciclo": 10, "pesoTotal": 1640, "fecha_fin": 1738252799 }
+    ]
+  },
+  {
+    "nombre": "Bizcocho de vainilla",
+    "ciclo": [
+      { "id_ciclo": 1, "pesoTotal": 2100, "fecha_fin": 1736564399 },
+      { "id_ciclo": 2, "pesoTotal": 2050, "fecha_fin": 1736747999 },
+      { "id_ciclo": 3, "pesoTotal": 2155, "fecha_fin": 1736931599 },
+      { "id_ciclo": 4, "pesoTotal": 2080, "fecha_fin": 1737115199 },
+      { "id_ciclo": 5, "pesoTotal": 2200, "fecha_fin": 1737298799 },
+      { "id_ciclo": 6, "pesoTotal": 2150, "fecha_fin": 1737482399 },
+      { "id_ciclo": 7, "pesoTotal": 2250, "fecha_fin": 1737665999 },
+      { "id_ciclo": 8, "pesoTotal": 2230, "fecha_fin": 1737849599 },
+      { "id_ciclo": 9, "pesoTotal": 2300, "fecha_fin": 1738033199 },
+      { "id_ciclo": 10, "pesoTotal": 2350, "fecha_fin": 1738216799 }
+    ]
+  },
+  {
+    "nombre": "Tarta de chocolate",
+    "ciclo": [
+      { "id_ciclo": 1, "pesoTotal": 1250, "fecha_fin": 1736564399 },
+      { "id_ciclo": 2, "pesoTotal": 1275, "fecha_fin": 1736741599 },
+      { "id_ciclo": 3, "pesoTotal": 1225, "fecha_fin": 1736918799 },
+      { "id_ciclo": 4, "pesoTotal": 1290, "fecha_fin": 1737095999 },
+      { "id_ciclo": 5, "pesoTotal": 1285, "fecha_fin": 1737273199 },
+      { "id_ciclo": 6, "pesoTotal": 1330, "fecha_fin": 1737450399 },
+      { "id_ciclo": 7, "pesoTotal": 1310, "fecha_fin": 1737627599 },
+      { "id_ciclo": 8, "pesoTotal": 1385, "fecha_fin": 1737804799 },
+      { "id_ciclo": 9, "pesoTotal": 1355, "fecha_fin": 1737981999 },
+      { "id_ciclo": 10, "pesoTotal": 1405, "fecha_fin": 1738159199 }
+    ]
+  },
+  {
+    "nombre": "Pan de pita",
+    "ciclo": [
+      { "id_ciclo": 1, "pesoTotal": 1200, "fecha_fin": 1736564399 },
+      { "id_ciclo": 2, "pesoTotal": 1220, "fecha_fin": 1736723199 },
+      { "id_ciclo": 3, "pesoTotal": 1215, "fecha_fin": 1736881999 },
+      { "id_ciclo": 4, "pesoTotal": 1235, "fecha_fin": 1737040799 },
+      { "id_ciclo": 5, "pesoTotal": 1240, "fecha_fin": 1737199599 },
+      { "id_ciclo": 6, "pesoTotal": 1285, "fecha_fin": 1737358399 },
+      { "id_ciclo": 7, "pesoTotal": 1265, "fecha_fin": 1737517199 },
+      { "id_ciclo": 8, "pesoTotal": 1305, "fecha_fin": 1737675999 },
+      { "id_ciclo": 9, "pesoTotal": 1325, "fecha_fin": 1737834799 },
+      { "id_ciclo": 10, "pesoTotal": 1340, "fecha_fin": 1737993599 }
+    ]
+  },
+  {
+    "nombre": "Galletas de avena",
+    "ciclo": [
+      { "id_ciclo": 1, "pesoTotal": 200, "fecha_fin": 1736564399 },
+      { "id_ciclo": 2, "pesoTotal": 250, "fecha_fin": 1736707199 },
+      { "id_ciclo": 3, "pesoTotal": 220, "fecha_fin": 1736849999 },
+      { "id_ciclo": 4, "pesoTotal": 260, "fecha_fin": 1736992799 },
+      { "id_ciclo": 5, "pesoTotal": 230, "fecha_fin": 1737135599 },
+      { "id_ciclo": 6, "pesoTotal": 270, "fecha_fin": 1737278399 },
+      { "id_ciclo": 7, "pesoTotal": 250, "fecha_fin": 1737421199 },
+      { "id_ciclo": 8, "pesoTotal": 280, "fecha_fin": 1737563999 },
+      { "id_ciclo": 9, "pesoTotal": 260, "fecha_fin": 1737706799 },
+      { "id_ciclo": 10, "pesoTotal": 300, "fecha_fin": 1737849599 }
+    ]
+  },
+  {
+    "nombre": "Magdalenas",
+    "ciclo": [
+      { "id_ciclo": 1, "pesoTotal": 500, "fecha_fin": 1736564399 },
+      { "id_ciclo": 2, "pesoTotal": 520, "fecha_fin": 1736751999 },
+      { "id_ciclo": 3, "pesoTotal": 510, "fecha_fin": 1736939599 },
+      { "id_ciclo": 4, "pesoTotal": 530, "fecha_fin": 1737127199 },
+      { "id_ciclo": 5, "pesoTotal": 540, "fecha_fin": 1737314799 },
+      { "id_ciclo": 6, "pesoTotal": 550, "fecha_fin": 1737502399 },
+      { "id_ciclo": 7, "pesoTotal": 560, "fecha_fin": 1737689999 },
+      { "id_ciclo": 8, "pesoTotal": 570, "fecha_fin": 1737877599 },
+      { "id_ciclo": 9, "pesoTotal": 580, "fecha_fin": 1738065199 },
+      { "id_ciclo": 10, "pesoTotal": 590, "fecha_fin": 1738252799 }
+    ]
+  }
+]
