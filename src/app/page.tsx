@@ -8,7 +8,7 @@ import NavDatos from "./components/navdatos/NavDatos.jsx"
 import EquipoX from "./desmoldeo/equipox/page.jsx"
 import BotonNoti from "./components/notificaciones/page.jsx"
 
-import Login from "./components/ciclosrealizados/productosrealizados/grafico_ciclos/grafico_ciclos.jsx";
+import Login from "./components/ciclosproductos/grafico_realizados/grafico_realizados.jsx";
 
 export default function Page() {
   return (
