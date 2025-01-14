@@ -1,21 +1,29 @@
+// Productividad.jsx
+'use client';
+
 import style from './Productividad.module.css';
 import FiltroPeriodo from '../filtroperiodo/FiltroPeriodo.jsx';
-
+import useWebSocket from '../../utils/useWebSocket.js';
 
 const Productividad = () => {
+    const pollId = "productividad_datos";
+    const { data, error, isConnected } = useWebSocket(pollId);
+
+    const {
+        N_LoteProducto,
+        Nombre_Prod,
+        PesoTotal_Prod,
+        Ciclos_Realiz,
+        Prod_Total,
+        Horas_Uso
+    } = data || {};  // Si data es null, evita un error de desestructuración
+    
+    const Promedio_Horas = (Horas_Uso, Cant_Dias) => { return Horas_Uso / (Cant_Dias * 24); };
+
     const datos = [
-        {
-            titulo: 'Ciclos totales realizados',
-            valor: 15,
-        },
-        {
-            titulo: 'Producción total',
-            valor: '16,5 Tn',
-        },
-        {
-            titulo: 'Horas de uso / Horas posibles',
-            valor: '12/48',
-        }
+        { id: 1, titulo: 'Ciclos realizados', dato: Ciclos_Realiz !== undefined && Ciclos_Realiz !== null ? Ciclos_Realiz : 'null' },
+        { id: 2, titulo: 'Produccion total', dato: Prod_Total !== undefined && RecetaProximaDesmolde !== null ? Prod_Total : 'null' },
+        { id: 3, titulo: 'Horas de uso diarias', dato: Promedio_Horas !== undefined && Promedio_Horas !== null ? Promedio_Horas : 'null' },
     ];
 
     const productos = [
@@ -97,3 +105,4 @@ const Productividad = () => {
 };
 
 export default Productividad;
+
