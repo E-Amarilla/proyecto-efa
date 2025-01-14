@@ -1,6 +1,7 @@
 import NavDatos from '../components/navdatos/NavDatos.jsx';
 import Productividad from '../components/productividad/Productividad.jsx';
 
+import FiltroPeriodo from '../components/filtroperiodo/FiltroPeriodo.jsx';
 
 import Grafico1 from '../components/grafico_realizados/grafico_realizados.jsx';
 import Grafico2 from '../components/grafico_ciclos/grafico_ciclos.jsx';
@@ -25,8 +26,8 @@ function Desmoldeo() {
 
                 <section id="section3" className={style.seccion}>
                     <Grafico1 />
-                    <div>
-                        
+                    <div className={style.graph2}>
+                        <FiltroPeriodo />
                         <Grafico2 />
                     </div>
                 </section>
