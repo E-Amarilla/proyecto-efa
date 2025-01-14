@@ -5,7 +5,7 @@ import style from "./Productividad.module.css";
 import FiltroPeriodo from "../filtroperiodo/FiltroPeriodo.jsx";
 
 const Productividad = () => {
-    const today = new Date().toISOString().split("T")[0]; // Obtener fecha actual en formato YYYY-MM-DD
+    const today = new Date().toISOString().split("T")[0];
 
     const [data, setData] = useState(null);
     const [dateRange, setDateRange] = useState({
@@ -13,9 +13,9 @@ const Productividad = () => {
         end: today,
     });
 
-    // Función que actualiza los datos
-    const handleDataUpdate = (newData) => {
+    const handleDataUpdate = (newData, startDate, endDate) => {
         setData(newData);
+        setDateRange({ start: startDate, end: endDate });
     };
 
     const Cant_Dias = 7;
@@ -48,14 +48,16 @@ const Productividad = () => {
         <div className={style.all}>
             <div className={style.productividad}>
                 <h2 className={style.titulo}>PRODUCTIVIDAD</h2>
-                <p className={style.fecha}>
-                    {dateRange.start} - {dateRange.end}
-                </p>
+                <div className={style.fechaContainer}>
+                    <span className={style.fecha}>{dateRange.start}</span>
+                    <span className={style.separator}> - </span>
+                    <span className={style.fecha}>{dateRange.end}</span>
+                </div>
                 <div className={style.metricaContainer}>
                     {datos.map((dato, index) => (
                         <div key={index} className={style.metrica}>
-                            <p className={style.descripcion}>{dato.titulo}</p>
                             <p className={style.valor}>{dato.dato}</p>
+                            <p className={style.descripcion}>{dato.titulo}</p>
                         </div>
                     ))}
                 </div>
@@ -88,7 +90,6 @@ const Productividad = () => {
                 </div>
             </div>
             <div className={style.filtro}>
-                {/* Asegúrate de pasar la función handleDataUpdate correctamente */}
                 <FiltroPeriodo onDataUpdate={handleDataUpdate} />
             </div>
         </div>

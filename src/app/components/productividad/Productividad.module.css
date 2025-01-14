@@ -19,8 +19,23 @@
 .titulo {
     text-align: left;
     font-size: 1vw;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.fechaContainer {
+    display: flex;
+    align-items: center;
+}
+
+.fecha {
+    display: inline;
+    color: orange;
+}
+
+.separator {
+    display: inline;
+    padding: 0 5px;
+    font-weight: bold;
 }
 
 .metricaContainer {
@@ -31,7 +46,7 @@
 }
 
 .metrica {
-    display: flex;
+    display: grid;
     align-items: center;
     text-align: center;
 }
@@ -95,7 +110,7 @@
     border-top: 4px solid #ccc;
     border-radius: 15px;
     margin: 20px auto;
-    width: 70%;
+    width: 80%;
 }
 
 .filtro {
