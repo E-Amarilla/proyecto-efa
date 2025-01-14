@@ -93,18 +93,21 @@ const Grafico = () => {
             color: "orange",
             lineWidth: 2,
             priceScaleId: 'left',
-            title:'Ciclos',
-            fontSize: '18px'
+            priceLineVisible: false, // Ocultar la línea de precio
+            title: 'Ciclos',
+            fontSize: '18px',
         });
 
         // Crear serie de línea para pesoProducto
         const lineSeriesPeso = chart.addLineSeries({
-            color: "blue", 
-            lineWidth: 2, 
+            color: "blue",
+            lineWidth: 2,
             priceScaleId: 'right',
-            title:'Tn',
-            fontSize: '18px'
+            priceLineVisible: false, // Ocultar la línea de precio
+            title: 'Tn',
+            fontSize: '18px',
         });
+
 
         // Guardar las referencias de las series
         seriesRef.current["Ciclos"] = lineSeriesCiclos;
