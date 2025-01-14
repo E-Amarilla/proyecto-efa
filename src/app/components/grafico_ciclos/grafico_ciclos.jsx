@@ -176,7 +176,7 @@ const Grafico = () => {
     return (
         <div
             id="container-wrapper"   
-            style={{ width: "100%", height: "auto", backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
+            style={{ width: "100%", minHeight: "500px", maxHeight: "auto", backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
         >
             <div style={{ display: "flex", justifyContent: "left", textAlign: "left", flexDirection: "column" }}>
                 <h1 style={{ margin: "0px", color:"#d9d9d9" }}>PRODUCTOS REALIZADOS</h1>

@@ -37,11 +37,11 @@ const Grafico = () => {
             },
             leftPriceScale: {
                 visible: true,
-                borderColor: 'rgba(255, 165, 0, 0.5)',
+                borderColor: 'orange',
             },
             rightPriceScale: {
                 visible: true,
-                borderColor: 'rgba(197, 203, 206, 1)',
+                borderColor: 'blue',
             }
         };
 
@@ -187,7 +187,7 @@ const Grafico = () => {
     return (
         <div
             id="container"   
-            style={{ width: "100%", height: "500px", backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
+            style={{ width: "100%", minHeight: "500px", maxHeight: "auto",backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
         >
             <div style={{ display: "flex", justifyContent: "left", textAlign: "left", flexDirection: "column" }}>
                 <h1 style={{ margin: "0px", color:"#d9d9d9" }}>CICLOS POR PRODUCTO</h1>

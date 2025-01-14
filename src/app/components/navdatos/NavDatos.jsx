@@ -77,6 +77,7 @@ const NavDatos = () => {
             setActiveSection(id);
         }
     };
+    
 
     return (
         <>

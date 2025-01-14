@@ -2,181 +2,105 @@
   {
     "nombre": "Pan de molde",
     "ciclo": [
-      {
-        "id_ciclo": 1,
-        "pesoTotal": 1500,
-        "fecha_fin": 1736564399
-      }
+      { "id_ciclo": 1, "pesoTotal": 1500, "fecha_fin": 1736564399 },
+      { "id_ciclo": 14, "pesoTotal": 1600, "fecha_fin": 1737164399 },
+      { "id_ciclo": 15, "pesoTotal": 1700, "fecha_fin": 1737764399 }
     ]
   },
   {
     "nombre": "Bizcocho de vainilla",
     "ciclo": [
-      {
-        "id_ciclo": 2,
-        "pesoTotal": 2100,
-        "fecha_fin": 1737428399
-      }
+      { "id_ciclo": 2, "pesoTotal": 2100, "fecha_fin": 1737428399 },
+      { "id_ciclo": 16, "pesoTotal": 2200, "fecha_fin": 1738028399 },
+      { "id_ciclo": 17, "pesoTotal": 2300, "fecha_fin": 1738628399 }
     ]
   },
   {
     "nombre": "Tarta de chocolate",
     "ciclo": [
-      {
-        "id_ciclo": 3,
-        "pesoTotal": 1250,
-        "fecha_fin": 1738292399
-      }
+      { "id_ciclo": 3, "pesoTotal": 1250, "fecha_fin": 1738292399 },
+      { "id_ciclo": 18, "pesoTotal": 1350, "fecha_fin": 1738892399 },
+      { "id_ciclo": 19, "pesoTotal": 1400, "fecha_fin": 1739492399 }
     ]
   },
   {
     "nombre": "Pan de pita",
     "ciclo": [
-      {
-        "id_ciclo": 4,
-        "pesoTotal": 1200,
-        "fecha_fin": 1739242799
-      }
+      { "id_ciclo": 4, "pesoTotal": 1200, "fecha_fin": 1739242799 },
+      { "id_ciclo": 20, "pesoTotal": 1250, "fecha_fin": 1739842799 },
+      { "id_ciclo": 21, "pesoTotal": 1300, "fecha_fin": 1740442799 }
     ]
   },
   {
     "nombre": "Galletas de avena",
     "ciclo": [
-      {
-        "id_ciclo": 5,
-        "pesoTotal": 200,
-        "fecha_fin": 1740106799
-      }
+      { "id_ciclo": 5, "pesoTotal": 200, "fecha_fin": 1740106799 },
+      { "id_ciclo": 22, "pesoTotal": 220, "fecha_fin": 1740706799 },
+      { "id_ciclo": 23, "pesoTotal": 250, "fecha_fin": 1741306799 }
     ]
   },
   {
     "nombre": "Brownie",
     "ciclo": [
-      {
-        "id_ciclo": 6,
-        "pesoTotal": 1200,
-        "fecha_fin": 1740970799
-      }
+      { "id_ciclo": 6, "pesoTotal": 1200, "fecha_fin": 1740970799 },
+      { "id_ciclo": 24, "pesoTotal": 1300, "fecha_fin": 1741570799 },
+      { "id_ciclo": 25, "pesoTotal": 1400, "fecha_fin": 1742170799 }
     ]
   },
   {
     "nombre": "Panecillos de leche",
     "ciclo": [
-      {
-        "id_ciclo": 7,
-        "pesoTotal": 120,
-        "fecha_fin": 1741834799
-      }
+      { "id_ciclo": 7, "pesoTotal": 120, "fecha_fin": 1741834799 },
+      { "id_ciclo": 26, "pesoTotal": 150, "fecha_fin": 1742434799 },
+      { "id_ciclo": 27, "pesoTotal": 180, "fecha_fin": 1743034799 }
     ]
   },
   {
     "nombre": "Tarta de frutas",
     "ciclo": [
-      {
-        "id_ciclo": 8,
-        "pesoTotal": 3600,
-        "fecha_fin": 1742698799
-      }
+      { "id_ciclo": 8, "pesoTotal": 3600, "fecha_fin": 1742698799 },
+      { "id_ciclo": 28, "pesoTotal": 3700, "fecha_fin": 1743298799 },
+      { "id_ciclo": 29, "pesoTotal": 3800, "fecha_fin": 1743898799 }
     ]
   },
   {
     "nombre": "Tarta de queso",
     "ciclo": [
-      {
-        "id_ciclo": 9,
-        "pesoTotal": 4500,
-        "fecha_fin": 1743562799
-      }
+      { "id_ciclo": 9, "pesoTotal": 4500, "fecha_fin": 1743562799 },
+      { "id_ciclo": 30, "pesoTotal": 4600, "fecha_fin": 1744162799 },
+      { "id_ciclo": 31, "pesoTotal": 4700, "fecha_fin": 1744762799 }
     ]
   },
   {
     "nombre": "Pizza",
     "ciclo": [
-      {
-        "id_ciclo": 10,
-        "pesoTotal": 600,
-        "fecha_fin": 1744426799
-      }
+      { "id_ciclo": 10, "pesoTotal": 600, "fecha_fin": 1744426799 },
+      { "id_ciclo": 32, "pesoTotal": 650, "fecha_fin": 1745026799 },
+      { "id_ciclo": 33, "pesoTotal": 700, "fecha_fin": 1745626799 }
     ]
   },
   {
     "nombre": "Pan de chocolate",
     "ciclo": [
-      {
-        "id_ciclo": 11,
-        "pesoTotal": 1100,
-        "fecha_fin": 1745290799
-      }
+      { "id_ciclo": 11, "pesoTotal": 1100, "fecha_fin": 1745290799 },
+      { "id_ciclo": 34, "pesoTotal": 1150, "fecha_fin": 1745890799 },
+      { "id_ciclo": 35, "pesoTotal": 1200, "fecha_fin": 1746490799 }
     ]
   },
   {
     "nombre": "Pan de pita integral",
     "ciclo": [
-      {
-        "id_ciclo": 12,
-        "pesoTotal": 330,
-        "fecha_fin": 1746154799
-      }
+      { "id_ciclo": 12, "pesoTotal": 330, "fecha_fin": 1746154799 },
+      { "id_ciclo": 36, "pesoTotal": 350, "fecha_fin": 1746754799 },
+      { "id_ciclo": 37, "pesoTotal": 370, "fecha_fin": 1747354799 }
     ]
   },
   {
     "nombre": "Tarta de manzana",
     "ciclo": [
-      {
-        "id_ciclo": 13,
-        "pesoTotal": 1750,
-        "fecha_fin": 1747018799
-      }
-    ]
-  },
-  {
-    "nombre": "Tarta de limón",
-    "ciclo": [
-      {
-        "id_ciclo": 14,
-        "pesoTotal": 3500,
-        "fecha_fin": 1747882799
-      }
-    ]
-  },
-  {
-    "nombre": "Galletas de jengibre",
-    "ciclo": [
-      {
-        "id_ciclo": 15,
-        "pesoTotal": 360,
-        "fecha_fin": 1748833199
-      }
-    ]
-  },
-  {
-    "nombre": "Crumble de manzana",
-    "ciclo": [
-      {
-        "id_ciclo": 16,
-        "pesoTotal": 2520,
-        "fecha_fin": 1749697199
-      }
-    ]
-  },
-  {
-    "nombre": "Tarta de zanahoria",
-    "ciclo": [
-      {
-        "id_ciclo": 17,
-        "pesoTotal": 2800,
-        "fecha_fin": 1750561199
-      }
-    ]
-  },
-  {
-    "nombre": "Tarta de mousse de fresa",
-    "ciclo": [
-      {
-        "id_ciclo": 18,
-        "pesoTotal": 750,
-        "fecha_fin": 1751425199
-      }
+      { "id_ciclo": 13, "pesoTotal": 1750, "fecha_fin": 1747018799 },
+      { "id_ciclo": 38, "pesoTotal": 1850, "fecha_fin": 1747618799 },
+      { "id_ciclo": 39, "pesoTotal": 1900, "fecha_fin": 1748218799 }
     ]
   }
 ]
