@@ -1,12 +1,12 @@
 "use client";
+
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import BuscarIcon from "./IMG/SearchIcon.png";
 
-export default function BotonFiltro() {
+const BotonFiltro = ({ onClick }) => {
     return (
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
-            {/* Botón PDF */}
             <Button
                 style={{
                     backgroundColor: "#1F1F1F",
@@ -15,15 +15,17 @@ export default function BotonFiltro() {
                     width: "100%",
                     height: "30px",
                     display: "flex",
+                    justifyContent: "center",
                     alignItems: "center",
                     fontSize: "15px",
-                    paddingLeft: "10px",
-                    paddingRight: "10px"
                 }}
+                onClick={onClick}
             >
-                <span>Aplicar filtro</span>
-                <Image src={BuscarIcon} alt="Buscar Icono" width={20} height={20} />
+                Aplicar filtro
+                <Image src={BuscarIcon} alt="Buscar Icono" width={20} height={20} style={{ marginLeft: "8px" }} />
             </Button>
         </div>
     );
-}
+};
+
+export default BotonFiltro;

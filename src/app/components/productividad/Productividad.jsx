@@ -1,90 +1,56 @@
-// Productividad.jsx
-'use server';
+"use client";
 
-import style from './Productividad.module.css';
-import FiltroPeriodo from '../filtroperiodo/FiltroPeriodo.jsx';
+import { useState } from "react";
+import style from "./Productividad.module.css";
+import FiltroPeriodo from "../filtroperiodo/FiltroPeriodo.jsx";
 
-const fetchData = async (fechaInicio, fechaFin) => {
-    try {
-        const response = await fetch(`http://192.168.0.169:8000/productividadresumen?fecha_inicio=${fechaInicio}&fecha_fin=${fechaFin}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
+const Productividad = () => {
+    const today = new Date().toISOString().split("T")[0]; // Obtener fecha actual en formato YYYY-MM-DD
 
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
+    const [data, setData] = useState(null);
+    const [dateRange, setDateRange] = useState({
+        start: today,
+        end: today,
+    });
 
-        return await response.json();
-    } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error;
-    }
-}
+    // Función que actualiza los datos
+    const handleDataUpdate = (newData) => {
+        setData(newData);
+    };
 
-const Productividad = async () => {
-    const fechaInicio = '2025-01-15';
-    const fechaFin = '2025-07-10';
+    const Cant_Dias = 7;
 
-    let data;
-    try {
-        data = await fetchData(fechaInicio, fechaFin);
-    } catch (error) {
-        return <div>Error loading data: {error.message}</div>;
-    }
+    const CantidadCiclosFinalizados = data?.CantidadCiclosFinalizados ?? "Cargando...";
+    const PesoTotal = data?.PesoTotal ?? "Cargando...";
+    const Horas_Uso =
+        data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
+            ? data.ProductosRealizados.reduce((acc, prod) => acc + prod.tiempoTotal, 0)
+            : "Cargando...";
 
-    if (!data) {
-        return <div>Loading...</div>;
-    }
-
-    const Cant_Dias = 7; // Supongamos que la cantidad de días es 7 para el cálculo del promedio de horas
-
-    const CantidadCiclosFinalizados = data.CantidadCiclosFinalizados !== undefined ? data.CantidadCiclosFinalizados : 'null';
-    const PesoTotal = data.PesoTotal !== undefined ? data.PesoTotal : 'null';
-    const Horas_Uso = data.ProductosRealizados && Array.isArray(data.ProductosRealizados) ? data.ProductosRealizados.reduce((acc, prod) => acc + prod.tiempoTotal, 0) : 'null';
-
-    const Promedio_Horas = (Horas_Uso, Cant_Dias) => Horas_Uso !== 'null' ? (Horas_Uso / (Cant_Dias * 24)).toFixed(2) : 'null';
+    const Promedio_Horas = (Horas_Uso, Cant_Dias) =>
+        Horas_Uso !== "Cargando..." ? (Horas_Uso / (Cant_Dias * 24)).toFixed(2) : "Cargando...";
 
     const datos = [
-        { id: 1, titulo: 'Ciclos realizados', dato: CantidadCiclosFinalizados },
-        { id: 2, titulo: 'Producción total', dato: PesoTotal },
-        { id: 3, titulo: 'Horas de uso diarias', dato: Promedio_Horas(Horas_Uso, Cant_Dias) },
+        { id: 1, titulo: "Ciclos realizados", dato: CantidadCiclosFinalizados },
+        { id: 2, titulo: "Producción total", dato: PesoTotal },
+        { id: 3, titulo: "Horas de uso diarias", dato: Promedio_Horas(Horas_Uso, Cant_Dias) },
     ];
 
     const productos = [
-        { 
-            nombre: 'Jamón 3Lb',
-            porcentaje: 15,
-            color: '#FFA500' 
-        },
-        {
-            nombre: 'Paleta 4Lb',
-            porcentaje: 35,
-            color: '#0000FF'
-        },
-        {
-            nombre: 'Jamón Premium 4Lb',
-            porcentaje: 20,
-            color: '#FF0000'
-        },
-        {
-            nombre: 'Mortadela 5Lb',
-            porcentaje: 20,
-            color: '#00FF00'
-        },
-        {
-            nombre: 'Paleta Premium 4Lb',
-            porcentaje: 10,
-            color: '#54C42D'
-        }
+        { nombre: "Jamón 3Lb", porcentaje: 15, color: "#FFA500" },
+        { nombre: "Paleta 4Lb", porcentaje: 35, color: "#0000FF" },
+        { nombre: "Jamón Premium 4Lb", porcentaje: 20, color: "#FF0000" },
+        { nombre: "Mortadela 5Lb", porcentaje: 20, color: "#00FF00" },
+        { nombre: "Paleta Premium 4Lb", porcentaje: 10, color: "#54C42D" },
     ];
 
     return (
         <div className={style.all}>
             <div className={style.productividad}>
                 <h2 className={style.titulo}>PRODUCTIVIDAD</h2>
+                <p className={style.fecha}>
+                    {dateRange.start} - {dateRange.end}
+                </p>
                 <div className={style.metricaContainer}>
                     {datos.map((dato, index) => (
                         <div key={index} className={style.metrica}>
@@ -93,7 +59,7 @@ const Productividad = async () => {
                         </div>
                     ))}
                 </div>
-                <hr className={style.divisor}/>
+                <hr className={style.divisor} />
                 <div className={style.barraContainer}>
                     <h3>% Producto realizado</h3>
                     <div className={style.barra}>
@@ -122,7 +88,8 @@ const Productividad = async () => {
                 </div>
             </div>
             <div className={style.filtro}>
-                <FiltroPeriodo />
+                {/* Asegúrate de pasar la función handleDataUpdate correctamente */}
+                <FiltroPeriodo onDataUpdate={handleDataUpdate} />
             </div>
         </div>
     );
