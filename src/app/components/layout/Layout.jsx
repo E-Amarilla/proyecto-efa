@@ -11,10 +11,10 @@ import LayoutIMG from '@/assets/img/LAYOUT.png';
 
 const Layout = () => {
   const sections = [
-    { id: 1, name: "Torre", path: "/desmoldeo/equipox", style: { top: "3.5%", left: "77.65%", width: "14.4%", height: "94.6%" }, styleclass: "Torresection" },
-    { id: 2, name: "SDDA", path: "/desmoldeo/equipox", style: { top: "35%", left: "55.9%", width: "23%", height: "35.5%" }, styleclass: "SDDAsection" },
-    { id: 3, name: "Robot", path: "/desmoldeo/equipox", style: { top: "38%", left: "34.8%", width: "14.5%", height: "25.8%" }, styleclass: "ROBOTsection" },
-    { id: 4, name: "Estacino Grippers", path: "/desmoldeo/equipox", style: { top: "75%", left: "12%", width: "10%", height: "21.6%" }, styleclass: "Grippersection" }
+    { id: 1, name: "Torre", path: "/desmoldeo/equipox", style: { top: "6%", left: "72%", width: "11.35%", height: "89.5%" }, styleclass: "Torresection" },
+    { id: 2, name: "SDDA", path: "/desmoldeo/equipox", style: { top: "35.8%", left: "54.65%", width: "17.35%", height: "33.5%" }, styleclass: "SDDAsection" },
+    { id: 3, name: "Robot", path: "/desmoldeo/equipox", style: { top: "38.5%", left: "37.9%", width: "11.5%", height: "24.7%" }, styleclass: "ROBOTsection" },
+    { id: 4, name: "Estacino Grippers", path: "/desmoldeo/equipox", style: { top: "75%", left: "20%", width: "8%", height: "20%" }, styleclass: "Grippersection" }
   ];
 
   return (
