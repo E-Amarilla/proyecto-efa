@@ -1,8 +1,9 @@
 import NavDatos from '../components/navdatos/NavDatos.jsx';
 import Productividad from '../components/productividad/Productividad.jsx';
 
-import CiclosProductos from '../components/ciclosproductos/CiclosProductos';
-import CiclosRealizados from '../components/ciclosrealizados/CiclosRealizados';
+
+import Grafico1 from '../components/grafico_realizados/grafico_realizados.jsx';
+import Grafico2 from '../components/grafico_ciclos/grafico_ciclos.jsx';
 
 import Layout from '../components/layout/Layout.jsx';
 
@@ -17,12 +18,17 @@ function Desmoldeo() {
                 <section id="section1" className={style.seccion}>
                     <Layout />
                 </section>
+
                 <section id="section2" className={style.seccion}>
                     <Productividad />
                 </section>
+
                 <section id="section3" className={style.seccion}>
-                    <CiclosProductos />
-                    <CiclosRealizados />
+                    <Grafico1 />
+                    <div>
+                        
+                        <Grafico2 />
+                    </div>
                 </section>
             </div>
         </div>

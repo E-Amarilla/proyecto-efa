@@ -108,7 +108,6 @@ const Grafico = () => {
             fontSize: '18px',
         });
 
-
         // Guardar las referencias de las series
         seriesRef.current["Ciclos"] = lineSeriesCiclos;
         seriesRef.current["Peso Producto"] = lineSeriesPeso;
@@ -160,14 +159,14 @@ const Grafico = () => {
                 const tooltipContent = filteredData
                     .map(pd => `
                     <div style="margin-bottom: 4px;">
-                    <b>${pd.nombre}</b><br />
-                    <span style="color: ${pd.series.options().color}">
-                        ${Math.round(100 * pd.value) / 100} 
-                        ${pd.nombre === "Peso Producto" ? "Tn" : ""}
-                    </span><br />
-                    <span>${dateStr}</span>
+                        <b>${pd.nombre}</b><br />
+                        <span style="color: ${pd.series.options().color}">
+                            ${Math.round(100 * pd.value) / 100} 
+                            ${pd.nombre === "Peso Producto" ? "Tn" : ""}
+                        </span><br />
+                        <span>${dateStr}</span>
                     </div>
-                `)
+                    `)
                     .join('');
 
                 toolTip.innerHTML = `<div style="font-size: 12px; line-height: 20px;">${tooltipContent}</div>`;
@@ -187,11 +186,20 @@ const Grafico = () => {
 
     return (
         <div
-            id="container"
-            ref={containerRef} // Referencia al contenedor
-            style={{ width: "100%", height: "700px" }}
-
-        ></div>
+            id="container"   
+            style={{ width: "100%", height: "500px", backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
+        >
+            <div style={{ display: "flex", justifyContent: "left", textAlign: "left", flexDirection: "column" }}>
+                <h1 style={{ margin: "0px", color:"#d9d9d9" }}>CICLOS POR PRODUCTO</h1>
+                <h1 style={{ margin: "0px", color:"orange" }}>POR PERIODO</h1>
+                <div style={{ display: "flex", justifyContent: "center", textAlign: "center", width: "100%", gap: "20px" }}>
+                    <h2 style={{ marginRight: "10px", color: "blue" }}>Peso (Tn)</h2>
+                    <h2 style={{ marginLeft: "10px", color: "orange" }}>Ciclos</h2>
+                </div>
+            </div>
+            
+            <div style={{ width: "100%", height: "385px"}} ref={containerRef}></div>
+        </div>
     );
 };
 
