@@ -41,7 +41,7 @@ const Grafico = () => {
             },
             rightPriceScale: {
                 visible: true,
-                borderColor: 'blue',
+                borderColor: 'lightblue',
             }
         };
 
@@ -74,7 +74,7 @@ const Grafico = () => {
         display: none;
         padding: 10px;
         box-sizing: border-box;
-        font-size: 12px;
+        font-size: 18px;
         text-align: left;
         z-index: 1000;
         pointer-events: none;
@@ -100,7 +100,7 @@ const Grafico = () => {
 
         // Crear serie de línea para pesoProducto
         const lineSeriesPeso = chart.addLineSeries({
-            color: "blue",
+            color: "lightblue",
             lineWidth: 2,
             priceScaleId: 'right',
             priceLineVisible: false, // Ocultar la línea de precio
@@ -169,7 +169,7 @@ const Grafico = () => {
                     `)
                     .join('');
 
-                toolTip.innerHTML = `<div style="font-size: 12px; line-height: 20px;">${tooltipContent}</div>`;
+                toolTip.innerHTML = `<div style="font-size: 16px; line-height: 20px;">${tooltipContent}</div>`;
 
                 const coordinateY = filteredData[0]?.series.priceToCoordinate(filteredData[0]?.value);
                 const shiftedCoordinateX = param.point.x - 50;
@@ -190,10 +190,10 @@ const Grafico = () => {
             style={{ width: "100%", minHeight: "500px", maxHeight: "auto",backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
         >
             <div style={{ display: "flex", justifyContent: "left", textAlign: "left", flexDirection: "column" }}>
-                <h1 style={{ margin: "0px", color:"#d9d9d9" }}>CICLOS POR PRODUCTO</h1>
+                <h1 style={{ margin: "0px", color:"#d9d9d9", fontWeight: "bold" }}>CICLOS POR PRODUCTO</h1>
                 <h1 style={{ margin: "0px", color:"orange" }}>POR PERIODO</h1>
                 <div style={{ display: "flex", justifyContent: "center", textAlign: "center", width: "100%", gap: "20px" }}>
-                    <h2 style={{ marginRight: "10px", color: "blue" }}>Peso (Tn)</h2>
+                    <h2 style={{ marginRight: "10px", color: "lightblue" }}>Peso (Tn)</h2>
                     <h2 style={{ marginLeft: "10px", color: "orange" }}>Ciclos</h2>
                 </div>
             </div>

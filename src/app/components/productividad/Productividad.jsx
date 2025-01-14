@@ -45,7 +45,7 @@ const Productividad = () => {
     ];
 
     return (
-        <div className={style.all}>
+        <div id="ProductividadSection" className={style.all}>
             <div className={style.productividad}>
                 <h2 className={style.titulo}>PRODUCTIVIDAD</h2>
                 <div className={style.fechaContainer}>
@@ -89,7 +89,7 @@ const Productividad = () => {
                     </div>
                 </div>
             </div>
-            <div className={style.filtro}>
+            <div className={`${style.filtro} ocultar-en-pdf`}>
                 <FiltroPeriodo onDataUpdate={handleDataUpdate} />
             </div>
         </div>
