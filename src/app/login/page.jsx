@@ -3,10 +3,11 @@ import { useState } from 'react';
 import { users } from '../users';
 
 import Link from 'next/link';
-import Image from 'next/image';
-
-import crem from './IMG/creminox.png';
 import style from './Login.module.css';
+
+//Imagenes
+import Image from "next/image";
+import crem from "@/assets/img/creminox.png";
 
 export default function Login() {
   const [username, setUsername] = useState('');

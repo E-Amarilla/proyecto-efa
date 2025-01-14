@@ -1,97 +1,92 @@
 .layoutContainer {
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  .backgroundImage {
-    width: 100%;
-    height: 39.5vw;
-    border-radius: 15px;
-    background-color: #131313;
-  }
-  
-  .interactiveSection {
-    position: absolute;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background-color: transparent; /* Sin fondo */
-    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); /* Sombra visible */
-  }
-  
-  .interactiveSection:hover {
-    background-color: rgba(255, 255, 255, 0.3); /* Fondo translúcido al pasar el mouse */
-    box-shadow: 0px 0px 15px 10px rgba(255, 255, 255, 0.8); /* Sombra más intensa */
-  }
-  
-  .tooltip {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: black;
-    color: #D9D9D9;
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 12px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .interactiveSection:hover .tooltip {
-    opacity: 1;
-  }
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: auto;
+}
 
-  .sectorContainer {
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  .BandaAsection:hover {
-    background-color: rgba(255, 255, 255, 0.3); /* Fondo translúcido al pasar el mouse */
-    box-shadow: 0px 0px 15px 10px rgba(255, 255, 255, 0.8); /* Sombra más intensa */
-  }
-  /* Sección rotada */
-  .BandaAsection {
-    transform: rotate(40deg); /* Rota la sección */
-    background-color: transparent; /* Sin fondo */
-    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); /* Sombra visible */
-    position: absolute;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10; /* Asegura que se quede sobre otros elementos */
-    opacity: 0;
-  }
-  
-  .BandaBsection {
-    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); /* Sombra visible */
-    opacity: 0;
-  }
+.backgroundImage {
+  width: 100%;
+  padding: 20px;
+  height: 39.5vw;
+  border-radius: 15px;
+  background-color: #131313;
+}
 
-  .SDDAsection {
-    box-shadow: 0px 0px 10px 5px rgba(7, 222, 136, 0.5); /* Sombra visible */
-    opacity: 0;
-  }
+.interactiveSection {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: transparent; /* Sin fondo */
+  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); /* Sombra visible */
+}
 
-  .Torresection {
-    box-shadow: 0px 0px 10px 5px rgba(134, 143, 139, 0.5); /* Sombra visible */
-    opacity: 0;
-  }
+.interactiveSection:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Fondo translúcido al pasar el mouse */
+  box-shadow: 0px 0px 15px 10px rgba(255, 255, 255, 0.8); /* Sombra más intensa */
+}
 
-  .KUKAsection {
-    box-shadow: 0px 0px 10px 5px rgba(222, 154, 7, 0.5); /* Sombra visible */
-    opacity: 0;
-  }
+.tooltip {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: #D9D9D9;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
-  .Grippersection {
-    box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.5); /* Sombra visible */
-    opacity: 0;
-  }
+.interactiveSection:hover .tooltip {
+  opacity: 1;
+}
 
-  .estadoLayout {
-    position: absolute;
-    left: 10px; /* Ajusta según sea necesario */
-    top: 10px; /* Ajusta según sea necesario */
-    z-index: 10; /* Asegura que esté por encima de otros elementos */
-    pointer-events: none;
-  }  
+.sectorContainer {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.BandaAsection:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Fondo translúcido al pasar el mouse */
+  box-shadow: 0px 0px 15px 10px rgba(255, 255, 255, 0.8); /* Sombra más intensa */
+}
+/* Sección rotada */
+.BandaAsection {
+  transform: rotate(40deg); /* Rota la sección */
+  background-color: transparent; /* Sin fondo */
+  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); /* Sombra visible */
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10; /* Asegura que se quede sobre otros elementos */
+}
+
+.SDDAsection {
+  box-shadow: 0px 0px 10px 5px rgba(7, 222, 136, 0.5); /* Sombra visible */
+}
+
+.Torresection {
+  box-shadow: 0px 0px 10px 5px rgba(134, 143, 139, 0.5); /* Sombra visible */
+}
+
+.ROBOTsection {
+  box-shadow: 0px 0px 10px 5px rgba(222, 154, 7, 0.5); /* Sombra visible */
+}
+
+.Grippersection {
+  box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.5); /* Sombra visible */
+  transform: rotate(30deg); /* Rota la sección */
+}
+
+.estadoLayout {
+  position: absolute;
+  left: 10px; /* Ajusta según sea necesario */
+  top: 10px; /* Ajusta según sea necesario */
+  z-index: 10; /* Asegura que esté por encima de otros elementos */
+  pointer-events: none;
+}  

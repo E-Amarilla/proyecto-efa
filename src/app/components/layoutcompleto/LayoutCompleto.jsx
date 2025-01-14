@@ -1,8 +1,8 @@
 "use client";
-import Image from "next/image";
+
 import Link from "next/link";
 import React from "react";
-import LayoutIMG from './IMG/layoutcompleto.png';
+
 import style from './LayoutCompleto.module.css';
 import DatosDesmoldeo from "./datosdesmoldeo/datosdesmoldeo";
 import DatosEncajonado from "./datosencajonado/datosencajonado";
@@ -10,6 +10,10 @@ import DatosPaletizado from "./datospaletizado/datospaletizado";
 import DatosEstadoDesmoldeo from "./datosdesmoldeo/datosestadodesmoldeo/datosestadodesmoldeo";
 import DatosEstadoEncajonado from "./datosencajonado/datosestadoencajonado/datosestadoencajonado.jsx";
 import DatosEstadoPaletizado from "./datospaletizado/datosestadopaletizado/datosestadopaletizado.jsx";
+
+//Imagenes
+import Image from "next/image";
+import LayoutIMG from '@/assets/img/layoutcompleto.png';
 
 const LayoutCompleto = () => {
   const sections = [

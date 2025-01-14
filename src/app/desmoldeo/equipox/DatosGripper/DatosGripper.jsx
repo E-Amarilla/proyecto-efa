@@ -1,5 +1,7 @@
 "use client";
-import gripper from './IMG/GRIPPER.png';
+
+//Imagenes
+import gripper from '@/assets/img/GRIPPER.png';
 
 //styles
 import style from './DatosGripper.module.css';

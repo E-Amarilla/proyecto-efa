@@ -1,12 +1,15 @@
 "use client";
-import puntoGris from './IMG/puntoGris.png';
-import puntoVerde from './IMG/puntoVerde.png';
+
 import useWebSocket from '@/app/utils/useWebSocket';
-import Image from "next/image";
 //styles
 import style from './SectorIO.module.css';
 import textstyle from '../texto.module.css';
 import React, { useState, useEffect } from 'react';
+
+//Imagenes
+import Image from "next/image";
+import puntoGris from '@/assets/img/puntoGris.png';
+import puntoVerde from '@/assets/img/puntoVerde.png';
 
 const SectorIOComponent = () => {
     

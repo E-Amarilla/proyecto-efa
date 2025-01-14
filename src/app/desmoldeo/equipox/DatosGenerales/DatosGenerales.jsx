@@ -1,12 +1,15 @@
 "use client";
 
 import {Card, Skeleton} from "@nextui-org/react";
-import receta1 from './IMG/RECETA.png';
-import receta2 from './IMG/RECETA2.png';
-import peso from './IMG/PESO.png';
-import estado from './IMG/ESTADO.png';
-import tiempo from './IMG/TIEMPO.png';
+
+//Imagenes
 import Image from "next/image";
+import receta1 from '@/assets/img/RECETA.png';
+import receta2 from '@/assets/img/RECETA2.png';
+import peso from '@/assets/img/PESO.png';
+import estado from '@/assets/img/ESTADO.png';
+import tiempo from '@/assets/img/TIEMPO.png';
+
 import useWebSocket from '../../../utils/useWebSocket';
 import React, { useState, useEffect } from 'react';
 

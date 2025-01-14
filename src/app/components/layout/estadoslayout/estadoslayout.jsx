@@ -3,10 +3,13 @@
 import { useEffect, useState } from 'react';
 import useWebSocket from '../../../utils/useWebSocket';
 import style from './estadoslayout.module.css';
-import puntoGris from './IMG/puntoGris.png';
-import puntoVerde from './IMG/puntoVerde.png';
-import puntoRojo from './IMG/puntoRojo.png';
+
+//Imagenes
 import Image from "next/image";
+import puntoGris from '@/assets/img/puntoGris.png';
+import puntoVerde from '@/assets/img/puntoVerde.png';
+import puntoRojo from '@/assets/img/puntoRojo.png';
+
 
 const EstadosLayout = () => {
     const pollId = "resumen-desmoldeo";

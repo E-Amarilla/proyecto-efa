@@ -1,11 +1,12 @@
 import React from 'react';
+
+//Imagenes
 import Image from "next/image"
-import cremImg from './IMG/creminox-logo.png';
-import webImg from './IMG/web.png';
-import linkImg from './IMG/linkedin.png';
-import ubiImg from './IMG/ubicacion.png';
-import mailImg from './IMG/mail.png';
-import fbImg from './IMG/facebook.png';
+import cremImg from '@/assets/img/creminox-logo.png';
+import linkImg from '@/assets/img/linkedin.png';
+import ubiImg from '@/assets/img/ubicacion.png';
+import mailImg from '@/assets/img/mail.png';
+import fbImg from '@/assets/img/facebook.png';
 
 import style from './Footer_Desmoldeo.module.css';
 

@@ -2,11 +2,15 @@
 
 import React, { useState } from 'react';
 import { usePathname } from 'next/navigation'; // Usa usePathname en lugar de useRouter
+
+//Imagenes
 import Image from "next/image";
-import cremImg from './IMG/creminox.png';
-import usuario from './IMG/usuario.png';
-import confImg from './IMG/configuracion.png';
-import alarmaImg from './IMG/alarma.png';
+import cremImg from "@/assets/img/creminox.png";
+import usuario from "@/assets/img/usuario.png";
+import confImg from "@/assets/img/configuracion.png";
+import alarmaImg from "@/assets/img/alarma.png";
+
+//Componentes
 import MenuAlarmas from '../../components/dropdownalarmas/dropdown';
 import Desloguear from '../../components/usuario/desloguear';
 import style from './Header.module.css';

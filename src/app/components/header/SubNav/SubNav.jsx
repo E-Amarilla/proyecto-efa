@@ -1,11 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import style from "./SubNav.module.css";
-import puntoVerde from "./IMG/puntoVerde.png";
-import puntoGris from "./IMG/puntoGris.png";
+
+//Imagenes
+import Image from "next/image";
+import puntoVerde from "@/assets/img/puntoVerde.png";
+import puntoGris from "@/assets/img/puntoGris.png";
 
 const SubNav = () => {
   const pathname = usePathname();

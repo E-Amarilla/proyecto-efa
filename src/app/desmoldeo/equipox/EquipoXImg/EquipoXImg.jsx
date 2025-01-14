@@ -1,10 +1,13 @@
 "use client";
 import { useState } from 'react';
-import Image from "next/image";
-import Img1 from './IMG/EquipoX.png';
-import Img2 from './IMG/EquipoX2.png';
-import Img3 from './IMG/EquipoX3.png';
+
 import style from './EquipoXImg.module.css';
+
+//Imagenes
+import Image from "next/image";
+import Img1 from '@/assets/img/equipos/EquipoX.png';
+import Img2 from '@/assets/img/equipos/EquipoX2.png';
+import Img3 from '@/assets/img/equipos/EquipoX3.png';
 
 const images = [
     { src: Img1, alt: 'Imagen Equipo X1' },

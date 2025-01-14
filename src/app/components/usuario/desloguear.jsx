@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import {
     Dropdown,
@@ -10,7 +9,11 @@ import {
     DropdownItem,
     Button,
 } from "@nextui-org/react";
+
 import style from './desloguear.module.css';
+
+//Imagenes
+import Image from "next/image";
 
 const Desloguear = ({ icon }) => {
     const router = useRouter();

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
-import crem from "./IMG/creminox.png";
+import crem from "@/assets/img/creminox.png";
 
 const Grafico = () => {
     const containerRef = useRef(null); // Referencia al contenedor del gráfico
@@ -52,7 +52,7 @@ const Grafico = () => {
         const container = containerRef.current;
         container.style.position = 'relative';
         const background = document.createElement('div');
-        background.style.zIndex = -1;
+        background.style.zIndex = 1;
         background.style.position = 'absolute';
         background.style.top = '50%';
         background.style.left = '50%';
@@ -198,7 +198,7 @@ const Grafico = () => {
                 </div>
             </div>
             
-            <div style={{ width: "100%", height: "385px"}} ref={containerRef}></div>
+            <div id="container" style={{ width: "100%", height: "calc(100% - 75px)" }} ref={containerRef}></div>
         </div>
     );
 };

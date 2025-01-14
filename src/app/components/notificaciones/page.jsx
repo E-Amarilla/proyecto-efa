@@ -1,11 +1,13 @@
 'use client';
 
 import { Toaster, toast } from "sonner";
-import MyIcon from "./IMG/cancelICON.png";
-import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@nextui-org/react";
 import style from "./notificaciones.module.css";
+
+//Imagenes
+import Image from "next/image";
+import MyIcon from "@/assets/img/cancelICON.png";
 
 export default function Notificaciones() {
     const [activeToasts, setActiveToasts] = useState([]);

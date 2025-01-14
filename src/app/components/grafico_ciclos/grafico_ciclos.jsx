@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { createChart } from "lightweight-charts";
-import crem from "./IMG/creminox.png";
+import crem from "@/assets/img/creminox.png";
 
 const COLORS = [
     "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
@@ -52,7 +52,7 @@ const Grafico = () => {
                 const container = containerRef.current;
                 container.style.position = 'relative';
                 const background = document.createElement('div');
-                background.style.zIndex = -1;
+                background.style.zIndex = 1;
                 background.style.position = 'absolute';
                 background.style.top = '50%';
                 background.style.left = '50%';
@@ -176,7 +176,7 @@ const Grafico = () => {
     return (
         <div
             id="container-wrapper"   
-            style={{ width: "100%", height: "500px", backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
+            style={{ width: "100%", height: "auto", backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
         >
             <div style={{ display: "flex", justifyContent: "left", textAlign: "left", flexDirection: "column" }}>
                 <h1 style={{ margin: "0px", color:"#d9d9d9" }}>PRODUCTOS REALIZADOS</h1>
