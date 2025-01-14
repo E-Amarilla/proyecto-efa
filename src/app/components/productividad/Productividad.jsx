@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import style from "./Productividad.module.css";
 import FiltroPeriodo from "../filtroperiodo/FiltroPeriodo.jsx";
 
@@ -36,13 +36,25 @@ const Productividad = () => {
         { id: 3, titulo: "Horas de uso diarias", dato: Promedio_Horas(Horas_Uso, Cant_Dias) },
     ];
 
-    const productos = [
-        { nombre: "Jamón 3Lb", porcentaje: 15, color: "#FFA500" },
-        { nombre: "Paleta 4Lb", porcentaje: 35, color: "#0000FF" },
-        { nombre: "Jamón Premium 4Lb", porcentaje: 20, color: "#FF0000" },
-        { nombre: "Mortadela 5Lb", porcentaje: 20, color: "#00FF00" },
-        { nombre: "Paleta Premium 4Lb", porcentaje: 10, color: "#54C42D" },
-    ];
+    // Generar color aleatorio en formato hexadecimal
+    const generarColorAleatorio = () => {
+        const letras = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letras[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
+
+    // Generar productos y calcular porcentaje de cada uno
+    const productos = data?.ProductosRealizados?.map((producto) => {
+        const porcentaje = ((producto.peso * 100) / PesoTotal / 1000);
+        return {
+            nombre: producto.NombreProducto,
+            porcentaje: porcentaje.toFixed(2),
+            color: generarColorAleatorio(),
+        };
+    }) ?? [];
 
     return (
         <div id="ProductividadSection" className={style.all}>
