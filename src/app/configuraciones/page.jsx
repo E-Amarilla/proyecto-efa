@@ -1,8 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import maqImg from '.@/assets/img/creminox.png';
 import style from './configuraciones.module.css';
+//Imagenes
+import Image from "next/image";
+import maqImg from '@/assets/img/creminox.png';
 
 const Configuraciones = () => {
     return (

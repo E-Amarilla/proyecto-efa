@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import style from "./TablaAlertas.module.css";
 import TiposAlarma from "../components/Botones/TiposAlarma/TiposAlarma.jsx";
-import Img from "./IMG/tabla.png";
 
 const TablaAlertas = () => {
   return (
@@ -22,7 +20,7 @@ const TablaAlertas = () => {
           </div>
 
           <div className={style.tabla}>
-            <Image className={style.img} src={Img} alt="Tabla" />
+            
           </div>
         </div>
       </div>
