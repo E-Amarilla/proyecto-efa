@@ -10,6 +10,10 @@ npm install react-icons
 
 npm install express nodemailer body-parser
 
+npx nextui-cli@latest add table
+
+npm install @react-stately/data
+
 ```
 
 ## Para descargar en pdf y excel

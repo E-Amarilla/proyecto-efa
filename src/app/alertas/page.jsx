@@ -1,31 +1,9 @@
-"use client";
+import Tabla from "./tabla";
 
-import style from "./TablaAlertas.module.css";
-import TiposAlarma from "../components/Botones/TiposAlarma/TiposAlarma.jsx";
-
-const TablaAlertas = () => {
+export default function HomePage() {
   return (
-    <>
-      <div className={style.all}>
-        <div className={style.contenedor}>
-          <div className={style.contenedorTop}>
-            <div className={style.tituloSubtitulo}>
-              <h1>HISTORIAL DE ALERTAS</h1>
-              <h2>EXTENDIDO</h2>
-            </div>
-
-            <div className={style.selector}>
-              <TiposAlarma />
-            </div>
-          </div>
-
-          <div className={style.tabla}>
-            
-          </div>
-        </div>
-      </div>
-    </>
+      <main className="min-h-screen bg-[#1f1f1f] text-white flex items-center justify-center p-1">
+        <Tabla />
+      </main>
   );
-};
-
-export default TablaAlertas;
+}

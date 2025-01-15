@@ -54,7 +54,7 @@ const MenuAlarmas = ({ icon }) => {
                     className={style.buttonContainer}
                     key="button"
                 >
-                    <Link href="/tablaalertas">
+                    <Link href="/alertas">
                         <Button
                             className={`${style.hoverEffect} flex justify-self-center font-bold`}
                             radius="full"
