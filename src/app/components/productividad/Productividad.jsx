@@ -18,7 +18,9 @@ const Productividad = () => {
         setDateRange({ start: startDate, end: endDate });
     };
 
-    const Cant_Dias = 7;
+    const Cant_Dias = Math.ceil(
+        (new Date(dateRange.end).getTime() - new Date(dateRange.start).getTime()) / (1000 * 3600 * 24) + 1
+    );
 
     const CantidadCiclosFinalizados = data?.CantidadCiclosFinalizados ?? "Cargando...";
     const PesoTotal = data?.PesoTotal ?? "Cargando...";
@@ -27,16 +29,25 @@ const Productividad = () => {
             ? data.ProductosRealizados.reduce((acc, prod) => acc + prod.tiempoTotal, 0)
             : "Cargando...";
 
+            console.log(`Cantidad de días: ${Cant_Dias} | Horas de uso: ${Horas_Uso}`);
+
     const Promedio_Horas = (Horas_Uso, Cant_Dias) =>
-        Horas_Uso !== "Cargando..." ? (Horas_Uso / (Cant_Dias * 24)).toFixed(2) : "Cargando...";
+        Horas_Uso !== "Cargando..." ? (Horas_Uso / (Cant_Dias)).toFixed(2) : "Cargando...";
 
     const datos = [
         { id: 1, titulo: "Ciclos realizados", dato: CantidadCiclosFinalizados },
-        { id: 2, titulo: "Producción total", dato: PesoTotal },
-        { id: 3, titulo: "Horas de uso diarias", dato: Promedio_Horas(Horas_Uso, Cant_Dias) },
+        { id: 2, titulo: "Producción total", dato: (
+            <span>
+              {PesoTotal} <span className="text-lg">Tn</span>
+            </span>
+          ) },
+        { id: 3, titulo: "Promedio de uso diario", dato: (
+            <span>
+              {Promedio_Horas(Horas_Uso, Cant_Dias)} <span className="text-lg">Hs</span>
+            </span>
+          ) },
     ];
 
-    // Generar color aleatorio en formato hexadecimal
     const generarColorAleatorio = () => {
         const letras = "0123456789ABCDEF";
         let color = "#";
@@ -46,11 +57,12 @@ const Productividad = () => {
         return color;
     };
 
-    // Generar productos y calcular porcentaje de cada uno
     const productos = data?.ProductosRealizados?.map((producto) => {
         const porcentaje = ((producto.peso * 100) / PesoTotal / 1000);
         return {
             nombre: producto.NombreProducto,
+            peso: producto.peso + "kg",
+            cantidadCiclos: producto.cantidadCiclos,
             porcentaje: porcentaje.toFixed(2),
             color: generarColorAleatorio(),
         };
@@ -80,11 +92,12 @@ const Productividad = () => {
                         {productos.map((producto, index) => (
                             <div
                                 key={index}
-                                className={style.segmento}
+                                className={`${style.segmento} segmento-tooltip`}
                                 style={{
                                     width: `${producto.porcentaje}%`,
                                     backgroundColor: producto.color,
                                 }}
+                                data-tooltip={`Ciclos: ${producto.cantidadCiclos}`}
                             />
                         ))}
                     </div>
@@ -95,7 +108,7 @@ const Productividad = () => {
                                     className={style.colorMuestra}
                                     style={{ backgroundColor: producto.color }}
                                 ></span>
-                                <p>{`${producto.nombre} - ${producto.porcentaje}%`}</p>
+                                <p className={style.prods}>{`${producto.nombre} - ${producto.porcentaje}% (${producto.peso})`}</p>
                             </div>
                         ))}
                     </div>
