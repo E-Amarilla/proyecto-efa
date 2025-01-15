@@ -19,7 +19,7 @@ const Grafico = () => {
     const productColors = useRef({});
 
     useEffect(() => {
-        fetch('/data/ciclosproducto.json') // Asegúrate de que la ruta sea correcta
+        fetch(`http://192.168.0.72:8000/graficos-hsitorico/ciclos-productos/?fecha_inicio=2025-01-01&fecha_fin=2025-07-11`) // Asegúrate de que la ruta sea correcta
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);

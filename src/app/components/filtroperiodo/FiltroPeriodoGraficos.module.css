@@ -1,0 +1,70 @@
+.contenedor {
+    height: 100%;
+    display: grid;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #131313;
+}
+
+.BotonesDescarga {
+    min-width: 8rem;
+    width: 14vw;
+    max-width: 100%;
+}
+
+  .titulo {
+    font-size: 1.5rem; /* Tamaño de fuente relativo */
+    font-weight: bold;
+    color: #d9d9d9;
+    text-align: center;
+    word-wrap: break-word; /* Evita que el texto se desborde */
+  }
+  
+.customDateRangePicker {
+    min-width: 6rem;
+    width: 13vw;
+    max-width: 100%;
+}
+
+.input {
+    font-size: 0.7rem;
+    display: flex;
+    min-width: 1rem;
+}
+
+  
+  @media (max-width: 768px) {
+    .titulo {
+      font-size: 1.2rem; /* Reduce el tamaño en pantallas pequeñas */
+    }
+  
+    .customDateRangePicker {
+      max-width: 90%; /* Se adapta al ancho del contenedor */
+    }
+  
+    .input {
+      font-size: 0.9rem; /* Ajusta el tamaño del input */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .titulo {
+      font-size: 1rem;
+    }
+  
+    .customDateRangePicker {
+      max-width: 100%; /* Asegura que se mantenga responsivo */
+    }
+  
+    .input {
+      font-size: 0.8rem;
+    }
+  }
+
+  .graph2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
