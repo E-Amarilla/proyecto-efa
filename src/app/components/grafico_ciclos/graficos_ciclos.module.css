@@ -1,0 +1,14 @@
+.fechaContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .fecha {
+    display: inline;
+    color: orange;
+  }
+  
+  .separator {
+    display: inline;
+    
+  }

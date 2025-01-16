@@ -4,28 +4,48 @@ import { useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
 import crem from "@/assets/img/creminox.png";
 
-const Grafico = () => {
-    const containerRef = useRef(null); // Referencia al contenedor del gráfico
-    const chartRef = useRef(null); // Referencia al gráfico
-    const seriesRef = useRef({}); // Referencia para almacenar las series de datos
-    const [data, setData] = useState(null); // Estado para almacenar los datos del archivo JSON
+const Grafico = ({ startDate, endDate }) => {
+    console.log("Datos recibidos en GraficoRealizados:", { startDate, endDate });
+
+    const containerRef = useRef(null);
+    const chartRef = useRef(null);
+    const seriesRef = useRef({});
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-        // Cargar datos del archivo JSON
-        fetch('/data/ciclosrealizados.json')
-            .then(response => response.json())
-            .then(jsonData => setData(jsonData))
-            .catch(error => console.error("Error al cargar el archivo JSON:", error));
-    }, []);
+        const fetchInitialData = async (startDate, endDate) => {
+            try {
+                const response = await fetch(
+                    `http://192.168.0.83:8000/graficos-hsitorico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                    {
+                        method: "GET",
+                        headers: { Accept: "application/json" },
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+
+                const datos = await response.json();
+                setData(datos);
+            } catch (error) {
+                console.error("Error fetching initial data:", error);
+                setData({ ciclos: [], pesoProducto: [] }); // Configurar datos vacíos en caso de error
+            }
+        };
+
+        fetchInitialData(startDate, endDate);
+    }, [startDate, endDate]);
 
     useEffect(() => {
-        if (!containerRef.current || !data) return; // Asegurarse de que el contenedor y los datos existen
+        if (!containerRef.current) return;
 
         // Configuración del gráfico
         const chartOptions = {
             layout: {
-                textColor: 'white',
-                background: { type: 'solid', color: 'transparent' },
+                textColor: "white",
+                background: { type: "solid", color: "transparent" },
             },
             crosshair: {
                 horzLine: { visible: false },
@@ -37,148 +57,69 @@ const Grafico = () => {
             },
             leftPriceScale: {
                 visible: true,
-                borderColor: 'orange',
+                borderColor: "orange",
             },
             rightPriceScale: {
                 visible: true,
-                borderColor: 'lightblue',
-            }
+                borderColor: "lightblue",
+            },
         };
 
         const chart = createChart(containerRef.current, chartOptions);
-        chartRef.current = chart; // Guardar la referencia del gráfico
+        chartRef.current = chart;
 
         // Agregar fondo
         const container = containerRef.current;
-        container.style.position = 'relative';
-        const background = document.createElement('div');
+        container.style.position = "relative";
+        const background = document.createElement("div");
         background.style.zIndex = 1;
-        background.style.position = 'absolute';
-        background.style.top = '50%';
-        background.style.left = '50%';
-        background.style.transform = 'translate(-50%, -50%)';
-        background.style.width = '100%';
-        background.style.height = '100%';
+        background.style.position = "absolute";
+        background.style.top = "50%";
+        background.style.left = "50%";
+        background.style.transform = "translate(-50%, -60%)";
+        background.style.width = "100%";
+        background.style.height = "100%";
         background.style.backgroundImage = `url(${crem.src})`;
-        background.style.backgroundRepeat = 'no-repeat';
-        background.style.backgroundPosition = 'center';
-        background.style.opacity = '0.2';
+        background.style.backgroundRepeat = "no-repeat";
+        background.style.backgroundPosition = "center";
+        background.style.opacity = "0.05";
         container.appendChild(background);
 
-        // Crear tooltip
-        const toolTip = document.createElement('div');
-        toolTip.style = `
-        width: auto;
-        height: auto;
-        position: absolute;
-        display: none;
-        padding: 10px;
-        box-sizing: border-box;
-        font-size: 18px;
-        text-align: left;
-        z-index: 1000;
-        pointer-events: none;
-        border: 1px solid;
-        border-radius: 15px;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background: black;
-        color: white;
-        border-color: red;
-        `;
-        containerRef.current.appendChild(toolTip);
-
-        // Crear serie de línea para ciclos
+        // Crear series, incluso si no hay datos
         const lineSeriesCiclos = chart.addLineSeries({
             color: "orange",
             lineWidth: 2,
-            priceScaleId: 'left',
-            priceLineVisible: false, // Ocultar la línea de precio
-            title: 'Ciclos',
-            fontSize: '18px',
+            priceScaleId: "left",
+            priceLineVisible: false,
+            title: "Ciclos",
         });
 
-        // Crear serie de línea para pesoProducto
         const lineSeriesPeso = chart.addLineSeries({
             color: "lightblue",
             lineWidth: 2,
-            priceScaleId: 'right',
-            priceLineVisible: false, // Ocultar la línea de precio
-            title: 'Tn',
-            fontSize: '18px',
+            priceScaleId: "right",
+            priceLineVisible: false,
+            title: "Tn",
         });
 
-        // Guardar las referencias de las series
         seriesRef.current["Ciclos"] = lineSeriesCiclos;
         seriesRef.current["Peso Producto"] = lineSeriesPeso;
 
-        // Datos para la serie de ciclos
-        const dataCiclos = data.ciclos.map(item => ({
+        // Asignar datos a las series
+        const dataCiclos = data?.ciclos?.map(item => ({
             time: new Date(item.fecha_fin).getTime() / 1000,
             value: item.CantidadCIclos,
-        }));
-
-        // Datos para la serie de pesoProducto
-        const dataPeso = data.pesoProducto.map(item => ({
+        })) || [];
+        const dataPeso = data?.pesoProducto?.map(item => ({
             time: new Date(item.fecha_fin).getTime() / 1000,
             value: item.PesoTotal,
-        }));
+        })) || [];
 
-        // Asignar datos a las series
         lineSeriesCiclos.setData(dataCiclos);
         lineSeriesPeso.setData(dataPeso);
 
-        // Ajustar la escala de tiempo para mostrar todos los datos
         chart.timeScale().fitContent();
 
-        // Tooltip
-        chart.subscribeCrosshairMove(param => {
-            if (
-                param.point === undefined ||
-                !param.time ||
-                param.point.x < 0 ||
-                param.point.x > containerRef.current.clientWidth ||
-                param.point.y < 0 ||
-                param.point.y > containerRef.current.clientHeight
-            ) {
-                toolTip.style.display = 'none';
-            } else {
-                const dateStr = new Date(param.time * 1000).toLocaleDateString();
-                toolTip.style.display = 'block';
-
-                const priceData = Object.entries(seriesRef.current).map(([nombre, series]) => {
-                    const data = param.seriesData.get(series);
-                    return {
-                        value: data ? (data.value !== undefined ? data.value : data.close) : 0,
-                        series,
-                        nombre,
-                    };
-                });
-
-                const filteredData = priceData.filter(pd => pd.value !== 0);
-                const tooltipContent = filteredData
-                    .map(pd => `
-                    <div style="margin-bottom: 4px;">
-                        <b>${pd.nombre}</b><br />
-                        <span style="color: ${pd.series.options().color}">
-                            ${Math.round(100 * pd.value) / 100} 
-                            ${pd.nombre === "Peso Producto" ? "Tn" : ""}
-                        </span><br />
-                        <span>${dateStr}</span>
-                    </div>
-                    `)
-                    .join('');
-
-                toolTip.innerHTML = `<div style="font-size: 16px; line-height: 20px;">${tooltipContent}</div>`;
-
-                const coordinateY = filteredData[0]?.series.priceToCoordinate(filteredData[0]?.value);
-                const shiftedCoordinateX = param.point.x - 50;
-                toolTip.style.left = `${Math.max(0, Math.min(containerRef.current.clientWidth - 150, shiftedCoordinateX))}px`;
-                toolTip.style.top = `${coordinateY ? coordinateY - 50 : 0}px`;
-            }
-        });
-
-        // Limpieza al desmontar el componente
         return () => {
             chart.remove();
         };
@@ -186,19 +127,33 @@ const Grafico = () => {
 
     return (
         <div
-            id="container"   
-            style={{ width: "100%", minHeight: "500px", maxHeight: "auto",backgroundColor: "#131313", borderRadius: "15px", padding: "20px"}}
+            id="container"
+            style={{
+                width: "100%",
+                minHeight: "500px",
+                maxHeight: "auto",
+                backgroundColor: "#131313",
+                borderRadius: "15px",
+                padding: "20px",
+            }}
         >
-            <div style={{ display: "flex", justifyContent: "left", textAlign: "left", flexDirection: "column" }}>
-                <h1 style={{ margin: "0px", color:"#d9d9d9", fontWeight: "bold" }}>CICLOS POR PRODUCTO</h1>
-                <h1 style={{ margin: "0px", color:"orange" }}>POR PERIODO</h1>
-                <div style={{ display: "flex", justifyContent: "center", textAlign: "center", width: "100%", gap: "20px" }}>
+            <div style={{ display: "flex", justifyContent: "left", flexDirection: "column" }}>
+                <h1 style={{ margin: "0px", color: "#d9d9d9", fontWeight: "bold" }}>CICLOS POR PRODUCTO</h1>
+                <h1 style={{ margin: "0px", color: "orange" }}>POR PERIODO</h1>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        width: "100%",
+                        gap: "20px",
+                    }}
+                >
                     <h2 style={{ marginRight: "10px", color: "lightblue" }}>Peso (Tn)</h2>
                     <h2 style={{ marginLeft: "10px", color: "orange" }}>Ciclos</h2>
                 </div>
             </div>
-            
-            <div id="container" style={{ width: "100%", height: "calc(100% - 75px)" }} ref={containerRef}></div>
+            <div id="chart-container" style={{ width: "100%", height: "calc(100% - 75px)" }} ref={containerRef}></div>
         </div>
     );
 };
