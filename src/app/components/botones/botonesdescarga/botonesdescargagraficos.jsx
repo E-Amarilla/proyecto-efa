@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Button } from "@nextui-org/react";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import html2canvas from "html2canvas";
@@ -7,37 +7,32 @@ import logoDataURL from './cremonabase64'; // Importa la data URL de la imagen
 
 export default function BotonesDescarga() {
     const handlePdfDownload = async () => {
-        const productSection = document.getElementById('ProductividadSection');
+        const graphSection = document.getElementById('GraficosSection');
         
-        if (productSection) {
-            const canvasProduct = await html2canvas(productSection, {
+        if (graphSection) {
+            const canvasProduct = await html2canvas(graphSection, {
                 scale: 2, // Aumenta la escala para mejorar la resolución
-                ignoreElements: (element) => element.classList.contains('FiltroPeriodo'),
+                ignoreElements: (element) => element.classList.contains('FiltroPeriodoGraficos'),
             });
             const imgDataProduct = canvasProduct.toDataURL('image/png');
             
-            // Crear un nuevo documento PDF con tamaño personalizado
-            const pdf = new jsPDF({
-                orientation: 'landscape',
-                unit: 'mm',
-                format: 'a4' // Tamaño A4
-            });
+            // Crear un nuevo documento PDF
+            const pdf = new jsPDF('landscape', 'mm', 'a4');
             
             // Agregar logo usando la data URL
             const logoWidth = 60; // Ajusta el tamaño según sea necesario
             const logoHeight = 15;
-            pdf.addImage(logoDataURL, 'PNG', 120, 50, logoWidth, logoHeight);
+            pdf.addImage(logoDataURL, 'PNG', 120, 5, logoWidth, logoHeight);
 
-            // Posicionar el contenido capturado en el centro
+            // Posicionar el contenido capturado y moverlo 20 píxeles hacia arriba en el eje y
             const imgProps = pdf.getImageProperties(imgDataProduct);
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            const x = (pdf.internal.pageSize.getWidth() - pdfWidth) / 2;
-            const y = (pdf.internal.pageSize.getHeight() - pdfHeight) / 2;
-            pdf.addImage(imgDataProduct, 'PNG', x, y, pdfWidth, pdfHeight, undefined, 'FAST');
+            const yOffset = -10; // Ajusta la posición en el eje y
+            pdf.addImage(imgDataProduct, 'PNG', 0, logoHeight + 20 + yOffset, pdfWidth, pdfHeight, undefined, 'FAST');
 
             // Guardar el PDF
-            pdf.save('resumen_productividad.pdf');
+            pdf.save('graficos.pdf');
         }
     };
 

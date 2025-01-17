@@ -2,7 +2,7 @@
 
 import { useState, useEffect, startTransition } from "react";
 import { DateRangePicker } from "@nextui-org/react";
-import Botones from "../botones/botonesdescarga/botonesdescarga.jsx";
+import BotonesDescarga from "../botones/botonesdescarga/botonesdescargagraficos.jsx";
 import BotonFiltro from "../botones/aplicarfiltro/botonfiltro.jsx";
 import style from "./FiltroPeriodoGraficos.module.css";
 import Grafico2 from "../grafico_ciclos/grafico_ciclos.jsx"
@@ -89,7 +89,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
     }, [dateRange]); // Ejecuta cuando el rango de fechas cambia
 
     return (
-        <div className={style.seccion}>
+        <div id="GraficosSection" className={style.seccion}>
             <div className={style.graph2}>
                 <div className={style.grafiproductos}>
                     <Grafico2 startDate={fechaInicio} endDate={fechaFin}/>
@@ -115,7 +115,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
                     </div>
                     <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                         <div className="min-w-[6rem] w-[13vw] max-w-full">
-                            <Botones />
+                            <BotonesDescarga />
                         </div>
                     </div>
                 </div>

@@ -89,16 +89,6 @@ const Completo = () => {
       }
     };
 
-    socket.onerror = (err) => {
-      console.error("Error en WebSocket:", err);
-      setError("Error al conectarse al servidor WebSocket.");
-      setIsLoading(false);
-    };
-
-    socket.onclose = () => {
-      console.log("Conexión WebSocket cerrada.");
-    };
-
     return () => {
       socket.close();
     };
