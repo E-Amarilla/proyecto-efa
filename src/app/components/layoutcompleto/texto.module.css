@@ -36,6 +36,26 @@
     list-style: none;
 }
 
-.contenedorInactivo {
-    margin-top: 0.7rem;
+.detallesDatos {
+    max-height: 55px;
+}
+
+.detallesDatosDesac {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.datosIndvGray {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background-color: #555555;
+    max-height: 65px;
+    height: 100%;
+    width: 100%;
+    transition: background-color 0.8s ease;
+    box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.45);
 }

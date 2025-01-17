@@ -63,6 +63,10 @@ const Grafico = ({ startDate, endDate }) => {
                 visible: true,
                 borderColor: "lightblue",
             },
+            timeScale: {
+                visible: true,
+                borderColor: "white",
+            },
             handleScroll: false, // Deshabilitar scrolling inicialmente
             handleScale: false, // Deshabilitar zoom inicialmente
         });

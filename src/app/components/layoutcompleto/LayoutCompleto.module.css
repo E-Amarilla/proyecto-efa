@@ -76,6 +76,10 @@
   box-shadow: none; /* Elimina la sombra */
 }
 
+.secciondatos .tooltip { 
+  pointer-events: none;
+}
+
 .interactiveSection .secciondatos {
   position: absolute;
   cursor: pointer;

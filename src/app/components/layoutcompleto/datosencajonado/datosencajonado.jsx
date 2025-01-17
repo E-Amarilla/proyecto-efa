@@ -29,8 +29,8 @@ const DatosEncajonado = () => {
             <div className={style.contenedorDatos}>
                 <ul className={style.datosTods}>
                     {datosTiempoReal.map(({ id, nombre, dato }) => (
-                        <li key={id} className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? cont.datosIndvRed : cont.datosIndvGray}>
-                            <a className={style.detallesDatos} href='/encajonado/equipox'>
+                        <li key={id} className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? cont.datosIndvRed : style.datosIndvGray}>
+                            <a className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? style.detallesDatos : style.detallesDatosDesac} href='/encajonado/equipox'>
                                 {estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? (
                                     <div className={style.contenedorActivo}>
                                         <h3 className={style.h3}>{nombre}</h3>

@@ -135,71 +135,67 @@ const handleRowsPerPageChange = (event) => {
 };
 
 return (
-    <div className="w-full px-5 bg-[#131313] rounded-[15px]">
-    <div className="w-full flex flex-col justify-center p-5">
-        <div className="w-full flex flex-row mb-5">
-        <div className="w-1/2 font-bold text-[#D9D9D9]">
+    <div className="w-full bg-[#131313] rounded-[15px] p-[20px]">
+        <div className="w-1/2 font-bold text-[#D9D9D9] mb-[15px]">
             <h1 className="text-[25px]">HISTORIAL DE ALERTAS</h1>
             <h2 className="text-[20px]">EXTENDIDO</h2>
-        </div>
         </div>
         {error && <p className="text-red-500">Error: {error}</p>}
         <Table
         aria-label="Tabla de alertas"
         className="w-full bg-[#131313] text-[#D9D9D9] table-fixed"
         >
-        <TableHeader columns={columns}>
-            {(column) => (
-            <TableColumn
-                key={column.key}
-                allowsSorting
-                className="bg-[#1F1F1F] text-[#D9D9D9] font-medium"
-                onClick={() => handleSort(column.key)} // Agregar click para ordenar
+            <TableHeader columns={columns}>
+                {(column) => (
+                <TableColumn
+                    key={column.key}
+                    allowsSorting
+                    className="bg-[#1F1F1F] text-[#D9D9D9] font-medium"
+                    onClick={() => handleSort(column.key)} // Agregar click para ordenar
+                >
+                    {column.label}
+                    {sortConfig.key === column.key && (
+                    <span>{sortConfig.direction === "asc" ? "↑" : "↓"}</span> // Indicador de dirección
+                    )}
+                </TableColumn>
+                )}
+            </TableHeader>
+            <TableBody
+                isLoading={isLoading}
+                items={paginatedRows}
+                loadingContent={<Spinner label="Loading..." />}
             >
-                {column.label}
-                {sortConfig.key === column.key && (
-                <span>{sortConfig.direction === "asc" ? "↑" : "↓"}</span> // Indicador de dirección
+                {(item) => (
+                <TableRow key={item.key}>
+                    {(columnKey) => (
+                    <TableCell className="bg-[#131313] text-[#D9D9D9]">
+                        {getKeyValue(item, columnKey)}
+                    </TableCell>
+                    )}
+                </TableRow>
                 )}
-            </TableColumn>
-            )}
-        </TableHeader>
-        <TableBody
-            isLoading={isLoading}
-            items={paginatedRows}
-            loadingContent={<Spinner label="Loading..." />}
-        >
-            {(item) => (
-            <TableRow key={item.key}>
-                {(columnKey) => (
-                <TableCell className="bg-[#131313] text-[#D9D9D9]">
-                    {getKeyValue(item, columnKey)}
-                </TableCell>
-                )}
-            </TableRow>
-            )}
-        </TableBody>
+            </TableBody>
         </Table>
         <div className="flex justify-between items-center mt-5">
-        <div className="flex items-center gap-2 text-[#D9D9D9]">
-            <label htmlFor="rows-per-page">Filas por página:</label>
-            <select
-            id="rows-per-page"
-            value={rowsPerPage}
-            onChange={handleRowsPerPageChange}
-            className="bg-[#2C2C2C] text-[#D9D9D9] rounded-md p-[5px]"
-            >
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={15}>15</option>
-            </select>
-        </div>
-        <div>
+            <div className="flex items-center gap-2 text-[#D9D9D9]">
+                <label htmlFor="rows-per-page">Filas por página:</label>
+                <select
+                id="rows-per-page"
+                value={rowsPerPage}
+                onChange={handleRowsPerPageChange}
+                className="bg-[#2C2C2C] text-[#D9D9D9] rounded-md p-[5px]"
+                >
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
+                    <option value={15}>15</option>
+                </select>
+            </div>
             <Pagination
             className="flex flex-wrap gap-4 items-center overflow-hidden"
             showControls
             isCompact
-            color="danger"
-            variant="bordered"
+            color="white"
+            variant="light"
             size="lg"
             initialPage={1}
             total={totalPages}
@@ -207,8 +203,6 @@ return (
             onChange={handlePageChange}
             />
         </div>
-        </div>
-    </div>
     </div>
 );
 };

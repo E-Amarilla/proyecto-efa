@@ -30,7 +30,7 @@ const DatosDesmoldeo = () => {
                 <ul className={style.datosTods}>
                     {datosTiempoReal.map(({ id, nombre, dato }) => (
                         <li key={id} className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? cont.datosIndvRed : cont.datosIndvGray}>
-                            <a className={style.detallesDatos} href='/desmoldeo/equipox'>
+                            <a className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? style.detallesDatos : style.detallesDatosDesac} href='/desmoldeo/equipox'>
                                 {estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? (
                                     <div className={style.contenedorActivo}>
                                         <h3 className={style.h3}>{nombre}</h3>
