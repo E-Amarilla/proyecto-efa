@@ -27,7 +27,7 @@ function Desmoldeo() {
                 </section>
 
                 <section id="section3" className={style.seccion}>
-                        <FiltroPeriodoGraficos />
+                    <FiltroPeriodoGraficos />
                 </section>
             </div>
         </div>

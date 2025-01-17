@@ -32,7 +32,7 @@ const Grafico = ({startDate, endDate}) => {
                 );
 
                 if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                    throw new Error(`El array que estas recibiendo está vacio: ${response.statusText}`);
                 }
 
                 const productos = await response.json();
@@ -54,6 +54,7 @@ const Grafico = ({startDate, endDate}) => {
                 background: { type: 'solid', color: 'transparent' },
             },
             crosshair: {
+                mode: data.length > 0 ? 1 : 0, // 1 = crosshair activo, 0 = desactivado
                 horzLine: { visible: false },
                 vertLine: { labelVisible: false },
             },
@@ -61,6 +62,8 @@ const Grafico = ({startDate, endDate}) => {
                 vertLines: { color: "rgba(255, 255, 255, 0.1)" },
                 horzLines: { color: "rgba(255, 255, 255, 0.1)" },
             },
+            handleScroll: data.length > 0, // Activar/desactivar scrolling
+            handleScale: data.length > 0, // Activar/desactivar zoom
         };
 
         const chart = createChart(containerRef.current, chartOptions);
@@ -73,7 +76,7 @@ const Grafico = ({startDate, endDate}) => {
         background.style.position = 'absolute';
         background.style.top = '50%';
         background.style.left = '50%';
-        background.style.transform = 'translate(-50%, -65%)';
+        background.style.transform = 'translate(-50%, -65%) scale(0.8)';
         background.style.width = '100%';
         background.style.height = '100%';
         background.style.backgroundImage = `url(${crem.src})`;

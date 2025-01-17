@@ -8,19 +8,20 @@ const DatosDesmoldeo = () => {
     const pollId = "celda-completo";
     const { data, error, isConnected } = useWebSocket(pollId);
 
+    const desmoldeoData = data?.Desmoldeo || {};
     const {
+        // estadoMaquina = 'Inactivo', // Para fines de ejemplo está siendo declarado manualmente
         NombreReceta,
-        PesoTotalProducto,
-        PesoNivelTorreProd,
-        // EstadoDesmoldeo, //
-    } = data || {};  // Si data es null, evita un error de desestructuración
+        PesoProducto,
+        PesoActual,
+    } = desmoldeoData;
 
-    const EstadoDesmoldeo = "activo";
+    const estadoMaquina = "pausa";
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Nombre receta', dato: NombreReceta !== undefined && NombreReceta !== null ? NombreReceta : '0' },
-        { id: 2, nombre: 'Peso total producto', dato: PesoTotalProducto !== undefined && PesoTotalProducto !== null ? PesoTotalProducto : '0' },
-        { id: 3, nombre: 'Torre nivel actual', dato: PesoNivelTorreProd !== undefined && PesoNivelTorreProd !== null ? PesoNivelTorreProd : '0' },
+        { id: 1, nombre: 'Nombre receta', dato: NombreReceta !== undefined && NombreReceta !== null ? NombreReceta : '-' },
+        { id: 2, nombre: 'Peso por linea de torre', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
+        { id: 3, nombre: 'Total desmoldado', dato: PesoActual !== undefined && PesoActual !== null ? PesoActual + " kg"  : '-'},
     ];
 
     return (
@@ -28,9 +29,9 @@ const DatosDesmoldeo = () => {
             <div className={style.contenedorDatos}>
                 <ul className={style.datosTods}>
                     {datosTiempoReal.map(({ id, nombre, dato }) => (
-                        <li key={id} className={EstadoDesmoldeo === 'activo' || EstadoDesmoldeo === 'pausa' ? cont.datosIndvRed : cont.datosIndvGray}>
+                        <li key={id} className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? cont.datosIndvRed : cont.datosIndvGray}>
                             <a className={style.detallesDatos} href='/desmoldeo/equipox'>
-                                {EstadoDesmoldeo === 'activo' || EstadoDesmoldeo === 'pausa' ? (
+                                {estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? (
                                     <div className={style.contenedorActivo}>
                                         <h3 className={style.h3}>{nombre}</h3>
                                         <h4 className={style.h4}>{dato}</h4>

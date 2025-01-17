@@ -1,8 +1,11 @@
 /* MenuAlarmas.module.css */
 .contenedorDrop {
     overflow: visible !important; /* Asegura que no bloquee el scroll */
-    max-height: auto; /* Permite que se expanda sin restricciones */
-    margin-top: 2%;
+    max-height: auto;
+    max-width: 1vw;
+    margin-top: 3%;
+    margin-left: -2%;
+    padding: 0;
     background: whitesmoke
 }
 

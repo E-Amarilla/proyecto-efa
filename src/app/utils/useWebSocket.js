@@ -8,7 +8,7 @@ export default function useWebSocket(pollId) {
   const socketRef = useRef(null); // Referencia al WebSocket
 
   useEffect(() => {
-    const socket = new WebSocket(`ws://192.168.0.72:8000/ws/${pollId}`);
+    const socket = new WebSocket(`ws://192.168.0.83:8000/ws/${pollId}`);
     socketRef.current = socket;
 
     // Evento: Conexión abierta

@@ -28,7 +28,7 @@ const MenuAlarmas = ({ icon }) => {
                     <DropdownItem
                         className={style.items}
                         key="1"
-                        description="Para de emergencia 'A' activada."
+                        description="Parada de emergencia 'A' activada."
                     >
                         {"Alarma"}
                     </DropdownItem>

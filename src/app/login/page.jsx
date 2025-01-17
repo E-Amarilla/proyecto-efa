@@ -18,7 +18,7 @@ export default function Login() {
     const user = users.find(u => u.username === username && u.password === password);
     if (user) {
       document.cookie = `auth=${JSON.stringify({ id: user.id, username: user.username })}; path=/`;
-      window.location.href = '/home';  // Use window.location.href for navigation
+      window.location.href = '/completo';  // Use window.location.href for navigation
     } else {
       alert('Invalid username or password');
     }

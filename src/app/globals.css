@@ -16,7 +16,7 @@ body {
 
 /* Ocultar barras de desplazamiento en todo el documento */
 body {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Agregar una sección scrollable que no muestre la barra */
@@ -29,5 +29,9 @@ body {
 
 .scrollablecontent::-webkit-scrollbar {
   display: none;  /* Safari y Chrome */
+}
+
+.p-1 {
+  padding: 10;
 }
 

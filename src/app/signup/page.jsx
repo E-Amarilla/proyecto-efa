@@ -12,7 +12,7 @@ export default function Signup() {
     const newUser = { id: users.length + 1, username, password };
     users.push(newUser);
     document.cookie = `auth=${JSON.stringify({ id: newUser.id, username: newUser.username })}; path=/`;
-    window.location.href = '/home';  // Use window.location.href for navigation
+    window.location.href = '/completo';  // Use window.location.href for navigation
   };
 
   return (

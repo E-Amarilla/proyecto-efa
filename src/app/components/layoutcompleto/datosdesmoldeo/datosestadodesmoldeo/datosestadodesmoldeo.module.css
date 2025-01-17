@@ -1,20 +1,31 @@
 .contenedorDatos {
-    margin: 0 0 -4 10;;
+    margin: 0 0 -4 10;
+    transition: all 0.3s ease-in-out; /* Transición general para cambios de contenedor */
 }
 
 .estadoActivo {
     margin: 0 0 -6 0;
     color: green;
     font-weight: bold;
+    transition: color 0.3s ease-in-out, margin 0.3s ease-in-out; /* Transición para color y margen */
+}
+
+.estadoPausa {
+    margin: 0 0 -6 0;
+    color: orange;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out, margin 0.3s ease-in-out; /* Transición para color y margen */
 }
 
 .estadoInactivo {
     color: #555555;
     font-weight: bold;
+    transition: color 0.3s ease-in-out; /* Transición para color */
 }
 
 .tiempo {
     color: white;
+    transition: color 0.3s ease-in-out; /* Transición para color del texto */
 }
 
 .area {
@@ -22,4 +33,5 @@
     font-weight: bold;
     font-size: 2rem;
     margin: 0 0 -7 0;
+    transition: color 0.3s ease-in-out, font-size 0.3s ease-in-out; /* Transición para color y tamaño de fuente */
 }
