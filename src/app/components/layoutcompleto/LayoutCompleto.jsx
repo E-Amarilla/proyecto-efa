@@ -49,11 +49,15 @@ const LayoutCompleto = () => {
 
   return (
     <div className={style.layoutContainer}>
-      <Image
-        src={LayoutIMG}
-        alt="Layout"
-        className={style.backgroundImage}
-      />
+      <div className={style.backgroundImage}>
+        <Image
+          src={LayoutIMG}
+          alt="Layout"
+          width={1080} // Cambia según las dimensiones reales
+          height={1920} // Cambia según las dimensiones reales
+          priority
+        />
+      </div>
       {sections.map((section) => (
         <Link href={section.path} key={section.id}>
           <div

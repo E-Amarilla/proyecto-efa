@@ -20,7 +20,7 @@ const DatosDesmoldeo = () => {
 
     const datosTiempoReal = [
         { id: 1, nombre: 'Nombre receta', dato: NombreReceta !== undefined && NombreReceta !== null ? NombreReceta : '-' },
-        { id: 2, nombre: 'Peso por linea de torre', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
+        { id: 2, nombre: 'Peso por linea', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
         { id: 3, nombre: 'Total desmoldado', dato: PesoActual !== undefined && PesoActual !== null ? PesoActual + " kg"  : '-'},
     ];
 

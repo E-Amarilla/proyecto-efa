@@ -7,28 +7,39 @@ const DatosEstadoPaletizado = () => {
     const pollId = "celda-completo";
     const { data, error, isConnected } = useWebSocket(pollId);
 
+    const paletizadoData = data?.Paletizado || {};
     const {
-        EstadoPaletizado = 'inactivo',  // Valor por defecto "inactivo" si es null
-        TiempoTransPaletizado = '00:00hs',  // Valor por defecto "00:00hs" si es null
-    } = data || {};  // Si data es null, evita un error de desestructuración
+        // estadoMaquina = 'Inactivo', // Para fines de ejemplo está siendo declarado manualmente
+        TiempoTranscurrido = '00:00 hs',
+    } = paletizadoData;
+
+    const estadoMaquina = 'inactivo'; // Ejemplo de valor
 
     return (
         <>
             <div className={style.contenedorDatos}>
                 <ul className={style.datosTods}>
-                    {EstadoPaletizado === 'activo' || EstadoPaletizado === 'pausa' ? (
+                    {estadoMaquina === 'Activo' || estadoMaquina === 'ACTIVO' || estadoMaquina === 'activo' ? (
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedorActivo}>
                                 <h1 className={style.area}>Paletizado</h1>
-                                <h3 className={style.estadoActivo}>{EstadoPaletizado.toUpperCase()}</h3>
-                                <h4 className={style.tiempo}>Hace: {TiempoTransPaletizado}</h4>
+                                <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h4 className={style.tiempo}>Hace: {TiempoTranscurrido}</h4>
+                            </div>
+                        </li>
+                    ) : estadoMaquina === 'Pausa' || estadoMaquina === 'PAUSA' || estadoMaquina === 'pausa' ? (
+                        <li className={style.datosIndvYellow}>
+                            <div className={style.contenedorPausa}>
+                                <h1 className={style.area}>Paletizado</h1>
+                                <h3 className={style.estadoPausa}>{estadoMaquina.toUpperCase()}</h3>
+                                <h4 className={style.tiempo}>Hace: {TiempoTranscurrido}</h4>
                             </div>
                         </li>
                     ) : (
                         <li className={style.datosIndvGray}>
                             <div className={style.contenedorInactivo}>
                                 <h1 className={style.area}>Paletizado</h1>
-                                <h3 className={style.estadoInactivo}>{EstadoPaletizado.toUpperCase()}</h3>
+                                <h3 className={style.estadoInactivo}>{estadoMaquina.toUpperCase()}</h3>
                             </div>
                         </li>
                     )}

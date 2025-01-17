@@ -3,7 +3,7 @@
     padding: 10px 15px;
     border-radius: 15px;
     background-color: rgb(255, 176, 86);
-    max-height: auto;
+    min-height: auto;
     transition: background-color 0.8s ease;
     box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.45);
 }

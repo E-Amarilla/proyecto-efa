@@ -7,12 +7,11 @@
 .backgroundImage {
   width: 100%;
   height: auto;
-  border-radius: 15px;
-  z-index: -10;
 }
 
 .interactiveSection {
   position: absolute;
+  padding: 0;
   cursor: pointer;
   transition: all 0.3s ease;
   background-color: transparent; /* Sin fondo */
@@ -67,10 +66,8 @@
   border-radius: 15px;
   background-color: transparent;
   z-index: 10;
-  padding: 20px;
   display: flex;
-  gap: 20;
-  overflow: auto;
+  gap: 10;
   box-shadow: none; /* Elimina la sombra */
 }
 
