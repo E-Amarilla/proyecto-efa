@@ -157,7 +157,7 @@ const Grafico = ({ startDate, endDate }) => {
             id="container-wrapper"
             style={{
                 width: "100%",
-                minHeight: "500px",
+                minHeight: "400px",
                 maxHeight: "auto",
                 backgroundColor: "#131313",
                 borderRadius: "15px",
@@ -198,7 +198,7 @@ const Grafico = ({ startDate, endDate }) => {
                     </div>
                 ))}
             </div>
-            <div id="container" style={{ width: "100%", height: "calc(100% - 100px)" }} ref={containerRef}></div>
+            <div id="container" style={{ width: "100%", height: "100%" }} ref={containerRef}></div>
         </div>
     );
 };

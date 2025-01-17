@@ -12,7 +12,6 @@
     color: #D9D9D9;
     background-color: #131313;
     border-radius: 15px;
-    border: 2px;
     padding: 20px;
 }
 
@@ -124,9 +123,9 @@
 .segmento {
     position: relative; /* Necesario para posicionar el tooltip relativo al segmento */
     height: 100%;
-  }
-  
-  .segmento[data-tooltip]::after {
+}
+
+.segmento[data-tooltip]::after {
     content: attr(data-tooltip);
     position: absolute;
     background: rgba(0, 0, 0, 0.7);
@@ -141,15 +140,15 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.0s ease, transform 0.3s ease;
-  }
-  
-  .segmento[data-tooltip]:hover::after {
+}
+
+.segmento[data-tooltip]:hover::after {
     opacity: 1;
     transform: translate(-50%, -50%); /* Mantiene el centro en el hover */
-  }
+}
 
-  .segmento[data-tooltip]:hover::after { 
+.segmento[data-tooltip]:hover::after { 
     left: auto; 
     right: 0; 
-    transform: translate(0, -50%); }
-  
+    transform: translate(0, -50%);
+}
