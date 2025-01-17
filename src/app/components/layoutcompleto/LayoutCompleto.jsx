@@ -42,14 +42,14 @@ const LayoutCompleto = () => {
       id: 4,
       name: "Datos",
       path: "/",
-      position: { top: "68.6%", left: "36.5%", width: "61.3%", height: "31.5%" },
+      position: { top: "67.5%", left: "36.5%", width: "61.3%", height: "31.5%" },
       styleClass: "secciondatos",
     },
   ];
 
   return (
     <div className={style.layoutContainer}>
-      <div className={style.backgroundImage}>
+      <div className={`${style.backgroundImage} ${style.imageContainer}`}>
         <Image
           src={LayoutIMG}
           alt="Layout"

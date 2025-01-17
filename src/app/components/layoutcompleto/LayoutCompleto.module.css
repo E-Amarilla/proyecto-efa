@@ -9,6 +9,11 @@
   height: auto;
 }
 
+.imageContainer {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
 .interactiveSection {
   position: absolute;
   padding: 0;
