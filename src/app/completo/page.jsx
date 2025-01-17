@@ -1,106 +1,203 @@
 "use client";
 
-// Importar imágenes
+import { useState, useEffect, useMemo } from "react";
+import {
+Table,
+TableHeader,
+TableColumn,
+TableBody,
+TableRow,
+TableCell,
+Spinner,
+Pagination,
+Button
+} from "@nextui-org/react";
+import Link from 'next/link';
 import Image from "next/image";
 import luzR from '@/assets/img/puntoRojo.png';
-import luzV from '@/assets/img/puntoVerde.png'; 
+import luzV from '@/assets/img/puntoVerde.png';
 import LayoutCompleto from '../components/layoutcompleto/LayoutCompleto.jsx';
-
-// Importar estilos
 import style from './Completo.module.css';
-import { useEffect, useState } from "react";
 
 const Completo = () => {
-    // Estado para almacenar las alertas recibidas del WebSocket
-    const [alertas, setAlertas] = useState([]);
-    const [error, setError] = useState(null); // Estado para manejar errores
+const [page, setPage] = useState(1);
+const [rowsPerPage, setRowsPerPage] = useState(5);
+const [isLoading, setIsLoading] = useState(true);
+const [error, setError] = useState(null);
+const [items, setItems] = useState([]);
 
-    useEffect(() => {
-        // Conexión al WebSocket (URL actualizada)
-        const socket = new WebSocket("ws://192.168.0.72:8000/ws/alarmas-datos");
+const wsUrl = "ws://192.168.0.72:8000/ws/alarmas-logs";
 
-        // Evento cuando se recibe un mensaje del WebSocket
-        socket.onmessage = (event) => {
-            try {
-                // Si el mensaje es un JSON válido, parsearlo
-                const data = JSON.parse(event.data);
+useEffect(() => {
+    const socket = new WebSocket(wsUrl);
 
-                // Verifica si los datos contienen un array de alertas
-                if (data && Array.isArray(data)) {
-                    setAlertas(data);
-                } else {
-                    throw new Error("Formato de datos no válido");
-                }
-            } catch (error) {
-                console.error("Error al procesar los datos del WebSocket:", error);
-                setError("Error al recibir o procesar los datos");
-            }
-        };
-
-        // Evento cuando el WebSocket se cierra
-        socket.onclose = () => {
-            console.log("Conexión WebSocket cerrada");
-        };
-
-        // Evento cuando ocurre un error en la conexión WebSocket
-        socket.onerror = (error) => {
-            console.error("Error en el WebSocket:", error);
-            setError("Error en la conexión WebSocket");
-        };
-
-        // Limpiar la conexión WebSocket cuando el componente se desmonta
-        return () => {
-            socket.close();
-        };
-    }, []);
-
-    // Función para convertir el formato de fecha
-    const convertirFecha = (fechaStr) => {
-        // Cambiar el formato '2025-01-17-12-00' a '2025-01-17 12:00'
-        const fechaFormateada = fechaStr.replace(/-/g, ":").replace(/(\d{4}):(\d{2}):(\d{2}):(\d{2}):(\d{2})/, "$1-$2-$3 $4:$5");
-        return new Date(fechaFormateada);
+    socket.onopen = () => {
+    console.log("Conexión WebSocket establecida.");
+    setIsLoading(false);
     };
 
-    // Filtrar alertas por tipo y ordenarlas por la hora (de más reciente a más antigua)
-    const alertasFiltradas = alertas
-        .filter(alerta => alerta.tipoAlarma === 'Error' || alerta.tipoAlarma === 'Advertencia')
-        .sort((a, b) => convertirFecha(b.fechaRegistro) - convertirFecha(a.fechaRegistro))
-        .slice(0, 8); // Limitar a las últimas 8 alertas
+    socket.onmessage = (event) => {
+    try {
+        const data = JSON.parse(event.data);
 
-    return (
-        <div className={style.body}>
-            <div className={style.contenedor}>
-                <div className={style.contenedorImagen}>
-                    <LayoutCompleto />
-                </div>
-            </div>
+        if (Array.isArray(data)) {
+        // Filtrar solo alertas de tipo "Error" y "Alerta"
+        const filteredItems = data.filter(alerta => alerta.tipoAlarma === "Error" || alerta.tipoAlarma === "Alerta");
 
-            {/* Título */}
-            <h2 className={style.titulo}>ÚLTIMAS ALERTAS</h2>
+        // Actualizar los items con el WebSocket
+        setItems((prevItems) => {
+            const updatedItems = [...prevItems];
 
-            {/* Mostrar error si lo hay */}
-            {error && <div className={style.error}>{error}</div>}
+            filteredItems.forEach((alerta) => {
+            const index = updatedItems.findIndex(item => item.key === alerta.id_alarma.toString());
+            if (index !== -1) {
+                // Si el item ya existe, lo actualizamos
+                updatedItems[index] = {
+                key: alerta.id_alarma.toString(),
+                description: alerta.descripcion,
+                type: alerta.tipoAlarma,
+                state: alerta.estadoAlarma,
+                time: alerta.fechaRegistro,
+                };
+            } else {
+                // Si no existe, lo agregamos
+                updatedItems.push({
+                key: alerta.id_alarma.toString(),
+                description: alerta.descripcion,
+                type: alerta.tipoAlarma,
+                state: alerta.estadoAlarma,
+                time: alerta.fechaRegistro,
+                });
+            }
+            });
 
-            {/* Lista de alertas */}
-            <div className={style.contenedorAlertas}>
-                <ul className={style.alertasTods}>
-                    {alertasFiltradas.map(({ id_alarma, descripcion, tipoAlarma, estadoAlarma, fechaRegistro }) => (
-                        <li key={id_alarma} className={style.alertaIndv}>
-                            <a className={style.detallesAlerta} href='alertas'>
-                                {/* Selección de la imagen basada en el tipo de alerta */}
-                                <Image 
-                                    src={tipoAlarma === 'Error' ? luzR : luzV} 
-                                    alt={`Estado: ${tipoAlarma}`} 
-                                    className={style.icon} 
-                                />
-                                {descripcion} - {tipoAlarma} - {estadoAlarma} - {convertirFecha(fechaRegistro).toLocaleString()}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            return updatedItems;
+        });
+        } else {
+        console.error("Formato de datos no válido:", data);
+        }
+    } catch (err) {
+        console.error("Error procesando datos del WebSocket:", err);
+        setError("Error procesando datos del servidor.");
+    }
+    };
+
+    socket.onerror = (err) => {
+    console.error("Error en WebSocket:", err);
+    setError("Error al conectarse al servidor WebSocket.");
+    setIsLoading(false);
+    };
+
+    socket.onclose = () => {
+    console.log("Conexión WebSocket cerrada.");
+    };
+
+    return () => {
+    socket.close();
+    };
+}, [wsUrl]);
+
+const columns = [
+    { key: "description", label: "DESCRIPCIÓN" },
+    { key: "type", label: "TIPO" },
+    { key: "state", label: "ESTADO" },
+    { key: "time", label: "HORA" },
+];
+
+const totalRows = items.length;
+const totalPages = Math.ceil(totalRows / rowsPerPage);
+const paginatedRows = useMemo(
+    () => items.slice((page - 1) * rowsPerPage, page * rowsPerPage),
+    [items, page, rowsPerPage]
+);
+
+const handlePageChange = (newPage) => setPage(newPage);
+
+const handleRowsPerPageChange = (event) => {
+    setRowsPerPage(Number(event.target.value));
+    setPage(1);
+};
+
+const renderState = (state) => {
+    if (state === "Activo") {
+    return <Image src={luzV} alt="Activo" width={15} height={15} />;
+    } else if (state === "Inactivo") {
+    return <Image src={luzR} alt="Inactivo" width={15} height={15} />;
+    }
+    return state;
+};
+
+return (
+    <div className={style.body}>
+    <div className={style.contenedor}>
+        <div className={style.contenedorImagen}>
+        <LayoutCompleto />
         </div>
-    );
+    </div>
+
+    {/* Título */}
+    <h2 className={style.titulo}>ÚLTIMAS ALERTAS</h2>
+
+    {/* Mostrar error si lo hay */}
+    {error && <p className="text-red-500">Error: {error}</p>}
+
+    <Table
+        aria-label="Tabla de alertas"
+        className="w-full bg-[#131313] text-[#D9D9D9] table-fixed p-[2px] rounded-[15px]"
+    >
+        <TableHeader columns={columns}>
+        {(column) => (
+            <TableColumn
+            key={column.key}
+            className="bg-[#1f1f1f] text-[#D9D9D9] font-medium"
+            >
+            {column.label}
+            </TableColumn>
+        )}
+        </TableHeader>
+        <TableBody
+        isLoading={isLoading}
+        items={paginatedRows}
+        loadingContent={<Spinner label="Cargando..." />}
+        >
+        {(item) => (
+            <TableRow key={item.key}>
+            {(columnKey) => (
+                <TableCell className="bg-[#131313] text-[#D9D9D9]">
+                {columnKey === "state" ? renderState(item.state) : columnKey === "time" ? new Date(item.time).toLocaleString() : item[columnKey]}
+                </TableCell>
+            )}
+            </TableRow>
+        )}
+        </TableBody>
+    </Table>
+
+    <div className="flex justify-between items-center mt-5">
+        <Pagination
+        className="flex flex-wrap gap-4 items-center overflow-hidden"
+        showControls
+        isCompact
+        color="white"
+        variant="light"
+        size="lg"
+        initialPage={1}
+        total={totalPages}
+        page={page}
+        onChange={handlePageChange}
+        />
+        <Link href="/alertas">
+        <Button
+            className={`${style.hoverEffect} flex justify-self-center font-bold`}
+            radius="full"
+            auto
+        >
+            Ver más
+        </Button>
+    </Link>
+    </div>
+    
+    </div>
+);
 };
 
 export default Completo;
