@@ -34,20 +34,23 @@ export default function Notificaciones() {
 
                     const id = toast(
                         <div className={style.notification}>
-                            <h2>{alarma.tipoAlarma}</h2>
-                            <h2>ID {alarma.id_alarma}</h2>
-                            <p>{alarma.descripcion}</p>
+                            
+                            <div className={style.texto}>
+                                <h2>{alarma.tipoAlarma}</h2>
+                                <p>{alarma.descripcion}</p>
+                            </div>
+                            
                             <button
                                 onClick={() => {
                                     toast.dismiss(id);
                                 }}
-                                style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                                style={{background: 'transparent', border: 'none', cursor: 'pointer'}}
                             >
                                 <Image src={MyIcon} alt="Cancel Icon" width={20} height={20} />
                             </button>
                         </div>,
                         {
-                            duration: 5000,
+                            duration: 5000000000000,
                         }
                     );
 
@@ -64,8 +67,6 @@ export default function Notificaciones() {
     }, [data]);
 
     return (
-        <div>
-            <Toaster />
-        </div>
+        <Toaster />
     );
 }

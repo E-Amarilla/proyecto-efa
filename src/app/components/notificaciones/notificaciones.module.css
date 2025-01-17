@@ -22,8 +22,14 @@
     font-weight: bold;
 }
 
-.BotonNext {
+.texto {
+    display: grid;
+    text-align: left;
+    width: 90%;
+}
+
+.notification {
+    width: 100%;
     display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center;    /* Centra verticalmente */
+    flex-direction: row;
 }
