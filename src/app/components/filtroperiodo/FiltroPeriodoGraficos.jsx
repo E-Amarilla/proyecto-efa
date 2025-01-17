@@ -32,7 +32,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://192.168.0.83:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://192.168.0.72:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },
@@ -64,7 +64,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://192.168.0.83:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://192.168.0.72:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },
@@ -91,7 +91,9 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
     return (
         <div className={style.seccion}>
             <div className={style.graph2}>
-                <Grafico2 startDate={fechaInicio} endDate={fechaFin}/>
+                <div className={style.grafiproductos}>
+                    <Grafico2 startDate={fechaInicio} endDate={fechaFin}/>
+                </div>
                 <div className={style.contenedor}>
                     <h2 className={style.titulo}>FILTRO POR PERIODO</h2>
                     <div className="h-full flex flex-col items-center gap-5 rounded-lg">

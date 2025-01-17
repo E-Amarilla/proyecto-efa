@@ -28,7 +28,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://192.168.0.83:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://192.168.0.72:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },
@@ -59,7 +59,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://192.168.0.83:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://192.168.0.72:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },

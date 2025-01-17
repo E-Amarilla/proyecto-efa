@@ -16,7 +16,7 @@ const DatosDesmoldeo = () => {
         PesoActual,
     } = desmoldeoData;
 
-    const estadoMaquina = "pausa";
+    const estadoMaquina = "activo";
 
     const datosTiempoReal = [
         { id: 1, nombre: 'Nombre receta', dato: NombreReceta !== undefined && NombreReceta !== null ? NombreReceta : '-' },

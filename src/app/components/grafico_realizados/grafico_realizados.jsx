@@ -16,7 +16,7 @@ const Grafico = ({ startDate, endDate }) => {
         const fetchInitialData = async (startDate, endDate) => {
             try {
                 const response = await fetch(
-                    `http://192.168.0.83:8000/graficos-hsitorico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                    `http://192.168.0.72:8000/graficos-hsitorico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                     {
                         method: "GET",
                         headers: { Accept: "application/json" },
