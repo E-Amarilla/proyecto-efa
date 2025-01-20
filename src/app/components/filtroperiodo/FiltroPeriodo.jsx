@@ -99,13 +99,13 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
                         onChange={handleDateChange}
                     />
                     <div className="min-w-[6rem] w-[13vw] max-w-full pt-2">
-                        <BotonFiltro onClick={handleButtonClick} startDate={dateRange.start} endDate={dateRange.end} />
+                        <BotonFiltro onClick={handleButtonClick}/>
                     </div>
                 </div>
             </div>
             <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                 <div className="min-w-[6rem] w-[13vw] max-w-full">
-                    <Botones />
+                    <Botones startDate={dateRange.start} endDate={dateRange.end}/>
                 </div>
             </div>
         </div>

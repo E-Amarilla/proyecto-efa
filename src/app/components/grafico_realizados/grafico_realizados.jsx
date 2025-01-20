@@ -23,11 +23,11 @@ const Grafico = ({ startDate, endDate }) => {
                         headers: { Accept: "application/json" },
                     }
                 );
-
+    
                 if (!response.ok) {
                     throw new Error(`Los datos que estás recibiendo están vacios.: ${response.statusText}`);
                 }
-
+    
                 const datos = await response.json();
                 setData(datos);
             } catch (error) {
@@ -35,9 +35,11 @@ const Grafico = ({ startDate, endDate }) => {
                 setData({ ciclos: [], pesoProducto: [] }); // Configurar datos vacíos en caso de error
             }
         };
-
-        fetchInitialData(startDate, endDate);
-    }, [startDate, endDate]);
+    
+        if (startDate && endDate) {
+            fetchInitialData(startDate, endDate);
+        }
+    }, [startDate, endDate]); // Asegura que se ejecute al cambiar las fechas    
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -81,7 +83,7 @@ const Grafico = ({ startDate, endDate }) => {
         background.style.position = "absolute";
         background.style.top = "50%";
         background.style.left = "50%";
-        background.style.transform = "translate(-50%, -60%)";
+        background.style.transform = "translate(-50%, -60%) scale(0.9)";
         background.style.width = "100%";
         background.style.height = "100%";
         background.style.backgroundImage = `url(${crem.src})`;
@@ -235,9 +237,9 @@ const Grafico = ({ startDate, endDate }) => {
             <div style={{ display: "flex", justifyContent: "left", flexDirection: "column" }}>
                 <h1 style={{ margin: "0px", color: "#d9d9d9", fontWeight: "bold" }}>CICLOS POR PRODUCTO</h1>
                 <div className={style.fechaContainer}>
-                    <span className={style.fecha}>{startDate}</span>
+                    <span className={style.fecha}>{new Date(startDate).toISOString().split("T")[0]}</span>
                     <span className={style.separator}> - </span>
-                    <span className={style.fecha}>{endDate}</span>
+                    <span className={style.fecha}>{new Date(endDate).toISOString().split("T")[0]}</span>
                 </div>
                 <div
                     style={{

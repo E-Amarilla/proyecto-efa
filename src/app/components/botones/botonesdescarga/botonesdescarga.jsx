@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Button } from "@nextui-org/react";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import html2canvas from "html2canvas";

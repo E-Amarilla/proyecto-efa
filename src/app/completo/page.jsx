@@ -26,7 +26,7 @@ const Completo = () => {
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
 
-  const wsUrl = "ws://192.168.0.72:8000/ws/alarmas-logs";
+  const wsUrl = "ws://192.168.0.150:8000/ws/alarmas-logs";
 
   // Función para convertir el formato de fecha
   const convertirFecha = (fechaStr) => {

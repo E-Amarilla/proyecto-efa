@@ -38,13 +38,13 @@ const Grafico = ({ startDate, endDate }) => {
                         headers: { Accept: "application/json" },
                     }
                 );
-
+    
                 if (!response.ok) {
                     throw new Error(`Error fetching data: ${response.statusText}`);
                 }
-
+    
                 const productos = await response.json();
-
+    
                 // Asignar colores a los productos
                 productColors.current = assignColors(productos);
                 setData(productos);
@@ -53,9 +53,11 @@ const Grafico = ({ startDate, endDate }) => {
                 console.error("Error fetching data:", error);
             }
         };
-
-        fetchInitialData();
-    }, [startDate, endDate]);
+    
+        if (startDate && endDate) {
+            fetchInitialData();
+        }
+    }, [startDate, endDate]); // Asegura que se ejecute al cambiar las fechas    
 
     useEffect(() => {
         const chartOptions = {
@@ -90,7 +92,7 @@ const Grafico = ({ startDate, endDate }) => {
         background.style.position = "absolute";
         background.style.top = "50%";
         background.style.left = "50%";
-        background.style.transform = "translate(-50%, -65%) scale(0.8)";
+        background.style.transform = "translate(-50%, -65%) scale(0.7)";
         background.style.width = "100%";
         background.style.height = "100%";
         background.style.backgroundImage = `url(${crem.src})`;
@@ -168,9 +170,9 @@ const Grafico = ({ startDate, endDate }) => {
             <div style={{ display: "flex", justifyContent: "left", textAlign: "left", flexDirection: "column" }}>
                 <h1 style={{ margin: "0px", color: "#d9d9d9", fontWeight: "bold" }}>PRODUCTOS REALIZADOS</h1>
                 <div className={style.fechaContainer}>
-                    <span className={style.fecha}>{startDate}</span>
+                    <span className={style.fecha}>{new Date(startDate).toISOString().split("T")[0]}</span>
                     <span className={style.separator}> - </span>
-                    <span className={style.fecha}>{endDate}</span>
+                    <span className={style.fecha}>{new Date(endDate).toISOString().split("T")[0]}</span>
                 </div>
             </div>
             <div

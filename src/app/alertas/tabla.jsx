@@ -21,7 +21,7 @@ const [error, setError] = useState(null);
 const [items, setItems] = useState([]);
 const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
 
-const wsUrl = "ws://192.168.0.72:8000/ws/alarmas-logs";
+const wsUrl = "ws://192.168.0.150:8000/ws/alarmas-logs";
 
 useEffect(() => {
     const socket = new WebSocket(wsUrl);
