@@ -68,19 +68,23 @@
 
 .SDDAsection {
   box-shadow: 0px 0px 10px 5px rgba(7, 222, 136, 0.5); /* Sombra visible */
+  position: absolute;
 }
 
 .Torresection {
   box-shadow: 0px 0px 10px 5px rgba(243, 127, 208, 0.5); /* Sombra visible */
+  position: absolute;
 }
 
 .ROBOTsection {
   box-shadow: 0px 0px 10px 5px rgba(222, 154, 7, 0.5); /* Sombra visible */
+  position: absolute;
 }
 
 .Grippersection {
   box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.5); /* Sombra visible */
   transform: rotate(34deg); /* Rota la sección */
+  position: absolute;
 }
 
 .estadoLayout {
