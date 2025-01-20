@@ -27,7 +27,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {!esLogin && <Header />} {/*CONDICIONAL HEADER, NO BORRAR*/}
         <div>
           {children}
-          <Sonner />
+          {!esLogin && <Sonner />} {/*CONDICIONAL SONNER, NO BORRAR*/}
         </div>
         {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
       </div>
