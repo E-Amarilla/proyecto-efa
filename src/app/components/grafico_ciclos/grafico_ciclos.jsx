@@ -32,7 +32,7 @@ const Grafico = ({ startDate, endDate }) => {
         const fetchInitialData = async () => {
             try {
                 const response = await fetch(
-                    `http://192.168.0.150:8000/graficos-historico/ciclos-productos/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/ciclos-productos/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                     {
                         method: "GET",
                         headers: { Accept: "application/json" },

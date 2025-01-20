@@ -28,7 +28,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://192.168.0.150:8000/productividad/resumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/productividad/resumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },
@@ -59,7 +59,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://192.168.0.150:8000/productividad/resumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/productividad/resumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },

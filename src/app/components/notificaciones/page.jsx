@@ -9,7 +9,9 @@ import style from "./notificaciones.module.css";
 import Image from "next/image";
 import MyIcon from "@/assets/img/cancelICON.png";
 
-const validIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+const validIds = process.env.NEXT_PUBLIC_VALID_IDS
+    ? process.env.NEXT_PUBLIC_VALID_IDS.split(',').map(Number)
+    : [];
 
 export default function Notificaciones() {
     const [activeToasts, setActiveToasts] = useState([]); // Almacena las alarmas mostradas

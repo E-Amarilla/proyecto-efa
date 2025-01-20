@@ -29,9 +29,11 @@
 
 .items {
     margin-bottom: 0.2rem !important; /* Asegura que no haya margen en los items */
-    padding: 0.5rem 1rem !important; /* Ajusta el padding según sea necesario */
     text-align: left;
     background-color: #d9d9d9;
+    display: relative;        /* Asegura que se comporte como un bloque para centrar */
+    text-align: center;    /* Centra el texto dentro del contenedor */
+    margin: 0 auto;       /* Opcional, asegura el centrado completo si es necesario */
 }
 
 .buttonContainer {

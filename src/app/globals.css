@@ -59,3 +59,7 @@ body {
 .border-b-primary {
   border-bottom-color: #712f;
 }
+
+.items-start {
+  align-items: center;
+}

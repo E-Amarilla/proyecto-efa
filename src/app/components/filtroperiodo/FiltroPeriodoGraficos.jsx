@@ -12,30 +12,26 @@ const FiltroPeriodo = () => {
     const today = new Date();
     const formattedToday = today.toISOString().split("T")[0];
 
-    // Calcular la fecha de hace un mes
     const lastMonth = new Date(today);
     lastMonth.setMonth(today.getMonth() - 1);
     const formattedLastMonth = lastMonth.toISOString().split("T")[0];
 
-    // Estado para el rango de fechas seleccionado
     const [dateRange, setDateRange] = useState({ start: formattedLastMonth, end: formattedToday });
-    // Estado para el rango de fechas aplicados
     const [fechaInicio, setFechaInicio] = useState(formattedLastMonth);
     const [fechaFin, setFechaFin] = useState(formattedToday);
 
     const handleDateChange = (range) => {
-        setDateRange(range); // Actualizar el rango de fechas cuando el usuario lo cambie
+        setDateRange(range);
     };
 
     const handleButtonClick = () => {
-        setFechaInicio(dateRange.start); // Asignar la fecha de inicio cuando se presiona el filtro
-        setFechaFin(dateRange.end); // Asignar la fecha de fin cuando se presiona el filtro
+        setFechaInicio(dateRange.start);
+        setFechaFin(dateRange.end);
     };
 
-    // Esto asegura que los gráficos solo se actualicen cuando se presiona el botón
     useEffect(() => {
-        // Aquí puedes realizar la lógica de la consulta o cualquier acción adicional
-    }, [fechaInicio, fechaFin]); // Ejecutar cuando las fechas de inicio o fin cambian
+
+    }, [fechaInicio, fechaFin]);
 
     return (
         <div id="GraficosSection" className={style.seccion}>
@@ -56,7 +52,7 @@ const FiltroPeriodo = () => {
                                     input: style.input,
                                 }}
                                 onChange={handleDateChange}
-                                value={[dateRange.start, dateRange.end]} // Asegúrate de que el valor esté sincronizado
+                                value={[dateRange.start, dateRange.end]}
                             />
                             <div className="min-w-[6rem] w-[13vw] max-w-full pt-2">
                                 <BotonFiltro onClick={handleButtonClick} />

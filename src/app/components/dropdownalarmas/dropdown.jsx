@@ -14,7 +14,9 @@ import {
 import style from './MenuAlarmas.module.css';
 import useWebSocket from '../../utils/useWebSocket';
 
-const validIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+const validIds = process.env.NEXT_PUBLIC_VALID_IDS
+    ? process.env.NEXT_PUBLIC_VALID_IDS.split(',').map(Number)
+    : [];
 
 const MenuAlarmas = ({ icon }) => {
     const [alerts, setAlerts] = useState([]); // Estado para almacenar las alertas filtradas
@@ -59,9 +61,9 @@ const MenuAlarmas = ({ icon }) => {
                         <DropdownItem
                             className={style.items}
                             key="no-alerts"
-                            description="No hay alarmas activas."
+                            description="Sin actividad"
                         >
-                            No hay alarmas activas.
+                                No hay alarmas activas
                         </DropdownItem>
                     )}
                 </DropdownSection>

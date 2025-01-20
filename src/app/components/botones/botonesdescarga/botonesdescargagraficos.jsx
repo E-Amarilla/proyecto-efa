@@ -39,7 +39,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
     const handleExcelDownload = async () => {
         try {
             const response = await fetch(
-                `http://192.168.0.150:8000/graficos-historico/descargar-excel?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/descargar-excel?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },
