@@ -50,7 +50,7 @@ export default function Notificaciones() {
                             </button>
                         </div>,
                         {
-                            duration: 5000000000000,
+                            duration: 5000,
                         }
                     );
 

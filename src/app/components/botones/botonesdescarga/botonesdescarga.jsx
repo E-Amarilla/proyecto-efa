@@ -5,7 +5,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import logoDataURL from './cremonabase64'; // Importa la data URL de la imagen
 
-export default function BotonesDescarga() {
+export default function BotonesDescarga({ startDate, endDate }) {
     const handlePdfDownload = async () => {
         const productSection = document.getElementById('ProductividadSection');
         
@@ -41,6 +41,35 @@ export default function BotonesDescarga() {
         }
     };
 
+    const handleExcelDownload = async () => {
+        try {
+            const response = await fetch(
+                `http://192.168.0.150:8000/productividad/descargar-excel?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                {
+                    method: "GET",
+                    headers: { Accept: "application/json" },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`Error en la descarga: ${response.statusText}`);
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `productividad_${startDate}_to_${endDate}.xlsx`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("Error al descargar el archivo:", error);
+        }
+    };
+
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center", width: "100%" }}>
             <Button
@@ -73,6 +102,7 @@ export default function BotonesDescarga() {
                     alignItems: "center",
                     fontSize: "17px",
                 }}
+                onClick={handleExcelDownload}
             >
                 <FaFileExcel style={{ marginRight: "8px" }} />
                 Descargar EXCEL

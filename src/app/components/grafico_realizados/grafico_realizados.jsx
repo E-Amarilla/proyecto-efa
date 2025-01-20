@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createChart } from "lightweight-charts";
 import crem from "@/assets/img/creminox.png";
+import style from "./grafico_realizados.module.css"
 
 const Grafico = ({ startDate, endDate }) => {
     console.log("Datos recibidos en GraficoRealizados:", { startDate, endDate });
@@ -16,7 +17,7 @@ const Grafico = ({ startDate, endDate }) => {
         const fetchInitialData = async (startDate, endDate) => {
             try {
                 const response = await fetch(
-                    `http://192.168.0.72:8000/graficos-hsitorico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                    `http://192.168.0.150:8000/graficos-historico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                     {
                         method: "GET",
                         headers: { Accept: "application/json" },
@@ -233,7 +234,11 @@ const Grafico = ({ startDate, endDate }) => {
         >
             <div style={{ display: "flex", justifyContent: "left", flexDirection: "column" }}>
                 <h1 style={{ margin: "0px", color: "#d9d9d9", fontWeight: "bold" }}>CICLOS POR PRODUCTO</h1>
-                <h1 style={{ margin: "0px", color: "orange" }}>POR PERIODO</h1>
+                <div className={style.fechaContainer}>
+                    <span className={style.fecha}>{startDate}</span>
+                    <span className={style.separator}> - </span>
+                    <span className={style.fecha}>{endDate}</span>
+                </div>
                 <div
                     style={{
                         display: "flex",

@@ -22,7 +22,9 @@ const Productividad = () => {
         (new Date(dateRange.end).getTime() - new Date(dateRange.start).getTime()) / (1000 * 3600 * 24) + 1
     );
 
-    const CantidadCiclosFinalizados = data?.CantidadCiclosFinalizados ?? "Cargando...";
+    const cantidadCiclosF = data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
+    ? data.ProductosRealizados.reduce((total, producto) => total + producto.cantidadCiclos, 0)
+    : "Cargando...";
     const PesoTotal = data?.PesoTotal ?? "Cargando...";
     const Horas_Uso =
         data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
@@ -35,7 +37,7 @@ const Productividad = () => {
         Horas_Uso !== "Cargando..." ? (Horas_Uso / (Cant_Dias)).toFixed(2) : "Cargando...";
 
     const datos = [
-        { id: 1, titulo: "Ciclos realizados", dato: CantidadCiclosFinalizados },
+        { id: 1, titulo: "Ciclos realizados", dato: cantidadCiclosF },
         { id: 2, titulo: "Producción total", dato: (
             <span>
               {PesoTotal} <span className="text-lg">Tn</span>

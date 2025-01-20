@@ -28,7 +28,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://192.168.0.72:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://192.168.0.150:8000/productividad/resumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },
@@ -59,7 +59,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
         setLoading(true);
         try {
             const response = await fetch(
-                `http://192.168.0.72:8000/productividadresumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                `http://192.168.0.150:8000/productividad/resumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
                     headers: { Accept: "application/json" },
@@ -99,7 +99,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
                         onChange={handleDateChange}
                     />
                     <div className="min-w-[6rem] w-[13vw] max-w-full pt-2">
-                        <BotonFiltro onClick={handleButtonClick} />
+                        <BotonFiltro onClick={handleButtonClick} startDate={dateRange.start} endDate={dateRange.end} />
                     </div>
                 </div>
             </div>
