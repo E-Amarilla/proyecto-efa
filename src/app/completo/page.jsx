@@ -37,28 +37,28 @@ const Completo = () => {
 
   useEffect(() => {
     const socket = new WebSocket(wsUrl);
-
+  
     socket.onopen = () => {
       console.log("Conexión WebSocket establecida.");
-      setIsLoading(false);
+      setError(null); // Limpiamos el estado de error al establecer la conexión
+      setIsLoading(true); // Aseguramos que está cargando inicialmente
     };
-
+  
     socket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-
-        if (Array.isArray(data)) {
+  
+        if (Array.isArray(data) && data.some(alerta => alerta.tipoAlarma === "Error" || alerta.tipoAlarma === "Alerta")) {
           // Filtrar solo alertas de tipo "Error" y "Alerta"
           const filteredItems = data.filter(alerta => alerta.tipoAlarma === "Error" || alerta.tipoAlarma === "Alerta");
-
+  
           // Actualizar los items con el WebSocket
           setItems((prevItems) => {
             const updatedItems = [...prevItems];
-
+  
             filteredItems.forEach((alerta) => {
               const index = updatedItems.findIndex(item => item.key === alerta.id_alarma.toString());
               if (index !== -1) {
-                // Si el item ya existe, lo actualizamos
                 updatedItems[index] = {
                   key: alerta.id_alarma.toString(),
                   description: alerta.descripcion,
@@ -67,7 +67,6 @@ const Completo = () => {
                   time: alerta.fechaRegistro,
                 };
               } else {
-                // Si no existe, lo agregamos
                 updatedItems.push({
                   key: alerta.id_alarma.toString(),
                   description: alerta.descripcion,
@@ -77,22 +76,36 @@ const Completo = () => {
                 });
               }
             });
-
+  
             return updatedItems;
           });
+  
+          setIsLoading(false); // Desactivar carga cuando se reciban los datos
         } else {
-          console.error("Formato de datos no válido:", data);
+          console.error("Formato de datos no válido o sin datos relevantes:", data);
         }
       } catch (err) {
         console.error("Error procesando datos del WebSocket:", err);
         setError("Error procesando datos del servidor.");
       }
     };
-
+  
+    socket.onerror = (err) => {
+      console.error("Error en WebSocket:", err);
+      if (!isLoading) { // Solo establecer error si no se ha completado la carga
+        setError("Error al conectarse al servidor WebSocket.");
+      }
+      setIsLoading(false);
+    };
+  
+    socket.onclose = () => {
+      console.log("Conexión WebSocket cerrada.");
+    };
+  
     return () => {
       socket.close();
     };
-  }, [wsUrl]);
+  }, [wsUrl]); // Dependemos de isLoading para asegurarnos de que vuelva a ser true si es necesario   
 
   const columns = [
     { key: "description", label: "DESCRIPCIÓN" },
@@ -123,6 +136,23 @@ const Completo = () => {
     }
     return state;
   };
+
+  useEffect(() => {
+    // Agregar el atributo "data-active" y "aria-current" a la página activa
+    const paginationItems = document.querySelectorAll('.nextui-pagination-item');
+    paginationItems.forEach(item => {
+      const pageNumber = parseInt(item.textContent);
+      if (pageNumber === page) {
+        item.setAttribute('data-active', 'true');
+        item.setAttribute('aria-current', 'true');
+        item.setAttribute('data-focus', 'true');
+      } else {
+        item.removeAttribute('data-active');
+        item.removeAttribute('aria-current');
+        item.removeAttribute('data-focus');
+      }
+    });
+  }, [page]);  
 
   return (
     <div className={style.body}>
@@ -177,9 +207,8 @@ const Completo = () => {
           color="white"
           variant="light"
           size="lg"
-          initialPage={1}
           total={totalPages}
-          page={page}
+          page={page}  // Página actual gestionada por estado
           onChange={handlePageChange}
         />
         <Link href="/alertas">

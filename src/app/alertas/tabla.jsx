@@ -27,65 +27,66 @@ useEffect(() => {
     const socket = new WebSocket(wsUrl);
 
     socket.onopen = () => {
-    console.log("Conexión WebSocket establecida.");
-    setIsLoading(false);
+        console.log("Conexión WebSocket establecida.");
     };
 
     socket.onmessage = (event) => {
-    try {
-        const data = JSON.parse(event.data);
+        try {
+            const data = JSON.parse(event.data);
 
-        if (Array.isArray(data)) {
-        // Actualizar los items con el WebSocket
-        setItems((prevItems) => {
-            const updatedItems = [...prevItems];
+            if (Array.isArray(data) && data.length > 0) {
+                setItems((prevItems) => {
+                    const updatedItems = [...prevItems];
 
-            data.forEach((alerta) => {
-            const index = updatedItems.findIndex(item => item.key === alerta.id_alarma.toString());
-            if (index !== -1) {
-                // Si el item ya existe, lo actualizamos
-                updatedItems[index] = {
-                key: alerta.id_alarma.toString(),
-                description: alerta.descripcion,
-                type: alerta.tipoAlarma,
-                state: alerta.estadoAlarma,
-                time: alerta.fechaRegistro,
-                };
-            } else {
-                // Si no existe, lo agregamos
-                updatedItems.push({
-                key: alerta.id_alarma.toString(),
-                description: alerta.descripcion,
-                type: alerta.tipoAlarma,
-                state: alerta.estadoAlarma,
-                time: alerta.fechaRegistro,
+                    data.forEach((alerta) => {
+                        const index = updatedItems.findIndex(item => item.key === alerta.id_alarma.toString());
+                        if (index !== -1) {
+                            // Si el item ya existe, lo actualizamos
+                            updatedItems[index] = {
+                                key: alerta.id_alarma.toString(),
+                                description: alerta.descripcion,
+                                type: alerta.tipoAlarma,
+                                state: alerta.estadoAlarma,
+                                time: alerta.fechaRegistro,
+                            };
+                        } else {
+                            // Si no existe, lo agregamos
+                            updatedItems.push({
+                                key: alerta.id_alarma.toString(),
+                                description: alerta.descripcion,
+                                type: alerta.tipoAlarma,
+                                state: alerta.estadoAlarma,
+                                time: alerta.fechaRegistro,
+                            });
+                        }
+                    });
+
+                    return updatedItems;
                 });
-            }
-            });
 
-            return updatedItems;
-        });
-        } else {
-        console.error("Formato de datos no válido:", data);
+                // Desactivamos isLoading solo después de recibir datos
+                setIsLoading(false);
+            } else {
+                console.error("Formato de datos no válido:", data);
+            }
+        } catch (err) {
+            console.error("Error procesando datos del WebSocket:", err);
+            setError("Error procesando datos del servidor.");
         }
-    } catch (err) {
-        console.error("Error procesando datos del WebSocket:", err);
-        setError("Error procesando datos del servidor.");
-    }
     };
 
     socket.onerror = (err) => {
-    console.error("Error en WebSocket:", err);
-    setError("Error al conectarse al servidor WebSocket.");
-    setIsLoading(false);
+        console.error("Error en WebSocket:", err);
+        setError("Error al conectarse al servidor WebSocket.");
+        setIsLoading(false); // Mantenemos el flujo por si hay error
     };
 
     socket.onclose = () => {
-    console.log("Conexión WebSocket cerrada.");
+        console.log("Conexión WebSocket cerrada.");
     };
 
     return () => {
-    socket.close();
+        socket.close();
     };
 }, [wsUrl]);
 
@@ -135,7 +136,7 @@ const handleRowsPerPageChange = (event) => {
 };
 
 return (
-    <div className="w-full bg-[#131313] rounded-[15px] p-[20px]">
+    <div className="w-full bg-[#131313] rounded-[15px] p-[20px] mt-[113px]">
         <div className="w-1/2 font-bold text-[#D9D9D9] mb-[15px]">
             <h1 className="text-[25px]">HISTORIAL DE ALERTAS</h1>
             <h2 className="text-[20px]">EXTENDIDO</h2>
