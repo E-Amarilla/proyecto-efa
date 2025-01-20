@@ -11,7 +11,7 @@ body {
   width: 100%;
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui;
 }
 
 /* Ocultar barras de desplazamiento en todo el documento */
@@ -50,4 +50,12 @@ body {
 .text-default-foreground:hover {
   background-color: rgba(221, 221, 221, 0.1) !important;
   border-radius: 15px !important;
+}
+
+.text-foreground {
+  color: #656565;
+}
+
+.border-b-primary {
+  border-bottom-color: #712f;
 }

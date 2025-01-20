@@ -10,7 +10,7 @@ TableRow,
 TableCell,
 getKeyValue,
 Pagination,
-Spinner,
+Spinner
 } from "@nextui-org/react";
 
 const Tabla = () => {
@@ -140,7 +140,6 @@ return (
             <h1 className="text-[25px]">HISTORIAL DE ALERTAS</h1>
             <h2 className="text-[20px]">EXTENDIDO</h2>
         </div>
-        {error && <p className="text-red-500">Error: {error}</p>}
         <Table
         aria-label="Tabla de alertas"
         className="w-full bg-[#131313] text-[#D9D9D9] table-fixed"
@@ -163,7 +162,8 @@ return (
             <TableBody
                 isLoading={isLoading}
                 items={paginatedRows}
-                loadingContent={<Spinner label="Loading..." />}
+                loadingContent={<Spinner
+                    label="Cargando..."/>}
             >
                 {(item) => (
                 <TableRow key={item.key}>
