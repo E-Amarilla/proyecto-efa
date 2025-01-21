@@ -37,9 +37,7 @@ const DatosPaletizado = () => {
                                         <h4 className={style.h4}>{dato}</h4>
                                     </div>
                                 ) : (
-                                    <div className={style.contenedorInactivo}>
-                                        <h3 className={style.h3inactivo}>{nombre}</h3>
-                                    </div>
+                                    <h3 className={style.h3inactivo}>{nombre}</h3>
                                 )}
                             </a>
                         </li>

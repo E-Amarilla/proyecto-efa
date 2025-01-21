@@ -77,8 +77,8 @@ const Grafico = ({ startDate, endDate }) => {
             },
             rightPriceScale: { visible: true, borderColor: "white" },
             timeScale: { visible: true, borderColor: "white" },
-            handleScroll: false, // Deshabilitar scrolling inicialmente
-            handleScale: false, // Deshabilitar zoom inicialmente
+            handleScroll: true,
+            handleScale: true,
         };
 
         const chart = createChart(containerRef.current, chartOptions);
@@ -100,6 +100,73 @@ const Grafico = ({ startDate, endDate }) => {
         background.style.backgroundPosition = "center";
         background.style.opacity = "0.05";
         container.appendChild(background);
+
+        // Crear tooltip
+        const toolTip = document.createElement('div');
+        toolTip.style = `
+            width: auto;
+            height: auto;
+            position: absolute;
+            display: none;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 12px;
+            text-align: left;
+            z-index: 1000;
+            pointer-events: none;
+            border: 1px solid;
+            border-radius: 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: black;
+            color: white;
+            border-color: red;
+        `;
+        container.appendChild(toolTip);
+
+        // Tooltip
+        chart.subscribeCrosshairMove(param => {
+            if (
+                param.point === undefined ||
+                !param.time ||
+                param.point.x < 0 ||
+                param.point.x > container.clientWidth ||
+                param.point.y < 0 ||
+                param.point.y > container.clientHeight
+            ) {
+                toolTip.style.display = 'none';
+            } else {
+                const dateStr = new Date(param.time * 1000).toLocaleDateString();
+                toolTip.style.display = 'block';
+
+                const priceData = Object.entries(seriesRef.current).map(([nombre, series]) => {
+                    const data = param.seriesData.get(series);
+                    return {
+                        value: data ? (data.value !== undefined ? data.value : data.close) : 0,
+                        series,
+                        nombre,
+                    };
+                });
+
+                const filteredData = priceData.filter(pd => pd.value !== 0);
+                const tooltipContent = filteredData
+                    .map(pd => `
+                        <div style="margin-bottom: 4px;">
+                            <b>${pd.nombre}</b><br />
+                            <span style="color: ${pd.series.options().color}">${Math.round(100 * pd.value) / 100} Tn</span><br />
+                            <span>${dateStr}</span>
+                        </div>
+                    `)
+                    .join('');
+
+                toolTip.innerHTML = `<div style="font-size: 12px; line-height: 20px;">${tooltipContent}</div>`;
+
+                const coordinateY = filteredData[0].series.priceToCoordinate(filteredData[0].value);
+                const shiftedCoordinateX = param.point.x - 50;
+                toolTip.style.left = `${Math.max(0, Math.min(container.clientWidth - 150, shiftedCoordinateX))}px`;
+                toolTip.style.top = `${coordinateY - 50}px`;
+            }
+        });
 
         if (data.length > 0) {
             data.forEach((producto) => {
