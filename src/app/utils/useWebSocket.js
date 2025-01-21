@@ -3,7 +3,6 @@ import { useEffect, useState, useRef } from "react";
 
 export default function useWebSocket(pollId) {
   const [data, setData] = useState(null); // Estado para los datos recibidos
-  const [error, setError] = useState(null); // Estado para errores
   const [isConnected, setIsConnected] = useState(false); // Estado de conexión
   const socketRef = useRef(null); // Referencia al WebSocket
 
@@ -31,15 +30,6 @@ export default function useWebSocket(pollId) {
       }
     };
 
-    // Evento: Error
-    socket.onerror = (err) => {
-      if (socketRef.current !== socket || socket.readyState !== WebSocket.OPEN) {
-        return;
-      }
-      console.error("Error en WebSocket:", err);
-      setError(err);
-    };
-
     // Evento: Conexión cerrada
     socket.onclose = () => {
       if (socketRef.current !== socket) {
@@ -58,5 +48,5 @@ export default function useWebSocket(pollId) {
     };
   }, [pollId]); // Se actualiza si cambia el pollId
 
-  return { data, error, isConnected };
+  return { data, isConnected };
 }
