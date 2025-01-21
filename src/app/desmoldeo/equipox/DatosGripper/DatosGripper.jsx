@@ -40,7 +40,7 @@ const DatosGripperComponent = () => {
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS GRIPPER</h1>
+      <h1 className={textstyle.titulo}>DATOS GRIPPERS</h1>
       <div className={style.contenedorDatos}>
         {datosGripper.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>
