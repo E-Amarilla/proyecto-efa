@@ -1,3 +1,4 @@
+// EquipoXImg.jsx
 "use client";
 
 import { useEquipo } from "../EquipoContext";
@@ -97,9 +98,7 @@ const EquipoXImg = () => {
         {images.map((_, index) => (
           <div
             key={index}
-            className={`${style.indicator} ${
-              index === currentIndex ? style.active : ""
-            }`}
+            className={`${style.indicator} ${index === currentIndex ? style.active : ""}`}
             onClick={() => setCurrentIndex(index)}
           ></div>
         ))}

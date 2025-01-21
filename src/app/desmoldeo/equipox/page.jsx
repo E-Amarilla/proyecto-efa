@@ -6,13 +6,12 @@ import DatosRobot from './DatosRobot/DatosRobot.jsx';
 import DatosSDDA from './DatosSDDA/DatosSDDA.jsx';
 import EquipoXImg from './EquipoXImg/EquipoXImg.jsx';
 import SectorIO from './SectorIO/SectorIO.jsx';
-import { EquipoProvider } from './EquipoContext';
+
 
 import style from './EquipoX.module.css';
 
 const EquipoX = () => {
   return (
-    <EquipoProvider>
       <div className={style.all}>
         <div className={style.Izq}>
           <DatosGenerales />
@@ -30,7 +29,6 @@ const EquipoX = () => {
           <EquipoXImg />
         </div>
       </div>
-    </EquipoProvider>
   );
 };
 
