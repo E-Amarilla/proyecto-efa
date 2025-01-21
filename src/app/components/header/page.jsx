@@ -1,23 +1,19 @@
 "use client";
 
-import React, { useState } from 'react';
-import { usePathname } from 'next/navigation'; // Usa usePathname en lugar de useRouter
-
-//Imagenes
+import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Image from "next/image";
 import cremImg from "@/assets/img/creminox.png";
 import usuario from "@/assets/img/usuario.png";
 import confImg from "@/assets/img/configuracion.png";
 import alarmaImg from "@/assets/img/alarma.png";
-
-//Componentes
 import MenuAlarmas from '../../components/dropdownalarmas/dropdown';
 import Desloguear from '../../components/usuario/desloguear';
 import style from './Header.module.css';
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
 
 const ExeHeader = () => {
-  const pathname = usePathname(); // Obtén la ruta actual
+  const pathname = usePathname();
   const [logoutVisible, setLogoutVisible] = useState(false);
 
   const toggleLogout = () => {
@@ -31,8 +27,13 @@ const ExeHeader = () => {
   ];
 
   const opcionesMenu = [
-    { id: 1, url: "/completo", text: "HOME" },
+    { id: 1, url: "/camaras", text: "CAMARAS" },
+    { id: 2, url: "/completo", text: "HOME" },
   ];
+
+  useEffect(() => {
+    // Sincroniza el estado con la ruta actual en la carga del cliente
+  }, [pathname]);
 
   return (
     <>
@@ -67,9 +68,7 @@ const ExeHeader = () => {
                 <li key={id} className={style.itemNav}>
                   <a
                     href={url}
-                    className={
-                      pathname === url ? style.activeLink : ''
-                    } // Añadir clase activa si la ruta coincide
+                    className={pathname === url ? style.activeLink : ''}
                   >
                     <span className={style.homeText}>{text}</span>
                   </a>

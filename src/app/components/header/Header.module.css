@@ -68,7 +68,8 @@
 .navLinks {
     display: flex;
     list-style: none;
-    margin-right: 1.5vw;
+    margin-right: 1vw;
+    gap: 35px;
 }
 
 .navLinks li a {
