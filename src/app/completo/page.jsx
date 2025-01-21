@@ -90,14 +90,6 @@ const Completo = () => {
       }
     };
   
-    socket.onerror = (err) => {
-      console.error("Error en WebSocket:", err);
-      if (!isLoading) { // Solo establecer error si no se ha completado la carga
-        setError("Error al conectarse al servidor WebSocket.");
-      }
-      setIsLoading(false);
-    };
-  
     socket.onclose = () => {
       console.log("Conexión WebSocket cerrada.");
     };
