@@ -79,7 +79,7 @@ const EquipoXImg = () => {
   }, [equipoSeleccionado]);
 
   // Asegúrate de que 'images' tenga un valor por defecto si 'equipoSeleccionado' no está en 'imageSets'
-  const images = imageSets[equipoSeleccionado] || [];
+  const images = imageSets[equipoSeleccionado] || imageSets["Default"];
   const totalImages = images.length;
 
   const prevImage = () => {
