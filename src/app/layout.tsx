@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Header from "./components/header/page";
 import Sonner from "./components/notificaciones/page"
-import { EquipoProvider } from "./desmoldeo/equipox/EquipoContext"
 import { AuthProvider } from './context/AuthContext';
 
 const DefaultFooter = dynamic(() => import('./components/footer/footer'), { ssr: false });
@@ -22,21 +21,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <AuthProvider>
       <html lang="en">
-        <head>
-          
-        </head>
+        <head></head>
         <body>
-        <div className="scrollablecontent">
+          <div className='scrollablecontent'>
           {!esLogin && <Header />} {/*CONDICIONAL HEADER, NO BORRAR*/}
-          <div>
-            <EquipoProvider>
-              {children}
-            </EquipoProvider>
-            {!esLogin && <Sonner />} {/*CONDICIONAL SONNER, NO BORRAR*/}
+                {children}
+              {!esLogin && <Sonner />} {/*CONDICIONAL SONNER, NO BORRAR*/}
+            {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossOrigin="anonymous"></script>
           </div>
-          {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossOrigin="anonymous"></script>
         </body>
       </html>
     </AuthProvider>

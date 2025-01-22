@@ -1,6 +1,7 @@
 "use client";
 
 import useWebSocket from '@/app/utils/useWebSocket';
+
 //styles
 import style from './SectorIO.module.css';
 import textstyle from '../texto.module.css';
