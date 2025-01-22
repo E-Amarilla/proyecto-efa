@@ -18,7 +18,7 @@ const Login = () => {
   const handleRegister = async (e) => {
   e.preventDefault();
   try {
-      const response = await axios.post('http://192.168.0.88:8000/usuario/registrar', {
+      const response = await axios.post(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/usuario/registrar`, {
       username: registerUsername,
       password: registerPassword,
       });

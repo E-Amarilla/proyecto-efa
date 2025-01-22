@@ -4,6 +4,7 @@ import {Card, Skeleton} from "@nextui-org/react";
 import useWebSocket from '../../utils/useWebSocket';
 import React, { useState, useEffect } from 'react';
 import style from './NavDatos.module.css';
+import Link from "next/link";
 
 const NavDatos = () => {
     const pollId = "resumen-desmoldeo";
@@ -90,7 +91,7 @@ const NavDatos = () => {
                                 activeSection === id ? style.active : ''
                             }`}
                         >
-                            <a
+                            <Link
                                 href={`#section${id}`}
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -99,7 +100,7 @@ const NavDatos = () => {
                                 className={style.navLink}
                             >
                                 {nombre}
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>
@@ -111,10 +112,10 @@ const NavDatos = () => {
                     <ul className={style.datosTods}>
                         {datosTiempoReal.map(({ id, nombre, dato }) => (
                             <li key={id} className={style.datosIndv}>
-                                <a className={style.detallesDatos} href='/desmoldeo/equipox'>
+                                <Link className={style.detallesDatos} href='/desmoldeo/equipox'>
                                     <h3 className={style.h3}>{nombre}</h3>
                                     <h4 className={style.h4}>{dato}</h4>
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>

@@ -1,3 +1,5 @@
+import ProtectedRoute from '../utils/ProtectedRoute';
+
 import NavDatos from '../components/navdatos/NavDatos.jsx';
 import Productividad from '../components/productividad/Productividad.jsx';
 
@@ -10,6 +12,7 @@ import style from "./Desmoldeo.module.css";
 function Desmoldeo() {
 
     return (
+        <ProtectedRoute>
         <div className={style.contenedor}>
             <NavDatos />
 
@@ -27,6 +30,7 @@ function Desmoldeo() {
                 </section>
             </div>
         </div>
+        </ProtectedRoute>
     );
 }
 

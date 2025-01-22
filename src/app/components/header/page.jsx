@@ -11,7 +11,7 @@ import MenuAlarmas from '../../components/dropdownalarmas/dropdown';
 import Desloguear from '../../components/usuario/desloguear';
 import style from './Header.module.css';
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
-
+import Link from "next/link";
 
 
 const ExeHeader = () => {
@@ -49,13 +49,13 @@ const ExeHeader = () => {
                 ) : onClick ? (
                     <Desloguear icon={icon} />
                 ) : (
-                  <a href={url}>
+                  <Link href={url}>
                     <Image
                       className={style.icon}
                       src={icon}
                       alt={`Icono ${id}`}
                     />
-                  </a>
+                  </Link>
                 )}
               </div>
             ))}
@@ -68,19 +68,19 @@ const ExeHeader = () => {
             <ul className={style.navLinks}>
               {opcionesMenu.map(({ id, url, text }) => (
                 <li key={id} className={style.itemNav}>
-                  <a
+                  <Link 
                     href={url}
                     className={pathname === url ? style.activeLink : ''}
                   >
                     <span className={style.homeText}>{text}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
             <div className={style.logo}>
-              <a href="https://creminox.com" target="_blank" rel="noopener noreferrer">
+              <Link href="https://creminox.com" target="_blank" rel="noopener noreferrer">
               <Image className={style.imgCREM} src={cremImg} alt="Creminox" />
-              </a>
+              </Link>
             </div>
           </div>
         </nav>

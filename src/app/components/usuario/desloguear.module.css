@@ -24,7 +24,7 @@
 }
 
 .items {
-    margin-bottom: 0.2rem !important; /* Asegura que no haya margen en los items */
+    margin-bottom: 0px !important; /* Asegura que no haya margen en los items */
     padding: 0.5rem 1rem !important; /* Ajusta el padding según sea necesario */
     text-align: left;
     background-color: #d9d9d9;

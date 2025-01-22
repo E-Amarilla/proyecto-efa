@@ -3,6 +3,7 @@
 import useWebSocket from '../../../utils/useWebSocket';
 import style from '../texto.module.css';
 import cont from './datosdesmoldeo.module.css';
+import Link from "next/link";
 
 const DatosDesmoldeo = () => {
     const pollId = "celda-completo";
@@ -29,7 +30,7 @@ const DatosDesmoldeo = () => {
             <ul className={style.datosTods}>
                 {datosTiempoReal.map(({ id, nombre, dato }) => (
                     <li key={id} className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? cont.datosIndvRed : cont.datosIndvGray}>
-                        <a className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? style.detallesDatos : style.detallesDatosDesac} href='/desmoldeo/equipox'>
+                        <Link className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? style.detallesDatos : style.detallesDatosDesac} href='/desmoldeo/equipox'>
                             {estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? (
                                 <div className={style.contenedorActivo}>
                                     <h3 className={style.h3}>{nombre}</h3>
@@ -38,7 +39,7 @@ const DatosDesmoldeo = () => {
                             ) : (
                                 <h3 className={style.h3inactivo}>{nombre}</h3>
                             )}
-                        </a>
+                        </Link>
                     </li>
                 ))}
             </ul>

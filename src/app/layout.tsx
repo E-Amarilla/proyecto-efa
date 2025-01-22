@@ -6,6 +6,7 @@ import Header from "./components/header/page";
 import Sonner from "./components/notificaciones/page"
 import { AuthProvider } from './context/AuthContext';
 
+
 const DefaultFooter = dynamic(() => import('./components/footer/footer'), { ssr: false });
 const CustomFooter = dynamic(() => import('./components/footer/footer_desmoldeo'), { ssr: false });
 
@@ -25,9 +26,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <body>
           <div className='scrollablecontent'>
           {!esLogin && <Header />} {/*CONDICIONAL HEADER, NO BORRAR*/}
-                {children}
-              {!esLogin && <Sonner />} {/*CONDICIONAL SONNER, NO BORRAR*/}
-            {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
+          {children}
+          {!esLogin && <Sonner />} {/*CONDICIONAL SONNER, NO BORRAR*/}
+          {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossOrigin="anonymous"></script>
           </div>
         </body>

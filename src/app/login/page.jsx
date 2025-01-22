@@ -10,7 +10,7 @@ import Image from "next/image";
 import crem from "@/assets/img/creminox.png";
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { user, login } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,7 +18,7 @@ const Login = () => {
       e.preventDefault();
       login(username, password)
   };
-
+  console.log(`AQUI OBTENGO LOS DATOS DEL USUARIO AAAAAAAAAAAAAAAA: ${user}`)
   return (
     <div className={style.all}>
       <div className={style.contenedor}>

@@ -1,20 +1,22 @@
-"use client"
+// utils/ProtectedRoute.jsx
+"use client";
 
-import { useContext, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import AuthContext from "../context/AuthContext";
+import { useContext, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import AuthContext from '../context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-    const { user } = useContext(AuthContext);
-    const router = useRouter();
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
 
-    useEffect(() => {
-        if (!user) {
-            router.push('/login');
-        }
-    }, [user, router]);
+  useEffect(() => {
+    if (user === null) {
+      router.push('/login');
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }
+  }, [user]);
 
-    return user ? children : null;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

@@ -10,6 +10,8 @@ import fbImg from '@/assets/img/facebook.png';
 
 import style from './Footer_Desmoldeo.module.css';
 
+import Link from "next/link";
+
 const Footer = () => {
     const opcionesIzq = [
         {
@@ -50,27 +52,27 @@ const Footer = () => {
                     {opcionesIzq.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
                             <Image src={icono} alt={texto} className={style.icon} />
-                            <a className={style.A} href={link} target="_blank" rel="noopener noreferrer">
+                            <Link className={style.A} href={link} target="_blank" rel="noopener noreferrer">
                                 {texto}
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>
 
                 {/* Logo central */}
                 <div className={style.footerLogo}>
-                    <a className={style.A} href="https://creminox.com" target="_blank" rel="noopener noreferrer">
+                    <Link className={style.A} href="https://creminox.com" target="_blank" rel="noopener noreferrer">
                         <Image src={cremImg} alt="Creminox logo" className={style.logo} />
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Sección derecha */}
                 <ul className={style.footerDer}>
                     {opcionesDer.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
-                            <a className={style.A} href={link} target="_blank" rel="noopener noreferrer">
+                            <Link className={style.A} href={link} target="_blank" rel="noopener noreferrer">
                                 {texto}
-                            </a>
+                            </Link>
                             <Image src={icono} alt={texto} className={style.icon} />
                         </li>
                     ))}

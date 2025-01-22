@@ -1,5 +1,7 @@
 "use client";
 
+import ProtectedRoute from '../utils/ProtectedRoute';
+
 import { useState, useEffect, useMemo } from "react";
 import {
   Table,
@@ -147,73 +149,75 @@ const Completo = () => {
   }, [page]);  
 
   return (
-    <div className={style.body}>
-      <div className={style.contenedor}>
-        <div className={style.contenedorImagen}>
-          <LayoutCompleto />
+    <ProtectedRoute>
+      <div className={style.body}>
+        <div className={style.contenedor}>
+          <div className={style.contenedorImagen}>
+            <LayoutCompleto />
+          </div>
+        </div>
+
+        {/* Título */}
+        <h2 className={style.titulo}>ÚLTIMAS ALERTAS</h2>
+
+        {/* Mostrar error si lo hay */}
+        {error && <p className="text-red-500">Error: {error}</p>}
+
+        <Table
+          aria-label="Tabla de alertas"
+          className="w-full bg-[#131313] text-[#D9D9D9] table-fixed p-[2px] rounded-[15px]"
+        >
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn
+                key={column.key}
+                className="bg-[#1f1f1f] text-[#D9D9D9] font-medium"
+              >
+                {column.label}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            isLoading={isLoading}
+            items={paginatedRows}
+            loadingContent={<Spinner label="Cargando..." />}
+          >
+            {(item) => (
+              <TableRow key={item.key}>
+                {(columnKey) => (
+                  <TableCell className="bg-[#131313] text-[#D9D9D9]">
+                    {columnKey === "state" ? renderState(item.state) : columnKey === "time" ? convertirFecha(item.time).toLocaleString() : item[columnKey]}
+                  </TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+
+        <div className="flex justify-between items-center mt-5">
+          <Pagination
+            className="flex flex-wrap gap-4 items-center overflow-hidden"
+            showControls
+            isCompact
+            color="white"
+            variant="light"
+            size="lg"
+            total={totalPages}
+            page={page}  // Página actual gestionada por estado
+            onChange={handlePageChange}
+          />
+          <Link href="/alertas">
+            <Button
+              className={`${style.hoverEffect} flex justify-self-center font-bold`}
+              radius="full"
+              auto
+            >
+              Ver más
+            </Button>
+          </Link>
         </div>
       </div>
-
-      {/* Título */}
-      <h2 className={style.titulo}>ÚLTIMAS ALERTAS</h2>
-
-      {/* Mostrar error si lo hay */}
-      {error && <p className="text-red-500">Error: {error}</p>}
-
-      <Table
-        aria-label="Tabla de alertas"
-        className="w-full bg-[#131313] text-[#D9D9D9] table-fixed p-[2px] rounded-[15px]"
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn
-              key={column.key}
-              className="bg-[#1f1f1f] text-[#D9D9D9] font-medium"
-            >
-              {column.label}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          isLoading={isLoading}
-          items={paginatedRows}
-          loadingContent={<Spinner label="Cargando..." />}
-        >
-          {(item) => (
-            <TableRow key={item.key}>
-              {(columnKey) => (
-                <TableCell className="bg-[#131313] text-[#D9D9D9]">
-                  {columnKey === "state" ? renderState(item.state) : columnKey === "time" ? convertirFecha(item.time).toLocaleString() : item[columnKey]}
-                </TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-
-      <div className="flex justify-between items-center mt-5">
-        <Pagination
-          className="flex flex-wrap gap-4 items-center overflow-hidden"
-          showControls
-          isCompact
-          color="white"
-          variant="light"
-          size="lg"
-          total={totalPages}
-          page={page}  // Página actual gestionada por estado
-          onChange={handlePageChange}
-        />
-        <Link href="/alertas">
-          <Button
-            className={`${style.hoverEffect} flex justify-self-center font-bold`}
-            radius="full"
-            auto
-          >
-            Ver más
-          </Button>
-        </Link>
-      </div>
-    </div>
+    </ProtectedRoute>
   );
 };
 

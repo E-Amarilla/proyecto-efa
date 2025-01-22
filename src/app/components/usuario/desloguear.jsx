@@ -1,13 +1,13 @@
 "use client";
 
-import React from 'react';
+import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import AuthContext from '../../context/AuthContext'; // Importa el AuthContext
 import {
     Dropdown,
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
-    Button,
 } from "@nextui-org/react";
 
 import style from './desloguear.module.css';
@@ -16,17 +16,7 @@ import style from './desloguear.module.css';
 import Image from "next/image";
 
 const Desloguear = ({ icon }) => {
-    const router = useRouter();
-
-    const handleLogout = () => {
-        console.log("Deslogueando...");
-        router.push('/login');
-    };
-
-    const handleChangeUser = () => {
-        console.log("Cambiando de usuario...");
-        router.push('/login'); // Cambia a la URL que desees
-    };
+    const { logout } = useContext(AuthContext); // Obtén la función logout del contexto
 
     return (
         <Dropdown className={style.contenedorDrop}>
@@ -39,21 +29,12 @@ const Desloguear = ({ icon }) => {
             </DropdownTrigger>
             <DropdownMenu aria-label="Dropdown menu with description" variant="faded">
                 <DropdownItem
-                    className={style.items}
-                    key="1"
-                    onClick={handleChangeUser} // Cambiamos la navegación aquí
-                >
-                    Cambiar de usuario
-                </DropdownItem>
-                <DropdownItem
-                
                     className={`${style.items} ${style.botonCerrar}`}
                     key="2"
-                    onClick={handleLogout} // Añadimos el manejador de clic aquí
+                    onClick={logout} // Llama a la función logout aquí
                 >
                     <span className={style.textCerrar}>Cerrar sesión</span>
                 </DropdownItem>
-
             </DropdownMenu>
         </Dropdown>
     );

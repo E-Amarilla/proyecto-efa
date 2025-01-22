@@ -3,6 +3,7 @@
 
 import React from 'react';
 import style from './Footer.module.css';
+import Link from "next/link";
 
 //Imagenes
 import Image from "next/image"
@@ -50,23 +51,23 @@ const DefaultFooter = () => {
                     {opcionesIzq.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
                             <Image src={icono} alt={texto} className={style.icon} />
-                            <a className={style.A} href={link} target="_blank" rel="noopener noreferrer">
+                            <Link className={style.A} href={link} target="_blank" rel="noopener noreferrer">
                                 {texto}
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>
                 <div className={style.footerLogo}>
-                    <a className={style.A} href="https://creminox.com" target="_blank" rel="noopener noreferrer">
+                    <Link className={style.A} href="https://creminox.com" target="_blank" rel="noopener noreferrer">
                         <Image src={cremImg} alt="Creminox logo" className={style.logo} />
-                    </a>
+                    </Link>
                 </div>
                 <ul className={style.footerDer}>
                     {opcionesDer.map(({ id, icono, link, texto }) => (
                         <li key={id} className={style.item}>
-                            <a className={style.A} href={link} target="_blank" rel="noopener noreferrer">
+                            <Link className={style.A} href={link} target="_blank" rel="noopener noreferrer">
                                 {texto}
-                            </a>
+                            </Link>
                             <Image src={icono} alt={texto} className={style.icon} />
                         </li>
                     ))}
