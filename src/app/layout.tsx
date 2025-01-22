@@ -6,7 +6,6 @@ import Header from "./components/header/page";
 import Sonner from "./components/notificaciones/page"
 import { EquipoProvider } from "./desmoldeo/equipox/EquipoContext"
 import { AuthProvider } from './context/AuthContext';
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 const DefaultFooter = dynamic(() => import('./components/footer/footer'), { ssr: false });
 const CustomFooter = dynamic(() => import('./components/footer/footer_desmoldeo'), { ssr: false });
