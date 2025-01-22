@@ -1,6 +1,6 @@
 .datosIndvRed {
     display: grid;
-    padding: 0.5vw;
+    border-radius: 0.7vw;
     border-radius: 1vw;
     background-color: #27a;
     max-height: 65px;
