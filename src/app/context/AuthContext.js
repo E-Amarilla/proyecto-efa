@@ -8,19 +8,14 @@ import { useRouter } from "next/navigation";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
     const [equipoSeleccionado, setEquipoSeleccionado] = useState(null);
     const router = useRouter();
 
-    // Restaurar el estado del usuario desde localStorage al cargar la página
-    useEffect(() => {
-        const userData = localStorage.getItem('user');
-        if (userData) {
-            const parsedUserData = JSON.parse(userData);
-            setUser(parsedUserData);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${parsedUserData.access_token}`;
-        }
-    }, []);
+    const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+    });
+    
 
     const login = async (username, password) => {
         try {
@@ -34,7 +29,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', response.data.access_token);
             localStorage.setItem('user', JSON.stringify(response.data));
             setUser(response.data);
-            router.push('/desmoldeo'); // Redirige a /desmoldeo después de iniciar sesión
+            router.push('/completo'); // Redirige a /desmoldeo después de iniciar sesión
         } catch (error) {
             console.log('Login Failed:', error);
         }

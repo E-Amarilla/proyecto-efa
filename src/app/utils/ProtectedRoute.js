@@ -12,7 +12,6 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     if (user === null) {
       router.push('/login');
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
   }, [user]);
 
