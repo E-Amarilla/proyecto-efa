@@ -1,62 +1,75 @@
 "use client";
-import { useState } from 'react';
-import { users } from '../users';
 
-import Link from 'next/link';
-import style from './Login.module.css';
+import { useContext, useState } from "react";
+import AuthContext from "../context/AuthContext";
+import style from "./Login.module.css";
+import Link from "next/link";
 
 //Imagenes
 import Image from "next/image";
 import crem from "@/assets/img/creminox.png";
 
-export default function Login() {
+const Login = () => {
+  const { login } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const user = users.find(u => u.username === username && u.password === password);
-    if (user) {
-      document.cookie = `auth=${JSON.stringify({ id: user.id, username: user.username })}; path=/`;
-      window.location.href = '/completo';  // Use window.location.href for navigation
-    } else {
-      alert('Invalid username or password');
-    }
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      login(username, password)
   };
 
   return (
-    <form className={style.all} onSubmit={handleSubmit}>
+    <div className={style.all}>
       <div className={style.contenedor}>
         <Image
           src={crem}
           alt='Creminox'
           className={style.imagen}
         />
-        <div className={style.formularioLogin}>
+        <form className={style.formularioLogin} onSubmit={handleSubmit}>
           <div className={style.inlab}>
-            <label className={style.inputsTextos}>Usuario</label>
-            <input 
-              className={style.inputs} 
-              type="text" 
-              value={username}
-              onChange={(e) => setUsername(e.target.value)} 
-            />
-          </div>
-          <div className={style.inlab}>
-            <label className={style.inputsTextos}>Contraseña</label>
+            <label
+              htmlFor="username"
+              className={style.inputsTextos}
+            >
+              Username
+            </label>
+            
             <input
+              type="text" 
               className={style.inputs} 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)} required
             />
           </div>
-        </div>
-        <button className={style.botonIngresar} type="submit">Login</button>
+
+          <div className={style.inlab}>
+            <label
+              className={style.inputsTextos}
+            >
+              Contraseña
+            </label>
+            
+            <input
+              type="password"
+              className={style.inputs} 
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)} required
+            />
+          </div>
+
+          <button className={style.botonIngresar} type="submit">Login</button>
+        </form>
+        
         <div>
           <Link className={style.signup} href="/login/recuperacion">Olvidó su contraseña? Recuperela aquí</Link>
         </div>
       </div>
-    </form>
+    </div>
   );
 }
+
+export default Login;

@@ -5,6 +5,8 @@ import dynamic from 'next/dynamic';
 import Header from "./components/header/page";
 import Sonner from "./components/notificaciones/page"
 import { EquipoProvider } from "./desmoldeo/equipox/EquipoContext"
+import { AuthProvider } from './context/AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const DefaultFooter = dynamic(() => import('./components/footer/footer'), { ssr: false });
 const CustomFooter = dynamic(() => import('./components/footer/footer_desmoldeo'), { ssr: false });
@@ -19,22 +21,25 @@ export default function RootLayout({ children }: RootLayoutProps) {
   const esLogin = ['/', '/signup', '/login', '/login/recuperacion'].includes(pathname);
 
   return (
-    <html lang="en">
-      <head>
-        
-      </head>
-      <body>
-      <div className="scrollablecontent">
-        {!esLogin && <Header />} {/*CONDICIONAL HEADER, NO BORRAR*/}
-        <div>
-          <EquipoProvider>
-            {children}
-          </EquipoProvider>
-          {!esLogin && <Sonner />} {/*CONDICIONAL SONNER, NO BORRAR*/}
+    <AuthProvider>
+      <html lang="en">
+        <head>
+          
+        </head>
+        <body>
+        <div className="scrollablecontent">
+          {!esLogin && <Header />} {/*CONDICIONAL HEADER, NO BORRAR*/}
+          <div>
+            <EquipoProvider>
+              {children}
+            </EquipoProvider>
+            {!esLogin && <Sonner />} {/*CONDICIONAL SONNER, NO BORRAR*/}
+          </div>
+          {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
         </div>
-        {!esLogin && (esDesmoldeo ? <CustomFooter /> : <DefaultFooter />)} {/*CONDICIONAL FOOTER, NO BORRAR*/}
-      </div>
-      </body>
-    </html>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossOrigin="anonymous"></script>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

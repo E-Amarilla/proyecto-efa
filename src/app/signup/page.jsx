@@ -1,42 +1,87 @@
 "use client";
-import { useState } from 'react';
-import Link from 'next/link';
-import { users } from '../users';
 
-export default function Signup() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+import { useContext, useState } from "react";
+import AuthContext from "../context/AuthContext";
+import axios from "axios";
+import style from "./Login.module.css";
+import Link from "next/link";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const newUser = { id: users.length + 1, username, password };
-    users.push(newUser);
-    document.cookie = `auth=${JSON.stringify({ id: newUser.id, username: newUser.username })}; path=/`;
-    window.location.href = '/completo';  // Use window.location.href for navigation
-  };
+//Imagenes
+import Image from "next/image";
+import crem from "@/assets/img/creminox.png";
+
+const Login = () => {
+  const { login } = useContext(AuthContext);
+  const [registerUsername, setRegisterUsername] = useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
+
+  const handleRegister = async (e) => {
+  e.preventDefault();
+  try {
+      const response = await axios.post('http://192.168.0.88:8000/usuario/registrar', {
+      username: registerUsername,
+      password: registerPassword,
+      });
+      login(registerUsername, registerPassword);
+  } catch(error) {
+      console.error('Failed to register user:', error);
+  }
+}
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Username</label>
-        <input 
-          type="text" 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
+    <div className={style.all}>
+      <div className={style.contenedor}>
+        <Image
+          src={crem}
+          alt='Creminox'
+          className={style.imagen}
         />
+        <form className={style.formularioLogin} onSubmit={handleRegister}>
+          <div className={style.inlab}>
+          <label
+            htmlFor="registerUsername"
+            className="form-label"
+          >
+            Username
+          </label>
+          
+          <input
+              type="text"
+              className="form-control"
+              id="registerUsername"
+              value={registerUsername}
+              onChange={(e) => setRegisterUsername(e.target.value)}
+              required
+          />
+          </div>
+
+          <div className={style.inlab}>
+          <label
+            htmlFor="registerPassword"
+            className="form-label"
+          >
+            Password
+          </label>
+
+          <input
+              type="password"
+              className="form-control"
+              id="registerPassword"
+              value={registerPassword}
+              onChange={(e) => setRegisterPassword(e.target.value)}
+              required
+          />
+          </div>
+
+          <button type="submit" className="btn btn-primary">Register</button>
+        </form>
+        
+        <div>
+          <Link className={style.signup} href="/login">Ya esta registrado? Ingrese sesión</Link>
+        </div>
       </div>
-      <div>
-        <label>Password</label>
-        <input 
-          type="password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-        />
-      </div>
-      <button type="submit">Signup</button>
-      <div>
-        <Link href="/login">Already have an account? Login here</Link>
-      </div>
-    </form>
+    </div>
   );
 }
+
+export default Login;

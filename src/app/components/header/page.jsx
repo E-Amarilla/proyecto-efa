@@ -12,7 +12,10 @@ import Desloguear from '../../components/usuario/desloguear';
 import style from './Header.module.css';
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
 
+
+
 const ExeHeader = () => {
+  const { user, logout } = useContext(AuthContext);
   const pathname = usePathname();
   const [logoutVisible, setLogoutVisible] = useState(false);
 
