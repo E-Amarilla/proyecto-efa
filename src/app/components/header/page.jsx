@@ -15,7 +15,6 @@ import ExeSubNav from './SubNav/ExeSubNav.jsx';
 
 
 const ExeHeader = () => {
-  const { user, logout } = useContext(AuthContext);
   const pathname = usePathname();
   const [logoutVisible, setLogoutVisible] = useState(false);
 

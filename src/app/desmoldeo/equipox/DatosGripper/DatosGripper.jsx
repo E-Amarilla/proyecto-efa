@@ -1,13 +1,14 @@
 "use client";
 
-import { useEquipo } from "../EquipoContext";
 import style from "./DatosGripper.module.css";
 import textstyle from "../texto.module.css";
 import useWebSocket from "@/app/utils/useWebSocket";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
+import AuthContext from "../../../context/AuthContext";
 
 const DatosGripperComponent = () => {
-  const { equipoSeleccionado, setEquipoSeleccionado } = useEquipo();
+  const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
 
   const initialdatosGripper = [
     { id: 1, texto: "COD. GRIPPER ACTUAL", dato: null },

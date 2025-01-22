@@ -3,8 +3,8 @@
 import style from './DatosSDDA.module.css';
 import textstyle from '../texto.module.css';
 import useWebSocket from '@/app/utils/useWebSocket';
-import React, { useState, useEffect } from 'react';
-import { useEquipo } from '../EquipoContext';
+import React, { useState, useEffect, useContext } from 'react';
+import AuthContext from "../../../context/AuthContext";
 
 const DatosSDDAComponent = () => {
   const initialdatosSdda = [
@@ -14,7 +14,7 @@ const DatosSDDAComponent = () => {
   ];
 
   const [datosSdda, setdatosSdda] = useState(initialdatosSdda);
-  const { equipoSeleccionado, setEquipoSeleccionado } = useEquipo();
+  const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
 
   const pollId = "lista-tiempo-real";
   const { data } = useWebSocket(pollId);

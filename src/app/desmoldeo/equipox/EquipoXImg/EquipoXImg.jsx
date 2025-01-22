@@ -1,9 +1,10 @@
 "use client";
 
-import { useEquipo } from "../EquipoContext";
-import { useState, useEffect } from "react";
+import AuthContext from "../../../context/AuthContext";
+import { useState, useEffect, useContext } from "react";
 import style from "./EquipoXImg.module.css";
 import Image from "next/image";
+
 
 import ImgGripper1 from "@/assets/img/equipos/Equipo_Gripper1.png";
 import ImgGripper2 from "@/assets/img/equipos/Equipo_Gripper2.png";
@@ -71,7 +72,7 @@ const imageSets = {
 };
 
 const EquipoXImg = () => {
-  const { equipoSeleccionado } = useEquipo();
+  const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {

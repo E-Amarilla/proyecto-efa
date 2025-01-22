@@ -12,10 +12,6 @@ body {
   padding: 0;
   margin: 0;
   font-family: system-ui;
-}
-
-/* Ocultar barras de desplazamiento en todo el documento */
-body {
   overflow-x: hidden;
 }
 
