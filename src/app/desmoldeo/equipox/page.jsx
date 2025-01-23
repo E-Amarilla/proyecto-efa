@@ -7,13 +7,12 @@ import DatosSDDA from './DatosSDDA/DatosSDDA.jsx';
 import EquipoXImg from './EquipoXImg/EquipoXImg.jsx';
 import SectorIO from './SectorIO/SectorIO.jsx';
 
-import ProtectedRoute from '../../utils/ProtectedRoute';
 
 import style from './EquipoX.module.css';
 
 const EquipoX = () => {
   return (
-    <ProtectedRoute>
+    
       <div className={style.all}>
         <div className={style.Izq}>
           <DatosGenerales />
@@ -31,7 +30,7 @@ const EquipoX = () => {
           <EquipoXImg />
         </div>
       </div>
-    </ProtectedRoute>
+    
 
   );
 };

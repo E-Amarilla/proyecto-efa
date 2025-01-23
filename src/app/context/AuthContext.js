@@ -1,6 +1,6 @@
 // context/AuthContext.js
 "use client";
-
+import Cookies from 'js-cookie';
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -15,8 +15,6 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem('user');
     return storedUser ? JSON.parse(storedUser) : null;
     });
-    
-
     const login = async (username, password) => {
         try {
             const formData = new FormData();
@@ -25,16 +23,18 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/usuario/login`, formData, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             });
-            axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
-            localStorage.setItem('token', response.data.access_token);
+        
+            const token = response.data.access_token;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             localStorage.setItem('user', JSON.stringify(response.data));
+            Cookies.set('token', token, { secure: true, sameSite: 'strict' }); // Guarda el token con seguridad
             setUser(response.data);
-            router.push('/completo'); // Redirige a /desmoldeo después de iniciar sesión
-        } catch (error) {
+            router.push('/completo');
+            } catch (error) {
             console.log('Login Failed:', error);
-        }
-    };
-
+            }
+        };
+        
     const logout = () => {
         setUser(null);
         delete axios.defaults.headers.common['Authorization'];

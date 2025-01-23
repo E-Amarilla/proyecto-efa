@@ -10,6 +10,8 @@ npm install react-icons
 
 npm install express nodemailer body-parser
 
+npm install js-cookie
+
 ```
 
 ## Para descargar en pdf y excel

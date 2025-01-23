@@ -1,7 +1,5 @@
 "use client";
 
-import ProtectedRoute from '../utils/ProtectedRoute';
-
 import { useState, useEffect, useMemo } from "react";
 import {
   Table,
@@ -149,7 +147,7 @@ const Completo = () => {
   }, [page]);  
 
   return (
-    <ProtectedRoute>
+    
       <div className={style.body}>
         <div className={style.contenedor}>
           <div className={style.contenedorImagen}>
@@ -217,7 +215,7 @@ const Completo = () => {
           </Link>
         </div>
       </div>
-    </ProtectedRoute>
+    
   );
 };
 
