@@ -1,9 +1,7 @@
 "use client";
 
 import style from './camaras.module.css';
-//Imagenes
-import Image from "next/image";
-import maqImg from '@/assets/img/creminox.png';
+import VideoStream from "./videostream/VideoStream"
 
 const Camaras = () => {
     return (
@@ -13,24 +11,21 @@ const Camaras = () => {
                 <div className={style.contenedor}>
                     <div className={style.contenedorImagen}>
                         </div>
-                            <Image className={style.img} src={maqImg} alt="Creminox" />
-                            <h2 className={style.h2}>CAMARAS</h2>
+                            <VideoStream cameraId="cam1" />
                         <div>
                     </div>
                 </div>
                 <div className={style.contenedor}>
                     <div className={style.contenedorImagen}>
                         </div>
-                            <Image className={style.img} src={maqImg} alt="Creminox" />
-                            <h2 className={style.h2}>CAMARAS</h2>
+                            <VideoStream cameraId="cam2" />
                         <div>
                     </div>
                 </div>
                 <div className={style.contenedor}>
                     <div className={style.contenedorImagen}>
                         </div>
-                            <Image className={style.img} src={maqImg} alt="Creminox" />
-                            <h2 className={style.h2}>CAMARAS</h2>
+                            <VideoStream cameraId="cam3" />
                         <div>
                     </div>
                 </div>
