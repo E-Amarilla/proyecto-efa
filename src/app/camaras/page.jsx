@@ -2,32 +2,23 @@
 
 import style from './camaras.module.css';
 import VideoStream from "./videostream/VideoStream"
+import Link from 'next/link';
 
 const Camaras = () => {
     return (
         <>
             <div className={style.contenedores}>
-                <div className={style.contenedor}>
-                    <div className={style.contenedorVideo}>
-                        </div>
-                            <VideoStream cameraId="cam1" />
-                        <div>
-                    </div>
-                </div>
-                <div className={style.contenedor}>
-                    <div className={style.contenedorVideo}>
-                        </div>
-                            <VideoStream cameraId="cam2" />
-                        <div>
-                    </div>
-                </div>
-                <div className={style.contenedor}>
-                    <div className={style.contenedorVideo}>
-                        </div>
-                            <VideoStream cameraId="cam3" />
-                        <div>
-                    </div>
-                </div>
+                <Link href="camaras/camara1" className={style.contenedor}>
+                        <VideoStream cameraId="cam1" />        
+                </Link>
+
+                <Link href="camaras/camara2" className={style.contenedor}>
+                        <VideoStream cameraId="cam2" />        
+                </Link>
+
+                <Link href="camaras/camara3" className={style.contenedor}>
+                        <VideoStream cameraId="cam3" />        
+                </Link>
             </div>
         </>
     );

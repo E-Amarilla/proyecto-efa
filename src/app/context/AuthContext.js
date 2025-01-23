@@ -14,12 +14,22 @@ export const AuthProvider = ({ children }) => {
 
     // Estado de autenticación
     const [user, setUser] = useState(() => {
-        const storedUser = localStorage.getItem('user');
-        return storedUser ? JSON.parse(storedUser) : null;
+        if (typeof window !== "undefined") {
+            const storedUser = localStorage.getItem('user');
+            return storedUser ? JSON.parse(storedUser) : null;
+        }
+        return null;
     });
 
     // Estado de la transmisión
     const [streamInitialized, setStreamInitialized] = useState(false);
+
+    // Redirigir al login si no hay usuario autenticado
+    useEffect(() => {
+        if (typeof window !== "undefined" && !user && pathname !== '/login') {
+            router.push('/login');
+        }
+    }, [user, pathname]);
 
     // Efecto para inicializar y limpiar la transmisión solo en /camaras
     useEffect(() => {
@@ -72,7 +82,7 @@ export const AuthProvider = ({ children }) => {
             const token = response.data.access_token;
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             localStorage.setItem('user', JSON.stringify(response.data));
-            Cookies.set('token', token, { secure: true, sameSite: 'strict' });
+            Cookies.set('token', token, { secure: false, sameSite: 'lax' }); // Cambia secure a false en desarrollo
             setUser(response.data);
             router.push('/completo');
         } catch (error) {

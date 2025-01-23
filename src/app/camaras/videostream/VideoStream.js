@@ -5,8 +5,9 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import AuthContext from "../../context/AuthContext";
+import style from "../camaras.module.css";
 
-const VideoStream = ({ cameraId }) => {
+const VideoStream = ({ cameraId, isFullScreen = false }) => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -84,7 +85,7 @@ const VideoStream = ({ cameraId }) => {
   };
 
   return (
-    <div style={{ flex: '1 1 30%', minWidth: '300px', pointerEvents: 'none' }}>
+    <div style={{ flex: '1 1 30%', minWidth: isFullScreen ? '100%' : '300px', pointerEvents: 'none' }}>
       {error && (
         <div style={styles.errorContainer}>
           <p>{error}</p>
@@ -100,14 +101,16 @@ const VideoStream = ({ cameraId }) => {
         </div>
       )}
       {showPlayer && (
-        <div data-vjs-player>
-          <video
-            ref={videoRef}
-            className="video-js vjs-default-skin"
-            style={{ width: "100%", height: "46vh" }}
-          >
-            <p>Tu navegador no soporta el elemento de video.</p>
-          </video>
+        <div className={style.contenedorVideo}>
+          <div data-vjs-player>
+            <video
+              ref={videoRef}
+              className="video-js vjs-default-skin"
+              style={{ width: "100%", height: isFullScreen ? "90vh" : "auto", backgroundColor: "transparent", borderRadius: "15px" }}
+            >
+              <p>Tu navegador no soporta el elemento de video.</p>
+            </video>
+          </div>
         </div>
       )}
     </div>
@@ -137,7 +140,7 @@ const styles = {
   },
   loadingContainer: {
     display: "flex",
-    marginTop: "8vh",
+    marginTop: "15vh",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
