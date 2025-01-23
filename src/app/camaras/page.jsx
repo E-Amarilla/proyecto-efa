@@ -6,24 +6,23 @@ import VideoStream from "./videostream/VideoStream"
 const Camaras = () => {
     return (
         <>
-            <h1 className={style.h1}>CAMARAS</h1>
             <div className={style.contenedores}>
                 <div className={style.contenedor}>
-                    <div className={style.contenedorImagen}>
+                    <div className={style.contenedorVideo}>
                         </div>
                             <VideoStream cameraId="cam1" />
                         <div>
                     </div>
                 </div>
                 <div className={style.contenedor}>
-                    <div className={style.contenedorImagen}>
+                    <div className={style.contenedorVideo}>
                         </div>
                             <VideoStream cameraId="cam2" />
                         <div>
                     </div>
                 </div>
                 <div className={style.contenedor}>
-                    <div className={style.contenedorImagen}>
+                    <div className={style.contenedorVideo}>
                         </div>
                             <VideoStream cameraId="cam3" />
                         <div>

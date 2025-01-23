@@ -4,10 +4,10 @@ import path from 'path';
 import fs from 'fs';
 
 const RTSP_URLS = [
-  'rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/101',
-  'rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/201',
-  'rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/301',
-];
+  process.env.NEXT_PUBLIC_CAM1,
+  process.env.NEXT_PUBLIC_CAM2,
+  process.env.NEXT_PUBLIC_CAM3,
+].filter(Boolean); // Filtra valores nulos o undefined
 
 const HLS_DIR = path.join(process.cwd(), 'public', 'hls');
 

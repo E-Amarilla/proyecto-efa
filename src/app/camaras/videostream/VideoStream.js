@@ -95,14 +95,12 @@ const VideoStream = ({ cameraId }) => {
       )}
       {isLoading && (
         <div style={styles.loadingContainer}>
-          <h2>Cámara {cameraId}</h2>
           <div style={styles.spinner}></div>
           <p>Conectando a la cámara...</p>
         </div>
       )}
       {showPlayer && (
         <div data-vjs-player>
-          <h2>Cámara {cameraId}</h2>
           <video
             ref={videoRef}
             className="video-js vjs-default-skin"
@@ -139,12 +137,12 @@ const styles = {
   },
   loadingContainer: {
     display: "flex",
+    marginTop: "8vh",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     height: "200px",
-    backgroundColor: "#f5f5f5",
-    color: "#333",
+    color: "#8c8c8c",
   },
   spinner: {
     border: "4px solid rgba(0, 0, 0, 0.1)",
