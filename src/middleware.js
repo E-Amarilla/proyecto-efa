@@ -20,6 +20,7 @@ export function middleware(request) {
     return NextResponse.next(); // Permite continuar con la solicitud
 }
 
+// Configuración del middleware para que se aplique a todas las rutas excepto las estáticas
 export const config = {
     matcher: ['/((?!_next/static|favicon.ico|api).*)'], // Aplica a todo excepto estáticos y API
 };

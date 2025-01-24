@@ -83,18 +83,28 @@ const startStream = (rtspUrl, outputFile) => {
 
 export default async function handler(req, res) {
   if (isStreaming) {
+    console.log("USUARIO YA MIRANDO, ME SUMO");
     return res.status(200).json({ message: 'Las transmisiones ya están en curso' });
   }
 
   isStreaming = true;
-  killFfmpegProcesses();
-  clearHlsDirectory();
 
   try {
-    // Iniciar transmisiones en secuencia
-    for (let i = 0; i < RTSP_URLS.length; i++) {
-      const outputFile = `cam${i + 1}.m3u8`;
-      await startStream(RTSP_URLS[i], outputFile); // Espera a que cada transmisión se inicie
+    // Verificar si los archivos HLS ya existen
+    const filesExist = RTSP_URLS.every((_, index) => {
+      const outputFile = `cam${index + 1}.m3u8`;
+      return fs.existsSync(path.join(HLS_DIR, outputFile));
+    });
+
+    if (!filesExist) {
+      killFfmpegProcesses();
+      clearHlsDirectory();
+
+      // Iniciar transmisiones en secuencia
+      for (let i = 0; i < RTSP_URLS.length; i++) {
+        const outputFile = `cam${i + 1}.m3u8`;
+        await startStream(RTSP_URLS[i], outputFile); // Espera a que cada transmisión se inicie
+      }
     }
 
     res.status(200).json({ message: 'Transmisiones iniciadas para todas las cámaras' });

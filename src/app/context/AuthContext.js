@@ -36,9 +36,6 @@ export const AuthProvider = ({ children }) => {
         if (pathname === '/camaras') { // Verifica si la ruta es /camaras
             const initializeStream = async () => {
                 try {
-                    // Limpiar recursos antes de iniciar nuevas transmisiones
-                    await fetch("/api/cleanup", { method: "POST" });
-
                     // Iniciar nuevas transmisiones
                     const response = await fetch("/api/stream");
                     const data = await response.json();
