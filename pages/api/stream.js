@@ -14,6 +14,7 @@ const HLS_DIR = path.join(process.cwd(), 'public', 'hls');
 const ffmpegProcesses = [];
 let isStreaming = false;
 
+// Función para limpiar el directorio HLS
 const clearHlsDirectory = () => {
   if (fs.existsSync(HLS_DIR)) {
     const files = fs.readdirSync(HLS_DIR);
@@ -32,6 +33,13 @@ const clearHlsDirectory = () => {
   }
 };
 
+// Limpiar el directorio HLS al iniciar el servidor
+if (!fs.existsSync(HLS_DIR)) {
+  fs.mkdirSync(HLS_DIR, { recursive: true });
+} else {
+  clearHlsDirectory(); // Limpiar el directorio solo al iniciar el servidor
+}
+
 const killFfmpegProcesses = () => {
   ffmpegProcesses.forEach((process) => {
     try {
@@ -43,10 +51,6 @@ const killFfmpegProcesses = () => {
   });
   ffmpegProcesses.length = 0;
 };
-
-if (!fs.existsSync(HLS_DIR)) {
-  fs.mkdirSync(HLS_DIR, { recursive: true });
-}
 
 const startStream = (rtspUrl, outputFile) => {
   return new Promise((resolve, reject) => {
@@ -98,7 +102,6 @@ export default async function handler(req, res) {
 
     if (!filesExist) {
       killFfmpegProcesses();
-      clearHlsDirectory();
 
       // Iniciar transmisiones en secuencia
       for (let i = 0; i < RTSP_URLS.length; i++) {

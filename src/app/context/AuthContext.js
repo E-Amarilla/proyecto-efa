@@ -31,39 +31,28 @@ export const AuthProvider = ({ children }) => {
         }
     }, [user, pathname]);
 
-    // Efecto para inicializar y limpiar la transmisión solo en /camaras
+    // Efecto para inicializar la transmisión solo en /camaras
     useEffect(() => {
-        if (pathname === '/camaras') { // Verifica si la ruta es /camaras
-            const initializeStream = async () => {
-                try {
-                    // Iniciar nuevas transmisiones
-                    const response = await fetch("/api/stream");
-                    const data = await response.json();
-                    console.log(data.message);
-                    setStreamInitialized(true);
-                } catch (error) {
-                    console.error("Error al iniciar la transmisión:", error);
-                }
-            };
+        const initializeStream = async () => {
+            try {
+                // Limpiar recursos antes de iniciar nuevas transmisiones
+                await fetch("/api/cleanup", { method: "POST" });
 
-            if (!streamInitialized) {
-                initializeStream();
+                // Iniciar nuevas transmisiones
+                const response = await fetch("/api/stream");
+                const data = await response.json();
+                console.log(data.message);
+                setStreamInitialized(true);
+            } catch (error) {
+                console.error("Error al iniciar la transmisión:", error);
             }
+        };
 
-            // Limpieza al desmontar el componente
-            return () => {
-                if (streamInitialized) {
-                    fetch("/api/cleanup", { method: "POST" })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data.message);
-                        })
-                        .catch(error => {
-                            console.error("Error al limpiar los recursos:", error);
-                        });
-                }
-            };
+        if (!streamInitialized) {
+            initializeStream();
         }
+
+        // No limpiar recursos al desmontar el componente
     }, [streamInitialized, pathname]); // Añade pathname como dependencia
 
     // Función para iniciar sesión

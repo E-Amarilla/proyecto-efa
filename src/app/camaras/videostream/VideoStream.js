@@ -18,16 +18,26 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
   useEffect(() => {
     const checkHlsFiles = async () => {
       try {
+        // Verificar si el archivo .m3u8 existe
         const m3u8Response = await fetch(`/hls/${cameraId}.m3u8`, { method: "HEAD" });
-        const tsResponse = await fetch(`/hls/${cameraId}0.ts`, { method: "HEAD" });
 
-        if (m3u8Response.ok && tsResponse.ok) {
-          console.log(`Archivos HLS disponibles para ${cameraId}. Configurando reproductor...`);
-          setIsLoading(false);
-          setShowPlayer(true);
-          setError(null);
+        if (m3u8Response.ok) {
+          // Verificar si existe algún archivo .ts para esta cámara
+          const tsFilesResponse = await fetch(`/hls/${cameraId}.m3u8`);
+          const tsFilesText = await tsFilesResponse.text();
+          const tsFiles = tsFilesText.split("\n").filter(line => line.endsWith(".ts"));
+
+          if (tsFiles.length > 0) {
+            console.log(`Archivos HLS disponibles para ${cameraId}. Configurando reproductor...`);
+            setIsLoading(false);
+            setShowPlayer(true);
+            setError(null);
+          } else {
+            console.log(`No se encontraron archivos .ts para ${cameraId}. Reintentando...`);
+            setTimeout(checkHlsFiles, 2000);
+          }
         } else {
-          console.log(`Archivos HLS no disponibles para ${cameraId}. Reintentando...`);
+          console.log(`Archivo .m3u8 no disponible para ${cameraId}. Reintentando...`);
           setTimeout(checkHlsFiles, 2000);
         }
       } catch (error) {
