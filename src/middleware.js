@@ -5,7 +5,7 @@ export function middleware(request) {
     const pathname = request.nextUrl.pathname;
 
     // Define las rutas públicas y protegidas
-    const isPublicRoute = ['/login', '/signup'].includes(pathname);
+    const isPublicRoute = ['/login', '/signup', '/login/recuperacion'].includes(pathname);
 
     // Si no hay token y la ruta no es pública, redirige al login
     if (!token && !isPublicRoute) {

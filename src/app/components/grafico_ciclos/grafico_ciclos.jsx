@@ -77,8 +77,9 @@ const Grafico = ({ startDate, endDate }) => {
             },
             rightPriceScale: { visible: true, borderColor: "white" },
             timeScale: { visible: true, borderColor: "white" },
-            handleScroll: true,
-            handleScale: true,
+            handleScroll: Array.isArray(data) && data.length > 0,
+            handleScale: Array.isArray(data) && data.length > 0,
+
         };
 
         const chart = createChart(containerRef.current, chartOptions);
@@ -169,6 +170,9 @@ const Grafico = ({ startDate, endDate }) => {
         });
 
         if (data.length > 0) {
+            const totalsByDay = {};
+    
+            // Procesar los datos de productos
             data.forEach((producto) => {
                 const lineSeries = chart.addLineSeries({
                     color: productColors.current[producto.nombre],
@@ -176,15 +180,33 @@ const Grafico = ({ startDate, endDate }) => {
                     priceScaleId: "right",
                     priceLineVisible: false,
                 });
-
-                const formattedData = producto.ciclo.map((ciclo) => ({
-                    time: ciclo.fecha_fin,
-                    value: ciclo.pesoTotal,
-                }));
+    
+                const formattedData = producto.ciclo.map((ciclo) => {
+                    // Sumar la producción diaria
+                    const time = ciclo.fecha_fin;
+                    totalsByDay[time] = (totalsByDay[time] || 0) + ciclo.pesoTotal;
+    
+                    return { time, value: ciclo.pesoTotal };
+                });
+    
                 lineSeries.setData(formattedData);
-
+    
                 seriesRef.current[producto.nombre] = lineSeries;
             });
+    
+            // Formatear los datos de suma diaria para la serie total
+            const totalSeriesData = Object.entries(totalsByDay)
+                .map(([time, value]) => ({ time: Number(time), value }))
+                .sort((a, b) => a.time - b.time);
+    
+            // Agregar la serie de totales al gráfico
+            const totalLineSeries = chart.addLineSeries({
+                color: "#FFD700", // Color dorado para la línea de suma
+                lineWidth: 2,
+                priceScaleId: "right",
+                priceLineVisible: false,
+            });
+            totalLineSeries.setData(totalSeriesData);
         }
         else {
             // Crear una serie ficticia si no hay datos

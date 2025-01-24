@@ -70,8 +70,9 @@ const Grafico = ({ startDate, endDate }) => {
                 visible: true,
                 borderColor: "white",
             },
-            handleScroll: false, // Deshabilitar scrolling inicialmente
-            handleScale: false, // Deshabilitar zoom inicialmente
+            handleScroll: Array.isArray(data) && data.length > 0,
+            handleScale: Array.isArray(data) && data.length > 0,
+
         });
         chartRef.current = chart;
 

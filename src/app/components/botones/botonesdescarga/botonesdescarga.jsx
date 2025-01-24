@@ -6,6 +6,9 @@ import jsPDF from "jspdf";
 import logoDataURL from './cremonabase64'; // Importa la data URL de la imagen
 
 export default function BotonesDescarga({ startDate, endDate }) {
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).access_token : null;
+
     const handlePdfDownload = async () => {
         const productSection = document.getElementById('ProductividadSection');
         
@@ -47,7 +50,8 @@ export default function BotonesDescarga({ startDate, endDate }) {
                 `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/productividad/descargar-excel?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
-                    headers: { Accept: "application/json" },
+                    
+                    headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
                 }
             );
 

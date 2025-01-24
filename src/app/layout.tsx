@@ -16,7 +16,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   const pathname = usePathname();
   const esDesmoldeo = pathname === '/desmoldeo';
-  const esLogin = ['/', '/signup', '/login', '/login/recuperacion'].includes(pathname);
+  const esLogin = ['/signup', '/login', '/login/recuperacion'].includes(pathname);
 
   return (
     <AuthProvider>
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <title>Creminox - EFA</title>
           
           {/* Add the favicon */}
-          <link rel="icon" href="/CremIcono.ico" type="image/x-icon" sizes="38x32" />
+          <link rel="icon" href="/favicon.ico" sizes="any" />
           
           {/* Optional: Add other meta tags */}
           <meta name="description" content="This is my Next.js project with a custom icon and title." />
