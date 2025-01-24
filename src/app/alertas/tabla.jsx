@@ -26,10 +26,6 @@ const wsUrl = `ws://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT
 useEffect(() => {
     const socket = new WebSocket(wsUrl);
 
-    socket.onopen = () => {
-        console.log("Conexión WebSocket establecida.");
-    };
-
     socket.onmessage = (event) => {
         try {
             const data = JSON.parse(event.data);
@@ -66,23 +62,15 @@ useEffect(() => {
 
                 // Desactivamos isLoading solo después de recibir datos
                 setIsLoading(false);
-            } else {
-                console.error("Formato de datos no válido:", data);
             }
         } catch (err) {
-            console.error("Error procesando datos del WebSocket:", err);
             setError("Error procesando datos del servidor.");
         }
     };
 
     socket.onerror = (err) => {
-        console.error("Error en WebSocket:", err);
         setError("Error al conectarse al servidor WebSocket.");
         setIsLoading(false); // Mantenemos el flujo por si hay error
-    };
-
-    socket.onclose = () => {
-        console.log("Conexión WebSocket cerrada.");
     };
 
     return () => {

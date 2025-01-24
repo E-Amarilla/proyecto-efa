@@ -6,7 +6,6 @@ import crem from "@/assets/img/creminox.png";
 import style from "./grafico_realizados.module.css"
 
 const Grafico = ({ startDate, endDate }) => {
-    console.log("Datos recibidos en GraficoRealizados:", { startDate, endDate });
 
     const containerRef = useRef(null);
     const chartRef = useRef(null);

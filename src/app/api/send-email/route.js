@@ -34,7 +34,6 @@ try {
     status: 200,
     });
 } catch (error) {
-    console.error("Error al enviar el correo:", error);
     return new Response(
     JSON.stringify({ error: "Hubo un error al enviar el correo." }),
     { status: 500 }

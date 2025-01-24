@@ -34,8 +34,35 @@ body {
   background-color: transparent;
 }
 
+.bg-default-100 {
+  background-color: #1F1F1F;
+  transition: ease 0.3s;
+}
+
+.hover\:bg-default-200:hover {
+  background-color: #333 !important;
+  transition: ease 0.3s;
+  transform: scale(1.05);
+}
+
+.text-default-600 {
+  color: #d9d9d9 !important;
+}
+
+.text-default-500 {
+  color: #b5b5b5;
+}
+
+.bg-content1 {
+  background-color: #1f1f1f;
+}
+
 .text-default-foreground {
   color: #d9d9d9;
+}
+
+.data-\[editable\=true\]\:text-foreground[data-editable="true"] {
+  color: #8c8c8c !important;
 }
 
 .rotate-180 {

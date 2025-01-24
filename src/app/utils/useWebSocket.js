@@ -12,7 +12,6 @@ export default function useWebSocket(pollId) {
 
     // Evento: Conexión abierta
     socket.onopen = () => {
-      console.log("Conexión WebSocket establecida");
       setIsConnected(true);
     };
 
@@ -23,7 +22,6 @@ export default function useWebSocket(pollId) {
       }
       try {
         const message = JSON.parse(event.data);
-        console.log("Mensaje recibido:", message);
         setData(message); // Actualiza el estado con los datos recibidos
       } catch (err) {
         console.error("Error al procesar el mensaje:", err);
@@ -35,7 +33,6 @@ export default function useWebSocket(pollId) {
       if (socketRef.current !== socket) {
         return;
       }
-      console.log("Conexión WebSocket cerrada");
       setIsConnected(false);
     };
 

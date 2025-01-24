@@ -18,7 +18,7 @@ const Login = () => {
       e.preventDefault();
       login(username, password)
   };
-  console.log(`AQUI OBTENGO LOS DATOS DEL USUARIO AAAAAAAAAAAAAAAA: ${user}`)
+  
   return (
     <div className={style.all}>
       <div className={style.contenedor}>

@@ -52,7 +52,6 @@ const FiltroPeriodo = () => {
                                     input: style.input,
                                 }}
                                 onChange={handleDateChange}
-                                value={[dateRange.start, dateRange.end]}
                             />
                             <div className="min-w-[6rem] w-[13vw] max-w-full pt-2">
                                 <BotonFiltro onClick={handleButtonClick} />

@@ -39,7 +39,6 @@ const Completo = () => {
     const socket = new WebSocket(wsUrl);
   
     socket.onopen = () => {
-      console.log("Conexión WebSocket establecida.");
       setError(null); // Limpiamos el estado de error al establecer la conexión
       setIsLoading(true); // Aseguramos que está cargando inicialmente
     };
@@ -81,19 +80,12 @@ const Completo = () => {
           });
   
           setIsLoading(false); // Desactivar carga cuando se reciban los datos
-        } else {
-          console.error("Formato de datos no válido o sin datos relevantes:", data);
         }
       } catch (err) {
-        console.error("Error procesando datos del WebSocket:", err);
         setError("Error procesando datos del servidor.");
       }
     };
-  
-    socket.onclose = () => {
-      console.log("Conexión WebSocket cerrada.");
-    };
-  
+
     return () => {
       socket.close();
     };
