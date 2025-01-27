@@ -5,7 +5,6 @@ import { useState, useEffect, useContext } from "react";
 import style from "./EquipoXImg.module.css";
 import Image from "next/image";
 
-
 import ImgGripper1 from "@/assets/img/equipos/Equipo_Gripper1.png";
 import ImgGripper2 from "@/assets/img/equipos/Equipo_Gripper2.png";
 import ImgGripper3 from "@/assets/img/equipos/Equipo_Gripper3.png";

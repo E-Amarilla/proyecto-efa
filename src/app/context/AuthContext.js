@@ -8,7 +8,7 @@ import { useRouter, usePathname } from "next/navigation"; // Importa usePathname
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [equipoSeleccionado, setEquipoSeleccionado] = useState(null);
+    const [equipoSeleccionado, setEquipoSeleccionado] = useState("Default"); // Inicializa con "Default"
     const router = useRouter();
     const pathname = usePathname(); // Obtén la ruta actual
 
@@ -54,6 +54,13 @@ export const AuthProvider = ({ children }) => {
 
         // No limpiar recursos al desmontar el componente
     }, [streamInitialized, pathname]); // Añade pathname como dependencia
+
+    // Efecto para resetear el equipo seleccionado cuando se abandona la página /desmoldeo/equipox
+    useEffect(() => {
+        if (pathname !== "/desmoldeo/equipox") {
+            setEquipoSeleccionado("Default");
+        }
+    }, [pathname]);
 
     // Función para iniciar sesión
     const login = async (username, password) => {
