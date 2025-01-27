@@ -1,6 +1,7 @@
 "use client";
 import '@/app/globals.css';
 import { usePathname } from 'next/navigation';
+import { Toaster } from 'sonner';
 import dynamic from 'next/dynamic';
 import Header from "./components/header/page";
 import Sonner from "./components/notificaciones/page";
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         </head>
         <body>
           <div className='scrollablecontent'>
+            <Toaster richColors={true}/>
             {!esLogin && <Header />} {/* CONDICIONAL HEADER, NO BORRAR */}
             {children}
             {!esLogin && <Sonner />} {/* CONDICIONAL SONNER, NO BORRAR */}

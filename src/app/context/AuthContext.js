@@ -1,9 +1,9 @@
-// context/AuthContext.js
 "use client";
 import Cookies from 'js-cookie';
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation"; // Importa usePathname
+import { toast } from "sonner"; // Importa Sonner para las notificaciones
 
 const AuthContext = createContext();
 
@@ -24,9 +24,10 @@ export const AuthProvider = ({ children }) => {
     // Estado de la transmisión
     const [streamInitialized, setStreamInitialized] = useState(false);
 
-    // Redirigir al login si no hay usuario autenticado
+    // Redirigir al login si no hay usuario autenticado y la ruta no es pública
     useEffect(() => {
-        if (typeof window !== "undefined" && !user && pathname !== '/login') {
+        const publicRoutes = ['/login', '/signup', '/login/recuperacion'];
+        if (typeof window !== "undefined" && !user && !publicRoutes.includes(pathname)) {
             router.push('/login');
         }
     }, [user, pathname]);
@@ -34,26 +35,24 @@ export const AuthProvider = ({ children }) => {
     // Efecto para inicializar la transmisión solo en /camaras
     useEffect(() => {
         const initializeStream = async () => {
-            try {
-                // Limpiar recursos antes de iniciar nuevas transmisiones
-                await fetch("/api/cleanup", { method: "POST" });
+            if (!streamInitialized) { // Solo inicializa si no se ha hecho antes
+                try {
+                    // Limpiar recursos antes de iniciar nuevas transmisiones
+                    await fetch("/api/cleanup", { method: "POST" });
 
-                // Iniciar nuevas transmisiones
-                const response = await fetch("/api/stream");
-                const data = await response.json();
-                console.log(data.message);
-                setStreamInitialized(true);
-            } catch (error) {
-                console.error("Error al iniciar la transmisión:", error);
+                    // Iniciar nuevas transmisiones
+                    const response = await fetch("/api/stream");
+                    const data = await response.json();
+                    console.log(data.message);
+                    setStreamInitialized(true); // Solo cambia el estado si no ha sido inicializado
+                } catch (error) {
+                    console.error("Error al iniciar la transmisión:", error);
+                }
             }
         };
 
-        if (!streamInitialized) {
-            initializeStream();
-        }
-
-        // No limpiar recursos al desmontar el componente
-    }, [streamInitialized, pathname]); // Añade pathname como dependencia
+        initializeStream();
+    }, [streamInitialized, pathname]); // Asegúrate de que `streamInitialized` es el estado correcto
 
     // Efecto para resetear el equipo seleccionado cuando se abandona la página /desmoldeo/equipox
     useEffect(() => {
@@ -78,8 +77,28 @@ export const AuthProvider = ({ children }) => {
             Cookies.set('token', token, { secure: false, sameSite: 'lax' }); // Cambia secure a false en desarrollo
             setUser(response.data);
             router.push('/completo');
+
+            // Notificación de éxito
+            toast.success("Inicio de sesión exitoso", {
+                position: 'bottom',
+                style: {
+                    marginLeft: '10px',
+                    marginBottom: '-20px',
+                    maxWidth: '22vh',
+                },
+            });            
         } catch (error) {
             console.log('Login Failed:', error);
+
+            toast.error("Error al iniciar sesión.\nPor favor, revisa tus credenciales.", {
+                position: 'bottom-center',
+                style: {
+                    whiteSpace: 'pre-line', // Esto permite el salto de línea en el texto
+                    textAlign: 'center',
+                    maxWidth: '30vh',
+                    justifyContent: 'center',
+                },
+            });            
         }
     };
 
