@@ -1,8 +1,8 @@
 "use client";
 
-import {Card, Skeleton} from "@nextui-org/react";
+import { Card, Skeleton } from "@nextui-org/react";
 import useWebSocket from '../../utils/useWebSocket';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import style from './NavDatos.module.css';
 import Link from "next/link";
 
@@ -16,7 +16,6 @@ const NavDatos = () => {
         { id: 3, nombre: 'GRAFICOS HISTORICOS' },
     ];
 
-    // Desestructurar los datos recibidos
     const {
         Nombre,
         RecetaProximaDesmolde,
@@ -28,7 +27,7 @@ const NavDatos = () => {
         PesoActual,
         TipoMolde,
         TiempoTranscurrido
-    } = data || {};  // Si data es null, evita un error de desestructuración
+    } = data || {};
 
     const datosTiempoReal = [
         { id: 1, nombre: 'Nombre receta', dato: Nombre !== undefined && Nombre !== null ? Nombre : 'null' },
@@ -37,48 +36,50 @@ const NavDatos = () => {
         { id: 4, nombre: 'Peso producto', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto : 'null' },
         { id: 5, nombre: 'Peso total producto', dato: PesoActual !== undefined && PesoActual !== null ? PesoActual : 'null' },
         { id: 6, nombre: 'N° Torre actual', dato: torreActual !== undefined && torreActual !== null ? torreActual : 'null' },
-        { id: 7, nombre: 'Torre nivel actual', dato: (NivelActual !== undefined && NivelActual !== null ? NivelActual : 'null') + "/" + (TotalNiveles !== undefined && TotalNiveles !== null ? TotalNiveles : 'null')},
+        { id: 7, nombre: 'Torre nivel actual', dato: (NivelActual !== undefined && NivelActual !== null ? NivelActual : 'null') + "/" + (TotalNiveles !== undefined && TotalNiveles !== null ? TotalNiveles : 'null') },
         { id: 8, nombre: 'N° Molde', dato: TipoMolde !== undefined && TipoMolde !== null ? TipoMolde : 'null' },
         { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : 'null' },
-    ];       
+    ];
 
-    const [activeSection, setActiveSection] = useState(1); // Inicializamos con la primera sección activa
+    const [activeSection, setActiveSection] = useState(1);
+    const sectionsRef = useRef([]);
 
     useEffect(() => {
-        const handleScroll = () => {
-            opcionesAlarma.forEach(({ id }) => {
-                const section = document.getElementById(`section${id}`);
-                if (section) {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
-                        setActiveSection(id);
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id').replace('section', '');
+                        setActiveSection(Number(id));
                     }
-                }
-            });
-        };
+                });
+            },
+            {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5, // Ajusta este valor según sea necesario
+            }
+        );
 
-        window.addEventListener('scroll', handleScroll);
+        // Observar las secciones
+        sectionsRef.current.forEach(section => {
+            if (section) observer.observe(section);
+        });
+
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            sectionsRef.current.forEach(section => {
+                if (section) observer.unobserve(section);
+            });
         };
     }, []);
 
     const handleScrollClick = (id) => {
         const section = document.getElementById(`section${id}`);
         if (section) {
-            const offset = -133;
-            const elementPosition = section.getBoundingClientRect().top + window.scrollY;
-            const offsetPosition = elementPosition + offset;
-    
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth',
-            });
-    
+            section.scrollIntoView({ behavior: 'smooth' });
             setActiveSection(id);
         }
     };
-    
 
     return (
         <>
@@ -106,7 +107,7 @@ const NavDatos = () => {
                 </ul>
 
                 <hr className={style.linea}></hr>
-                
+
                 <div className={style.contenedorDatos}>
                     <p className={style.datosGen}>DATOS GENERALES</p>
                     <ul className={style.datosTods}>

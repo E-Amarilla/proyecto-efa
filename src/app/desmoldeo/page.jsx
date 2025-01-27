@@ -10,10 +10,8 @@ import style from "./Desmoldeo.module.css";
 function Desmoldeo() {
 
     return (
-        
         <div className={style.contenedor}>
             <NavDatos />
-
             <div className={style.secciones}>
                 <section id="section1" className={style.seccion}>
                     <Layout />

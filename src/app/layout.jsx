@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
           <title>Creminox - EFA</title>
           
           {/* Add the favicon */}
-          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="icon" href="./favicon.ico" sizes="any" />
           
           {/* Optional: Add other meta tags */}
           <meta name="description" content="This is my Next.js project with a custom icon and title." />

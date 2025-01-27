@@ -1,5 +1,5 @@
 .contenedores {    
-    margin-top: 93px;
+    margin-top: 113px;
     display: flex;
     justify-content: center;
     height: 90%;
@@ -9,7 +9,6 @@
 .contenedor {
     background-color: #131313;
     border-radius: 20px;
-    margin-bottom: 20px;
     padding: 20px;
     width: 50%;
     height: 41.4vw;
