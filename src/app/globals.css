@@ -14,16 +14,15 @@ body {
   overflow-x: hidden;
 }
 
-/* Contenedor principal que ocupa toda la pantalla */
 .scrollablecontent {
-  height: 100vh;
-  overflow-y: auto;
-  -ms-overflow-style: none;  /* IE y Edge */
-  scrollbar-width: none;  /* Firefox */
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  overflow-y: scroll; /* Asegura que el desplazamiento sea funcional */
+  -ms-overflow-style: none; /* Ocultar barra en IE y Edge */
+  scrollbar-width: none; /* Ocultar barra en Firefox */
 }
 
 .scrollablecontent::-webkit-scrollbar {
-  display: none;  /* Safari y Chrome */
+  display: none; /* Ocultar barra en navegadores basados en WebKit */
 }
 
 .p-1 {
@@ -55,6 +54,23 @@ body {
 
 .bg-content1 {
   background-color: #1f1f1f;
+}
+
+.pb-2 {
+  color: #d9d9d9;
+  background-color:#2a2a2a !important;
+}
+
+.pb-2 .text-default-400 {
+  background-color: #1F1F1F !important;
+}
+
+.pb-2 .text-foreground {
+  color: #d9d9d9;
+}
+
+.text-foreground[aria-disabled="true"] {
+  color: #6c6c6c !important;
 }
 
 .text-default-foreground {
