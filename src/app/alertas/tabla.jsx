@@ -2,198 +2,218 @@
 
 import { useState, useEffect, useMemo } from "react";
 import {
-Table,
-TableHeader,
-TableColumn,
-TableBody,
-TableRow,
-TableCell,
-getKeyValue,
-Pagination,
-Spinner
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  getKeyValue,
+  Pagination,
+  Spinner,
+  Button,
 } from "@nextui-org/react";
 
 const Tabla = () => {
-const [page, setPage] = useState(1);
-const [rowsPerPage, setRowsPerPage] = useState(5);
-const [isLoading, setIsLoading] = useState(true);
-const [error, setError] = useState(null);
-const [items, setItems] = useState([]);
-const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [items, setItems] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
 
-const wsUrl = `ws://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/ws/alarmas-logs`;
+  const wsUrl = `ws://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/ws/alarmas-logs`;
 
-useEffect(() => {
+  const connectWebSocket = () => {
+    setIsLoading(true);
+    setError(null);
+
     const socket = new WebSocket(wsUrl);
 
     socket.onmessage = (event) => {
-        try {
-            const data = JSON.parse(event.data);
+      try {
+        const data = JSON.parse(event.data);
 
-            if (Array.isArray(data) && data.length > 0) {
-                setItems((prevItems) => {
-                    const updatedItems = [...prevItems];
+        if (Array.isArray(data) && data.length > 0) {
+          setItems((prevItems) => {
+            const updatedItems = [...prevItems];
 
-                    data.forEach((alerta) => {
-                        const index = updatedItems.findIndex(item => item.key === alerta.id_alarma.toString());
-                        if (index !== -1) {
-                            // Si el item ya existe, lo actualizamos
-                            updatedItems[index] = {
-                                key: alerta.id_alarma.toString(),
-                                description: alerta.descripcion,
-                                type: alerta.tipoAlarma,
-                                state: alerta.estadoAlarma,
-                                time: alerta.fechaRegistro,
-                            };
-                        } else {
-                            // Si no existe, lo agregamos
-                            updatedItems.push({
-                                key: alerta.id_alarma.toString(),
-                                description: alerta.descripcion,
-                                type: alerta.tipoAlarma,
-                                state: alerta.estadoAlarma,
-                                time: alerta.fechaRegistro,
-                            });
-                        }
-                    });
-
-                    return updatedItems;
+            data.forEach((alerta) => {
+              const index = updatedItems.findIndex(
+                (item) => item.key === alerta.id_alarma.toString()
+              );
+              if (index !== -1) {
+                // Actualizamos el item existente
+                updatedItems[index] = {
+                  key: alerta.id_alarma.toString(),
+                  description: alerta.descripcion,
+                  type: alerta.tipoAlarma,
+                  state: alerta.estadoAlarma,
+                  time: alerta.fechaRegistro,
+                };
+              } else {
+                // Agregamos un nuevo item
+                updatedItems.push({
+                  key: alerta.id_alarma.toString(),
+                  description: alerta.descripcion,
+                  type: alerta.tipoAlarma,
+                  state: alerta.estadoAlarma,
+                  time: alerta.fechaRegistro,
                 });
+              }
+            });
 
-                // Desactivamos isLoading solo después de recibir datos
-                setIsLoading(false);
-            }
-        } catch (err) {
-            setError("Error procesando datos del servidor.");
+            return updatedItems;
+          });
+          setIsLoading(false);
         }
+      } catch (err) {
+        setError("Error procesando datos del servidor.");
+        setIsLoading(false);
+      }
     };
 
-    socket.onerror = (err) => {
-        setError("Error al conectarse al servidor WebSocket.");
-        setIsLoading(false); // Mantenemos el flujo por si hay error
+    socket.onerror = () => {
+      setError("No se pudieron obtener los datos");
+      setIsLoading(false);
     };
 
     return () => {
-        socket.close();
+      socket.close();
     };
-}, [wsUrl]);
+  };
 
-const columns = [
+  useEffect(() => {
+    connectWebSocket();
+  }, [wsUrl]);
+
+  const columns = [
     { key: "description", label: "DESCRIPCIÓN" },
     { key: "type", label: "TIPO" },
     { key: "state", label: "ESTADO" },
     { key: "time", label: "HORA" },
-];
+  ];
 
-const handleSort = (key) => {
+  const handleSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
-    direction = "desc";
+      direction = "desc";
     }
     setSortConfig({ key, direction });
-};
+  };
 
-const sortedItems = useMemo(() => {
+  const sortedItems = useMemo(() => {
     let sortedData = [...items];
     if (sortConfig.key) {
-    sortedData.sort((a, b) => {
+      sortedData.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? -1 : 1;
+          return sortConfig.direction === "asc" ? -1 : 1;
         }
         if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? 1 : -1;
+          return sortConfig.direction === "asc" ? 1 : -1;
         }
         return 0;
-    });
+      });
     }
     return sortedData;
-}, [items, sortConfig]);
+  }, [items, sortConfig]);
 
-const totalRows = sortedItems.length;
-const totalPages = Math.ceil(totalRows / rowsPerPage);
-const paginatedRows = useMemo(
+  const totalRows = sortedItems.length;
+  const totalPages = Math.ceil(totalRows / rowsPerPage);
+  const paginatedRows = useMemo(
     () => sortedItems.slice((page - 1) * rowsPerPage, page * rowsPerPage),
     [sortedItems, page, rowsPerPage]
-);
+  );
 
-const handlePageChange = (newPage) => setPage(newPage);
+  const handlePageChange = (newPage) => setPage(newPage);
 
-const handleRowsPerPageChange = (event) => {
+  const handleRowsPerPageChange = (event) => {
     setRowsPerPage(Number(event.target.value));
     setPage(1);
-};
+  };
 
-return (
+  return (
     <div className="w-full bg-[#131313] rounded-[15px] p-[20px] mt-[113px]">
-        <div className="w-1/2 font-bold text-[#D9D9D9] mb-[15px]">
-            <h1 className="text-[25px]">HISTORIAL DE ALERTAS</h1>
-            <h2 className="text-[20px]">EXTENDIDO</h2>
-        </div>
-        <Table
+      <div className="w-1/2 font-bold text-[#D9D9D9] mb-[15px]">
+        <h1 className="text-[25px]">HISTORIAL DE ALERTAS</h1>
+        <h2 className="text-[20px]">EXTENDIDO</h2>
+      </div>
+      <Table
         aria-label="Tabla de alertas"
         className="w-full bg-[#131313] text-[#D9D9D9] table-fixed"
-        >
-            <TableHeader columns={columns}>
-                {(column) => (
-                <TableColumn
-                    key={column.key}
-                    allowsSorting
-                    className="bg-[#1F1F1F] text-[#D9D9D9] font-medium"
-                    onClick={() => handleSort(column.key)} // Agregar click para ordenar
-                >
-                    {column.label}
-                    {sortConfig.key === column.key && (
-                    <span>{sortConfig.direction === "asc" ? "↑" : "↓"}</span> // Indicador de dirección
-                    )}
-                </TableColumn>
-                )}
-            </TableHeader>
-            <TableBody
-                isLoading={isLoading}
-                items={paginatedRows}
-                loadingContent={<Spinner
-                    label="Cargando..."/>}
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn
+              key={column.key}
+              allowsSorting
+              className="bg-[#1F1F1F] text-[#D9D9D9] font-medium"
+              onClick={() => handleSort(column.key)}
             >
-                {(item) => (
+              {column.label}
+              {sortConfig.key === column.key && (
+                <span>{sortConfig.direction === "asc" ? "↑" : "↓"}</span>
+              )}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody
+          isLoading={isLoading && !error}
+          items={!error ? paginatedRows : []}
+          loadingContent={<Spinner label="Cargando..." />}
+        >
+          {!error
+            ? (item) => (
                 <TableRow key={item.key}>
-                    {(columnKey) => (
+                  {(columnKey) => (
                     <TableCell className="bg-[#131313] text-[#D9D9D9]">
-                        {getKeyValue(item, columnKey)}
+                      {getKeyValue(item, columnKey)}
                     </TableCell>
-                    )}
+                  )}
                 </TableRow>
-                )}
-            </TableBody>
-        </Table>
-        <div className="flex justify-between items-center mt-5">
-            <div className="flex items-center gap-2 text-[#D9D9D9]">
-                <label htmlFor="rows-per-page">Filas por página:</label>
-                <select
-                id="rows-per-page"
-                value={rowsPerPage}
-                onChange={handleRowsPerPageChange}
-                className="bg-[#2C2C2C] text-[#D9D9D9] rounded-md p-[5px]"
-                >
-                    <option value={5}>5</option>
-                    <option value={10}>10</option>
-                    <option value={15}>15</option>
-                </select>
-            </div>
-            <Pagination
-            className="flex flex-wrap gap-4 items-center overflow-hidden"
-            showControls
-            isCompact
-            color="white"
-            variant="light"
-            size="lg"
-            initialPage={1}
-            total={totalPages}
-            page={page}
-            onChange={handlePageChange}
-            />
+              )
+            : null}
+        </TableBody>
+      </Table>
+      {error && (
+        <div className="text-center mt-[4px] text-[#D9D9D9] h-[150px] flex flex-col justify-center items-center shadow-md rounded-[15px]">
+            <div className="mb-2">{error}</div>
+            <Button onClick={connectWebSocket} className="bg-[#761122]">
+                Reintentar
+            </Button>
         </div>
+      )}
+      <div className="flex justify-between items-center mt-5">
+        <div className="flex items-center gap-2 text-[#D9D9D9]">
+          <label htmlFor="rows-per-page">Filas por página:</label>
+          <select
+            id="rows-per-page"
+            value={rowsPerPage}
+            onChange={handleRowsPerPageChange}
+            className="bg-[#2C2C2C] text-[#D9D9D9] rounded-md p-[5px]"
+            disabled={!!error}
+          >
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+          </select>
+        </div>
+        <Pagination
+          className="flex flex-wrap gap-4 items-center overflow-hidden"
+          showControls
+          isCompact
+          color="white"
+          variant="light"
+          size="lg"
+          initialPage={1}
+          total={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          disabled={!!error}
+        />
+      </div>
     </div>
-);
+  );
 };
 
 export default Tabla;

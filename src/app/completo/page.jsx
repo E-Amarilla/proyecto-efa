@@ -26,35 +26,35 @@ const Completo = () => {
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
 
-  const wsUrl = `ws://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/ws/alarmas-logs`
+  const wsUrl = `ws://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/ws/alarmas-logs`;
 
   // Función para convertir el formato de fecha
   const convertirFecha = (fechaStr) => {
-    // Cambiar el formato '2025-01-17-12-00' a '2025-01-17 12:00'
     const fechaFormateada = fechaStr.replace(/-/g, ":").replace(/(\d{4}):(\d{2}):(\d{2}):(\d{2}):(\d{2})/, "$1-$2-$3 $4:$5");
     return new Date(fechaFormateada);
   };
 
-  useEffect(() => {
+  const connectWebSocket = () => {
+    setIsLoading(true);
+    setError(null); // Limpiar cualquier error previo
+
     const socket = new WebSocket(wsUrl);
-  
+
     socket.onopen = () => {
       setError(null); // Limpiamos el estado de error al establecer la conexión
       setIsLoading(true); // Aseguramos que está cargando inicialmente
     };
-  
+
     socket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-  
+
         if (Array.isArray(data) && data.some(alerta => alerta.tipoAlarma === "Error" || alerta.tipoAlarma === "Alerta")) {
-          // Filtrar solo alertas de tipo "Error" y "Alerta"
           const filteredItems = data.filter(alerta => alerta.tipoAlarma === "Error" || alerta.tipoAlarma === "Alerta");
-  
-          // Actualizar los items con el WebSocket
+
           setItems((prevItems) => {
             const updatedItems = [...prevItems];
-  
+
             filteredItems.forEach((alerta) => {
               const index = updatedItems.findIndex(item => item.key === alerta.id_alarma.toString());
               if (index !== -1) {
@@ -75,21 +75,31 @@ const Completo = () => {
                 });
               }
             });
-  
+
             return updatedItems;
           });
-  
-          setIsLoading(false); // Desactivar carga cuando se reciban los datos
+
+          setIsLoading(false);
         }
       } catch (err) {
         setError("Error procesando datos del servidor.");
+        setIsLoading(false); // Deja de cargar cuando ocurre un error
       }
+    };
+
+    socket.onerror = () => {
+      setError("No se pudieron obtener los datos");
+      setIsLoading(false); // Detener el estado de carga en caso de error de conexión
     };
 
     return () => {
       socket.close();
     };
-  }, [wsUrl]); // Dependemos de isLoading para asegurarnos de que vuelva a ser true si es necesario   
+  };
+
+  useEffect(() => {
+    connectWebSocket(); // Iniciar la conexión al montar el componente
+  }, [wsUrl]);
 
   const columns = [
     { key: "description", label: "DESCRIPCIÓN" },
@@ -121,93 +131,79 @@ const Completo = () => {
     return state;
   };
 
-  useEffect(() => {
-    // Agregar el atributo "data-active" y "aria-current" a la página activa
-    const paginationItems = document.querySelectorAll('.nextui-pagination-item');
-    paginationItems.forEach(item => {
-      const pageNumber = parseInt(item.textContent);
-      if (pageNumber === page) {
-        item.setAttribute('data-active', 'true');
-        item.setAttribute('aria-current', 'true');
-        item.setAttribute('data-focus', 'true');
-      } else {
-        item.removeAttribute('data-active');
-        item.removeAttribute('aria-current');
-        item.removeAttribute('data-focus');
-      }
-    });
-  }, [page]);  
-
   return (
-    
-      <div className={style.body}>
-        <div className={style.contenedor}>
-          <div className={style.contenedorImagen}>
-            <LayoutCompleto />
-          </div>
-        </div>
-
-        {/* Título */}
-        <h2 className={style.titulo}>ÚLTIMAS ALERTAS</h2>
-
-        {/* Mostrar error si lo hay */}
-        {error && <p className="text-red-500">Error: {error}</p>}
-
-        <Table
-          aria-label="Tabla de alertas"
-          className="w-full bg-[#131313] text-[#D9D9D9] table-fixed p-[2px] rounded-[15px]"
-        >
-          <TableHeader columns={columns}>
-            {(column) => (
-              <TableColumn
-                key={column.key}
-                className="bg-[#1f1f1f] text-[#D9D9D9] font-medium"
-              >
-                {column.label}
-              </TableColumn>
-            )}
-          </TableHeader>
-          <TableBody
-            isLoading={isLoading}
-            items={paginatedRows}
-            loadingContent={<Spinner label="Cargando..." />}
-          >
-            {(item) => (
-              <TableRow key={item.key}>
-                {(columnKey) => (
-                  <TableCell className="bg-[#131313] text-[#D9D9D9]">
-                    {columnKey === "state" ? renderState(item.state) : columnKey === "time" ? convertirFecha(item.time).toLocaleString() : item[columnKey]}
-                  </TableCell>
-                )}
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-
-        <div className="flex justify-between items-center mt-5">
-          <Pagination
-            className="flex flex-wrap gap-4 items-center overflow-hidden"
-            showControls
-            isCompact
-            color="white"
-            variant="light"
-            size="lg"
-            total={totalPages}
-            page={page}  // Página actual gestionada por estado
-            onChange={handlePageChange}
-          />
-          <Link href="/alertas">
-            <Button
-              className={`${style.hoverEffect} flex justify-self-center font-bold`}
-              radius="full"
-              auto
-            >
-              Ver más
-            </Button>
-          </Link>
+    <div className={style.body}>
+      <div className={style.contenedor}>
+        <div className={style.contenedorImagen}>
+          <LayoutCompleto />
         </div>
       </div>
-    
+
+      {/* Título */}
+      <h2 className={style.titulo}>ÚLTIMAS ALERTAS</h2>
+
+      <div className="w-full bg-[#131313] text-[#D9D9D9] table-fixed p-[2px] rounded-[15px]">
+      <Table
+        aria-label="Tabla de alertas"
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn
+              key={column.key}
+              className="bg-[#1f1f1f] text-[#D9D9D9] font-medium"
+            >
+              {column.label}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody
+          isLoading={isLoading}
+          items={paginatedRows}
+          loadingContent={<Spinner label="Cargando..." />}
+        >
+          {(item) => (
+            <TableRow key={item.key}>
+              {(columnKey) => (
+                <TableCell className="bg-[#131313] text-[#D9D9D9]">
+                  {columnKey === "state" ? renderState(item.state) : item[columnKey]}
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      {error && (
+        <div className="text-center mt-[4px] text-[#D9D9D9] h-[150px] flex flex-col justify-center items-center shadow-md rounded-[15px]">
+            <div className="mb-2">{error}</div>
+            <Button onClick={connectWebSocket} className="bg-[#761122]">
+                Reintentar
+            </Button>
+        </div>
+      )}
+      </div>
+
+      <div className="flex justify-between mt-[8px]">
+        {/* Paginación */}
+        <Pagination
+          showControls
+          total={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          color="white"
+          size="lg"
+        />
+
+        <Link href="/alertas" className="flex justify-end">
+          <Button
+            className="hoverEffect flex justify-self-left font-bold bg-[#131313]"
+            radius="full"
+            auto
+          >
+            Ver más
+          </Button>
+        </Link>
+      </div>
+    </div>
   );
 };
 
