@@ -9,9 +9,12 @@ import crem from "@/assets/img/creminox.png";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false); // Estado para el spinner
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Activar el spinner
+
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
@@ -36,6 +39,8 @@ export default function ForgotPassword() {
       toast.error("Error al conectar con el servidor.", {
         position: "bottom-center",
       });
+    } finally {
+      setLoading(false); // Desactivar el spinner
     }
   };
 
@@ -57,8 +62,12 @@ export default function ForgotPassword() {
               />
             </div>
           </div>
-          <button className={style.botonIngresar} type="submit">
-            Recuperar Contraseña
+          <button className={style.botonIngresar} type="submit" disabled={loading}>
+            {loading ? (
+              <div className={style.spinner}></div> // Spinner
+            ) : (
+              "Recuperar Contraseña" // Texto normal del botón
+            )}
           </button>
           <div>
             <Link className={style.signup} href="../login">

@@ -19,18 +19,11 @@ export default function RootLayout({ children }) {
     <AuthProvider>
       <html lang="en">
         <head>
-          {/* Add the title */}
-          <title>Creminox - EFA</title>
-          
-          {/* Add the favicon */}
+          <title>Creminox - EFA</title>      
           <link rel="icon" href="./favicon.ico" sizes="any" />
-          
-          {/* Optional: Add other meta tags */}
-          <meta name="description" content="This is my Next.js project with a custom icon and title." />
         </head>
         <body>
           <div className='scrollablecontent'>
-            <Toaster richColors={true}/>
             {!esLogin && <Header />} {/* CONDICIONAL HEADER, NO BORRAR */}
             {children}
             {!esLogin && <Sonner />} {/* CONDICIONAL SONNER, NO BORRAR */}

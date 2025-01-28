@@ -24,3 +24,9 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+@media (max-width: 1680px) { /* Puedes ajustar el ancho máximo según tu necesidad */
+    .all {
+        height: 125%; /* Aplica el height del 125% en pantallas más pequeñas */
+    }
+}

@@ -64,43 +64,26 @@ export const AuthProvider = ({ children }) => {
     // Función para iniciar sesión
     const login = async (username, password) => {
         try {
-            const formData = new FormData();
-            formData.append('username', username);
-            formData.append('password', password);
-            const response = await axios.post(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/usuario/login`, formData, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            });
-
-            const token = response.data.access_token;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            localStorage.setItem('user', JSON.stringify(response.data));
-            Cookies.set('token', token, { secure: false, sameSite: 'lax' }); // Cambia secure a false en desarrollo
-            setUser(response.data);
-            router.push('/completo');
-
-            // Notificación de éxito
-            toast.success("Inicio de sesión exitoso", {
-                position: 'bottom',
-                style: {
-                    marginLeft: '10px',
-                    marginBottom: '-20px',
-                    maxWidth: '22vh',
-                },
-            });            
+          const formData = new FormData();
+          formData.append('username', username);
+          formData.append('password', password);
+          const response = await axios.post(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/usuario/login`, formData, {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          });
+      
+          const token = response.data.access_token;
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          localStorage.setItem('user', JSON.stringify(response.data));
+          Cookies.set('token', token, { secure: false, sameSite: 'lax' }); // Cambia secure a false en desarrollo
+          setUser(response.data);
+          router.push('/completo');
+      
+          console.log('Login Authorized');         
         } catch (error) {
-            console.log('Login Failed:', error);
-
-            toast.error("Error al iniciar sesión.\nPor favor, revisa tus credenciales.", {
-                position: 'bottom-center',
-                style: {
-                    whiteSpace: 'pre-line', // Esto permite el salto de línea en el texto
-                    textAlign: 'center',
-                    maxWidth: '30vh',
-                    justifyContent: 'center',
-                },
-            });            
+          console.log('Login Failed:', error);
+          throw new Error('Credenciales inválidas'); // Lanzar una excepción con el mensaje de error
         }
-    };
+      };
 
     // Función para cerrar sesión
     const logout = () => {
