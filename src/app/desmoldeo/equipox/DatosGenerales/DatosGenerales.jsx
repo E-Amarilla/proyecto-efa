@@ -1,7 +1,5 @@
 "use client";
 
-import {Card, Skeleton} from "@nextui-org/react";
-
 //Imagenes
 import Image from "next/image";
 import receta1 from '@/assets/img/RECETA.png';
@@ -21,23 +19,22 @@ const DatosGenerales = () => {
     const pollId = "resumen-desmoldeo";
     const { data, error, isConnected } = useWebSocket(pollId);
 
-     // Desestructurar los datos recibidos
     const {
-        NombreReceta,
-        RecetaActual,
-        ProximaReceta,
-        PesoTotalProducto,
-        Estado,
-        TiempoTranscurrido
-    } = data || {};  // Si data es null, evita un error de desestructuración
+        NombreActual,
+        idRecetaActual,
+        idRecetaProximo,
+        PesoActualDesmoldado,
+        estadoMaquina,
+        tiempoTranscurrido
+    } = data || {};
 
     const datosGenerales = [
-        { id: 1, texto: 'NOMBRE RECETA', dato: NombreReceta !== undefined && NombreReceta !== null ? NombreReceta : 'null', icono:receta1 },
-        { id: 2, texto: 'RECETA ACTUAL', dato: RecetaActual !== undefined && RecetaActual !== null ? RecetaActual : 'null', icono:receta2  },
-        { id: 3, texto: 'PROXIMA RECETA', dato: ProximaReceta !== undefined && ProximaReceta !== null ? ProximaReceta : 'null', icono:receta2 },
-        { id: 4, texto: 'PESO TOTAL PRODUCTO', dato: PesoTotalProducto !== undefined && PesoTotalProducto !== null ? PesoTotalProducto : 'null', icono:peso  },
-        { id: 5, texto: 'ESTADO', dato: Estado !== undefined && Estado !== null ? Estado : 'null', icono:estado },
-        { id: 6, texto: 'TIEMPO TRANSCURRIDO', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00hs', icono: tiempo },
+        { id: 1, texto: 'NOMBRE RECETA', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1 },
+        { id: 2, texto: 'ID RECETA ACTUAL', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
+        { id: 3, texto: 'ID PROXIMA RECETA', dato: idRecetaProximo !== undefined && idRecetaProximo !== null ? idRecetaProximo : 'null', icono:receta2 },
+        { id: 4, texto: 'PESO TOTAL DESMOLDADO', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono:peso  },
+        { id: 5, texto: 'ESTADO MAQUINA', dato: estadoMaquina !== undefined && estadoMaquina !== null ? estadoMaquina : 'null', icono:estado },
+        { id: 6, texto: 'TIEMPO TRANSCURRIDO', dato: tiempoTranscurrido !== undefined && tiempoTranscurrido !== null ? tiempoTranscurrido : '00:00hs', icono: tiempo },
     ];       
 
     return (

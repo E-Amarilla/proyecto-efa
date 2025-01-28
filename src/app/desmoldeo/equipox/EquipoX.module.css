@@ -18,6 +18,27 @@
     justify-content: space-between; /* Distribuye el espacio entre los elementos */
 }
 
+.Med {
+    justify-items: center;
+}
+
+.titulo {
+    background-color: #131313;
+    border-radius: 15px;
+    display: flex;
+    pointer-events: none;
+    padding: 20px 30px; /* Más espacio interno para un diseño más espacioso */
+    justify-content: center;
+    align-items: center;
+    font-size: 35px; /* Tamaño un poco mayor para impacto */
+    font-weight: 700; /* Aumenta la densidad del texto */
+    color: #FFFFFF; /* Blanco puro para mejor legibilidad */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Agrega sombra para profundidad */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 2px; /* Espaciado entre letras para un look más moderno */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efecto al pasar el cursor */
+}
+
 .datoList {
     flex: 1;
     display: flex;

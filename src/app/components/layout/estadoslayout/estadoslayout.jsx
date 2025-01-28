@@ -14,11 +14,11 @@ import puntoRojo from '@/assets/img/puntoRojo.png';
 const EstadosLayout = () => {
     const pollId = "resumen-desmoldeo";
     const { data, error, isConnected } = useWebSocket(pollId);
-    const [estado, setEstado] = useState('inactivo');
+    const [estadoMaquina, setEstado] = useState('inactivo');
 
     useEffect(() => {
-        if (data && data.Estado !== undefined) {
-            setEstado(data.Estado);
+        if (data && data.estadoMaquina !== undefined) {
+            setEstado(data.estadoMaquina);
         } else {
             setEstado('inactivo');
         }
@@ -28,7 +28,7 @@ const EstadosLayout = () => {
         <>
             <div className={style.contenedorDatos}>
                 <ul className={style.datosTods}>
-                    {estado === ("Activo" || "activo")  ? (
+                    {estadoMaquina === ("Activo" || "activo")  ? (
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedores}>
                                 <Image
@@ -36,10 +36,10 @@ const EstadosLayout = () => {
                                     className={style.icon}
                                     alt={'Icono'}
                                 /> 
-                                <h3 className={style.estadoActivo}>{estado.toUpperCase()}</h3>
+                                <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
                             </div>
                         </li>
-                    ) : estado === ("Pausa" || "pausa") ? (
+                    ) : estadoMaquina === ("Pausa" || "pausa") ? (
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedores}>
                                 <Image
@@ -47,10 +47,10 @@ const EstadosLayout = () => {
                                     className={style.icon}
                                     alt={'Icono'}
                                 /> 
-                                <h3 className={style.estadoPausa}>{estado.toUpperCase()}</h3>
+                                <h3 className={style.estadoPausa}>{estadoMaquina.toUpperCase()}</h3>
                             </div>
                         </li>
-                    ) : estado === ("Inactivo" || "inactivo")  ? (
+                    ) : estadoMaquina === ("Inactivo" || "inactivo")  ? (
                         <li className={style.datosIndvGray}>
                             <div className={style.contenedores}>
                                 <Image
@@ -58,7 +58,7 @@ const EstadosLayout = () => {
                                     className={style.icon}
                                     alt={'Icono'}
                                 /> 
-                                <h3 className={style.estadoInactivo}>{estado.toUpperCase()}</h3>
+                                <h3 className={style.estadoInactivo}>{estadoMaquina.toUpperCase()}</h3>
                             </div>
                         </li>
                     ) : (

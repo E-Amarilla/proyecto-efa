@@ -8,9 +8,9 @@ import AuthContext from "../../../context/AuthContext";
 
 const DatosSDDAComponent = () => {
   const initialdatosSdda = [
-    { id: 1, texto: 'SDDA_LONG_MM', dato: null },
-    { id: 2, texto: 'SDDA_VERTICAL_MM', dato: null },
-    { id: 3, texto: 'SDDA NIVEL ACTUAL', dato: null },
+    { id: 1, texto: 'TOTAL NIVELES', dato: null },
+    { id: 2, texto: 'SDDA_LONG_MM', dato: null },
+    { id: 3, texto: 'SDDA_VERTICAL_MM', dato: null },
   ];
 
   const [datosSdda, setdatosSdda] = useState(initialdatosSdda);

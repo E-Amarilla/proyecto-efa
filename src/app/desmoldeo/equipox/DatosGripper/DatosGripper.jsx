@@ -11,9 +11,8 @@ const DatosGripperComponent = () => {
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
 
   const initialdatosGripper = [
-    { id: 1, texto: "COD. GRIPPER ACTUAL", dato: null },
-    { id: 2, texto: "COD. GRIPPER PROXIMO", dato: null },
-    { id: 3, texto: "GRIPPERS DISPONIBLES", dato: null },
+    { id: 1, texto: "N° GRIPPER ACTUAL", dato: null },
+    { id: 2, texto: "N° GRIPPER PROXIMO", dato: null },
   ];
 
   const [datosGripper, setdatosGripper] = useState(initialdatosGripper);

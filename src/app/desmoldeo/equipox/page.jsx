@@ -18,13 +18,14 @@ const EquipoX = () => {
           <DatosGenerales />
           <SectorIO />
         </div>
-
-        <div className={style.Med}>
-          <DatosGripper />
-          <DatosRobot />
-          <DatosSDDA />
-          <DatosTorre />
-        </div>
+        
+          <div className={style.Med}>
+            <span className={style.titulo}>DATOS DESMOLDEO</span>
+            <DatosRobot />
+            <DatosSDDA />
+            <DatosTorre />
+            <DatosGripper />
+          </div>
 
         <div className={style.Der}>
           <EquipoXImg />

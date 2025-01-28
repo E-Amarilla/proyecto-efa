@@ -3,6 +3,7 @@
     background-color: #131313;
     border-radius: 15px;
     padding: 10px 20px 20px 20px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     color: #D9D9D9;
@@ -11,27 +12,22 @@
 }
 
 .contenedorDatos {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    color: #D9D9D9;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.datoList {
-    width: 100%;
-    padding: 10px 20px;
-    background-color: #1F1F1F;
-    border-radius: 15px;
-}
-
-.detallesDatos {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.datoList {
+    height: 120%; /* Puedes ajustar este valor si no necesitas más del 100% */
+    width: 32%;
+    padding: 10px 20px;
+    background-color: #1F1F1F;
+    border-radius: 15px;
+    display: flex; /* Habilitar flexbox */
+    flex-direction: column; /* Asegurar que los elementos internos estén en columna */
+    justify-content: center; /* Centrar contenido verticalmente */
 }
 
 .icon {

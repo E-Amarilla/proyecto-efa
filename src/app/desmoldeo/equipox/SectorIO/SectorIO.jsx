@@ -2,37 +2,49 @@
 
 import useWebSocket from '@/app/utils/useWebSocket';
 
-//styles
+// Styles
 import style from './SectorIO.module.css';
 import textstyle from '../texto.module.css';
 import React, { useState, useEffect } from 'react';
 
-//Imagenes
+// Imágenes
 import Image from "next/image";
 import puntoGris from '@/assets/img/puntoGris.png';
 import puntoVerde from '@/assets/img/puntoVerde.png';
+import puntoA from '@/assets/img/puntoA.png';
+import puntoB from '@/assets/img/puntoB.png';
 
 const SectorIOComponent = () => {
-    
     const initialSectorIO = [
-        { id: 1, texto: 'ESTADO', dato: '0', icono: puntoGris, },
-        { id: 2, texto: 'IO_YY EQ XX', dato: '0', icono: puntoGris, },
-        { id: 3, texto: 'ID EQUIPO', dato: '0', icono: puntoGris, },
-        { id: 4, texto: 'NOMBRE', dato: '0', icono: puntoGris, }
+        { id: 1, texto: 'ESTADO DEL CICLO', dato: '0', icono: puntoGris },
+        { id: 2, texto: 'BANDA DE DESMOLDEO', dato: '0', icono: puntoGris },
     ];
 
     const [sectorIO, setSectorIO] = useState(initialSectorIO);
-    
+
     const pollId = "lista-tiempo-real";
     const { data, error, isConnected } = useWebSocket(pollId);
 
     useEffect(() => {
         if (data && data.sectorIO) {
-            const updatedSectorIO = sectorIO.map((item, index) => ({
-                ...item,
-                dato: data.sectorIO[index] !== undefined && data.sectorIO[index] !== null ? data.sectorIO[index] : '0',
-                icono: data.sectorIO[index] ? puntoVerde : puntoGris // Asumimos puntoVerde para true y puntoGris para false
-            }));
+            const updatedSectorIO = sectorIO.map((item, index) => {
+                const dato = data.sectorIO[index];
+                
+                let icono = puntoGris; // Default icon
+                if (dato === true) {
+                    icono = puntoVerde;
+                } else if (dato === 'A') {
+                    icono = puntoA;
+                } else if (dato === 'B') {
+                    icono = puntoB;
+                }
+
+                return {
+                    ...item,
+                    dato: dato !== undefined && dato !== null ? dato : '0',
+                    icono: icono
+                };
+            });
             setSectorIO(updatedSectorIO);
         }
     }, [data]);
@@ -43,9 +55,9 @@ const SectorIOComponent = () => {
             <div className={style.datosGen}>
                 {sectorIO.map(({ id, texto, dato, icono }) => (
                     <div key={id} className={style.datoList}>
-                        <div className={style.detallesDatos} href='EquipoX'>
+                        <div className={style.detallesDatos}>
                             <div className={style.texto}>
-                                <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                <h3 className={style.subtitulo}>{texto}</h3>
                             </div>
                             <Image 
                                 src={icono} 

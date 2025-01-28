@@ -1,6 +1,15 @@
 "use client";
 
-import { Card, Skeleton } from "@nextui-org/react";
+import Image from "next/image";
+import receta1 from '@/assets/img/RECETA.png';
+import receta2 from '@/assets/img/RECETA2.png';
+import torre from '@/assets/img/TORRE.png';
+import nivelactual from '@/assets/img/NIVELACTUAL.png';
+import molde from '@/assets/img/MOLDE.png';
+import peso from '@/assets/img/PESO.png';
+import tiempo from '@/assets/img/TIEMPO.png';
+import gripper from "@/assets/img/GRIPPER.png"
+
 import useWebSocket from '../../utils/useWebSocket';
 import React, { useState, useEffect, useRef } from 'react';
 import style from './NavDatos.module.css';
@@ -17,28 +26,28 @@ const NavDatos = () => {
     ];
 
     const {
-        Nombre,
-        RecetaProximaDesmolde,
-        NroGriper,
+        NombreActual,
+        idRecetaProximo,
+        NGripperActual,
         PesoProducto,
-        NivelActual,
+        sdda_nivel_actual,
         TotalNiveles,
         torreActual,
-        PesoActual,
+        PesoActualDesmoldado,
         TipoMolde,
-        TiempoTranscurrido
+        tiempoTranscurrido
     } = data || {};
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Nombre receta', dato: Nombre !== undefined && Nombre !== null ? Nombre : 'null' },
-        { id: 2, nombre: 'Proxima receta', dato: RecetaProximaDesmolde !== undefined && RecetaProximaDesmolde !== null ? RecetaProximaDesmolde : 'null' },
-        { id: 3, nombre: 'N° Gripper actual', dato: NroGriper !== undefined && NroGriper !== null ? NroGriper : 'null' },
-        { id: 4, nombre: 'Peso producto', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto : 'null' },
-        { id: 5, nombre: 'Peso total producto', dato: PesoActual !== undefined && PesoActual !== null ? PesoActual : 'null' },
-        { id: 6, nombre: 'N° Torre actual', dato: torreActual !== undefined && torreActual !== null ? torreActual : 'null' },
-        { id: 7, nombre: 'Torre nivel actual', dato: (NivelActual !== undefined && NivelActual !== null ? NivelActual : 'null') + "/" + (TotalNiveles !== undefined && TotalNiveles !== null ? TotalNiveles : 'null') },
-        { id: 8, nombre: 'N° Molde', dato: TipoMolde !== undefined && TipoMolde !== null ? TipoMolde : 'null' },
-        { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : 'null' },
+        { id: 1, nombre: 'Nombre receta', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1  },
+        { id: 2, nombre: 'ID Proxima receta', dato: idRecetaProximo !== undefined && idRecetaProximo !== null ? idRecetaProximo : 'null', icono:receta2  },
+        { id: 3, nombre: 'N° Gripper actual', dato: NGripperActual !== undefined && NGripperActual !== null ? NGripperActual : 'null', icono:gripper  },
+        { id: 4, nombre: 'Peso por fila', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto : 'null', icono:peso  },
+        { id: 5, nombre: 'Peso desmoldado', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono:peso  },
+        { id: 6, nombre: 'N° Torre actual', dato: torreActual !== undefined && torreActual !== null ? torreActual : 'null', icono:torre  },
+        { id: 7, nombre: 'Torre nivel actual', dato: (sdda_nivel_actual !== undefined && sdda_nivel_actual !== null ? sdda_nivel_actual : 'null') + "/" + (TotalNiveles !== undefined && TotalNiveles !== null ? TotalNiveles : 'null'), icono:nivelactual  },
+        { id: 8, nombre: 'N° Molde', dato: TipoMolde !== undefined && TipoMolde !== null ? TipoMolde : 'null', icono:molde  },
+        { id: 9, nombre: 'Tiempo transcurrido', dato: tiempoTranscurrido !== undefined && tiempoTranscurrido !== null ? tiempoTranscurrido : 'null', icono:tiempo  },
     ];
 
     const [activeSection, setActiveSection] = useState(1);
@@ -111,12 +120,17 @@ const NavDatos = () => {
                 <div className={style.contenedorDatos}>
                     <p className={style.datosGen}>DATOS GENERALES</p>
                     <ul className={style.datosTods}>
-                        {datosTiempoReal.map(({ id, nombre, dato }) => (
+                        {datosTiempoReal.map(({ id, nombre, dato, icono }) => (
                             <li key={id} className={style.datosIndv}>
                                 <Link className={style.detallesDatos} href='/desmoldeo/equipox'>
                                     <h3 className={style.h3}>{nombre}</h3>
                                     <h4 className={style.h4}>{dato}</h4>
                                 </Link>
+                                <Image 
+                                    src={icono} 
+                                    alt={`Estado: ${id}`} 
+                                    className={style.icon} 
+                                />
                             </li>
                         ))}
                     </ul>

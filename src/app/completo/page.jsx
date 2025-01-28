@@ -140,7 +140,7 @@ const Completo = () => {
       </div>
 
       {/* Título */}
-      <h2 className={style.titulo}>ÚLTIMAS ALERTAS</h2>
+      <h2 className={style.titulo}>LISTADO ALARMAS</h2>
 
       <div className="w-full bg-[#131313] text-[#D9D9D9] table-fixed p-[2px] rounded-[15px]">
       <Table

@@ -19,10 +19,10 @@ const DatosRobotComponent = () => {
   const { data } = useWebSocket(pollId);
 
   useEffect(() => {
-    if (data && data.datosKuka) {
+    if (data && data.datosRobot) {
       const updatedDatosRobot = initialDatosRobot.map((item, index) => ({
         ...item,
-        dato: data.datosKuka[index] !== undefined ? data.datosKuka[index] : null,
+        dato: data.datosRobot[index] !== undefined ? data.datosRobot[index] : null,
       }));
       setDatosRobot(updatedDatosRobot);
     }

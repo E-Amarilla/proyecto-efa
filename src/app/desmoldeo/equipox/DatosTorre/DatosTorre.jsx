@@ -11,11 +11,8 @@ const DatosTorreComponent = () => {
 
   const initialDatosTorre = [
     { id: 1, texto: "N° TORRE ACTUAL", dato: null },
-    { id: 2, texto: "TORRE NIVEL ACTUAL", dato: null },
-    { id: 3, texto: "TAG ACTUAL", dato: null },
-    { id: 4, texto: "N° TORRE PROXIMA", dato: null },
-    { id: 5, texto: "TIPO FIN", dato: null },
-    { id: 6, texto: "DESMOLDEO BANDA", dato: null },
+    { id: 2, texto: "N° TORRE PROXIMA", dato: null },
+    { id: 3, texto: "NIVEL DE TORRE ACTUAL", dato: null },
   ];
 
   const [datosTorre, setDatosTorre] = useState(initialDatosTorre);
