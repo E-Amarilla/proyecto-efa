@@ -25,7 +25,7 @@ const Productividad = () => {
     const cantidadCiclosF = data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
     ? data.ProductosRealizados.reduce((total, producto) => total + producto.cantidadCiclos, 0)
     : "Cargando...";
-    const PesoTotal = data?.PesoTotal ?? "Cargando...";
+    const PesoTotalCiclos = data?.PesoTotalCiclos.toFixed(3) ?? "Cargando...";
     const Horas_Uso =
         data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
             ? data.ProductosRealizados.reduce((acc, prod) => acc + prod.tiempoTotal, 0)
@@ -34,13 +34,13 @@ const Productividad = () => {
             console.log(`Cantidad de días: ${Cant_Dias} | Horas de uso: ${Horas_Uso}`);
 
     const Promedio_Horas = (Horas_Uso, Cant_Dias) =>
-        Horas_Uso !== "Cargando..." ? (Horas_Uso / (Cant_Dias)).toFixed(2) : "Cargando...";
+        Horas_Uso !== "Cargando..." ? (((Horas_Uso/60000)/60) / (Cant_Dias)).toFixed(2) : "Cargando...";
 
     const datos = [
         { id: 1, titulo: "Ciclos realizados", dato: cantidadCiclosF },
         { id: 2, titulo: "Producción total", dato: (
             <span>
-              {PesoTotal} <span className="text-lg">Tn</span>
+              {PesoTotalCiclos} <span className="text-lg">Tn</span>
             </span>
           ) },
         { id: 3, titulo: "Promedio de uso diario", dato: (
@@ -60,10 +60,10 @@ const Productividad = () => {
     };
 
     const productos = data?.ProductosRealizados?.map((producto) => {
-        const porcentaje = ((producto.peso * 100) / PesoTotal / 1000);
+        const porcentaje = ((producto.pesoTotal * 100) / PesoTotalCiclos / 1000);
         return {
             nombre: producto.NombreProducto,
-            peso: producto.peso + "kg",
+            peso: producto.pesoTotal.toFixed(2) + "kg",
             cantidadCiclos: producto.cantidadCiclos,
             porcentaje: porcentaje.toFixed(2),
             color: generarColorAleatorio(),

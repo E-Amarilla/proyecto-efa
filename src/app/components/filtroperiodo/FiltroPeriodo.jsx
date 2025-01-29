@@ -7,6 +7,9 @@ import BotonFiltro from "../botones/aplicarfiltro/botonfiltro.jsx";
 import style from "./FiltroPeriodo.module.css";
 
 const FiltroPeriodo = ({ onDataUpdate }) => {
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).access_token : null;
+
     const today = new Date();
     const formattedToday = today.toISOString().split("T")[0];
 
@@ -31,7 +34,8 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
                 `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/productividad/resumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
-                    headers: { Accept: "application/json" },
+                    
+                    headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
                 }
             );
 
@@ -62,7 +66,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
                 `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/productividad/resumen?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                 {
                     method: "GET",
-                    headers: { Accept: "application/json" },
+                    headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
                 }
             );
 

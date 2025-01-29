@@ -15,8 +15,8 @@ const FiltroPeriodo = () => {
     const lastMonth = new Date(today);
     lastMonth.setMonth(today.getMonth() - 1);
     const formattedLastMonth = lastMonth.toISOString().split("T")[0];
-
     const [dateRange, setDateRange] = useState({ start: formattedLastMonth, end: formattedToday });
+    
     const [fechaInicio, setFechaInicio] = useState(formattedLastMonth);
     const [fechaFin, setFechaFin] = useState(formattedToday);
 
