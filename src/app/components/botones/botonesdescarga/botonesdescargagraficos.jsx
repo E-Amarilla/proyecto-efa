@@ -4,34 +4,51 @@ import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import logoDataURL from './cremonabase64'; // Importa la data URL de la imagen
+import telIcon from './telbase64'; // Importa la data URL de la imagen
+import webIcon from './webbase64'; // Importa la data URL de la imagen
+import mailIcon from './mailbase64'; // Importa la data URL de la imagen
 
 export default function BotonesDescarga({ startDate, endDate }) {
     const handlePdfDownload = async () => {
         const graphSection = document.getElementById('GraficosSection');
-        
+
         if (graphSection) {
             const canvasProduct = await html2canvas(graphSection, {
-                scale: 2, // Aumenta la escala para mejorar la resolución
-                ignoreElements: (element) => element.classList.contains('FiltroPeriodoGraficos'),
+                scale: 2,
+                ignoreElements: (element) => element.classList && element.classList.contains('FiltroPeriodoGraficos'),
             });
             const imgDataProduct = canvasProduct.toDataURL('image/png');
-            
-            // Crear un nuevo documento PDF
-            const pdf = new jsPDF('landscape', 'mm', 'a4');
-            
-            // Agregar logo usando la data URL
-            const logoWidth = 60; // Ajusta el tamaño según sea necesario
-            const logoHeight = 15;
-            pdf.addImage(logoDataURL, 'PNG', 120, 5, logoWidth, logoHeight);
 
-            // Posicionar el contenido capturado y moverlo 20 píxeles hacia arriba en el eje y
+            const pdf = new jsPDF({
+                orientation: 'landscape',
+                unit: 'mm',
+                format: [184, 297]
+            });
+    
             const imgProps = pdf.getImageProperties(imgDataProduct);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfWidth = 287;
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            const yOffset = -10; // Ajusta la posición en el eje y
-            pdf.addImage(imgDataProduct, 'PNG', 0, logoHeight + 20 + yOffset, pdfWidth, pdfHeight, undefined, 'FAST');
+            pdf.addImage(imgDataProduct, 'PNG', 5, 5, pdfWidth, pdfHeight, undefined, 'FAST');
+    
+            const logoWidth = 40;
+            const logoHeight = 10;
+            pdf.addImage(logoDataURL, 'PNG', 245, 20, logoWidth, logoHeight);
+            
+            // Añadir texto "EFA - Proyecto" debajo del logo
+            pdf.setFontSize(12);
+            pdf.text("EFA - Proyecto", 252, 37);
+            pdf.text("Celda de desmoldeo", 247, 42);
+            
 
-            // Guardar el PDF
+            pdf.addImage(webIcon, 'PNG', 240, 65, 5, 5); // Icono de ubicación de 10x10 px
+            pdf.text("creminox.com", 247, 69); // Texto al lado del icono
+
+            pdf.addImage(telIcon, 'PNG', 240, 71, 5, 5); // Icono de teléfono de 10x10 px
+            pdf.text("+54 11 4918-3944", 247, 75); // Texto al lado del icono
+
+            pdf.addImage(mailIcon, 'PNG', 240, 77, 5, 5); // Icono de teléfono de 10x10 px
+            pdf.text("soporte@creminox.com", 247, 81); // Texto al lado del icono
+    
             pdf.save('graficos.pdf');
         }
     };

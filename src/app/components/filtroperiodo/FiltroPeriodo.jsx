@@ -84,7 +84,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
     }, []); // Ejecuta solo al montar el componente
 
     return (
-        <div className={style.contenedor}>
+        <div className={`${style.contenedor} FiltroPeriodo`}>
             <h2 className={style.titulo}>FILTRO POR PERIODO</h2>
             <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                 <div className="flex flex-col items-center w-full">

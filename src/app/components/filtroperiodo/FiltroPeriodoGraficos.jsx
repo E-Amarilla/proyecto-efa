@@ -36,10 +36,10 @@ const FiltroPeriodo = () => {
     return (
         <div id="GraficosSection" className={style.seccion}>
             <div className={style.graph2}>
-                <div className={style.grafiproductos}>
+                <div className={`${style.grafiproductos} ${style.fullWidth}`}>
                     <Grafico2 startDate={fechaInicio} endDate={fechaFin} />
                 </div>
-                <div className={style.contenedor}>
+                <div className={`${style.contenedor} FiltroPeriodoGraficos`}>
                     <h2 className={style.titulo}>FILTRO POR PERIODO</h2>
                     <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                         <div className="flex flex-col items-center w-full">
@@ -60,7 +60,7 @@ const FiltroPeriodo = () => {
                     </div>
                     <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                         <div className="min-w-[6rem] w-[13vw] max-w-full">
-                            <BotonesDescarga startDate={dateRange.start} endDate={dateRange.end}/>
+                            <BotonesDescarga startDate={dateRange.start} endDate={dateRange.end} />
                         </div>
                     </div>
                 </div>

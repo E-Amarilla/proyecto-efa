@@ -9,11 +9,9 @@ const DatosEstadoDesmoldeo = () => {
 
     const desmoldeoData = data?.Desmoldeo || {};
     const {
-        // estadoMaquina = 'Inactivo', // Para fines de ejemplo está siendo declarado manualmente
-        TiempoTranscurrido = '00:00 hs',
+        estadoMaquina = 'Inactivo',
+        TiempoTrancurrido = '00:00 hs',
     } = desmoldeoData;
-
-    const estadoMaquina = 'activo'; // Ejemplo de valor
 
     return (
         <>
@@ -24,15 +22,15 @@ const DatosEstadoDesmoldeo = () => {
                             <div className={style.contenedorActivo}>
                                 <h1 className={style.area}>Desmoldeo</h1>
                                 <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
-                                <h4 className={style.tiempo}>Hace: {TiempoTranscurrido}</h4>
+                                <h4 className={style.tiempo}>{TiempoTrancurrido}</h4>
                             </div>
                         </li>
-                    ) : estadoMaquina === 'Pausa' || estadoMaquina === 'PAUSA' || estadoMaquina === 'pausa' ? (
+                    ) : estadoMaquina === 'Pausado' || estadoMaquina === 'PAUSADO' || estadoMaquina === 'pausado' ? (
                         <li className={style.datosIndvYellow}>
                             <div className={style.contenedorPausa}>
                                 <h1 className={style.area}>Desmoldeo</h1>
                                 <h3 className={style.estadoPausa}>{estadoMaquina.toUpperCase()}</h3>
-                                <h4 className={style.tiempo}>Hace: {TiempoTranscurrido}</h4>
+                                <h4 className={style.tiempo}>{TiempoTrancurrido}</h4>
                             </div>
                         </li>
                     ) : (

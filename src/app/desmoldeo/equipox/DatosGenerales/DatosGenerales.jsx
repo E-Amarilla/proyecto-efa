@@ -20,21 +20,22 @@ const DatosGenerales = () => {
     const { data, error, isConnected } = useWebSocket(pollId);
 
     const {
-        NombreActual,
         idRecetaActual,
-        idRecetaProximo,
+        idRecetaProxima,
         PesoActualDesmoldado,
         estadoMaquina,
-        tiempoTranscurrido
+        TiempoTranscurrido
     } = data || {};
+
+    const NombreActual = data ? data["Nombre actual"] : 'null';
 
     const datosGenerales = [
         { id: 1, texto: 'NOMBRE RECETA', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1 },
         { id: 2, texto: 'ID RECETA ACTUAL', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 3, texto: 'ID PROXIMA RECETA', dato: idRecetaProximo !== undefined && idRecetaProximo !== null ? idRecetaProximo : 'null', icono:receta2 },
+        { id: 3, texto: 'ID PROXIMA RECETA', dato: idRecetaProxima !== undefined && idRecetaProxima !== null ? idRecetaProxima : 'null', icono:receta2 },
         { id: 4, texto: 'PESO TOTAL DESMOLDADO', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono:peso  },
         { id: 5, texto: 'ESTADO MAQUINA', dato: estadoMaquina !== undefined && estadoMaquina !== null ? estadoMaquina : 'null', icono:estado },
-        { id: 6, texto: 'TIEMPO TRANSCURRIDO', dato: tiempoTranscurrido !== undefined && tiempoTranscurrido !== null ? tiempoTranscurrido : '00:00hs', icono: tiempo },
+        { id: 6, texto: 'TIEMPO TRANSCURRIDO', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
     ];       
 
     return (

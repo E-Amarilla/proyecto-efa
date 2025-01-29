@@ -71,4 +71,5 @@
     background-color: #555555;
     transition: background-color 0.8s ease;
     box-shadow: 6px 6px 6px 0px rgba(0, 0, 0, 0.45);
+    pointer-events: none;
 }

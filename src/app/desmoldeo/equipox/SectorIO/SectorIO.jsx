@@ -16,8 +16,8 @@ import puntoB from '@/assets/img/puntoB.png';
 
 const SectorIOComponent = () => {
     const initialSectorIO = [
-        { id: 1, texto: 'ESTADO DEL CICLO', dato: '0', icono: puntoGris },
-        { id: 2, texto: 'BANDA DE DESMOLDEO', dato: '0', icono: puntoGris },
+        { id: 1, texto: 'ESTADO DEL CICLO', dato: 0, icono: puntoGris },
+        { id: 2, texto: 'BANDA DE DESMOLDEO', dato: 0, icono: puntoGris },
     ];
 
     const [sectorIO, setSectorIO] = useState(initialSectorIO);
@@ -28,20 +28,30 @@ const SectorIOComponent = () => {
     useEffect(() => {
         if (data && data.sectorIO) {
             const updatedSectorIO = sectorIO.map((item, index) => {
-                const dato = data.sectorIO[index];
-                
+                // Asignamos los datos recibidos
+                let dato = data.sectorIO[index] !== undefined ? data.sectorIO[index] : 0;
                 let icono = puntoGris; // Default icon
-                if (dato === true) {
-                    icono = puntoVerde;
-                } else if (dato === 'A') {
-                    icono = puntoA;
-                } else if (dato === 'B') {
-                    icono = puntoB;
+
+                // Comprobamos el índice y asignamos el icono adecuado
+                if (index === 0) {
+                    // Lógica para el índice 0 (Estado del ciclo)
+                    if (dato === 0 || dato === null) {
+                        icono = puntoGris;
+                    } else if (dato === 1) {
+                        icono = puntoVerde;
+                    }
+                } else if (index === 1) {
+                    // Lógica para el índice 1 (Banda de desmoldeo)
+                    if (dato === 1) {
+                        icono = puntoA;
+                    } else if (dato === 2) {
+                        icono = puntoB;
+                    }
                 }
 
                 return {
                     ...item,
-                    dato: dato !== undefined && dato !== null ? dato : '0',
+                    dato: dato,
                     icono: icono
                 };
             });

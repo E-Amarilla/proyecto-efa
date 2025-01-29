@@ -4,6 +4,7 @@ import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import logoDataURL from './cremonabase64'; // Importa la data URL de la imagen
+import FiltroPeriodo from "../../../components/filtroperiodo/FiltroPeriodo"
 
 export default function BotonesDescarga({ startDate, endDate }) {
     const storedUser = localStorage.getItem('user');
@@ -11,38 +12,44 @@ export default function BotonesDescarga({ startDate, endDate }) {
 
     const handlePdfDownload = async () => {
         const productSection = document.getElementById('ProductividadSection');
-        
+    
         if (productSection) {
             const canvasProduct = await html2canvas(productSection, {
-                scale: 2, // Aumenta la escala para mejorar la resolución
-                ignoreElements: (element) => element.classList.contains('FiltroPeriodo'),
+                scale: 2,
+                ignoreElements: (element) => element.classList && element.classList.contains('FiltroPeriodo'),
             });
+    
             const imgDataProduct = canvasProduct.toDataURL('image/png');
-            
-            // Crear un nuevo documento PDF con tamaño personalizado
+    
             const pdf = new jsPDF({
                 orientation: 'landscape',
                 unit: 'mm',
-                format: 'a4' // Tamaño A4
+                format: [120, 297]
             });
-            
-            // Agregar logo usando la data URL
-            const logoWidth = 60; // Ajusta el tamaño según sea necesario
-            const logoHeight = 15;
-            pdf.addImage(logoDataURL, 'PNG', 120, 50, logoWidth, logoHeight);
-
-            // Posicionar el contenido capturado en el centro
+    
+            const pdfWidth = 370; // mm
+            const pdfHeight = 210; // mm
+    
+            pdf.addImage(logoDataURL, 'PNG', 10, 10, 40, 10);
+    
             const imgProps = pdf.getImageProperties(imgDataProduct);
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            const x = (pdf.internal.pageSize.getWidth() - pdfWidth) / 2;
-            const y = (pdf.internal.pageSize.getHeight() - pdfHeight) / 2;
-            pdf.addImage(imgDataProduct, 'PNG', x, y, pdfWidth, pdfHeight, undefined, 'FAST');
-
-            // Guardar el PDF
+            let imgWidth = pdfWidth - 20;
+            let imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+    
+            if (imgHeight > pdfHeight - 40) {
+                imgHeight = pdfHeight - 40;
+                imgWidth = (imgProps.width * imgHeight) / imgProps.height;
+            }
+    
+            const x = (pdfWidth - imgWidth) / 2;
+            const y = 30;
+    
+            pdf.addImage(imgDataProduct, 'PNG', x, y, imgWidth, imgHeight, undefined, 'FAST');
+    
             pdf.save('resumen_productividad.pdf');
         }
     };
+    
 
     const handleExcelDownload = async () => {
         try {

@@ -39,7 +39,7 @@ const EstadosLayout = () => {
                                 <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
                             </div>
                         </li>
-                    ) : estadoMaquina === ("Pausa" || "pausa") ? (
+                    ) : estadoMaquina === ("Pausado" || "pausado") ? (
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedores}>
                                 <Image

@@ -11,33 +11,34 @@ const DatosDesmoldeo = () => {
 
     const desmoldeoData = data?.Desmoldeo || {};
     const {
-        // estadoMaquina = 'Inactivo', // Para fines de ejemplo está siendo declarado manualmente
-        NombreReceta,
+        estadoMaquina = 'Inactivo',
         PesoProducto,
-        PesoActual,
+        PesoActualDesmoldado,
     } = desmoldeoData;
 
-    const estadoMaquina = "activo";
+    const NombreActual = data?.Desmoldeo ? data?.Desmoldeo["Nombre actual"] : '-';
+
+    console.log("Datos recibidos desde el WebSocket:", data);
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Nombre receta', dato: NombreReceta !== undefined && NombreReceta !== null ? NombreReceta : '-' },
-        { id: 2, nombre: 'Peso por linea', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
-        { id: 3, nombre: 'Total desmoldado', dato: PesoActual !== undefined && PesoActual !== null ? PesoActual + " kg"  : '-'},
+        { id: 1, nombre: 'Nombre receta', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : '-' },
+        { id: 2, nombre: 'Peso por fila', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
+        { id: 3, nombre: 'Total desmoldado', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado + " kg"  : '-'},
     ];
 
     return (
         <>
             <ul className={style.datosTods}>
                 {datosTiempoReal.map(({ id, nombre, dato }) => (
-                    <li key={id} className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? cont.datosIndvRed : cont.datosIndvGray}>
-                        <Link className={estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? style.detallesDatos : style.detallesDatosDesac} href='/desmoldeo/equipox'>
-                            {estadoMaquina === 'activo' || estadoMaquina === 'pausa' ? (
+                    <li key={id} className={estadoMaquina === 'Activo' || estadoMaquina === 'Pausado' ? cont.datosIndvRed : style.datosIndvGray}>
+                        <Link className={estadoMaquina === 'Activo' || estadoMaquina === 'Pausado' ? style.detallesDatos : style.detallesDatosDesac} href='/desmoldeo/equipox'>
+                            {estadoMaquina === 'Activo' || estadoMaquina === 'Pausado' ? (
                                 <div className={style.contenedorActivo}>
                                     <h3 className={style.h3}>{nombre}</h3>
                                     <h4 className={style.h4}>{dato}</h4>
                                 </div>
                             ) : (
-                                <h3 className={style.h3inactivo}>{nombre}</h3>
+                                    <h3 className={style.h3inactivo}>{nombre}</h3>
                             )}
                         </Link>
                     </li>
