@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { createChart } from "lightweight-charts";
+import { createChart, TickMarkType } from "lightweight-charts";
 import crem from "@/assets/img/creminox.png";
-import style from "./grafico_ciclos.module.css"
+import style from "./grafico_ciclos.module.css";
 
 const COLORS = [
     "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
@@ -12,6 +12,8 @@ const COLORS = [
     "#F6FF33", "#33FFF3", "#FF336F", "#57FF33", "#3333FF"
 ];
 
+const totalLineColor = '#2962FF';
+
 const Grafico = ({ startDate, endDate }) => {
     const [data, setData] = useState([]);
     const [visibleProducts, setVisibleProducts] = useState([]);
@@ -19,6 +21,7 @@ const Grafico = ({ startDate, endDate }) => {
     const chartRef = useRef(null);
     const seriesRef = useRef({});
     const productColors = useRef({});
+    const [totalLineSeries, setTotalLineSeries] = useState(null); // Define la serie de suma total
 
     // Precalcular colores para los productos
     const assignColors = (productos) => {
@@ -28,6 +31,9 @@ const Grafico = ({ startDate, endDate }) => {
         }, {});
     };
 
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).access_token : null;
+
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
@@ -35,7 +41,7 @@ const Grafico = ({ startDate, endDate }) => {
                     `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/ciclos-productos/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                     {
                         method: "GET",
-                        headers: { Accept: "application/json" },
+                        headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
                     }
                 );
     
@@ -76,7 +82,18 @@ const Grafico = ({ startDate, endDate }) => {
                 horzLines: { color: "rgba(255, 255, 255, 0.1)" },
             },
             rightPriceScale: { visible: true, borderColor: "white" },
-            timeScale: { visible: true, borderColor: "white" },
+            timeScale: {
+                visible: true,
+                borderColor: "white" ,
+                timeVisible: true,
+                secondVisible: true,
+                tickMarkFormatter: (time, tickMarkType, locale) => {
+                    const date = new Date(time * 1000);
+                    const hours = date.getHours().toString().padStart(2, '0');
+                    const minutes = date.getMinutes().toString().padStart(2, '0');
+                    return `${hours}:${minutes}`;
+                }
+            },
             handleScroll: Array.isArray(data) && data.length > 0,
             handleScale: Array.isArray(data) && data.length > 0,
 
@@ -87,9 +104,10 @@ const Grafico = ({ startDate, endDate }) => {
 
         const container = containerRef.current;
         container.style.position = "relative";
-
+        
+        // Crear y agregar el fondo
         const background = document.createElement("div");
-        background.style.zIndex = 1;
+        background.style.zIndex = "0";
         background.style.position = "absolute";
         background.style.top = "50%";
         background.style.left = "50%";
@@ -101,31 +119,24 @@ const Grafico = ({ startDate, endDate }) => {
         background.style.backgroundPosition = "center";
         background.style.opacity = "0.05";
         container.appendChild(background);
-
-        // Crear tooltip
+        
+        // Crear y agregar el tooltip
         const toolTip = document.createElement('div');
-        toolTip.style = `
-            width: auto;
-            height: auto;
-            position: absolute;
-            display: none;
-            padding: 10px;
-            box-sizing: border-box;
-            font-size: 12px;
-            text-align: left;
-            z-index: 1000;
-            pointer-events: none;
-            border: 1px solid;
-            border-radius: 15px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            background: black;
-            color: white;
-            border-color: red;
-        `;
+        toolTip.style.position = "absolute";
+        toolTip.style.display = "none";
+        toolTip.style.padding = "8px 12px";
+        toolTip.style.boxSizing = "border-box";
+        toolTip.style.fontSize = "12px";
+        toolTip.style.textAlign = "left";
+        toolTip.style.zIndex = "1000";
+        toolTip.style.pointerEvents = "none";
+        toolTip.style.border = "1px solid grey";
+        toolTip.style.borderRadius = "8px";
+        toolTip.style.background = "rgba(0, 0, 0, 0.8)";
+        toolTip.style.color = "white";
         container.appendChild(toolTip);
 
-        // Tooltip
+        // Tooltip en crosshair move
         chart.subscribeCrosshairMove(param => {
             if (
                 param.point === undefined ||
@@ -136,37 +147,58 @@ const Grafico = ({ startDate, endDate }) => {
                 param.point.y > container.clientHeight
             ) {
                 toolTip.style.display = 'none';
-            } else {
-                const dateStr = new Date(param.time * 1000).toLocaleDateString();
-                toolTip.style.display = 'block';
-
-                const priceData = Object.entries(seriesRef.current).map(([nombre, series]) => {
-                    const data = param.seriesData.get(series);
-                    return {
-                        value: data ? (data.value !== undefined ? data.value : data.close) : 0,
-                        series,
-                        nombre,
-                    };
-                });
-
-                const filteredData = priceData.filter(pd => pd.value !== 0);
-                const tooltipContent = filteredData
-                    .map(pd => `
-                        <div style="margin-bottom: 4px;">
-                            <b>${pd.nombre}</b><br />
-                            <span style="color: ${pd.series.options().color}">${Math.round(100 * pd.value) / 100} Tn</span><br />
-                            <span>${dateStr}</span>
-                        </div>
-                    `)
-                    .join('');
-
-                toolTip.innerHTML = `<div style="font-size: 12px; line-height: 20px;">${tooltipContent}</div>`;
-
-                const coordinateY = filteredData[0].series.priceToCoordinate(filteredData[0].value);
-                const shiftedCoordinateX = param.point.x - 50;
-                toolTip.style.left = `${Math.max(0, Math.min(container.clientWidth - 150, shiftedCoordinateX))}px`;
-                toolTip.style.top = `${coordinateY - 50}px`;
+                return;
             }
+
+            // Convertir timestamp a fecha legible
+            const dateStr = new Date(param.time * 1000).toLocaleDateString();
+
+            // Obtener los datos de cada serie
+            const priceData = Object.entries(seriesRef.current).map(([nombre, series]) => {
+                const data = param.seriesData.get(series);
+                return {
+                    value: data ? (data.value !== undefined ? data.value : data.close) : null,
+                    series,
+                    nombre,
+                };
+            }).filter(pd => pd.value !== null); // Filtramos datos nulos
+
+            if (priceData.length === 0) {
+                toolTip.style.display = 'none';
+                return;
+            }
+
+            // Generar contenido del tooltip
+            toolTip.innerHTML = priceData.map(pd => `
+                <div style="margin-bottom: 4px;">
+                    <b>${pd.nombre}</b><br />
+                    <span style="color: ${pd.series.options().color}">${Math.round(100 * pd.value) / 100} Tn</span><br />
+                    <span>${dateStr}</span>
+                </div>
+            `).join('');
+
+            // Posicionar el tooltip ARRIBA del punto señalado
+            const firstSeries = priceData[0].series;
+            const coordinateY = firstSeries.priceToCoordinate(priceData[0].value);
+
+            if (coordinateY === null) {
+                toolTip.style.display = 'none';
+                return;
+            }
+
+            toolTip.style.display = "block";
+
+            // Ajustamos la posición para que el tooltip esté bien alineado sin tapar el punto
+            const tooltipHeight = toolTip.clientHeight; // Altura dinámica del tooltip
+            const tooltipWidth = toolTip.clientWidth;
+            const marginAbovePoint = 15; // Margen extra sobre el punto
+            const adjustedY = coordinateY - tooltipHeight - marginAbovePoint;
+
+            let adjustedX = param.point.x - tooltipWidth / 2;
+            adjustedX = Math.max(5, Math.min(container.clientWidth - tooltipWidth - 5, adjustedX));
+
+            toolTip.style.left = `${adjustedX}px`;
+            toolTip.style.top = `${adjustedY}px`;
         });
 
         if (data.length > 0) {
@@ -174,7 +206,7 @@ const Grafico = ({ startDate, endDate }) => {
     
             // Procesar los datos de productos
             data.forEach((producto) => {
-                const lineSeries = chart.addLineSeries({
+                const lineSeries = chart.addHistogramSeries({
                     color: productColors.current[producto.nombre],
                     lineWidth: 2,
                     priceScaleId: "right",
@@ -198,23 +230,27 @@ const Grafico = ({ startDate, endDate }) => {
             const totalSeriesData = Object.entries(totalsByDay)
                 .map(([time, value]) => ({ time: Number(time), value }))
                 .sort((a, b) => a.time - b.time);
-    
+
             // Agregar la serie de totales al gráfico
-            const totalLineSeries = chart.addLineSeries({
-                color: "#FFD700", // Color dorado para la línea de suma
+            const totalLine = chart.addAreaSeries({
+                topColor: '#2962FF',
+                bottomColor: 'rgba(41, 98, 255, 0.28)',
+                lineColor: '#2962FF',
                 lineWidth: 2,
-                priceScaleId: "right",
-                priceLineVisible: false,
+                crossHairMarkerVisible: false,
             });
-            totalLineSeries.setData(totalSeriesData);
-        }
-        else {
+
+            totalLine.setData(totalSeriesData);
+
+            // Set the total line series state
+            setTotalLineSeries(totalLine);
+        } else {
             // Crear una serie ficticia si no hay datos
-            const dummySeries = chart.addLineSeries({
+            const dummySeries = chart.addHistogramSeries({
                 color: COLORS[0],
                 lineWidth: 2,
                 priceScaleId: "right",
-                priceLineVisible: false,
+                priceLineVisible: true,
             });
             dummySeries.setData([]);
         }
@@ -227,14 +263,19 @@ const Grafico = ({ startDate, endDate }) => {
     }, [data]);
 
     useEffect(() => {
-        if (!chartRef.current) return;
+        if (!chartRef.current || !totalLineSeries) return;
 
         Object.entries(seriesRef.current).forEach(([nombreProducto, lineSeries]) => {
             lineSeries.applyOptions({
                 visible: visibleProducts.includes(nombreProducto),
             });
         });
-    }, [visibleProducts]);
+
+        // Agregar visibilidad para la serie de suma total
+        totalLineSeries.applyOptions({
+            visible: visibleProducts.includes('total'),
+        });
+    }, [visibleProducts, totalLineSeries]);
 
     const toggleProductVisibility = (nombreProducto) => {
         setVisibleProducts((prev) =>
@@ -267,18 +308,36 @@ const Grafico = ({ startDate, endDate }) => {
             <div
                 style={{
                     display: "flex",
+                    flexDirection: "row",
                     justifyContent: "center",
                     alignItems: "center",
                     marginBottom: "10px",
-                    flexWrap: "wrap",
                     gap: "15px",
+                    width: "100%",
                 }}
             >
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                    }}
+                >
+                    <input
+                        type="checkbox"
+                        checked={visibleProducts.includes('total')}
+                        onChange={() => toggleProductVisibility('total')}
+                    />
+                    <span style={{ color: totalLineColor }}>
+                        Total
+                    </span>
+                </div>
                 {data.map((producto) => (
                     <div
                         key={producto.nombre}
                         style={{
                             display: "flex",
+                            flexDirection: "row",
                             alignItems: "center",
                             gap: "5px",
                         }}
@@ -288,7 +347,7 @@ const Grafico = ({ startDate, endDate }) => {
                             checked={visibleProducts.includes(producto.nombre)}
                             onChange={() => toggleProductVisibility(producto.nombre)}
                         />
-                        <span style={{ color: productColors.current[producto.nombre] || "#ffffff" }}>
+                        <span style={{ color: productColors.current[producto.nombre] || "#ffffff", display: "flex" }}>
                             {producto.nombre}
                         </span>
                     </div>
