@@ -1,13 +1,14 @@
 "use client";
 
-import useWebSocket from '../../../../utils/useWebSocket';
+import { useContext } from "react";
+import AuthContext from "../../../../context/AuthContext";
 import style from './datosestadodesmoldeo.module.css';
 
 const DatosEstadoDesmoldeo = () => {
-    const pollId = "celda-completo";
-    const { data, error, isConnected } = useWebSocket(pollId);
+    const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
-    const desmoldeoData = data?.Desmoldeo || {};
+    const desmoldeoData = data?.celda?.Desmoldeo || {};
+
     const {
         estadoMaquina = 'Inactivo',
         TiempoTrancurrido = '00:00 hs',

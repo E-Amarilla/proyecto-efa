@@ -2,7 +2,6 @@
 
 import style from './DatosSDDA.module.css';
 import textstyle from '../texto.module.css';
-import useWebSocket from '@/app/utils/useWebSocket';
 import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from "../../../context/AuthContext";
 
@@ -16,14 +15,13 @@ const DatosSDDAComponent = () => {
   const [datosSdda, setdatosSdda] = useState(initialdatosSdda);
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
 
-  const pollId = "lista-tiempo-real";
-  const { data } = useWebSocket(pollId);
+  const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
   useEffect(() => {
-    if (data && data.datosSdda) {
+    if (data && data?.general?.datosSdda) {
       const updateddatosSdda = initialdatosSdda.map((item, index) => ({
         ...item,
-        dato: data.datosSdda[index] !== undefined ? data.datosSdda[index] : null,
+        dato: data?.general?.datosSdda[index] !== undefined ? data?.general?.datosSdda[index] : null,
       }));
       setdatosSdda(updateddatosSdda);
     }

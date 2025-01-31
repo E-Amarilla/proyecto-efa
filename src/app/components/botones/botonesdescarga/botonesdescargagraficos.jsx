@@ -48,8 +48,10 @@ export default function BotonesDescarga({ startDate, endDate }) {
             pdf.text("EFA - Proyecto", 252, 32);
             pdf.text("Celda de desmoldeo", 247, 37);
     
-            pdf.addImage(webIcon, 'PNG', 240, 60, 5, 5); // Icono de ubicación de 10x10 px
+            pdf.addImage(webIcon, 'PNG', 240, 60, 5, 5); // Icono de ubicación de 5x5 px
             pdf.text("creminox.com", 247, 64); // Texto al lado del icono
+            
+            pdf.link(240, 60, 30, 5, { url: "https://creminox.com", target: "_blank" });            
     
             pdf.addImage(telIcon, 'PNG', 240, 66, 5, 5); // Icono de teléfono de 10x10 px
             pdf.text("+54 11 4918-3944", 247, 70); // Texto al lado del icono

@@ -1,11 +1,11 @@
 "use client";
 
-import useWebSocket from '@/app/utils/useWebSocket';
+import AuthContext from "../../../context/AuthContext";
 
 // Styles
 import style from './SectorIO.module.css';
 import textstyle from '../texto.module.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 
 // Imágenes
 import Image from "next/image";
@@ -22,14 +22,13 @@ const SectorIOComponent = () => {
 
     const [sectorIO, setSectorIO] = useState(initialSectorIO);
 
-    const pollId = "lista-tiempo-real";
-    const { data, error, isConnected } = useWebSocket(pollId);
+    const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
     useEffect(() => {
-        if (data && data.sectorIO) {
+        if (data && data?.general?.sectorIO) {
             const updatedSectorIO = sectorIO.map((item, index) => {
                 // Asignamos los datos recibidos
-                let dato = data.sectorIO[index] !== undefined ? data.sectorIO[index] : 0;
+                let dato = data?.general?.sectorIO[index] !== undefined ? data?.general?.sectorIO[index] : 0;
                 let icono = puntoGris; // Default icon
 
                 // Comprobamos el índice y asignamos el icono adecuado

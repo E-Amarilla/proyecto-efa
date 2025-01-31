@@ -3,7 +3,6 @@
 import AuthContext from "../../../context/AuthContext";
 import style from "./DatosTorre.module.css";
 import textstyle from "../texto.module.css";
-import useWebSocket from "@/app/utils/useWebSocket";
 import React, { useState, useEffect, useContext } from "react";
 
 const DatosTorreComponent = () => {
@@ -16,14 +15,13 @@ const DatosTorreComponent = () => {
   ];
 
   const [datosTorre, setDatosTorre] = useState(initialDatosTorre);
-  const pollId = "lista-tiempo-real";
-  const { data } = useWebSocket(pollId);
+  const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
   useEffect(() => {
-    if (data && data.datosTorre) {
+    if (data && data?.general?.datosTorre) {
       const updatedDatosTorre = initialDatosTorre.map((item, index) => ({
         ...item,
-        dato: data.datosTorre[index] !== undefined ? data.datosTorre[index] : null,
+        dato: data?.general?.datosTorre[index] !== undefined ? data?.general?.datosTorre[index] : null,
       }));
       setDatosTorre(updatedDatosTorre);
     }

@@ -89,7 +89,7 @@ const Productividad = () => {
                 </div>
                 <hr className={style.divisor} />
                 <div className={style.barraContainer}>
-                    <h3>% Producto realizado</h3>
+                    <h3 className={style.textoBarra}>% Producto realizado</h3>
                     <div className={style.barra}>
                         {productos.map((producto, index) => (
                             <div

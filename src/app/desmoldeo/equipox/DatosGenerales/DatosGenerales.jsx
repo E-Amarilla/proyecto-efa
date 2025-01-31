@@ -8,7 +8,8 @@ import peso from '@/assets/img/PESO.png';
 import estado from '@/assets/img/ESTADO.png';
 import tiempo from '@/assets/img/TIEMPO.png';
 
-import useWebSocket from '../../../utils/useWebSocket';
+import { useContext } from "react";
+import AuthContext from "../../../context/AuthContext"
 import React, { useState, useEffect } from 'react';
 
 import style from './DatosGenerales.module.css';
@@ -16,8 +17,7 @@ import textstyle from '../texto.module.css';
 
 
 const DatosGenerales = () => {
-    const pollId = "resumen-desmoldeo";
-    const { data, error, isConnected } = useWebSocket(pollId);
+    const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
     const {
         idRecetaActual,
@@ -25,9 +25,9 @@ const DatosGenerales = () => {
         PesoActualDesmoldado,
         estadoMaquina,
         TiempoTranscurrido
-    } = data || {};
+    } = data?.desmoldeo|| {};
 
-    const NombreActual = data ? data["Nombre actual"] : 'null';
+    const NombreActual = data?.desmoldeo ? data?.desmoldeo["Nombre actual"] : 'null';
 
     const datosGenerales = [
         { id: 1, texto: 'NOMBRE RECETA', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1 },

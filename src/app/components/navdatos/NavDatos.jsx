@@ -10,20 +10,14 @@ import peso from '@/assets/img/PESO.png';
 import tiempo from '@/assets/img/TIEMPO.png';
 import gripper from "@/assets/img/GRIPPER.png"
 
-import useWebSocket from '../../utils/useWebSocket';
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 import React, { useState, useEffect, useRef } from 'react';
 import style from './NavDatos.module.css';
 import Link from "next/link";
 
 const NavDatos = () => {
-    const pollId = "resumen-desmoldeo";
-    const { data, error, isConnected } = useWebSocket(pollId);
-
-    const opcionesAlarma = [
-        { id: 1, nombre: 'LAYOUT' },
-        { id: 2, nombre: 'PRODUCTIVIDAD' },
-        { id: 3, nombre: 'GRAFICOS HISTORICOS' },
-    ];
+    const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
     const {
         idRecetaProxima,
@@ -35,9 +29,15 @@ const NavDatos = () => {
         PesoActualDesmoldado,
         TipoMolde,
         TiempoTranscurrido
-    } = data || {};
+    } = data?.desmoldeo || {};
 
-    const NombreActual = data ? data["Nombre actual"] : 'null';
+    const NombreActual = data?.desmoldeo ? data?.desmoldeo["Nombre actual"] : 'null';
+
+    const opcionesAlarma = [
+        { id: 1, nombre: 'LAYOUT' },
+        { id: 2, nombre: 'PRODUCTIVIDAD' },
+        { id: 3, nombre: 'GRAFICOS HISTORICOS' },
+    ];
 
     const datosTiempoReal = [
         { id: 1, nombre: 'Nombre receta', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1  },

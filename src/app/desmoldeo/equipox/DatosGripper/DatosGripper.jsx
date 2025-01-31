@@ -2,7 +2,6 @@
 
 import style from "./DatosGripper.module.css";
 import textstyle from "../texto.module.css";
-import useWebSocket from "@/app/utils/useWebSocket";
 import React, { useState, useEffect, useContext } from "react";
 
 import AuthContext from "../../../context/AuthContext";
@@ -16,14 +15,14 @@ const DatosGripperComponent = () => {
   ];
 
   const [datosGripper, setdatosGripper] = useState(initialdatosGripper);
-  const pollId = "lista-tiempo-real";
-  const { data } = useWebSocket(pollId);
+
+  const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
   useEffect(() => {
-    if (data && data.datosGripper) {
+    if (data && data?.general?.datosGripper) {
       const updateddatosGripper = initialdatosGripper.map((item, index) => ({
         ...item,
-        dato: data.datosGripper[index] !== undefined ? data.datosGripper[index] : null,
+        dato: data?.general?.datosGripper[index] !== undefined ? data?.general?.datosGripper[index] : null,
       }));
       setdatosGripper(updateddatosGripper);
     }

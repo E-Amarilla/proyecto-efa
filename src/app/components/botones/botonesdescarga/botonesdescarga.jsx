@@ -58,6 +58,8 @@ export default function BotonesDescarga({ startDate, endDate }) {
             pdf.addImage(webIcon, 'PNG', 240, logoMargin+40, 5, 5); // Icono de ubicación de 10x10 px
             pdf.text("creminox.com", 247, logoMargin+44); // Texto al lado del icono
     
+            pdf.link(240, logoMargin+40, 30, 5, { url: "https://creminox.com", target: "_blank" });     
+
             pdf.addImage(telIcon, 'PNG', 240, logoMargin+46, 5, 5); // Icono de teléfono de 10x10 px
             pdf.text("+54 11 4918-3944", 247, logoMargin+50); // Texto al lado del icono
     

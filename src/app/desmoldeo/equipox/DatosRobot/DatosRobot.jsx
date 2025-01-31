@@ -1,7 +1,6 @@
 "use client";
 import style from './DatosRobot.module.css';
 import textstyle from '../texto.module.css';
-import useWebSocket from '@/app/utils/useWebSocket';
 import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from "../../../context/AuthContext";
 
@@ -15,14 +14,13 @@ const DatosRobotComponent = () => {
   const [datosRobot, setDatosRobot] = useState(initialDatosRobot);
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
 
-  const pollId = "lista-tiempo-real";
-  const { data } = useWebSocket(pollId);
+  const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
   useEffect(() => {
-    if (data && data.datosRobot) {
+    if (data && data?.general?.datosRobot) {
       const updatedDatosRobot = initialDatosRobot.map((item, index) => ({
         ...item,
-        dato: data.datosRobot[index] !== undefined ? data.datosRobot[index] : null,
+        dato: data?.general?.datosRobot[index] !== undefined ? data?.general?.datosRobot[index] : null,
       }));
       setDatosRobot(updatedDatosRobot);
     }

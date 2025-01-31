@@ -73,6 +73,10 @@
     position: relative;
 }
 
+.textoBarra {
+    margin-bottom: 5px;
+}
+
 .barra {
     display: flex;
     height: 20px;
