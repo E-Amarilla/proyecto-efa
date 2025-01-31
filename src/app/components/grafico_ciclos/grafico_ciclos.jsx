@@ -81,7 +81,12 @@ const Grafico = ({ startDate, endDate }) => {
                 vertLines: { color: "rgba(255, 255, 255, 0.1)" },
                 horzLines: { color: "rgba(255, 255, 255, 0.1)" },
             },
-            rightPriceScale: { visible: true, borderColor: "white" },
+            rightPriceScale: {
+                visible: true,
+                borderColor: "white",
+                autoScale: true,
+                scaleMargins: { top: 0.1, bottom: 0 }, // Asegura que el mínimo sea 0
+            },            
             timeScale: {
                 visible: true,
                 borderColor: "white" ,
@@ -95,7 +100,11 @@ const Grafico = ({ startDate, endDate }) => {
                 }
             },
             handleScroll: Array.isArray(data) && data.length > 0,
-            handleScale: Array.isArray(data) && data.length > 0,
+            handleScale: {
+                mouseWheel: true, // Permitir zoom con scroll
+                pinch: true, // Permitir zoom en dispositivos táctiles
+                axisPressedMouseMove: false, // Deshabilitar ajuste de escala con click
+            },
 
         };
 
@@ -151,7 +160,7 @@ const Grafico = ({ startDate, endDate }) => {
             }
 
             // Convertir timestamp a fecha legible
-            const dateStr = new Date(param.time * 1000).toLocaleDateString();
+            const dateStr = new Date(param.time * 1000).toLocaleString(); // Cambiado a toLocaleString()
 
             // Obtener los datos de cada serie
             const priceData = Object.entries(seriesRef.current).map(([nombre, series]) => {
@@ -172,7 +181,7 @@ const Grafico = ({ startDate, endDate }) => {
             toolTip.innerHTML = priceData.map(pd => `
                 <div style="margin-bottom: 4px;">
                     <b>${pd.nombre}</b><br />
-                    <span style="color: ${pd.series.options().color}">${Math.round(100 * pd.value) / 100} Tn</span><br />
+                    <span style="color: ${pd.series.options().color}">${Math.round(100 * pd.value) / 100} kg</span><br />
                     <span>${dateStr}</span>
                 </div>
             `).join('');
@@ -284,7 +293,7 @@ const Grafico = ({ startDate, endDate }) => {
                 : [...prev, nombreProducto]
         );
     };
-
+    
     return (
         <div
             id="container-wrapper"

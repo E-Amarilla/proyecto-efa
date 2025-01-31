@@ -21,7 +21,7 @@ const DatosEstadoDesmoldeo = () => {
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedorActivo}>
                                 <h1 className={style.area}>Desmoldeo</h1>
-                                <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoActivo}>{String(estadoMaquina).toUpperCase()}</h3>
                                 <h4 className={style.tiempo}>{TiempoTrancurrido}</h4>
                             </div>
                         </li>
@@ -29,7 +29,7 @@ const DatosEstadoDesmoldeo = () => {
                         <li className={style.datosIndvYellow}>
                             <div className={style.contenedorPausa}>
                                 <h1 className={style.area}>Desmoldeo</h1>
-                                <h3 className={style.estadoPausa}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoPausa}>{String(estadoMaquina).toUpperCase()}</h3>
                                 <h4 className={style.tiempo}>{TiempoTrancurrido}</h4>
                             </div>
                         </li>
@@ -37,7 +37,7 @@ const DatosEstadoDesmoldeo = () => {
                         <li className={style.datosIndvGray}>
                             <div className={style.contenedorInactivo}>
                                 <h1 className={style.area}>Desmoldeo</h1>
-                                <h3 className={style.estadoInactivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoInactivo}>{String(estadoMaquina).toUpperCase()}</h3>
                             </div>
                         </li>
                     )}

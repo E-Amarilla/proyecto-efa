@@ -12,6 +12,9 @@ const Grafico = ({ startDate, endDate }) => {
     const seriesRef = useRef({});
     const [data, setData] = useState(null);
 
+    const storedUser = localStorage.getItem('user');
+    const token = storedUser ? JSON.parse(storedUser).access_token : null;
+
     useEffect(() => {
         const fetchInitialData = async (startDate, endDate) => {
             try {
@@ -22,19 +25,24 @@ const Grafico = ({ startDate, endDate }) => {
                         headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
                     }
                 );
-    
+        
                 if (!response.ok) {
-                    throw new Error(`Los datos que estás recibiendo están vacios.: ${response.statusText}`);
+                    throw new Error(`Los datos que estás recibiendo están vacíos.: ${response.statusText}`);
                 }
-    
+        
                 const datos = await response.json();
+                
+                // Aquí agregamos el console.log para ver los datos recibidos
+                console.log("Datos recibidos:", datos);
+                
                 setData(datos);
             } catch (error) {
                 console.error("Error fetching initial data:", error);
                 setData({ ciclos: [], pesoProducto: [] }); // Configurar datos vacíos en caso de error
             }
         };
-    
+        
+
         if (startDate && endDate) {
             fetchInitialData(startDate, endDate);
         }

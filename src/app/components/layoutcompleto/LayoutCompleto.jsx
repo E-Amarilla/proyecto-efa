@@ -35,7 +35,7 @@ const LayoutCompleto = () => {
       id: 3,
       name: "Paletizado",
       path: "/paletizado",
-      position: { top: "32.8%", left: "59.8%", width: "37.2%", height: "34%" },
+      position: { top: "32.8%", left: "62.8%", width: "37.2%", height: "34%" },
       styleClass: "seccionbloqueada",
     },
     {
