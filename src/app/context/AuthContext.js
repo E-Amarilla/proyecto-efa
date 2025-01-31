@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation"; // Importa usePathname
-import { toast } from "sonner"; // Importa Sonner para las notificaciones
 
 const AuthContext = createContext();
 
