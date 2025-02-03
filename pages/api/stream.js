@@ -63,18 +63,21 @@ const startStream = (rtspUrl, outputFile) => {
         '-force_key_frames expr:gte(t,n_forced*5)',
         '-g 5',
         '-keyint_min 5',
+        '-f hls', // Especifica el formato de salida como HLS
+        '-c:v libx264', // Usa el codec libx264 para video
+        '-c:a aac', // Usa el codec AAC para audio (si aplica)
       ])
       .on('start', (cmdline) => {
         console.log(`FFmpeg started for ${outputFile} with command:`, cmdline);
         console.log(`Archivos HLS se generarán en: ${HLS_DIR}`);
-        resolve(command); // Resuelve la promesa cuando FFmpeg inicia
+        resolve(command);
       })
       .on('progress', (progress) => {
         console.log(`Processing ${outputFile}:`, progress);
       })
       .on('error', (err) => {
         console.error(`FFmpeg error for ${outputFile}:`, err);
-        reject(err); // Rechaza la promesa en caso de error
+        reject(err);
       })
       .on('end', () => {
         console.log(`FFmpeg finished processing for ${outputFile}`);
