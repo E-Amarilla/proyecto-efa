@@ -26,7 +26,7 @@ const Grafico = ({ startDate, endDate }) => {
     // Precalcular colores para los productos
     const assignColors = (productos) => {
         return productos.reduce((acc, producto, index) => {
-            acc[producto.nombre] = COLORS[index % COLORS.length];
+            acc[producto.NombreProducto] = COLORS[index % COLORS.length];
             return acc;
         }, {});
     };
@@ -38,7 +38,7 @@ const Grafico = ({ startDate, endDate }) => {
         const fetchInitialData = async () => {
             try {
                 const response = await fetch(
-                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/ciclos-productos/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                     {
                         method: "GET",
                         headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
@@ -48,13 +48,14 @@ const Grafico = ({ startDate, endDate }) => {
                 if (!response.ok) {
                     throw new Error(`Error fetching data: ${response.statusText}`);
                 }
-    
+
                 const productos = await response.json();
+                console.log("Datos de la API:", productos); // Verifica si los datos son correctos
     
                 // Asignar colores a los productos
                 productColors.current = assignColors(productos);
                 setData(productos);
-                setVisibleProducts(productos.map((p) => p.nombre)); // Mostrar todas las líneas inicialmente
+                setVisibleProducts(productos.map((p) => p.NombreProducto)); // Mostrar todas las líneas inicialmente
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -216,23 +217,23 @@ const Grafico = ({ startDate, endDate }) => {
             // Procesar los datos de productos
             data.forEach((producto) => {
                 const lineSeries = chart.addHistogramSeries({
-                    color: productColors.current[producto.nombre],
+                    color: productColors.current[producto.NombreProducto],
                     lineWidth: 2,
                     priceScaleId: "right",
                     priceLineVisible: false,
                 });
     
-                const formattedData = producto.ciclo.map((ciclo) => {
+                const formattedData = producto.ListaDeCiclos.map((ListaDeCiclos) => {
                     // Sumar la producción diaria
-                    const time = ciclo.fecha_fin;
-                    totalsByDay[time] = (totalsByDay[time] || 0) + ciclo.pesoTotal;
+                    const time = ListaDeCiclos.fecha_fin;
+                    totalsByDay[time] = (totalsByDay[time] || 0) + ListaDeCiclos.pesoDesmontado;
     
-                    return { time, value: ciclo.pesoTotal };
+                    return { time, value: ListaDeCiclos.pesoDesmontado };
                 });
     
                 lineSeries.setData(formattedData);
     
-                seriesRef.current[producto.nombre] = lineSeries;
+                seriesRef.current[producto.NombreProducto] = lineSeries;
             });
     
             // Formatear los datos de suma diaria para la serie total
@@ -274,9 +275,9 @@ const Grafico = ({ startDate, endDate }) => {
     useEffect(() => {
         if (!chartRef.current || !totalLineSeries) return;
 
-        Object.entries(seriesRef.current).forEach(([nombreProducto, lineSeries]) => {
+        Object.entries(seriesRef.current).forEach(([NombreProducto, lineSeries]) => {
             lineSeries.applyOptions({
-                visible: visibleProducts.includes(nombreProducto),
+                visible: visibleProducts.includes(NombreProducto),
             });
         });
 
@@ -286,11 +287,11 @@ const Grafico = ({ startDate, endDate }) => {
         });
     }, [visibleProducts, totalLineSeries]);
 
-    const toggleProductVisibility = (nombreProducto) => {
+    const toggleProductVisibility = (NombreProducto) => {
         setVisibleProducts((prev) =>
-            prev.includes(nombreProducto)
-                ? prev.filter((p) => p !== nombreProducto)
-                : [...prev, nombreProducto]
+            prev.includes(NombreProducto)
+                ? prev.filter((p) => p !== NombreProducto)
+                : [...prev, NombreProducto]
         );
     };
     
@@ -343,7 +344,7 @@ const Grafico = ({ startDate, endDate }) => {
                 </div>
                 {data.map((producto) => (
                     <div
-                        key={producto.nombre}
+                        key={producto.NombreProducto}
                         style={{
                             display: "flex",
                             flexDirection: "row",
@@ -353,11 +354,11 @@ const Grafico = ({ startDate, endDate }) => {
                     >
                         <input
                             type="checkbox"
-                            checked={visibleProducts.includes(producto.nombre)}
-                            onChange={() => toggleProductVisibility(producto.nombre)}
+                            checked={visibleProducts.includes(producto.NombreProducto)}
+                            onChange={() => toggleProductVisibility(producto.NombreProducto)}
                         />
-                        <span style={{ color: productColors.current[producto.nombre] || "#ffffff", display: "flex" }}>
-                            {producto.nombre}
+                        <span style={{ color: productColors.current[producto.NombreProducto] || "#ffffff", display: "flex" }}>
+                            {producto.NombreProducto}
                         </span>
                     </div>
                 ))}

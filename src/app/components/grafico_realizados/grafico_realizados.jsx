@@ -19,7 +19,7 @@ const Grafico = ({ startDate, endDate }) => {
         const fetchInitialData = async (startDate, endDate) => {
             try {
                 const response = await fetch(
-                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/ciclos-productos/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
                     {
                         method: "GET",
                         headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
@@ -117,7 +117,25 @@ const Grafico = ({ startDate, endDate }) => {
     
         seriesRef.current["Ciclos"] = lineSeriesCiclos;
         seriesRef.current["Peso Producto"] = lineSeriesPeso;
-    
+
+        const container = containerRef.current;
+        container.style.position = "relative";
+        
+        // Crear y agregar el fondo
+        const background = document.createElement("div");
+        background.style.zIndex = "0";
+        background.style.position = "absolute";
+        background.style.top = "50%";
+        background.style.left = "50%";
+        background.style.transform = "translate(-50%, -65%) scale(0.7)";
+        background.style.width = "100%";
+        background.style.height = "100%";
+        background.style.backgroundImage = `url(${crem.src})`;
+        background.style.backgroundRepeat = "no-repeat";
+        background.style.backgroundPosition = "center";
+        background.style.opacity = "0.05";
+        container.appendChild(background);
+
         // Crear tooltip
         const toolTip = document.createElement('div');
         toolTip.style.position = "absolute";
@@ -134,52 +152,82 @@ const Grafico = ({ startDate, endDate }) => {
         toolTip.style.color = "white";
         containerRef.current.appendChild(toolTip);
     
-        // Suscribirse al movimiento del cruzamiento
         chart.subscribeCrosshairMove(param => {
             if (
                 param.point === undefined ||
                 !param.time ||
                 param.point.x < 0 ||
-                param.point.x > containerRef.current.clientWidth ||
+                param.point.x > container.clientWidth ||
                 param.point.y < 0 ||
-                param.point.y > containerRef.current.clientHeight
+                param.point.y > container.clientHeight
             ) {
                 toolTip.style.display = 'none';
-            } else {
-                const dateStr = new Date(param.time * 1000).toLocaleDateString();
-                toolTip.style.display = 'block';
-    
-                const priceData = Object.entries(seriesRef.current).map(([nombre, series]) => {
-                    const data = param.seriesData.get(series);
-                    return {
-                        value: data ? (data.value !== undefined ? data.value : data.close) : 0,
-                        series,
-                        nombre,
-                    };
-                });
-    
-                const filteredData = priceData.filter(pd => pd.value !== 0);
-                const tooltipContent = filteredData
-                    .map(pd => `
-                        <div style="margin-bottom: 4px;">
-                            <b>${pd.nombre}</b><br />
-                            <span style="color: ${pd.series.options().color}">
-                                ${Math.round(100 * pd.value) / 100} 
-                                ${pd.nombre === "Peso Producto" ? "Tn" : ""}
-                            </span><br />
-                            <span>${dateStr}</span>
-                        </div>
-                    `)
-                    .join('');
-    
-                toolTip.innerHTML = `<div style="font-size: 16px; line-height: 20px;">${tooltipContent}</div>`;
-    
-                const coordinateY = filteredData[0]?.series.priceToCoordinate(filteredData[0]?.value);
-                const shiftedCoordinateX = param.point.x - 50;
-                toolTip.style.left = `${Math.max(0, Math.min(containerRef.current.clientWidth - 150, shiftedCoordinateX))}px`;
-                toolTip.style.top = `${coordinateY ? coordinateY - 50 : 0}px`;
+                return;
             }
-        });
+
+            // Convertir timestamp a fecha legible
+            const dateStr = new Date(param.time * 1000).toLocaleString(); // Cambiado a toLocaleString()
+
+            // Obtener los datos de cada serie
+            const priceData = Object.entries(seriesRef.current).map(([nombre, series]) => {
+                const data = param.seriesData.get(series);
+                return {
+                    value: data ? (data.value !== undefined ? data.value : data.close) : null,
+                    series,
+                    nombre,
+                };
+            }).filter(pd => pd.value !== null); // Filtramos datos nulos
+
+            if (priceData.length === 0) {
+                toolTip.style.display = 'none';
+                return;
+            }
+
+            const tooltipContent =
+            toolTip.innerHTML = priceData.map(pd => `
+                <div style="margin-bottom: 4px;">
+                    <b>${pd.nombre}</b><br />
+                    <span style="color: ${pd.series.options().color}">
+                        ${Math.round(100 * pd.value) / 100} 
+                        ${pd.nombre === "Peso Producto" ? "Tn" : ""}
+                    </span><br />
+                </div>
+            `)
+            .join('');
+
+            // Agregar el dateStr solo una vez al final del contenido
+            toolTip.innerHTML = `
+                <div style="font-size: 16px; line-height: 20px;">
+                    ${tooltipContent}
+                    <div style="margin-top: 8px;">
+                        <span>${dateStr}</span>
+                    </div>
+                </div>
+            `;
+
+            // Posicionar el tooltip ARRIBA del punto señalado
+            const firstSeries = priceData[0].series;
+            const coordinateY = firstSeries.priceToCoordinate(priceData[0].value);
+
+            if (coordinateY === null) {
+                toolTip.style.display = 'none';
+                return;
+            }
+
+            toolTip.style.display = "block";
+
+            // Ajustamos la posición para que el tooltip esté bien alineado sin tapar el punto
+            const tooltipHeight = toolTip.clientHeight; // Altura dinámica del tooltip
+            const tooltipWidth = toolTip.clientWidth;
+            const marginAbovePoint = 15; // Margen extra sobre el punto
+            const adjustedY = coordinateY - tooltipHeight - marginAbovePoint;
+
+            let adjustedX = param.point.x - tooltipWidth / 2;
+            adjustedX = Math.max(5, Math.min(container.clientWidth - tooltipWidth - 20, adjustedX));
+
+            toolTip.style.left = `${adjustedX}px`;
+            toolTip.style.top = `${adjustedY}px`;
+        });      
     
         return () => {
             chart.remove();
