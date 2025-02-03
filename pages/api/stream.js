@@ -1,3 +1,4 @@
+// stream.js
 import ffmpeg from 'fluent-ffmpeg';
 import path from 'path';
 import fs from 'fs';
@@ -12,10 +13,6 @@ const HLS_DIR = path.join(process.cwd(), 'public', 'hls');
 
 const ffmpegProcesses = [];
 let isStreaming = false;
-
-// Especificar la ruta de FFmpeg en Linux
-const ffmpegPath = '/usr/bin/ffmpeg'; // Asegúrate de que esta ruta sea correcta
-ffmpeg.setFfmpegPath(ffmpegPath);
 
 // Función para limpiar el directorio HLS
 const clearHlsDirectory = () => {
