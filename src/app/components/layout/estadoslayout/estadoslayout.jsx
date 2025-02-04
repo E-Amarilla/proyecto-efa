@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import useWebSocket from '../../../utils/useWebSocket';
+import AuthContext from "../../../context/AuthContext";
 import style from './estadoslayout.module.css';
 
 //Imagenes
@@ -12,17 +13,14 @@ import puntoRojo from '@/assets/img/puntoRojo.png';
 
 
 const EstadosLayout = () => {
-    const pollId = "resumen-desmoldeo";
-    const { data, error, isConnected } = useWebSocket(pollId);
-    const [estadoMaquina, setEstado] = useState('inactivo');
+    
+    const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
-    useEffect(() => {
-        if (data && data.estadoMaquina !== undefined) {
-            setEstado(data.estadoMaquina);
-        } else {
-            setEstado('inactivo');
-        }
-    }, [data]);
+    const desmoldeoData = data?.celda?.Desmoldeo || {};
+
+    const {
+        estadoMaquina = 'Inactivo',
+    } = desmoldeoData;
 
     return (
         <>

@@ -21,12 +21,21 @@ import ImgRobot1 from "@/assets/img/equipos/Equipo_Robot1.png";
 import ImgRobot2 from "@/assets/img/equipos/Equipo_Robot2.png";
 import ImgRobot3 from "@/assets/img/equipos/Equipo_Robot3.png";
 
-import ImgTorre1 from "@/assets/img/equipos/Equipo_Torre1.png";
+import ImgTorre1 from "@/assets/img/equipos/Equipo_Torre3.png";
 import ImgTorre2 from "@/assets/img/equipos/Equipo_Torre2.png";
-import ImgTorre3 from "@/assets/img/equipos/Equipo_Torre3.png";
+import ImgTorre3 from "@/assets/img/equipos/Equipo_Torre1.png";
+
+const gripperImages = [
+  { src: ImgGripper1, alt: "Gripper Imagen-1" },
+  { src: ImgGripper2, alt: "Gripper Imagen-2" },
+  { src: ImgGripper3, alt: "Gripper Imagen-3" },
+  { src: ImgGripper4, alt: "Gripper Imagen-4" },
+  { src: ImgGripper5, alt: "Gripper Imagen-5" },
+  { src: ImgGripper6, alt: "Gripper Imagen-6" },
+];
 
 const imageSets = {
-  Default: [
+  'Default': [
     { src: ImgTorre1, alt: "Torre Imagen-1" },
     { src: ImgTorre2, alt: "Torre Imagen-2" },
     { src: ImgTorre3, alt: "Torre Imagen-3" },
@@ -44,25 +53,19 @@ const imageSets = {
     { src: ImgSDDA3, alt: "SDDA Imagen-3" },
     { src: ImgSDDA4, alt: "SDDA Imagen-4" },
   ],
-  Gripper: [
-    { src: ImgGripper1, alt: "Gripper Imagen-1" },
-    { src: ImgGripper2, alt: "Gripper Imagen-2" },
-    { src: ImgGripper3, alt: "Gripper Imagen-3" },
-    { src: ImgGripper4, alt: "Gripper Imagen-4" },
-    { src: ImgGripper5, alt: "Gripper Imagen-5" },
-    { src: ImgGripper6, alt: "Gripper Imagen-6" },
-  ],
-  Torre: [
+  'Gripper': gripperImages,
+  'Estación de grippers': gripperImages,
+  'Posicionador de torres': [
+    { src: ImgTorre3, alt: "Torre Imagen-3" },
     { src: ImgTorre1, alt: "Torre Imagen-1" },
     { src: ImgTorre2, alt: "Torre Imagen-2" },
-    { src: ImgTorre3, alt: "Torre Imagen-3" },
   ],
-  Robot: [
+  'Robot': [
     { src: ImgRobot1, alt: "Robot Equipo-1" },
     { src: ImgRobot2, alt: "Robot Equipo-2" },
     { src: ImgRobot3, alt: "Robot Equipo-3" },
   ],
-  SDDA: [
+  'SDDA': [
     { src: ImgSDDA1, alt: "SDDA Imagen-1" },
     { src: ImgSDDA2, alt: "SDDA Imagen-2" },
     { src: ImgSDDA3, alt: "SDDA Imagen-3" },
@@ -97,7 +100,7 @@ const EquipoXImg = () => {
   return (
     <div className={style.all}>
       <h1 className={style.title}>
-        {equipoSeleccionado ? `${equipoSeleccionado.toUpperCase()}` : "EQUIPOS"}
+      {["Default", "BandaA", "BandaB", null].includes(equipoSeleccionado) ? "EQUIPOS" : equipoSeleccionado === "Estación de grippers" ? "GRIPPER" : equipoSeleccionado.toUpperCase()}
       </h1>
       <div className={style.carousel}>
         {totalImages > 0 ? (

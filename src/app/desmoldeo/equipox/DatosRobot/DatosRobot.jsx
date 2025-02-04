@@ -44,7 +44,7 @@ const DatosRobotComponent = () => {
             <div className={style.detallesDatos}>
               <div className={style.texto}>
                 <h3 className={textstyle.subtitulo}>{texto}</h3>
-                <h4 className={textstyle.h4}>{dato === null ? 'null' : dato.toString()}</h4>
+                <h4 className={textstyle.h4}>{dato === null ? 'null' : dato.toString()} mm</h4>
               </div>
             </div>
           </div>
