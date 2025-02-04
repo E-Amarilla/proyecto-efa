@@ -12,10 +12,13 @@ import LayoutIMG from '@/assets/img/LAYOUT.png';
 const Layout = () => {
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
   const sections = [
-    { id: 1, name: "Torre", path: "/desmoldeo/equipox", style: { top: "6%", left: "72%", width: "11.35%", height: "89.5%" }, styleclass: "Torresection" },
-    { id: 2, name: "SDDA", path: "/desmoldeo/equipox", style: { top: "35.8%", left: "54.65%", width: "17.35%", height: "33.5%" }, styleclass: "SDDAsection" },
-    { id: 3, name: "Robot", path: "/desmoldeo/equipox", style: { top: "38.5%", left: "37.9%", width: "11.5%", height: "24.7%" }, styleclass: "ROBOTsection" },
-    { id: 4, name: "Gripper", path: "/desmoldeo/equipox", style: { top: "75%", left: "20%", width: "8.5%", height: "18%" }, styleclass: "Grippersection" }
+    { id: 1, name: "Posicionador de torres", path: "/desmoldeo/equipox", style: { top: "8.4%", left: "72.5%", width: "10.5%", height: "66%" }, styleclass: "Torresection" },
+    { id: 2, name: "SDDA", path: "/desmoldeo/equipox", style: { top: "30.9%", left: "59.9%", width: "12.3%", height: "21.5%" }, styleclass: "SDDAsection" },
+    { id: 3, name: "Robot", path: "/desmoldeo/equipox", style: { top: "33.4%", left: "48.3%", width: "7.8%", height: "16.3%" }, styleclass: "ROBOTsection" },
+    { id: 4, name: "Gripper", path: "/desmoldeo/equipox", style: { top: "9.7%", left: "54.2%", width: "7.8%", height: "17.3%" }, styleclass: "Grippersection" },
+    { id: 5, name: "Estación de grippers", path: "/desmoldeo/equipox", style: { top: "68.6%", left: "48.3%", width: "7.8%", height: "19.5%" }, styleclass: "Estacionsection" },
+    { id: 6, name: "BandaA", path: "/desmoldeo/equipox", style: { top: "2.9%", left: "47%", width: "9.6%", height: "23%" }, styleclass: "BandaAsection" },
+    { id: 7, name: "BandaB", path: "/desmoldeo/equipox", style: { top: "12.3%", left: "34.3%", width: "8.5%", height: "27%" }, styleclass: "BandaBsection" }
   ];
 
   const handleSectionClick = (section) => {

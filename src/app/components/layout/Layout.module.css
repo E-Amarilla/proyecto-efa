@@ -40,6 +40,9 @@
   font-size: 12px;
   opacity: 0;
   transition: opacity 0.3s ease;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  overflow: hidden; /* Asegura que el contenido no se desborde */
+  text-overflow: ellipsis; /* Agrega puntos suspensivos si el texto es demasiado largo */
 }
 
 .interactiveSection:hover .tooltip {
@@ -49,21 +52,6 @@
 .sectorContainer {
   text-align: center;
   margin-top: 50px;
-}
-
-.BandaAsection:hover {
-  background-color: rgba(255, 255, 255, 0.3); /* Fondo translúcido al pasar el mouse */
-  box-shadow: 0px 0px 15px 10px rgba(255, 255, 255, 0.8); /* Sombra más intensa */
-}
-/* Sección rotada */
-.BandaAsection {
-  transform: rotate(40deg); /* Rota la sección */
-  background-color: transparent; /* Sin fondo */
-  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 0.5); /* Sombra visible */
-  position: absolute;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 10; /* Asegura que se quede sobre otros elementos */
 }
 
 .SDDAsection {
@@ -83,7 +71,25 @@
 
 .Grippersection {
   box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.5); /* Sombra visible */
-  transform: rotate(34deg); /* Rota la sección */
+  transform: rotate(30deg); /* Rota la sección */
+  position: absolute;
+  z-index: 10;
+}
+
+.Estacionsection {
+  box-shadow: 0px 0px 10px 5px rgba(255, 0, 0, 0.5); /* Sombra visible */
+  position: absolute;
+}
+
+.BandaAsection {
+  box-shadow: 0px 0px 10px 5px rgba(62, 29, 253, 0.5); /* Sombra visible */
+  position: absolute;
+  z-index: 9;
+}
+
+.BandaBsection {
+  box-shadow: 0px 0px 10px 5px rgba(62, 29, 253, 0.5); /* Sombra visible */
+  transform: rotate(61deg); /* Rota la sección */
   position: absolute;
 }
 

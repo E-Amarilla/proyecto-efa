@@ -28,13 +28,13 @@ const DatosTorreComponent = () => {
   }, [data]);
 
   const handleClick = () => {
-    setEquipoSeleccionado(equipoSeleccionado === "Torre" ? null : "Torre"); // Alterna la selección
+    setEquipoSeleccionado(equipoSeleccionado === "Posicionador de torres" ? null : "Posicionador de torres"); // Alterna la selección
   };
 
   return (
     <div
       className={`${style.datosGen} ${
-        equipoSeleccionado === "Torre" ? style.selected : ""
+        equipoSeleccionado === "Posicionador de torres" ? style.selected : ""
       }`}
       onClick={handleClick}
     >

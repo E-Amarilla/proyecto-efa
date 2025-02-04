@@ -29,13 +29,13 @@ const DatosGripperComponent = () => {
   }, [data]);
 
   const handleClick = () => {
-    setEquipoSeleccionado(equipoSeleccionado === "Gripper" ? null : "Gripper"); // Alterna la selección
+    setEquipoSeleccionado(equipoSeleccionado === "Gripper" || equipoSeleccionado === "Estación de grippers" ? null : "Gripper"); // Alterna la selección
   };
 
   return (
     <div
       className={`${style.datosGen} ${
-        equipoSeleccionado === "Gripper" ? style.selected : ""
+        equipoSeleccionado === "Gripper" || equipoSeleccionado === "Estación de grippers" ? style.selected : ""
       }`}
       onClick={handleClick}
     >
