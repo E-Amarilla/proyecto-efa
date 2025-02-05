@@ -62,7 +62,7 @@ const ExeHeader = () => {
           </div>
           {logoutVisible && <Desloguear />}
           <div className={style.centerText}>
-            <p>SDDA - EFA PROYECTO</p>
+            <p>MXEF-04 | CELDA DE DESMOLDEO</p>
           </div>
           <div className={style.rightSection}>
             <ul className={style.navLinks}>

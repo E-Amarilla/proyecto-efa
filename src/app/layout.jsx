@@ -1,3 +1,4 @@
+// layout.jsx (Archivo principal del layout)
 "use client";
 import '@/app/globals.css';
 import { usePathname } from 'next/navigation';
@@ -6,6 +7,7 @@ import dynamic from 'next/dynamic';
 import Header from "./components/header/page";
 import Sonner from "./components/notificaciones/page";
 import { AuthProvider } from './context/AuthContext';
+import metadata from './metadata'; // Importa el objeto metadata con export default
 
 const DefaultFooter = dynamic(() => import('./components/footer/footer'), { ssr: false });
 const CustomFooter = dynamic(() => import('./components/footer/footer_desmoldeo'), { ssr: false });
@@ -19,8 +21,9 @@ export default function RootLayout({ children }) {
     <AuthProvider>
       <html lang="en">
         <head>
-          <title>Creminox - EFA</title>      
-          <link rel="icon" href="./favicon.ico" sizes="any" />
+          <title>{metadata.title.default}</title>
+          <meta name="description" content={metadata.description} />
+          <link rel="icon" href={metadata.icons.icon} sizes="any" />
         </head>
         <body>
           <div className='scrollablecontent'>

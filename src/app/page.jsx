@@ -1,6 +1,4 @@
-"use client";
-
-import Completo from './Completo/page';
+import Completo from './completo/page';
 
 const Home = () => {
   return (
