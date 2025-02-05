@@ -38,7 +38,7 @@ const DatosSDDAComponent = () => {
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS SDDA</h1>
+      <h1 className={textstyle.titulo}>DATOS SDDA - DESMOLDADORA</h1>
       <div className={style.contenedorDatos}>
         {datosSdda.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>

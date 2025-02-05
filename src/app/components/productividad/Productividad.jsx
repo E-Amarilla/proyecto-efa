@@ -25,7 +25,7 @@ const Productividad = () => {
     const cantidadCiclosF = data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
     ? data.ProductosRealizados.reduce((total, producto) => total + producto.cantidadCiclos, 0)
     : "Cargando...";
-    const PesoTotalCiclos = data?.PesoTotalCiclos.toFixed(3) ?? "Cargando...";
+    const PesoTotalCiclos = data?.PesoTotalCiclos.toFixed(2) ?? "Cargando...";
     const Horas_Uso =
         data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
             ? data.ProductosRealizados.reduce((acc, prod) => acc + prod.tiempoTotal, 0)
