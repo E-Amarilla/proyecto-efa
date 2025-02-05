@@ -1,0 +1,4 @@
+.customSelect :global(.text-foreground-500) {
+    font-weight: bold;
+    font-size: 20;
+  }

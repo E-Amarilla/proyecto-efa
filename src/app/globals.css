@@ -110,3 +110,7 @@ body {
 .vjs-loading-spinner {
   margin-top: 26vh !important; /* Ajusta este valor según tus necesidades */
 }
+
+.customSelect .text-foreground-500 {
+  font-weight: bold; /* Aplica negrita solo a los labels dentro del Select */
+}
