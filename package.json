@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@heroui/react": "^2.6.14",
     "@heroui/spinner": "^2.2.7",
     "@heroui/system": "^2.4.7",
     "@heroui/theme": "^2.4.6",
+    "@heroui/use-infinite-scroll": "^2.2.3",
     "@nextui-org/button": "^2.2.9",
     "@nextui-org/date-picker": "^2.3.9",
     "@nextui-org/dropdown": "^2.3.9",
