@@ -1,0 +1,22 @@
+/* texto.module.css */
+.titulo {
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.subtitulo {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.h4 {
+    font-size: 14px;
+}
+
+.titulo,
+.subtitulo,
+.h4 {
+    margin: 0;
+    padding: 0;
+}
