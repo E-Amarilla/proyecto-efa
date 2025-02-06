@@ -69,6 +69,6 @@ export default function Notificaciones() {
     }, [data]);
 
     return (
-        <Toaster />
+        <Toaster richColors={true}/>
     );
 }
