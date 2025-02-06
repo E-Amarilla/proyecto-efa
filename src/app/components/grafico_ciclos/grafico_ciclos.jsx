@@ -1,369 +1,158 @@
-"use client";
-
-import { useEffect, useState, useRef } from "react";
-import { createChart, TickMarkType } from "lightweight-charts";
-import crem from "@/assets/img/creminox.png";
-import style from "./grafico_ciclos.module.css";
-
-const COLORS = [
-    "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
-    "#33FFF6", "#FFC733", "#A1FF33", "#5733FF", "#FF3333",
-    "#33FFA5", "#FF6F33", "#A6FF33", "#33A1FF", "#FF33F6",
-    "#F6FF33", "#33FFF3", "#FF336F", "#57FF33", "#3333FF"
-];
-
-const totalLineColor = '#2962FF';
+import React, { useEffect, useRef, useState } from 'react';
+import { Chart, registerables } from 'chart.js';
+import zoomPlugin from 'chartjs-plugin-zoom';
+import 'chartjs-adapter-date-fns';
 
 const Grafico = ({ startDate, endDate }) => {
-    const [data, setData] = useState([]);
-    const [visibleProducts, setVisibleProducts] = useState([]);
-    const containerRef = useRef(null);
     const chartRef = useRef(null);
-    const seriesRef = useRef({});
-    const productColors = useRef({});
-    const [totalLineSeries, setTotalLineSeries] = useState(null); // Define la serie de suma total
+    const chartInstanceRef = useRef(null);
+    const [chartData, setChartData] = useState(null);
 
-    // Precalcular colores para los productos
-    const assignColors = (productos) => {
-        return productos.reduce((acc, producto, index) => {
-            acc[producto.NombreProducto] = COLORS[index % COLORS.length];
-            return acc;
-        }, {});
-    };
-
-    const storedUser = localStorage.getItem('user');
-    const token = storedUser ? JSON.parse(storedUser).access_token : null;
+    const colores = [
+        "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
+        "#33FFF6", "#FFC733", "#A1FF33", "#5733FF", "#FF3333",
+        "#33FFA5", "#FF6F33", "A6FF33", "#33A1FF", "#FF33F6",
+        "#F6FF33", "#33FFF3", "#FF336F", "#57FF33", "#3333FF"
+    ];
 
     useEffect(() => {
-        const fetchInitialData = async () => {
-            try {
-                const response = await fetch(
-                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
-                    {
-                        method: "GET",
-                        headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+        Chart.register(...registerables, zoomPlugin);
+    }, []);
+
+    const fetchData = async () => {
+        if (!startDate || !endDate) {
+            console.error("Fechas no definidas.");
+            return;
+        }
+
+        const storedUser = localStorage.getItem('user');
+        const token = storedUser ? JSON.parse(storedUser).access_token : null;
+
+        try {
+            const response = await fetch(
+                `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+                {
+                    method: "GET",
+                    headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`Error fetching data: ${response.statusText}`);
+            }
+
+            const productos = await response.json();
+
+            const datasets = productos.map((producto, index) => ({
+                label: producto.NombreProducto,
+                backgroundColor: colores[index % colores.length],
+                borderColor: `${colores[index % colores.length]}80`,
+                fill: false,
+                data: producto.ListaDeCiclos.map(ciclo => ({
+                    x: ciclo.fecha_fin * 1000,
+                    y: ciclo.pesoDesmontado
+                }))
+            }));
+
+            setChartData({ datasets });
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [startDate, endDate]);
+
+    useEffect(() => {
+        if (chartData && chartRef.current) {
+            if (chartInstanceRef.current) {
+                chartInstanceRef.current.destroy();
+            }
+
+            const ctx = chartRef.current.getContext('2d');
+            chartInstanceRef.current = new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true } },
+                        title: {
+                            align: 'start',
+                            color: '#D9D9D9',
+                            display: true,
+                            text: 'Peso desmontado por tiempo',
+                            font: { weight: 'normal', size: 20 },
+                            padding: { top: 0, bottom: 15 }
+                        },
+                        zoom: {
+                            pan: { enabled: true, mode: 'x' },
+                            zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const datasetLabel = context.dataset.label || 'Peso';
+                                    const peso = context.raw.y;
+                                    const date = new Date(context.raw.x);
+                                    return [
+                                        `Fecha: ${date.toLocaleString()}`,
+                                        `${datasetLabel}: ${peso} kg`
+                                    ];
+                                },
+                                title: () => ''
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'Peso desmontado (kg)' },
+                            beginAtZero: true,
+                            border: { color: '#D9D9D9' },
+                            grid: { color: '#1F1F1F', tickColor: '#fff' }
+                        },
+                        x: {
+                            type: 'time',
+                            time: {
+                                tooltipFormat: 'yyyy-MM-dd HH:mm:ss',
+                                displayFormats: {
+                                    second: 'HH:mm:ss',
+                                    minute: 'HH:mm',
+                                    hour: 'HH:mm',
+                                    day: 'dd MMM',
+                                    week: 'dd MMM',
+                                    month: 'MMM yyyy',
+                                    quarter: 'MMM yyyy',
+                                    year: 'yyyy'
+                                },
+                            },
+                            title: { display: true, text: 'Tiempo' },
+                            border: { color: '#D9D9D9' },
+                            grid: { color: '#1F1F1F', tickColor: '#fff' },
+                            ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 20
+                            }
+                        }
                     }
-                );
-    
-                if (!response.ok) {
-                    throw new Error(`Error fetching data: ${response.statusText}`);
                 }
-
-                const productos = await response.json();
-                console.log("Datos de la API:", productos); // Verifica si los datos son correctos
-    
-                // Asignar colores a los productos
-                productColors.current = assignColors(productos);
-                setData(productos);
-                setVisibleProducts(productos.map((p) => p.NombreProducto)); // Mostrar todas las líneas inicialmente
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-    
-        if (startDate && endDate) {
-            fetchInitialData();
+            });
         }
-    }, [startDate, endDate]); // Asegura que se ejecute al cambiar las fechas    
+    }, [chartData]);
 
     useEffect(() => {
-        const chartOptions = {
-            layout: {
-                textColor: "white",
-                background: { type: "solid", color: "transparent" },
-            },
-            crosshair: {
-                mode: 1,
-                horzLine: { visible: false },
-                vertLine: { labelVisible: false },
-            },
-            grid: {
-                visible: true,
-                vertLines: { color: "rgba(255, 255, 255, 0.1)" },
-                horzLines: { color: "rgba(255, 255, 255, 0.1)" },
-            },
-            rightPriceScale: {
-                visible: true,
-                borderColor: "white",
-                autoScale: true,
-                scaleMargins: { top: 0.1, bottom: 0 }, // Asegura que el mínimo sea 0
-            },            
-            timeScale: {
-                visible: true,
-                borderColor: "white" ,
-                timeVisible: true,
-                secondVisible: true,
-                tickMarkFormatter: (time, tickMarkType, locale) => {
-                    const date = new Date(time * 1000);
-                    const hours = date.getHours().toString().padStart(2, '0');
-                    const minutes = date.getMinutes().toString().padStart(2, '0');
-                    return `${hours}:${minutes}`;
-                }
-            },
-            handleScroll: Array.isArray(data) && data.length > 0,
-            handleScale: {
-                mouseWheel: true, // Permitir zoom con scroll
-                pinch: true, // Permitir zoom en dispositivos táctiles
-                axisPressedMouseMove: false, // Deshabilitar ajuste de escala con click
-            },
-
-        };
-
-        const chart = createChart(containerRef.current, chartOptions);
-        chartRef.current = chart;
-
-        const container = containerRef.current;
-        container.style.position = "relative";
-        
-        // Crear y agregar el fondo
-        const background = document.createElement("div");
-        background.style.zIndex = "0";
-        background.style.position = "absolute";
-        background.style.top = "50%";
-        background.style.left = "50%";
-        background.style.transform = "translate(-50%, -65%) scale(0.7)";
-        background.style.width = "100%";
-        background.style.height = "100%";
-        background.style.backgroundImage = `url(${crem.src})`;
-        background.style.backgroundRepeat = "no-repeat";
-        background.style.backgroundPosition = "center";
-        background.style.opacity = "0.05";
-        container.appendChild(background);
-        
-        // Crear y agregar el tooltip
-        const toolTip = document.createElement('div');
-        toolTip.style.position = "absolute";
-        toolTip.style.display = "none";
-        toolTip.style.padding = "8px 12px";
-        toolTip.style.boxSizing = "border-box";
-        toolTip.style.fontSize = "12px";
-        toolTip.style.textAlign = "left";
-        toolTip.style.zIndex = "1000";
-        toolTip.style.pointerEvents = "none";
-        toolTip.style.border = "1px solid grey";
-        toolTip.style.borderRadius = "8px";
-        toolTip.style.background = "rgba(0, 0, 0, 0.8)";
-        toolTip.style.color = "white";
-        container.appendChild(toolTip);
-
-        // Tooltip en crosshair move
-        chart.subscribeCrosshairMove(param => {
-            if (
-                param.point === undefined ||
-                !param.time ||
-                param.point.x < 0 ||
-                param.point.x > container.clientWidth ||
-                param.point.y < 0 ||
-                param.point.y > container.clientHeight
-            ) {
-                toolTip.style.display = 'none';
-                return;
-            }
-
-            // Convertir timestamp a fecha legible
-            const dateStr = new Date(param.time * 1000).toLocaleString(); // Cambiado a toLocaleString()
-
-            // Obtener los datos de cada serie
-            const priceData = Object.entries(seriesRef.current).map(([nombre, series]) => {
-                const data = param.seriesData.get(series);
-                return {
-                    value: data ? (data.value !== undefined ? data.value : data.close) : null,
-                    series,
-                    nombre,
-                };
-            }).filter(pd => pd.value !== null); // Filtramos datos nulos
-
-            if (priceData.length === 0) {
-                toolTip.style.display = 'none';
-                return;
-            }
-
-            // Generar contenido del tooltip
-            toolTip.innerHTML = priceData.map(pd => `
-                <div style="margin-bottom: 4px;">
-                    <b>${pd.nombre}</b><br />
-                    <span style="color: ${pd.series.options().color}">${Math.round(100 * pd.value) / 100} kg</span><br />
-                    <span>${dateStr}</span>
-                </div>
-            `).join('');
-
-            // Posicionar el tooltip ARRIBA del punto señalado
-            const firstSeries = priceData[0].series;
-            const coordinateY = firstSeries.priceToCoordinate(priceData[0].value);
-
-            if (coordinateY === null) {
-                toolTip.style.display = 'none';
-                return;
-            }
-
-            toolTip.style.display = "block";
-
-            // Ajustamos la posición para que el tooltip esté bien alineado sin tapar el punto
-            const tooltipHeight = toolTip.clientHeight; // Altura dinámica del tooltip
-            const tooltipWidth = toolTip.clientWidth;
-            const marginAbovePoint = 15; // Margen extra sobre el punto
-            const adjustedY = coordinateY - tooltipHeight - marginAbovePoint;
-
-            let adjustedX = param.point.x - tooltipWidth / 2;
-            adjustedX = Math.max(5, Math.min(container.clientWidth - tooltipWidth - 5, adjustedX));
-
-            toolTip.style.left = `${adjustedX}px`;
-            toolTip.style.top = `${adjustedY}px`;
-        });
-
-        if (data.length > 0) {
-            const totalsByDay = {};
-    
-            // Procesar los datos de productos
-            data.forEach((producto) => {
-                const lineSeries = chart.addHistogramSeries({
-                    color: productColors.current[producto.NombreProducto],
-                    lineWidth: 2,
-                    priceScaleId: "right",
-                    priceLineVisible: false,
-                });
-    
-                const formattedData = producto.ListaDeCiclos.map((ListaDeCiclos) => {
-                    // Sumar la producción diaria
-                    const time = ListaDeCiclos.fecha_fin;
-                    totalsByDay[time] = (totalsByDay[time] || 0) + ListaDeCiclos.pesoDesmontado;
-    
-                    return { time, value: ListaDeCiclos.pesoDesmontado };
-                });
-    
-                lineSeries.setData(formattedData);
-    
-                seriesRef.current[producto.NombreProducto] = lineSeries;
-            });
-    
-            // Formatear los datos de suma diaria para la serie total
-            const totalSeriesData = Object.entries(totalsByDay)
-                .map(([time, value]) => ({ time: Number(time), value }))
-                .sort((a, b) => a.time - b.time);
-
-            // Agregar la serie de totales al gráfico
-            const totalLine = chart.addAreaSeries({
-                topColor: '#2962FF',
-                bottomColor: 'rgba(41, 98, 255, 0.28)',
-                lineColor: '#2962FF',
-                lineWidth: 2,
-                crossHairMarkerVisible: false,
-            });
-
-            totalLine.setData(totalSeriesData);
-
-            // Set the total line series state
-            setTotalLineSeries(totalLine);
-        } else {
-            // Crear una serie ficticia si no hay datos
-            const dummySeries = chart.addHistogramSeries({
-                color: COLORS[0],
-                lineWidth: 2,
-                priceScaleId: "right",
-                priceLineVisible: true,
-            });
-            dummySeries.setData([]);
-        }
-
-        chart.timeScale().fitContent();
-
         return () => {
-            chart.remove();
+            if (chartInstanceRef.current) {
+                chartInstanceRef.current.destroy();
+            }
         };
-    }, [data]);
+    }, []);
 
-    useEffect(() => {
-        if (!chartRef.current || !totalLineSeries) return;
-
-        Object.entries(seriesRef.current).forEach(([NombreProducto, lineSeries]) => {
-            lineSeries.applyOptions({
-                visible: visibleProducts.includes(NombreProducto),
-            });
-        });
-
-        // Agregar visibilidad para la serie de suma total
-        totalLineSeries.applyOptions({
-            visible: visibleProducts.includes('total'),
-        });
-    }, [visibleProducts, totalLineSeries]);
-
-    const toggleProductVisibility = (NombreProducto) => {
-        setVisibleProducts((prev) =>
-            prev.includes(NombreProducto)
-                ? prev.filter((p) => p !== NombreProducto)
-                : [...prev, NombreProducto]
-        );
-    };
-    
     return (
-        <div
-            id="container-wrapper"
-            style={{
-                width: "100%",
-                minHeight: "400px",
-                maxHeight: "auto",
-                backgroundColor: "#131313",
-                borderRadius: "15px",
-                padding: "20px",
-            }}
-        >
-            <div style={{ display: "flex", justifyContent: "left", textAlign: "left", flexDirection: "column" }}>
-                <h1 style={{ margin: "0px", color: "#d9d9d9", fontWeight: "bold" }}>PRODUCTOS REALIZADOS</h1>
-                <div className={style.fechaContainer}>
-                    <span className={style.fecha}>{new Date(startDate).toISOString().split("T")[0]}</span>
-                    <span className={style.separator}> - </span>
-                    <span className={style.fecha}>{new Date(endDate).toISOString().split("T")[0]}</span>
-                </div>
-            </div>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginBottom: "10px",
-                    gap: "15px",
-                    width: "100%",
-                }}
-            >
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                    }}
-                >
-                    <input
-                        type="checkbox"
-                        checked={visibleProducts.includes('total')}
-                        onChange={() => toggleProductVisibility('total')}
-                    />
-                    <span style={{ color: totalLineColor }}>
-                        Total
-                    </span>
-                </div>
-                {data.map((producto) => (
-                    <div
-                        key={producto.NombreProducto}
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: "5px",
-                        }}
-                    >
-                        <input
-                            type="checkbox"
-                            checked={visibleProducts.includes(producto.NombreProducto)}
-                            onChange={() => toggleProductVisibility(producto.NombreProducto)}
-                        />
-                        <span style={{ color: productColors.current[producto.NombreProducto] || "#ffffff", display: "flex" }}>
-                            {producto.NombreProducto}
-                        </span>
-                    </div>
-                ))}
-            </div>
-            <div id="container" style={{ width: "100%", height: "100%" }} ref={containerRef}></div>
+        <div className="bg-black p-[20px] h-full w-full rounded-md">
+            <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
         </div>
     );
 };
