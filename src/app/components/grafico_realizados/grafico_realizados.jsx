@@ -103,6 +103,25 @@ const formattedEndDate = formatDate(endDate);
               color: '#D9D9D9'
             }
           },
+          title: {
+            display: true,
+            text: 'PRODUCTOS REALIZADOS',
+            color: '#D9D9D9',
+            font: {
+              size: 18,
+              family: 'system',
+            }
+          },
+          subtitle: {
+            display: true,
+            text: `${formattedStartDate} - ${formattedEndDate}`,
+            color: '#ffa500',
+            font: {
+              size: 16,
+              family: 'system',
+              weight: 'normal',
+            }
+          },
           zoom: {
             pan: { enabled: true, mode: 'x' },
             zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
@@ -215,12 +234,6 @@ const formattedEndDate = formatDate(endDate);
 
   return (
     <div className="bg-black p-[20px] h-full w-full rounded-[15px]" style={{ height: '500px', width: '100%' }}>
-        <h2 className={style.titulo}>CICLOS POR PRODUCTO</h2>
-        <div className={style.fechaContainer}>
-            <span className={style.fecha}>{formattedStartDate}</span>
-            <span className={style.separator}> - </span>
-            <span className={style.fecha}>{formattedEndDate}</span>
-        </div>
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
     </div>
   );
