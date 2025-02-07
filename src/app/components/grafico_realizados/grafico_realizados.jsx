@@ -104,22 +104,27 @@ const formattedEndDate = formatDate(endDate);
             }
           },
           title: {
+            align: 'start',
             display: true,
-            text: 'PRODUCTOS REALIZADOS',
+            text: 'CICLOS POR PRODUCTO',
             color: '#D9D9D9',
             font: {
-              size: 18,
-              family: 'system',
+              size: 20,
+              family: 'system-ui'
             }
           },
           subtitle: {
+            align: 'start',
             display: true,
             text: `${formattedStartDate} - ${formattedEndDate}`,
             color: '#ffa500',
             font: {
               size: 16,
-              family: 'system',
               weight: 'normal',
+              family: 'system-ui'
+            },
+            padding: {
+              top: -10  // Usamos padding para mover el subtítulo hacia arriba
             }
           },
           zoom: {
