@@ -14,15 +14,8 @@ body {
   overflow-x: hidden;
 }
 
-.scrollablecontent {
-  height: 100vh; /* Ocupa toda la altura de la ventana */
-  overflow-y: scroll; /* Asegura que el desplazamiento sea funcional */
-  -ms-overflow-style: none; /* Ocultar barra en IE y Edge */
-  scrollbar-width: none; /* Ocultar barra en Firefox */
-}
-
-.scrollablecontent::-webkit-scrollbar {
-  display: none; /* Ocultar barra en navegadores basados en WebKit */
+::-webkit-scrollbar {
+  display: none;
 }
 
 .p-1 {

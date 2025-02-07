@@ -5,6 +5,8 @@ import { useState, useEffect, useContext } from "react";
 import style from "./EquipoXImg.module.css";
 import Image from "next/image";
 
+import ImgCeldaGeneral1 from "@/assets/img/equipos/CELDAGENERAL.png";
+
 import ImgGripper1 from "@/assets/img/equipos/Equipo_Gripper1.png";
 import ImgGripper2 from "@/assets/img/equipos/Equipo_Gripper2.png";
 import ImgGripper3 from "@/assets/img/equipos/Equipo_Gripper3.png";
@@ -26,50 +28,35 @@ import ImgTorre2 from "@/assets/img/equipos/Equipo_Torre2.png";
 import ImgTorre3 from "@/assets/img/equipos/Equipo_Torre1.png";
 
 const gripperImages = [
-  { src: ImgGripper1, alt: "Gripper Imagen-1" },
-  { src: ImgGripper2, alt: "Gripper Imagen-2" },
-  { src: ImgGripper3, alt: "Gripper Imagen-3" },
-  { src: ImgGripper4, alt: "Gripper Imagen-4" },
-  { src: ImgGripper5, alt: "Gripper Imagen-5" },
-  { src: ImgGripper6, alt: "Gripper Imagen-6" },
+  { src: ImgGripper1, alt: "Gripper | Imagen-1" },
+  { src: ImgGripper2, alt: "Gripper | Imagen-2" },
+  { src: ImgGripper3, alt: "Gripper | Imagen-3" },
+  { src: ImgGripper4, alt: "Gripper | Imagen-4" },
+  { src: ImgGripper5, alt: "Gripper | Imagen-5" },
+  { src: ImgGripper6, alt: "Gripper | Imagen-6" },
 ];
 
 const imageSets = {
   'Default': [
-    { src: ImgTorre1, alt: "Torre Imagen-1" },
-    { src: ImgTorre2, alt: "Torre Imagen-2" },
-    { src: ImgTorre3, alt: "Torre Imagen-3" },
-    { src: ImgGripper1, alt: "Gripper Imagen-1" },
-    { src: ImgGripper2, alt: "Gripper Imagen-2" },
-    { src: ImgGripper3, alt: "Gripper Imagen-3" },
-    { src: ImgGripper4, alt: "Gripper Imagen-4" },
-    { src: ImgGripper5, alt: "Gripper Imagen-5" },
-    { src: ImgGripper6, alt: "Gripper Imagen-6" },
-    { src: ImgRobot1, alt: "Imagen Equipo Robot" },
-    { src: ImgRobot2, alt: "Imagen Equipo Robot" },
-    { src: ImgRobot3, alt: "Imagen Equipo Robot" },
-    { src: ImgSDDA1, alt: "SDDA Imagen-1" },
-    { src: ImgSDDA2, alt: "SDDA Imagen-2" },
-    { src: ImgSDDA3, alt: "SDDA Imagen-3" },
-    { src: ImgSDDA4, alt: "SDDA Imagen-4" },
+    { src: ImgCeldaGeneral1, alt: "Celda General | Imagen-1" },
   ],
   'Gripper': gripperImages,
   'Estación de grippers': gripperImages,
   'Posicionador de torres': [
-    { src: ImgTorre3, alt: "Torre Imagen-3" },
-    { src: ImgTorre1, alt: "Torre Imagen-1" },
-    { src: ImgTorre2, alt: "Torre Imagen-2" },
+    { src: ImgTorre3, alt: "Posicionador de torres | Imagen-3" },
+    { src: ImgTorre1, alt: "Posicionador de torres | Imagen-1" },
+    { src: ImgTorre2, alt: "Posicionador de torres | Imagen-2" },
   ],
   'Robot': [
-    { src: ImgRobot1, alt: "Robot Equipo-1" },
-    { src: ImgRobot2, alt: "Robot Equipo-2" },
-    { src: ImgRobot3, alt: "Robot Equipo-3" },
+    { src: ImgRobot1, alt: "Robot | Imagen-1" },
+    { src: ImgRobot2, alt: "Robot | Imagen-2" },
+    { src: ImgRobot3, alt: "Robot | Imagen-3" },
   ],
   'SDDA': [
-    { src: ImgSDDA1, alt: "SDDA Imagen-1" },
-    { src: ImgSDDA2, alt: "SDDA Imagen-2" },
-    { src: ImgSDDA3, alt: "SDDA Imagen-3" },
-    { src: ImgSDDA4, alt: "SDDA Imagen-4" },
+    { src: ImgSDDA1, alt: "SDDA | Imagen-1" },
+    { src: ImgSDDA2, alt: "SDDA | Imagen-2" },
+    { src: ImgSDDA3, alt: "SDDA | Imagen-3" },
+    { src: ImgSDDA4, alt: "SDDA | Imagen-4" },
   ],
 };
 
@@ -100,7 +87,7 @@ const EquipoXImg = () => {
   return (
     <div className={style.all}>
       <h1 className={style.title}>
-      {["Default", "BandaA", "BandaB", null].includes(equipoSeleccionado) ? "EQUIPOS" : equipoSeleccionado === "Estación de grippers" ? "GRIPPER" : equipoSeleccionado.toUpperCase()}
+      {["Default", "BandaA", "BandaB", null].includes(equipoSeleccionado) ? "CELDA DE DESMOLDEO" : equipoSeleccionado === "Estación de grippers" ? "GRIPPER" : equipoSeleccionado.toUpperCase()}
       </h1>
       <div className={style.carousel}>
         {totalImages > 0 ? (

@@ -187,7 +187,7 @@ const Configuraciones = () => {
                     <div className={style.datosGen}>
                         <ul className={style.lista}>
                             {datosGeneralesIzq.map(({ id, texto, dato, icono }) => (
-                                <li key={id} className={style.datoList}>
+                                <li key={id} className={style.datoListIzq}>
                                     <div className={style.detallesDatos}>
                                         <div className={style.texto}>
                                             <h3 className={textstyle.subtitulo}>{texto}</h3>

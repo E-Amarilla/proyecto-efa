@@ -51,93 +51,94 @@ const NavDatos = () => {
         { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono:tiempo  },
     ];
 
-    const [activeSection, setActiveSection] = useState(1);
-    const sectionsRef = useRef([]);
+    const [activeSection, setActiveSection] = useState(1); // Inicializamos con la primera sección activa
+    const debounceTimeout = useRef(null); // Usamos un ref para manejar el timeout del debounce
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.getAttribute('id').replace('section', '');
-                        setActiveSection(Number(id));
+        const handleScroll = () => {
+            if (debounceTimeout.current) {
+                clearTimeout(debounceTimeout.current); // Limpiamos el timeout anterior
+            }
+
+            debounceTimeout.current = setTimeout(() => {
+                opcionesAlarma.forEach(({ id }) => {
+                    const section = document.getElementById(`section${id}`);
+                    if (section) {
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+                            setActiveSection(id);
+                        }
                     }
                 });
-            },
-            {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.5, // Ajusta este valor según sea necesario
-            }
-        );
+            }, 100); // Retardo de 100ms para reducir las actualizaciones
+        };
 
-        // Observar las secciones
-        sectionsRef.current.forEach(section => {
-            if (section) observer.observe(section);
-        });
-
+        window.addEventListener('scroll', handleScroll);
         return () => {
-            sectionsRef.current.forEach(section => {
-                if (section) observer.unobserve(section);
-            });
+            window.removeEventListener('scroll', handleScroll);
+            clearTimeout(debounceTimeout.current); // Limpiamos el timeout al desmontar
         };
     }, []);
 
     const handleScrollClick = (id) => {
         const section = document.getElementById(`section${id}`);
         if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
+            const offset = -133;
+            const elementPosition = section.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition + offset;
+    
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth',
+            });
+    
             setActiveSection(id);
         }
     };
 
     return (
-        <>
-            <div className={style.nav}>
-                <ul className={style.navList}>
-                    {opcionesAlarma.map(({ id, nombre }) => (
-                        <li
-                            key={id}
-                            className={`${style.navItem} ${
-                                activeSection === id ? style.active : ''
-                            }`}
+        <div className={style.nav}>
+            <ul className={style.navList}>
+                {opcionesAlarma.map(({ id, nombre }) => (
+                    <li
+                        key={id}
+                        className={`${style.navItem} ${activeSection === id ? style.active : ''}`}
+                    >
+                        <Link
+                            href={`#section${id}`}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                handleScrollClick(id);
+                            }}
+                            className={style.navLink}
                         >
-                            <Link
-                                href={`#section${id}`}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handleScrollClick(id);
-                                }}
-                                className={style.navLink}
-                            >
-                                {nombre}
+                            {nombre}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+
+            <hr className={style.linea}></hr>
+
+            <div className={style.contenedorDatos}>
+                <p className={style.datosGen}>DATOS GENERALES</p>
+                <ul className={style.datosTods}>
+                    {datosTiempoReal.map(({ id, nombre, dato, icono }) => (
+                        <li key={id} className={style.datosIndv}>
+                            <Link className={style.detallesDatos} href='/desmoldeo/equipox'>
+                                <h3 className={style.h3}>{nombre}</h3>
+                                <h4 className={style.h4}>{dato}</h4>
                             </Link>
+                            <Image 
+                                src={icono} 
+                                alt={`Estado: ${id}`} 
+                                className={style.icon} 
+                            />
                         </li>
                     ))}
                 </ul>
-
-                <hr className={style.linea}></hr>
-
-                <div className={style.contenedorDatos}>
-                    <p className={style.datosGen}>DATOS GENERALES</p>
-                    <ul className={style.datosTods}>
-                        {datosTiempoReal.map(({ id, nombre, dato, icono }) => (
-                            <li key={id} className={style.datosIndv}>
-                                <Link className={style.detallesDatos} href='/desmoldeo/equipox'>
-                                    <h3 className={style.h3}>{nombre}</h3>
-                                    <h4 className={style.h4}>{dato}</h4>
-                                </Link>
-                                <Image 
-                                    src={icono} 
-                                    alt={`Estado: ${id}`} 
-                                    className={style.icon} 
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
             </div>
-        </>
+        </div>
     );
 };
 
