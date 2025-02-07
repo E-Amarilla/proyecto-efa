@@ -1,4 +1,12 @@
+.titulo {
+    text-align: left;
+    font-size: 1vw;
+    font-weight: bold;
+    color: #D9D9D9;
+}
+
 .fechaContainer {
+    margin-top: -5;
     display: flex;
     align-items: center;
 }

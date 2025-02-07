@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
+import style from './grafico_realizados.module.css';
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -40,6 +41,16 @@ const Grafico = ({ startDate, endDate }) => {
     }
   };
 
+const formatDate = (date) => {
+    const d = new Date(date);
+    const year = d.getUTCFullYear();
+    const month = String(d.getUTCMonth() + 1).padStart(2, '0'); // Asegurar dos dígitos
+    const day = String(d.getUTCDate()).padStart(2, '0'); // Asegurar dos dígitos
+    return `${year}-${month}-${day}`;
+};
+
+const formattedStartDate = formatDate(startDate);
+const formattedEndDate = formatDate(endDate);
   // Llamada a la API cuando cambian las fechas
   useEffect(() => {
     fetchData();
@@ -91,14 +102,6 @@ const Grafico = ({ startDate, endDate }) => {
               usePointStyle: true,
               color: '#D9D9D9'
             }
-          },
-          title: {
-            align: 'start',
-            color: '#D9D9D9',
-            display: true,
-            text: `Ciclos y Peso Producto\n${new Date(startDate).toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}`,
-            font: { weight: 'normal', size: 20 },
-            padding: { top: 0, bottom: 15 }
           },
           zoom: {
             pan: { enabled: true, mode: 'x' },
@@ -211,7 +214,13 @@ const Grafico = ({ startDate, endDate }) => {
   }, [chartData]);
 
   return (
-    <div className="bg-black p-[20px] h-full w-full rounded-md" style={{ height: '500px', width: '100%' }}>
+    <div className="bg-black p-[20px] h-full w-full rounded-[15px]" style={{ height: '500px', width: '100%' }}>
+        <h2 className={style.titulo}>CICLOS POR PRODUCTO</h2>
+        <div className={style.fechaContainer}>
+            <span className={style.fecha}>{formattedStartDate}</span>
+            <span className={style.separator}> - </span>
+            <span className={style.fecha}>{formattedEndDate}</span>
+        </div>
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
     </div>
   );
