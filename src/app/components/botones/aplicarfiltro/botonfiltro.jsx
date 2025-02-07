@@ -10,7 +10,7 @@ const BotonFiltro = ({ onClick }) => {
             <Button
                 style={{
                     backgroundColor: "#1F1F1F",
-                    border: "1px solid #131313",
+                    border: "2px solid #555555", // Actualizado
                     color: "#8c8c8c",
                     width: "100%",
                     height: "30px",
@@ -18,6 +18,7 @@ const BotonFiltro = ({ onClick }) => {
                     justifyContent: "center",
                     alignItems: "center",
                     fontSize: "15px",
+                    boxShadow: "0 2px 5px rgba(217, 217, 217, 0.1)", // Añadido
                 }}
                 onClick={onClick}
             >

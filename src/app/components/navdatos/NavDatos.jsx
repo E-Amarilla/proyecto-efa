@@ -59,20 +59,25 @@ const NavDatos = () => {
             if (debounceTimeout.current) {
                 clearTimeout(debounceTimeout.current); // Limpiamos el timeout anterior
             }
-
+    
             debounceTimeout.current = setTimeout(() => {
                 opcionesAlarma.forEach(({ id }) => {
                     const section = document.getElementById(`section${id}`);
                     if (section) {
                         const rect = section.getBoundingClientRect();
-                        if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+                        const sectionTop = rect.top;
+                        const sectionBottom = rect.bottom;
+    
+                        // Cambiar la lógica para que se active en un rango mayor
+                        // Verifica si la sección está visible en la ventana
+                        if (sectionTop < window.innerHeight && sectionBottom >= 0) {
                             setActiveSection(id);
                         }
                     }
                 });
-            }, 100); // Retardo de 100ms para reducir las actualizaciones
+            }, 50); // Retardo de 50ms para reducir las actualizaciones
         };
-
+    
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);

@@ -92,16 +92,18 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
             <h2 className={style.titulo}>FILTRO POR PERIODO</h2>
             <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                 <div className="flex flex-col items-center w-full">
-                    <DateRangePicker
-                        label="Selecciona el periodo"
-                        classNames={{
-                            base: style.customDateRangePicker,
-                            trigger: style.datePickerTrigger,
-                            popover: style.datePickerPopover,
-                            input: style.input,
-                        }}
-                        onChange={handleDateChange}
-                    />
+                    <div className={style.datePickerGlobal}>
+                        <DateRangePicker
+                            label="Selecciona el periodo"
+                            classNames={{
+                                base: style.customDateRangePicker,
+                                trigger: style.datePickerTrigger,
+                                popover: style.datePickerPopover,
+                                input: style.input,
+                            }}
+                            onChange={handleDateChange}
+                        />
+                    </div>
                     <div className="min-w-[6rem] w-[13vw] max-w-full pt-2">
                         <BotonFiltro onClick={handleButtonClick}/>
                     </div>
