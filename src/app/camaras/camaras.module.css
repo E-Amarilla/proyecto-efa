@@ -2,7 +2,7 @@
     margin-top: 133px;
     display: flex;
     flex-direction: row;
-    height: 65.4%;
+    height: 65.4vh;
     width: auto;
 }
 
@@ -13,6 +13,7 @@
     padding: 20px;
     width: 100%;
     height: 27.8vw;
+    margin-top: 2vh;
     min-height: 250px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
