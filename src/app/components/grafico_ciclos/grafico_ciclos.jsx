@@ -3,7 +3,7 @@ import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
 
-const Grafico = ({ startDate, endDate }) => {
+const GraficoC = ({ startDate, endDate }) => {
     const chartRef = useRef(null);
     const chartInstanceRef = useRef(null);
     const [chartData, setChartData] = useState(null);
@@ -42,7 +42,6 @@ const Grafico = ({ startDate, endDate }) => {
             }
 
             const productos = await response.json();
-
             const datasets = productos.map((producto, index) => ({
                 label: producto.NombreProducto,
                 backgroundColor: colores[index % colores.length],
@@ -157,4 +156,4 @@ const Grafico = ({ startDate, endDate }) => {
     );
 };
 
-export default Grafico;
+export default GraficoC;
