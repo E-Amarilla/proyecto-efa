@@ -53,7 +53,7 @@ const NavDatos = () => {
 
     const [activeSection, setActiveSection] = useState(1); // Inicializamos con la primera sección activa
     const debounceTimeout = useRef(null); // Usamos un ref para manejar el timeout del debounce
-
+    
     useEffect(() => {
         const handleScroll = () => {
             if (debounceTimeout.current) {
@@ -61,6 +61,9 @@ const NavDatos = () => {
             }
     
             debounceTimeout.current = setTimeout(() => {
+                let closestSection = null;
+                let closestDistance = Infinity;
+    
                 opcionesAlarma.forEach(({ id }) => {
                     const section = document.getElementById(`section${id}`);
                     if (section) {
@@ -68,13 +71,26 @@ const NavDatos = () => {
                         const sectionTop = rect.top;
                         const sectionBottom = rect.bottom;
     
-                        // Cambiar la lógica para que se active en un rango mayor
-                        // Verifica si la sección está visible en la ventana
-                        if (sectionTop < window.innerHeight && sectionBottom >= 0) {
-                            setActiveSection(id);
+                        // Establecemos un margen adicional para que la sección se active
+                        const offsetMargin = 200; // Ajusta este valor según lo necesites
+    
+                        // Calculamos la distancia de la parte superior de la ventana a la sección
+                        const distanceFromTop = Math.abs(sectionTop);
+    
+                        // Cambiar la lógica para que se active si la sección está cerca de la parte superior de la ventana + margen
+                        if (sectionTop < window.innerHeight + offsetMargin && sectionBottom >= 0 - offsetMargin) {
+                            if (distanceFromTop < closestDistance) {
+                                closestDistance = distanceFromTop;
+                                closestSection = id;
+                            }
                         }
                     }
                 });
+    
+                // Si encontramos una sección más cercana, la activamos
+                if (closestSection) {
+                    setActiveSection(closestSection);
+                }
             }, 50); // Retardo de 50ms para reducir las actualizaciones
         };
     
@@ -84,7 +100,8 @@ const NavDatos = () => {
             clearTimeout(debounceTimeout.current); // Limpiamos el timeout al desmontar
         };
     }, []);
-
+    
+    
     const handleScrollClick = (id) => {
         const section = document.getElementById(`section${id}`);
         if (section) {
@@ -99,7 +116,7 @@ const NavDatos = () => {
     
             setActiveSection(id);
         }
-    };
+    };       
 
     return (
         <div className={style.nav}>
