@@ -136,7 +136,7 @@ const formattedEndDate = formatDate(endDate);
               label: (context) => {
                 const datasetLabel = context.dataset.label || 'Dato';
                 const value = context.raw.y;
-                const date = context.raw.x;
+                const date = formatDate(context.raw.x); // Usamos la función formatDate aquí
                 return [`Fecha: ${date}`, `${datasetLabel}: ${value}`];
               },
               title: () => ''

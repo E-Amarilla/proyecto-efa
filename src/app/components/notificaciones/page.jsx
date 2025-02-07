@@ -27,7 +27,9 @@ export default function Notificaciones() {
 
             // Compara con el esimport AuthContext from "../context/AuthContext.js";tado anterior guardado en la referencia
             alarmasFiltradas.forEach(alarmas => {
-                const prevAlarma = prevDataRef.current.find(prev => prev.id_alarma === alarmas.id_alarma);
+                const prevAlarma = Array.isArray(prevDataRef.current)
+                ? prevDataRef.current.find(prev => prev.id_alarma === alarmas.id_alarma)
+                : null;
 
                 // Detecta únicamente cambios de Inactivo/null a Activo
                 if ((!prevAlarma || prevAlarma.estadoAlarma !== "Activo") && alarmas.estadoAlarma === "Activo") {

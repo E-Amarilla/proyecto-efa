@@ -156,9 +156,9 @@ const GraficoC = ({ startDate, endDate }) => {
               label: (context) => {
                 const datasetLabel = context.dataset.label || 'Peso';
                 const peso = context.raw.y;
-                const date = new Date(context.raw.x);
+                const date = formatDate(context.raw.x);
                 return [
-                  `Fecha: ${date.toLocaleString()}`,
+                  `Fecha: ${date}`,
                   `${datasetLabel}: ${peso} kg`
                 ];
               },

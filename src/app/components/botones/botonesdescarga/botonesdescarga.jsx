@@ -17,7 +17,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
     
         if (productSection) {
             const canvasProduct = await html2canvas(productSection, {
-                scale: 2,
+                scale: 3,
                 ignoreElements: (element) => element.classList && element.classList.contains('FiltroPeriodo'),
             });
     
@@ -52,7 +52,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
             
             // Añadir texto "EFA - Proyecto" debajo del logo
             pdf.setFontSize(12);
-            pdf.text("EFA - Proyecto", 252, logoMargin+17);
+            pdf.text("EFA - MXEF-04", 253, logoMargin+17);
             pdf.text("Celda de desmoldeo", 247, logoMargin+22);
     
             pdf.addImage(webIcon, 'PNG', 240, logoMargin+40, 5, 5); // Icono de ubicación de 10x10 px
