@@ -25,10 +25,20 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const publicRoutes = ['/login', '/signup', '/login/recuperacion'];
-        if (typeof window !== "undefined" && !user && !publicRoutes.includes(pathname)) {
-            router.push('/login');
+        const blockedRoutes = ['/encajonado', '/paletizado'];
+    
+        if (typeof window !== "undefined") {
+            // 🔹 Redirigir al login si no hay usuario y la ruta no es pública
+            if (!user && !publicRoutes.includes(pathname)) {
+                router.push('/login');
+            }
+    
+            // 🔹 Bloquear rutas sin importar si el usuario está autenticado o no
+            if (blockedRoutes.includes(pathname)) {
+                router.push('/error'); // O cualquier otra página que indique acceso denegado
+            }
         }
-    }, [user, pathname]);
+    }, [user, pathname]);    
 
     useEffect(() => {
         const initializeStream = async () => {

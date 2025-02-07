@@ -1,10 +1,10 @@
 'use client';
 
 import { Toaster, toast } from "sonner";
-import { useEffect, useState, useRef } from "react";
-import useWebSocket from '../../utils/useWebSocket';
+import { useEffect, useState, useRef, useContext } from "react";
 import style from "./notificaciones.module.css";
 
+import AuthContext from "../../context/AuthContext.js";
 // Imagenes
 import Image from "next/image";
 import MyIcon from "@/assets/img/cancelICON.png";
@@ -16,30 +16,29 @@ const validIds = process.env.NEXT_PUBLIC_VALID_IDS
 export default function Notificaciones() {
     const [activeToasts, setActiveToasts] = useState([]); // Almacena las alarmas mostradas
     const prevDataRef = useRef([]); // Referencia mutable para el estado anterior
-    const pollId = "alarmas-datos";
-    const { data, error, isConnected } = useWebSocket(pollId);
+    const { data } = useContext(AuthContext);
 
     useEffect(() => {
         if (data) {
             // Filtra las alarmas con ID válido
-            const alarmasFiltradas = data.filter(
-                alarma => validIds.includes(alarma.id_alarma)
+            const alarmasFiltradas = data.alarmas.filter(
+                alarmas => validIds.includes(alarmas.id_alarma)
             );
 
-            // Compara con el estado anterior guardado en la referencia
-            alarmasFiltradas.forEach(alarma => {
-                const prevAlarma = prevDataRef.current.find(prev => prev.id_alarma === alarma.id_alarma);
+            // Compara con el esimport AuthContext from "../context/AuthContext.js";tado anterior guardado en la referencia
+            alarmasFiltradas.forEach(alarmas => {
+                const prevAlarma = prevDataRef.current.find(prev => prev.id_alarma === alarmas.id_alarma);
 
                 // Detecta únicamente cambios de Inactivo/null a Activo
-                if ((!prevAlarma || prevAlarma.estadoAlarma !== "Activo") && alarma.estadoAlarma === "Activo") {
-                    console.log(`Alarma integrada: Cambio de estado de inactivo/null a activo. ID: ${alarma.id_alarma}`);
+                if ((!prevAlarma || prevAlarma.estadoAlarma !== "Activo") && alarmas.estadoAlarma === "Activo") {
+                    console.log(`Alarma integrada: Cambio de estado de inactivo/null a activo. ID: ${alarmas.id_alarma}`);
 
                     const id = toast(
                         <div className={style.notification}>
                             
                             <div className={style.texto}>
-                                <h2>{alarma.tipoAlarma}</h2>
-                                <p>{alarma.descripcion}</p>
+                                <h2>{alarmas.tipoAlarma}</h2>
+                                <p>{alarmas.descripcion}</p>
                             </div>
                             
                             <button
@@ -57,9 +56,9 @@ export default function Notificaciones() {
                     );
 
                     // Actualiza el estado de las alarmas activas
-                    setActiveToasts(prev => [...prev, alarma.id_alarma]);
+                    setActiveToasts(prev => [...prev, alarmas.id_alarma]);
                 } else {
-                    console.log(`Alarma descartada: Estado sin cambios, ya activa o cambio a inactivo. ID: ${alarma.id_alarma}`);
+                    console.log(`Alarma descartada: Estado sin cambios, ya activa o cambio a inactivo. ID: ${alarmas.id_alarma}`);
                 }
             });
 
