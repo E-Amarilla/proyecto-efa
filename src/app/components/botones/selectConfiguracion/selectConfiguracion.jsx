@@ -1,53 +1,47 @@
-import {Select, SelectItem} from "@heroui/react";
-import style from './selectConfiguracion.module.css'
+import { useState } from "react";
+import { Select, SelectItem } from "@heroui/react";
+import style from "./selectConfiguracion.module.css";
 
-export const PetIcon = (props) => {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      focusable="false"
-      height="1em"
-      role="presentation"
-      viewBox="0 0 20 20"
-      width="2em"
-      {...props}
-    >
-    </svg>
-  );
-};
-
-export const animals = [
-  {key: "1", label: "RECETA 1"},
-  {key: "2", label: "RECETA 2"},
-  {key: "3", label: "RECETA 3"},
-  {key: "4", label: "RECETA 4"},
-  {key: "5", label: "RECETA 5"},
-  {key: "6", label: "RECETA 6"},
-  {key: "7", label: "RECETA 7"},
-  {key: "8", label: "RECETA 8"},
-  {key: "9", label: "RECETA 9"},
-  {key: "10", label: "RECETA 10"},
-  {key: "11", label: "RECETA 11"},
-  {key: "12", label: "RECETA 12"},
-  {key: "13", label: "RECETA 13"},
-  {key: "14", label: "RECETA 14"},
-  {key: "15", label: "RECETA 15"},
-  {key: "16", label: "RECETA 16"},
-  {key: "17", label: "RECETA 17"},
-  {key: "18", label: "RECETA 18"},
-  {key: "19", label: "RECETA 19"},
-  {key: "20", label: "RECETA 20"},
+export const recetas = [
+  { key: "1", label: "RECETA 1" },
+  { key: "2", label: "RECETA 2" },
+  { key: "3", label: "RECETA 3" },
+  { key: "4", label: "RECETA 4" },
+  { key: "5", label: "RECETA 5" },
+  { key: "6", label: "RECETA 6" },
+  { key: "7", label: "RECETA 7" },
+  { key: "8", label: "RECETA 8" },
+  { key: "9", label: "RECETA 9" },
+  { key: "10", label: "RECETA 10" },
+  { key: "11", label: "RECETA 11" },
+  { key: "12", label: "RECETA 12" },
+  { key: "13", label: "RECETA 13" },
+  { key: "14", label: "RECETA 14" },
+  { key: "15", label: "RECETA 15" },
+  { key: "16", label: "RECETA 16" },
+  { key: "17", label: "RECETA 17" },
+  { key: "18", label: "RECETA 18" },
+  { key: "19", label: "RECETA 19" },
+  { key: "20", label: "RECETA 20" },
 ];
 
-export default function App() {
+const SelectConfiguracion = ({ onChange }) => {
+  const [selectedKey, setSelectedKey] = useState("1");
+
+  const handleSelectionChange = (keys) => {
+    if (keys.size > 0) {
+      const newValue = Array.from(keys)[0];
+      setSelectedKey(newValue);
+      onChange(newValue); // Enviar el valor a la página padre
+    }
+  };
+
   return (
     <div className={style.customSelect}>
       <Select
         className="max-w"
-        defaultSelectedKeys={["1"]}
-        placeholder="Eliga su receta"
-        startContent={<PetIcon />}
+        selectedKeys={[selectedKey]}
+        onSelectionChange={handleSelectionChange}
         itemHeight={32.2}
         maxListboxHeight={667}
         isVirtualized
@@ -60,7 +54,8 @@ export default function App() {
         popoverProps={{
           classNames: {
             base: "before:bg-default-200",
-            content: "p-[10px] border-small border-divider bg-[#131313] align-middle mb-[8px]",
+            content:
+              "p-[10px] border-small border-divider bg-[#131313] align-middle mb-[8px]",
           },
         }}
         scrollShadowProps={{
@@ -69,11 +64,11 @@ export default function App() {
         listboxProps={{
           itemClasses: {
             base: [
-              "border-[2px]", // Añadir borde de 1px
-              "border-[#8c8c8c]", // Color del borde
-              "border-opacity-[0.02]", // Opacidad del borde
+              "border-[2px]",
+              "border-[#8c8c8c]",
+              "border-opacity-[0.02]",
               "max-h-[690px]",
-              "mb-[8px]", // Ajusta el margen aquí para agregar espacio entre los items
+              "mb-[8px]",
               "rounded-md",
               "text-default-500",
               "p-1",
@@ -86,12 +81,14 @@ export default function App() {
               "data-[focus-visible=true]:ring-default-500",
             ],
           },
-        }}      
+        }}
       >
-      {animals.map((animal) => (
-        <SelectItem key={animal.key}>{animal.label}</SelectItem>
-      ))}
-    </Select>
+        {recetas.map((receta) => (
+          <SelectItem key={receta.key}>{receta.label}</SelectItem>
+        ))}
+      </Select>
     </div>
   );
-}
+};
+
+export default SelectConfiguracion;

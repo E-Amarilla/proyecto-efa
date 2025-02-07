@@ -7,12 +7,12 @@ import Image from "next/image";
 import receta2 from '@/assets/img/RECETA2.png';
 
 import { useContext, useState, useEffect, useRef } from "react";
-import Link from "next/link";
+
 import AuthContext from "../context/AuthContext"
 
 import textstyle from './texto.module.css';
 
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import BotonAplicar from '../components/botones/aplicarcorrecion/botonaplicar';
 import BotonResetear from '../components/botones/resetearfalla/botonresetear';
 import SelectConfiguracion from '../components/botones/selectConfiguracion/selectConfiguracion'
@@ -173,13 +173,15 @@ const Configuraciones = () => {
         ? datosCorrecionesNivelesFA
         : datosCorrecionesNivelesCHg);
 
-        console.log("selectedOption: ", selectedOption, "selectedNivel: ", selectedNivel);
+    console.log("selectedOption: ", selectedOption, "selectedNivel: ", selectedNivel);
+
+    const [selectedReceta, setSelectedReceta] = useState("1"); // Estado para receta
 
     return (
         <div className={style.all}>
             <div className={style.Izq}>
                 <div className={style.selector}>
-                    <SelectConfiguracion />
+                    <SelectConfiguracion onChange={setSelectedReceta}/>
                 </div>
                 <div className={style.contenedor}>
                     <div className={style.datosGen}>

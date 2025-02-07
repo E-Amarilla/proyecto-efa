@@ -201,7 +201,7 @@
 
 .selectTorreWrapper {
     position: absolute; /* Posiciona de forma absoluta dentro del contenedor relativo */
-    right: 100px; /* Margen de 10px desde la derecha */
+    left: -6.2vw;
 }
 
 .datoListNivelesFallas {
