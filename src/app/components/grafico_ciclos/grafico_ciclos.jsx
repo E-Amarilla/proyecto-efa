@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
-import style from './grafico_ciclos.module.css';
 import 'chartjs-adapter-date-fns';
+import {Spinner} from "@heroui/spinner";
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -10,11 +10,12 @@ const GraficoC = ({ startDate, endDate }) => {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [chartData, setChartData] = useState({ datasets: [] });
+  const [loading, setLoading] = useState(true);
 
   const colores = [
     "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
     "#33FFF6", "#FFC733", "#A1FF33", "#5733FF", "#FF3333",
-    "#33FFA5", "#FF6F33", "A6FF33", "#33A1FF", "#FF33F6",
+    "#33FFA5", "#FF6F33", "#A6FF33", "#33A1FF", "#FF33F6",
     "#F6FF33", "#33FFF3", "#FF336F", "#57FF33", "#3333FF"
   ];
 
@@ -24,7 +25,12 @@ const GraficoC = ({ startDate, endDate }) => {
     cycles.forEach(ciclo => {
       const date = new Date(ciclo.fecha_fin * 1000);
       // Redondea la fecha al inicio de la hora
-      const hour = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours()).getTime();
+      const hour = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+        date.getHours()
+      ).getTime();
       if (!groups[hour]) {
         groups[hour] = 0;
       }
@@ -32,16 +38,16 @@ const GraficoC = ({ startDate, endDate }) => {
     });
     // Convierte el objeto en un arreglo de { x: timestamp, y: valor } y lo ordena cronológicamente
     return Object.entries(groups)
-      .map(([hour, value]) => ({ x: parseInt(hour), y: value }))
+      .map(([hour, value]) => ({ x: parseInt(hour, 10), y: value }))
       .sort((a, b) => a.x - b.x);
   };
 
   const fetchData = async () => {
     if (!startDate || !endDate) {
-      // console.error("Fechas no definidas.");
+      setLoading(false);
       return;
     }
-
+    setLoading(true);
     const storedUser = localStorage.getItem('user');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
 
@@ -50,7 +56,10 @@ const GraficoC = ({ startDate, endDate }) => {
         `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
         {
           method: "GET",
-          headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json"
+          },
         }
       );
 
@@ -69,7 +78,9 @@ const GraficoC = ({ startDate, endDate }) => {
 
       setChartData({ datasets });
     } catch (error) {
-      // console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -132,7 +143,7 @@ const GraficoC = ({ startDate, endDate }) => {
               family: 'system-ui'
             },
             padding: {
-              top: -10  // Usamos padding para mover el subtítulo hacia arriba
+              top: -10  // Ajusta el subtítulo hacia arriba
             }
           },
           legend: {
@@ -210,14 +221,20 @@ const GraficoC = ({ startDate, endDate }) => {
     if (chartInstanceRef.current && chartData && chartData.datasets.length > 0) {
       chartInstanceRef.current.data = chartData;
       chartInstanceRef.current.update();
-    } else {
-      // console.log("Esperando datos...");
     }
   }, [chartData]);
 
   return (
-    <div className="bg-black p-[20px] h-full w-full rounded-[15px] mt[10px]" style={{ height: '500px', width: '100%' }}>
+    <div
+      className="relative bg-black p-[20px] h-full w-full rounded-[15px] mt[10px]"
+      style={{ height: '500px', width: '100%' }}
+    >
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
+      {loading && (
+        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75">
+          <Spinner label="Cargando..." />
+        </div>
+      )}
     </div>
   );
 };

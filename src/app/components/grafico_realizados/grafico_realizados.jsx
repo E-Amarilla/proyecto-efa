@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
-import style from './grafico_realizados.module.css';
+import {Spinner} from "@heroui/spinner";
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -10,13 +10,14 @@ const Grafico = ({ startDate, endDate }) => {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [chartData, setChartData] = useState({ ciclos: [], pesoProducto: [] });
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     if (!startDate || !endDate) {
-      // console.error("Fechas no definidas.");
+      setLoading(false);
       return;
     }
-
+    setLoading(true);
     const storedUser = localStorage.getItem('user');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
 
@@ -34,34 +35,34 @@ const Grafico = ({ startDate, endDate }) => {
       }
 
       const datos = await response.json();
-      // console.log("Datos recibidos de la API:", datos);
       setChartData(datos);
     } catch (error) {
-      // console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-const formatDate = (date) => {
+  const formatDate = (date) => {
     const d = new Date(date);
     const year = d.getUTCFullYear();
-    const month = String(d.getUTCMonth() + 1).padStart(2, '0'); // Asegurar dos dígitos
-    const day = String(d.getUTCDate()).padStart(2, '0'); // Asegurar dos dígitos
+    const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(d.getUTCDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
-};
+  };
 
-const formattedStartDate = formatDate(startDate);
-const formattedEndDate = formatDate(endDate);
-  // Llamada a la API cuando cambian las fechas
+  const formattedStartDate = formatDate(startDate);
+  const formattedEndDate = formatDate(endDate);
+
   useEffect(() => {
     fetchData();
   }, [startDate, endDate]);
 
-  // Inicialización (y reinicialización) del gráfico
   useEffect(() => {
     const ctx = chartRef.current?.getContext('2d');
     if (!ctx) return;
 
-    // Si existe una instancia anterior, la destruimos
+    // Si existe una instancia previa, se destruye
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
@@ -124,7 +125,7 @@ const formattedEndDate = formatDate(endDate);
               family: 'system-ui'
             },
             padding: {
-              top: -10  // Usamos padding para mover el subtítulo hacia arriba
+              top: -10  // Se usa padding para mover el subtítulo hacia arriba
             }
           },
           zoom: {
@@ -136,7 +137,7 @@ const formattedEndDate = formatDate(endDate);
               label: (context) => {
                 const datasetLabel = context.dataset.label || 'Dato';
                 const value = context.raw.y;
-                const date = formatDate(context.raw.x); // Usamos la función formatDate aquí
+                const date = formatDate(context.raw.x);
                 return [`Fecha: ${date}`, `${datasetLabel}: ${value}`];
               },
               title: () => ''
@@ -202,13 +203,11 @@ const formattedEndDate = formatDate(endDate);
 
     chartInstanceRef.current = newChart;
 
-    // Limpieza: destruir el gráfico al desmontar o al reinicializar
     return () => {
       newChart.destroy();
     };
-  }, [startDate, endDate]);
+  }, [startDate, endDate, formattedStartDate, formattedEndDate]);
 
-  // Actualización del gráfico con los datos obtenidos
   useEffect(() => {
     if (
       chartInstanceRef.current &&
@@ -226,20 +225,23 @@ const formattedEndDate = formatDate(endDate);
         y: item.PesoDiarioProducto / 1000
       }));
 
-      // .log("Datos Ciclos procesados:", ciclosData);
-      // console.log("Datos Peso Producto procesados:", pesoProductoData);
-
       chartInstanceRef.current.data.datasets[0].data = ciclosData;
       chartInstanceRef.current.data.datasets[1].data = pesoProductoData;
       chartInstanceRef.current.update();
-    } else {
-      // console.log("Esperando datos...");
     }
   }, [chartData]);
 
   return (
-    <div className="bg-black p-[20px] h-full w-full rounded-[15px]" style={{ height: '500px', width: '100%' }}>
+    <div
+      className="relative bg-black p-[20px] h-full w-full rounded-[15px]"
+      style={{ height: '500px', width: '100%' }}
+    >
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
+      {loading && (
+        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75">
+          <Spinner label="Cargando..." />
+        </div>
+      )}
     </div>
   );
 };
