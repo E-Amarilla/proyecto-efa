@@ -31,7 +31,7 @@ const NavDatos = () => {
         TiempoTranscurrido
     } = data?.desmoldeo || {};
 
-    const NombreActual = data?.desmoldeo ? data?.desmoldeo["Nombre actual"] : 'null';
+    const NombreActual = data?.desmoldeo ? (data?.desmoldeo["Nombre actual"]?.trim() || '-') : '-';
 
     const opcionesAlarma = [
         { id: 1, nombre: 'LAYOUT' },

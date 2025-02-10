@@ -89,7 +89,7 @@ const Login = () => {
         </form>
         
         <div>
-          <Link className={style.signup} href="/login/recuperacion">Olvidó su contraseña? Recuperela aquí</Link>
+          <Link className={style.signup} href="/login/recuperacion">¿Olvidó su contraseña? Recupérela aquí</Link>
         </div>
       </div>
     </div>

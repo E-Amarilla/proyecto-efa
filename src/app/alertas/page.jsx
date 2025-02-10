@@ -1,4 +1,4 @@
-import Tabla from "./tabla";
+import Tabla from "../components/tabla/tabla";
 
 export default function HomePage() {
   return (

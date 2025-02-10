@@ -27,7 +27,7 @@ const DatosGenerales = () => {
         TiempoTranscurrido
     } = data?.desmoldeo|| {};
 
-    const NombreActual = data?.desmoldeo ? data?.desmoldeo["Nombre actual"] : 'null';
+    const NombreActual = data?.desmoldeo ? (data?.desmoldeo["Nombre actual"]?.trim() || '-') : '-';
 
     const datosGenerales = [
         { id: 1, texto: 'NOMBRE RECETA', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1 },

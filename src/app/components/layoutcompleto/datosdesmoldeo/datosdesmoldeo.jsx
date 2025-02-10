@@ -17,8 +17,7 @@ const DatosDesmoldeo = () => {
         PesoActualDesmoldado,
     } = desmoldeoData;
     
-    const NombreActual = data?.celda?.Desmoldeo ? data?.celda?.Desmoldeo["Nombre actual"] : '-';
-
+    const NombreActual = data?.desmoldeo ? (data?.desmoldeo["Nombre actual"]?.trim() || '-') : '-';
     // console.log("Datos recibidos desde el WebSocket:", data);
 
     const datosTiempoReal = [
