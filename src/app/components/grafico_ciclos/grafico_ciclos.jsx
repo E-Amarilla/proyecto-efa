@@ -38,7 +38,7 @@ const GraficoC = ({ startDate, endDate }) => {
 
   const fetchData = async () => {
     if (!startDate || !endDate) {
-      console.error("Fechas no definidas.");
+      // console.error("Fechas no definidas.");
       return;
     }
 
@@ -69,7 +69,7 @@ const GraficoC = ({ startDate, endDate }) => {
 
       setChartData({ datasets });
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
     }
   };
 
@@ -211,7 +211,7 @@ const GraficoC = ({ startDate, endDate }) => {
       chartInstanceRef.current.data = chartData;
       chartInstanceRef.current.update();
     } else {
-      console.log("Esperando datos...");
+      // console.log("Esperando datos...");
     }
   }, [chartData]);
 

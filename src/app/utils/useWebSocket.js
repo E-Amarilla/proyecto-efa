@@ -24,7 +24,7 @@ export default function useWebSocket(pollId) {
         const message = JSON.parse(event.data);
         setData(message); // Actualiza el estado con los datos recibidos
       } catch (err) {
-        console.error("Error al procesar el mensaje:", err);
+        // console.error("Error al procesar el mensaje:", err);
       }
     };
 

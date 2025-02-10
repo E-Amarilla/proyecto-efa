@@ -47,10 +47,10 @@ export const AuthProvider = ({ children }) => {
                     await fetch("/api/cleanup", { method: "POST" });
                     const response = await fetch("/api/stream");
                     const data = await response.json();
-                    console.log(data.message);
+                    // console.log(data.message);
                     setStreamInitialized(true);
                 } catch (error) {
-                    console.error("Error al iniciar la transmisión:", error);
+                    // console.error("Error al iniciar la transmisión:", error);
                 }
             }
         };
@@ -78,9 +78,9 @@ export const AuthProvider = ({ children }) => {
             Cookies.set('token', token, { secure: false, sameSite: 'lax' });
             setUser(response.data);
             router.push('/completo');
-            console.log('Login Authorized');
+            // console.log('Login Authorized');
         } catch (error) {
-            console.log('Login Failed:', error);
+            // console.log('Login Failed:', error);
             throw new Error('Credenciales inválidas');
         }
     };

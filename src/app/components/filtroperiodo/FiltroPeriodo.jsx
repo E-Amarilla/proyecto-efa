@@ -46,7 +46,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
             const data = await response.json();
             onDataUpdate(data, startDate, endDate); // Pasar fechas a onDataUpdate
         } catch (error) {
-            console.error("Error fetching initial data:", error);
+            // console.error("Error fetching initial data:", error);
         } finally {
             setLoading(false);
         }
@@ -77,7 +77,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
             const data = await response.json();
             onDataUpdate(data, startDate, endDate); // Pasar fechas a onDataUpdate
         } catch (error) {
-            console.error("Error fetching data:", error);
+            // console.error("Error fetching data:", error);
         } finally {
             setLoading(false);
         }

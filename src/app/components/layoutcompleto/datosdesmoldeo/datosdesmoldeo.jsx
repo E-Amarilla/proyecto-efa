@@ -19,7 +19,7 @@ const DatosDesmoldeo = () => {
     
     const NombreActual = data?.celda?.Desmoldeo ? data?.celda?.Desmoldeo["Nombre actual"] : '-';
 
-    console.log("Datos recibidos desde el WebSocket:", data);
+    // console.log("Datos recibidos desde el WebSocket:", data);
 
     const datosTiempoReal = [
         { id: 1, nombre: 'Nombre receta', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : '-' },

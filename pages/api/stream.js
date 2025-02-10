@@ -22,14 +22,14 @@ const clearHlsDirectory = () => {
       const filePath = path.join(HLS_DIR, file);
       try {
         fs.unlinkSync(filePath);
-        console.log(`Archivo eliminado: ${filePath}`);
+        // console.log(`Archivo eliminado: ${filePath}`);
       } catch (error) {
-        console.error(`Error al eliminar el archivo ${filePath}:`, error);
+        // console.error(`Error al eliminar el archivo ${filePath}:`, error);
       }
     });
-    console.log("Todos los archivos de la carpeta hls han sido eliminados.");
+    // console.log("Todos los archivos de la carpeta hls han sido eliminados.");
   } else {
-    console.log("La carpeta hls no existe. No hay archivos para eliminar.");
+    // console.log("La carpeta hls no existe. No hay archivos para eliminar.");
   }
 };
 
@@ -44,9 +44,9 @@ const killFfmpegProcesses = () => {
   ffmpegProcesses.forEach((process) => {
     try {
       process.kill('SIGKILL');
-      console.log(`Proceso FFmpeg terminado: ${process.ffmpegProc.pid}`);
+      // console.log(`Proceso FFmpeg terminado: ${process.ffmpegProc.pid}`);
     } catch (error) {
-      console.error(`Error al terminar el proceso FFmpeg: ${error}`);
+      // console.error(`Error al terminar el proceso FFmpeg: ${error}`);
     }
   });
   ffmpegProcesses.length = 0;
@@ -68,19 +68,19 @@ const startStream = (rtspUrl, outputFile) => {
         '-c:a aac', // Usa el codec AAC para audio (si aplica)
       ])
       .on('start', (cmdline) => {
-        console.log(`FFmpeg started for ${outputFile} with command:`, cmdline);
-        console.log(`Archivos HLS se generarán en: ${HLS_DIR}`);
+        // console.log(`FFmpeg started for ${outputFile} with command:`, cmdline);
+        // console.log(`Archivos HLS se generarán en: ${HLS_DIR}`);
         resolve(command);
       })
       .on('progress', (progress) => {
-        console.log(`Processing ${outputFile}:`, progress);
+        // console.log(`Processing ${outputFile}:`, progress);
       })
       .on('error', (err) => {
-        console.error(`FFmpeg error for ${outputFile}:`, err);
+        // console.error(`FFmpeg error for ${outputFile}:`, err);
         reject(err);
       })
       .on('end', () => {
-        console.log(`FFmpeg finished processing for ${outputFile}`);
+        // console.log(`FFmpeg finished processing for ${outputFile}`);
       });
 
     ffmpegProcesses.push(command);
@@ -90,7 +90,7 @@ const startStream = (rtspUrl, outputFile) => {
 
 export default async function handler(req, res) {
   if (isStreaming) {
-    console.log("USUARIO YA MIRANDO, ME SUMO");
+    // console.log("USUARIO YA MIRANDO, ME SUMO");
     return res.status(200).json({ message: 'Las transmisiones ya están en curso' });
   }
 
@@ -115,7 +115,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ message: 'Transmisiones iniciadas para todas las cámaras' });
   } catch (error) {
-    console.error("Error al iniciar las transmisiones:", error);
+    // console.error("Error al iniciar las transmisiones:", error);
     res.status(500).json({ message: 'Error al iniciar las transmisiones' });
   }
 }

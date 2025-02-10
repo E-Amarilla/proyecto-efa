@@ -91,7 +91,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
             link.parentNode.removeChild(link);
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            console.error("Error al descargar el archivo:", error);
+            // console.error("Error al descargar el archivo:", error);
         }
     };
 

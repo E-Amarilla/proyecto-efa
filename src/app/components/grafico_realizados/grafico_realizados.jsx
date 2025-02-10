@@ -13,7 +13,7 @@ const Grafico = ({ startDate, endDate }) => {
 
   const fetchData = async () => {
     if (!startDate || !endDate) {
-      console.error("Fechas no definidas.");
+      // console.error("Fechas no definidas.");
       return;
     }
 
@@ -34,10 +34,10 @@ const Grafico = ({ startDate, endDate }) => {
       }
 
       const datos = await response.json();
-      console.log("Datos recibidos de la API:", datos);
+      // console.log("Datos recibidos de la API:", datos);
       setChartData(datos);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
     }
   };
 
@@ -226,14 +226,14 @@ const formattedEndDate = formatDate(endDate);
         y: item.PesoDiarioProducto / 1000
       }));
 
-      console.log("Datos Ciclos procesados:", ciclosData);
-      console.log("Datos Peso Producto procesados:", pesoProductoData);
+      // .log("Datos Ciclos procesados:", ciclosData);
+      // console.log("Datos Peso Producto procesados:", pesoProductoData);
 
       chartInstanceRef.current.data.datasets[0].data = ciclosData;
       chartInstanceRef.current.data.datasets[1].data = pesoProductoData;
       chartInstanceRef.current.update();
     } else {
-      console.log("Esperando datos...");
+      // console.log("Esperando datos...");
     }
   }, [chartData]);
 

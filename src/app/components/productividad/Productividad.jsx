@@ -31,7 +31,7 @@ const Productividad = () => {
             ? data.ProductosRealizados.reduce((acc, prod) => acc + prod.tiempoTotal, 0)
             : "Cargando...";
 
-            console.log(`Cantidad de días: ${Cant_Dias} | Horas de uso: ${Horas_Uso}`);
+            // console.log(`Cantidad de días: ${Cant_Dias} | Horas de uso: ${Horas_Uso}`);
 
     const Promedio_Horas = (Horas_Uso, Cant_Dias) =>
         Horas_Uso !== "Cargando..." ? (((Horas_Uso/60000)/60) / (Cant_Dias)).toFixed(2) : "Cargando...";

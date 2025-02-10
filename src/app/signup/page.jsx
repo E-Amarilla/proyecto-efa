@@ -24,7 +24,7 @@ const Login = () => {
       });
       login(registerUsername, registerPassword);
   } catch(error) {
-      console.error('Failed to register user:', error);
+      // console.error('Failed to register user:', error);
   }
 }
 

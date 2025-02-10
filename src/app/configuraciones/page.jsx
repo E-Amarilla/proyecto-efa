@@ -122,7 +122,7 @@ const Configuraciones = () => {
 
     const handleAplicarClick = (index) => {
         if (inputRefs.current[index]) {
-            console.log(`Valor del input ${index + 1}:`, inputRefs.current[index].value);
+            // console.log(`Valor del input ${index + 1}:`, inputRefs.current[index].value);
             toast.success("El dato de la corrección fue ajustado con éxito", {
                 position: "bottom-center",
             });
@@ -149,7 +149,7 @@ const Configuraciones = () => {
     };
 
     useEffect(() => {
-        console.log("CORRECCION NIVEL SELECCIONADA:", selectedNivel);
+        // console.log("CORRECCION NIVEL SELECCIONADA:", selectedNivel);
     }, [selectedNivel]);
 
 
@@ -160,7 +160,7 @@ const Configuraciones = () => {
     };
 
     useEffect(() => {
-        console.log("TORRE SELECCIONADA: ", selectedTorre);
+        // console.log("TORRE SELECCIONADA: ", selectedTorre);
     }, [selectedTorre]);
     
     const datosActuales = selectedOption === 1
@@ -173,7 +173,7 @@ const Configuraciones = () => {
         ? datosCorrecionesNivelesFA
         : datosCorrecionesNivelesCHg);
 
-    console.log("selectedOption: ", selectedOption, "selectedNivel: ", selectedNivel);
+    // console.log("selectedOption: ", selectedOption, "selectedNivel: ", selectedNivel);
 
     const [selectedReceta, setSelectedReceta] = useState("1"); // Estado para receta
 

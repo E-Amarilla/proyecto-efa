@@ -28,20 +28,20 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
           const tsFiles = tsFilesText.split("\n").filter(line => line.endsWith(".ts"));
 
           if (tsFiles.length > 0) {
-            console.log(`Archivos HLS disponibles para ${cameraId}. Configurando reproductor...`);
+            // console.log(`Archivos HLS disponibles para ${cameraId}. Configurando reproductor...`);
             setIsLoading(false);
             setShowPlayer(true);
             setError(null);
           } else {
-            console.log(`No se encontraron archivos .ts para ${cameraId}. Reintentando...`);
+            // console.log(`No se encontraron archivos .ts para ${cameraId}. Reintentando...`);
             setTimeout(checkHlsFiles, 2000);
           }
         } else {
-          console.log(`Archivo .m3u8 no disponible para ${cameraId}. Reintentando...`);
+          // console.log(`Archivo .m3u8 no disponible para ${cameraId}. Reintentando...`);
           setTimeout(checkHlsFiles, 2000);
         }
       } catch (error) {
-        console.error(`Error al verificar los archivos HLS para ${cameraId}:`, error);
+        // console.error(`Error al verificar los archivos HLS para ${cameraId}:`, error);
         setTimeout(checkHlsFiles, 2000);
       }
     };
@@ -72,13 +72,13 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
 
         if (bufferEnd - currentTime > 15) {
           player.tech_.clearBuffer_();
-          console.log("Buffer antiguo eliminado");
+          // console.log("Buffer antiguo eliminado");
           player.tech_.setCurrentTime(currentTime);
         }
       });
 
       player.on("error", () => {
-        console.error("Error en el reproductor de Video.js");
+        // console.error("Error en el reproductor de Video.js");
         setError("Error al cargar la transmisión. Intenta recargar la página.");
       });
 

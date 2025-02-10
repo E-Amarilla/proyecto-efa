@@ -39,6 +39,7 @@ const SelectConfiguracion = ({ onChange }) => {
   return (
     <div className={style.customSelect}>
       <Select
+        aria-label="Seleccionar receta"
         className="max-w"
         selectedKeys={[selectedKey]}
         onSelectionChange={handleSelectionChange}
