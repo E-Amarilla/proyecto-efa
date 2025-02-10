@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
-import {Spinner} from "@heroui/spinner";
+import { Spinner } from '@heroui/spinner';
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -168,9 +168,15 @@ const GraficoC = ({ startDate, endDate }) => {
                 const datasetLabel = context.dataset.label || 'Peso';
                 const peso = context.raw.y;
                 const date = formatDate(context.raw.x);
+                // Calcula el total stackeado
+                const totalStacked = context.chart.data.datasets.reduce((total, dataset) => {
+                  const dataItem = dataset.data.find(item => item.x === context.raw.x);
+                  return total + (dataItem ? dataItem.y : 0);
+                }, 0);
                 return [
-                  `Fecha: ${date}`,
-                  `${datasetLabel}: ${peso} kg`
+                  `${datasetLabel}: ${peso} kg`,
+                  `FECHA: ${date}`,
+                  `TOTAL DE LA HORA: ${totalStacked} kg`
                 ];
               },
               title: () => ''
@@ -231,7 +237,7 @@ const GraficoC = ({ startDate, endDate }) => {
     >
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
       {loading && (
-        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75">
+        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-xl">
           <Spinner label="Cargando..." />
         </div>
       )}

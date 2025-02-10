@@ -238,7 +238,7 @@ const Grafico = ({ startDate, endDate }) => {
     >
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
       {loading && (
-        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75">
+        <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-xl">
           <Spinner label="Cargando..." />
         </div>
       )}
