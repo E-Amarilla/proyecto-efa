@@ -5,8 +5,8 @@ import { DateRangePicker } from "@nextui-org/react";
 import BotonesDescarga from "../botones/botonesdescarga/botonesdescargagraficos.jsx";
 import BotonFiltro from "../botones/aplicarfiltro/botonfiltro.jsx";
 import style from "./FiltroPeriodoGraficos.module.css";
-import Grafico2 from "../grafico_ciclos/grafico_ciclos.jsx";
-import Grafico1 from "../grafico_realizados/grafico_realizados.jsx";
+import Grafico1 from "../grafico_ciclos/grafico_ciclos.jsx";
+import Grafico2 from "../grafico_realizados/grafico_realizados.jsx";
 
 const FiltroPeriodo = () => {
     const today = new Date();
@@ -38,6 +38,7 @@ const FiltroPeriodo = () => {
             <div className={style.graph2}>
                 <div className={`${style.grafiproductos} ${style.fullWidth}`}>
                 <Grafico1 startDate={fechaInicio} endDate={fechaFin} />
+                
                 </div>
                 <div className={`${style.contenedor} FiltroPeriodoGraficos`}>
                     <h2 className={style.titulo}>FILTRO POR PERIODO</h2>

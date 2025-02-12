@@ -13,6 +13,11 @@ const Productividad = () => {
         end: today,
     });
 
+    useEffect(() => {
+        // console.log("Nueva data:", data);
+    }, [data]); // Se ejecuta solo cuando data cambia
+    
+
     const handleDataUpdate = (newData, startDate, endDate) => {
         setData(newData);
         setDateRange({ start: startDate, end: endDate });
@@ -34,7 +39,7 @@ const Productividad = () => {
             // console.log(`Cantidad de días: ${Cant_Dias} | Horas de uso: ${Horas_Uso}`);
 
     const Promedio_Horas = (Horas_Uso, Cant_Dias) =>
-        Horas_Uso !== "Cargando..." ? (((Horas_Uso/60000)/60) / (Cant_Dias)).toFixed(2) : "Cargando...";
+        Horas_Uso !== "Cargando..." ? ((Horas_Uso/60) / (Cant_Dias)).toFixed(2) : "Cargando...";
 
     const datos = [
         { id: 1, titulo: "Ciclos realizados", dato: cantidadCiclosF },

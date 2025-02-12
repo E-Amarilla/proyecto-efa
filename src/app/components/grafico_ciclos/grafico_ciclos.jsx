@@ -2,45 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
-import { Spinner } from '@heroui/spinner';
+import {Spinner} from "@heroui/spinner";
 
 Chart.register(...registerables, zoomPlugin);
 
-const GraficoC = ({ startDate, endDate }) => {
+const Grafico = ({ startDate, endDate }) => {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
-  const [chartData, setChartData] = useState({ datasets: [] });
+  const [chartData, setChartData] = useState({ ciclos: [], pesoProducto: [] });
   const [loading, setLoading] = useState(true);
-
-  const colores = [
-    "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
-    "#33FFF6", "#FFC733", "#A1FF33", "#5733FF", "#FF3333",
-    "#33FFA5", "#FF6F33", "#A6FF33", "#33A1FF", "#FF33F6",
-    "#F6FF33", "#33FFF3", "#FF336F", "#57FF33", "#3333FF"
-  ];
-
-  // Función para agrupar los ciclos por hora y sumar el peso desmontado
-  const groupByHour = (cycles) => {
-    const groups = {};
-    cycles.forEach(ciclo => {
-      const date = new Date(ciclo.fecha_fin * 1000);
-      // Redondea la fecha al inicio de la hora
-      const hour = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        date.getHours()
-      ).getTime();
-      if (!groups[hour]) {
-        groups[hour] = 0;
-      }
-      groups[hour] += ciclo.pesoDesmontado;
-    });
-    // Convierte el objeto en un arreglo de { x: timestamp, y: valor } y lo ordena cronológicamente
-    return Object.entries(groups)
-      .map(([hour, value]) => ({ x: parseInt(hour, 10), y: value }))
-      .sort((a, b) => a.x - b.x);
-  };
 
   const fetchData = async () => {
     if (!startDate || !endDate) {
@@ -53,13 +23,10 @@ const GraficoC = ({ startDate, endDate }) => {
 
     try {
       const response = await fetch(
-        `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/productos-realizados/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
+        `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/graficos-historico/ciclos-productos/?fecha_inicio=${startDate}&fecha_fin=${endDate}`,
         {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json"
-          },
+          headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
         }
       );
 
@@ -67,16 +34,8 @@ const GraficoC = ({ startDate, endDate }) => {
         throw new Error(`Error fetching data: ${response.statusText}`);
       }
 
-      const productos = await response.json();
-      const datasets = productos.map((producto, index) => ({
-        label: producto.NombreProducto,
-        backgroundColor: colores[index % colores.length],
-        borderColor: `${colores[index % colores.length]}80`,
-        fill: false,
-        data: groupByHour(producto.ListaDeCiclos)
-      }));
-
-      setChartData({ datasets });
+      const datos = await response.json();
+      setChartData(datos);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -103,29 +62,52 @@ const GraficoC = ({ startDate, endDate }) => {
     const ctx = chartRef.current?.getContext('2d');
     if (!ctx) return;
 
-    // Destruir instancia previa, si existe
+    // Si existe una instancia previa, se destruye
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
 
     const initialData = {
-      datasets: []
+      datasets: [
+        {
+          label: 'Ciclos',
+          data: [],
+          borderColor: '#F828',
+          backgroundColor: '#EF8225',
+          yAxisID: 'ciclos',
+          fill: false,
+          type: 'line'
+        },
+        {
+          label: 'Peso Producto (Tn)',
+          data: [],
+          borderColor: '#3AF8',
+          backgroundColor: '#3AF',
+          yAxisID: 'pesoProducto',
+          fill: false,
+          type: 'line'
+        }
+      ]
     };
 
     const newChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: initialData,
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        interaction: {
-          intersect: false,
-        },
         plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              usePointStyle: true,
+              color: '#D9D9D9'
+            }
+          },
           title: {
             align: 'start',
             display: true,
-            text: 'PRODUCTOS REALIZADOS',
+            text: 'CICLOS POR PRODUCTO',
             color: '#D9D9D9',
             font: {
               size: 20,
@@ -143,71 +125,74 @@ const GraficoC = ({ startDate, endDate }) => {
               family: 'system-ui'
             },
             padding: {
-              top: -10  // Ajusta el subtítulo hacia arriba
+              top: -10  // Se usa padding para mover el subtítulo hacia arriba
             }
-          },
-          legend: {
-            position: 'top',
-            labels: { usePointStyle: true, color: '#D9D9D9' }
           },
           zoom: {
             pan: { enabled: true, mode: 'x' },
-            zoom: {
-              wheel: { enabled: true },
-              pinch: { enabled: true },
-              mode: 'x'
-            },
-            limits: {
-              // Limitar el zoom para que no se muestre un rango menor a 1 hora (3600000 ms)
-              x: { minRange: 3600000 }
-            }
+            zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
           },
           tooltip: {
             callbacks: {
               label: (context) => {
-                const datasetLabel = context.dataset.label || 'Peso';
-                const peso = context.raw.y;
+                const datasetLabel = context.dataset.label || 'Dato';
+                const value = context.raw.y;
                 const date = formatDate(context.raw.x);
-                // Calcula el total stackeado
-                const totalStacked = context.chart.data.datasets.reduce((total, dataset) => {
-                  const dataItem = dataset.data.find(item => item.x === context.raw.x);
-                  return total + (dataItem ? dataItem.y : 0);
-                }, 0);
-                return [
-                  `${datasetLabel}: ${peso} kg`,
-                  `FECHA: ${date}`,
-                  `TOTAL DE LA HORA: ${totalStacked} kg`
-                ];
+                return [`Fecha: ${date}`, `${datasetLabel}: ${value}`];
               },
               title: () => ''
             }
           }
         },
         scales: {
-          y: {
-            stacked: true,
-            title: { display: true, text: 'Peso desmontado (kg)', color: '#D9D9D9' },
-            beginAtZero: true,
-            border: { color: '#D9D9D9' },
-            grid: { color: '#1F1F1F', tickColor: '#fff' },
-            ticks: { color: '#D9D9D9' }
+          ciclos: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+            suggestedMin: 0,
+            suggestedMax: 10,
+            title: {
+              display: true,
+              text: 'Ciclos Completados',
+              color: '#EF8225'
+            },
+            grid: { color: '#1F1F1F', tickColor: '#EF8225' },
+            border: { color: '#EF8225' },
+            ticks: { color: '#EF8225' }
+          },
+          pesoProducto: {
+            type: 'linear',
+            display: true,
+            position: 'right',
+            suggestedMin: 0,
+            suggestedMax: 10,
+            title: {
+              display: true,
+              text: 'Peso Producto (Tn)',
+              color: '#3AF'
+            },
+            grid: { color: '#1F1F1F', tickColor: '#3AF' },
+            border: { color: '#3AF' },
+            ticks: { color: '#3AF' }
           },
           x: {
-            stacked: true,
             type: 'time',
             time: {
-              unit: 'hour',
-              tooltipFormat: 'yyyy-MM-dd HH:mm:ss',
+              parser: 'yyyy-MM-dd',
+              tooltipFormat: 'yyyy-MM-dd',
               displayFormats: {
-                hour: 'HH:mm',
-                day: 'dd MMM',
-                week: 'dd MMM',
-                month: 'MMM yyyy',
-                quarter: 'MMM yyyy',
+                day: 'yyyy-MM-dd',
+                week: 'yyyy-MM-dd',
+                month: 'yyyy-MM',
+                quarter: 'yyyy-MM',
                 year: 'yyyy'
               }
             },
-            title: { display: true, text: 'Tiempo', color: '#D9D9D9' },
+            title: {
+              display: true,
+              text: 'Tiempo',
+              color: '#D9D9D9'
+            },
             border: { color: '#D9D9D9' },
             grid: { color: '#1F1F1F', tickColor: '#fff' },
             ticks: { autoSkip: true, maxTicksLimit: 20, color: '#D9D9D9' }
@@ -224,15 +209,31 @@ const GraficoC = ({ startDate, endDate }) => {
   }, [startDate, endDate, formattedStartDate, formattedEndDate]);
 
   useEffect(() => {
-    if (chartInstanceRef.current && chartData && chartData.datasets.length > 0) {
-      chartInstanceRef.current.data = chartData;
+    if (
+      chartInstanceRef.current &&
+      chartData &&
+      chartData.ciclos.length > 0 &&
+      chartData.pesoProducto.length > 0
+    ) {
+      const ciclosData = chartData.ciclos.map(item => ({
+        x: new Date(item.fecha_fin),
+        y: item.CiclosCompletados
+      }));
+
+      const pesoProductoData = chartData.pesoProducto.map(item => ({
+        x: new Date(item.fecha_fin),
+        y: item.PesoDiarioProducto / 1000
+      }));
+
+      chartInstanceRef.current.data.datasets[0].data = ciclosData;
+      chartInstanceRef.current.data.datasets[1].data = pesoProductoData;
       chartInstanceRef.current.update();
     }
   }, [chartData]);
 
   return (
     <div
-      className="relative bg-black p-[20px] h-full w-full rounded-[15px] mt[10px]"
+      className="relative bg-black p-[20px] h-full w-full rounded-[15px]"
       style={{ height: '500px', width: '100%' }}
     >
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
@@ -245,4 +246,4 @@ const GraficoC = ({ startDate, endDate }) => {
   );
 };
 
-export default GraficoC;
+export default Grafico;
