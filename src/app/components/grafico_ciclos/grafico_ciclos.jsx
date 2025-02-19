@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
-import {Spinner} from "@heroui/spinner";
+import { Spinner } from "@heroui/spinner";
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -62,7 +62,6 @@ const Grafico = ({ startDate, endDate }) => {
     const ctx = chartRef.current?.getContext('2d');
     if (!ctx) return;
 
-    // Si existe una instancia previa, se destruye
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
@@ -107,7 +106,7 @@ const Grafico = ({ startDate, endDate }) => {
           title: {
             align: 'start',
             display: true,
-            text: 'CICLOS POR PRODUCTO',
+            text: 'CICLOS POR DIA',
             color: '#D9D9D9',
             font: {
               size: 20,
@@ -125,12 +124,20 @@ const Grafico = ({ startDate, endDate }) => {
               family: 'system-ui'
             },
             padding: {
-              top: -10  // Se usa padding para mover el subtítulo hacia arriba
+              top: -10
             }
           },
           zoom: {
             pan: { enabled: true, mode: 'x' },
-            zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' }
+            zoom: {
+              wheel: {
+                enabled: true 
+              },
+              pinch: { 
+                enabled: true
+              },
+              mode: 'x' 
+            }
           },
           tooltip: {
             callbacks: {
@@ -141,6 +148,13 @@ const Grafico = ({ startDate, endDate }) => {
                 return [`Fecha: ${date}`, `${datasetLabel}: ${value}`];
               },
               title: () => ''
+            }
+          }
+        },
+        transitions: {
+          zoom: {
+            animation: {
+              duration: 0
             }
           }
         },
@@ -186,7 +200,8 @@ const Grafico = ({ startDate, endDate }) => {
                 month: 'yyyy-MM',
                 quarter: 'yyyy-MM',
                 year: 'yyyy'
-              }
+              },
+              minUnit: 'day'
             },
             title: {
               display: true,
@@ -194,7 +209,7 @@ const Grafico = ({ startDate, endDate }) => {
               color: '#D9D9D9'
             },
             border: { color: '#D9D9D9' },
-            grid: { color: '#1F1F1F', tickColor: '#fff' },
+            grid: { color: '#8C8C8C', tickColor: '#fff' },
             ticks: { autoSkip: true, maxTicksLimit: 20, color: '#D9D9D9' }
           }
         }
@@ -231,6 +246,12 @@ const Grafico = ({ startDate, endDate }) => {
     }
   }, [chartData]);
 
+  const resetZoom = () => {
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.resetZoom();
+    }
+  };
+
   return (
     <div
       className="relative bg-black p-[20px] h-full w-full rounded-[15px]"
@@ -242,6 +263,12 @@ const Grafico = ({ startDate, endDate }) => {
           <Spinner label="Cargando..." />
         </div>
       )}
+      <button
+        onClick={resetZoom}
+        className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
+      >
+        Reiniciar Zoom
+      </button>
     </div>
   );
 };

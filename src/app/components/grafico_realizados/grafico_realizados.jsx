@@ -13,11 +13,11 @@ const GraficoC = ({ startDate, endDate }) => {
   const [loading, setLoading] = useState(true);
 
   const colores = [
-    "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF",
-    "#33FFF6", "#FFC733", "#A1FF33", "#5733FF", "#FF3333",
-    "#33FFA5", "#FF6F33", "#A6FF33", "#33A1FF", "#FF33F6",
-    "#F6FF33", "#33FFF3", "#FF336F", "#57FF33", "#3333FF"
-  ];
+    '#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A6',
+    '#33FFF5', '#FF9A33', '#33FFBD', '#FF3333', '#A633FF',
+    '#FFD933', '#33FFD4', '#A6FF33', '#337BFF', '#33FF76',
+    '#FF3357', '#33FF8D', '#FF8633', '#FF33C5', '#33FFC5'
+  ];  
 
   // Función para agrupar los ciclos por hora y sumar el peso desmontado
   const groupByHour = (cycles) => {
@@ -99,6 +99,8 @@ const GraficoC = ({ startDate, endDate }) => {
     fetchData();
   }, [startDate, endDate]);
 
+  
+
   useEffect(() => {
     const ctx = chartRef.current?.getContext('2d');
     if (!ctx) return;
@@ -176,17 +178,24 @@ const GraficoC = ({ startDate, endDate }) => {
                 return [
                   `${datasetLabel}: ${peso} kg`,
                   `FECHA: ${date}`,
-                  `TOTAL DE LA HORA: ${totalStacked} kg`
+                  `PRODUCCION POR HORA: ${totalStacked} kg`
                 ];
               },
               title: () => ''
             }
           }
         },
+        transitions: {
+          zoom: {
+            animation: {
+              duration: 0
+            }
+          }
+        },
         scales: {
           y: {
             stacked: true,
-            title: { display: true, text: 'Peso desmontado (kg)', color: '#D9D9D9' },
+            title: { display: true, text: 'Peso producto (kg)', color: '#D9D9D9' },
             beginAtZero: true,
             border: { color: '#D9D9D9' },
             grid: { color: '#1F1F1F', tickColor: '#fff' },
@@ -209,7 +218,7 @@ const GraficoC = ({ startDate, endDate }) => {
             },
             title: { display: true, text: 'Tiempo', color: '#D9D9D9' },
             border: { color: '#D9D9D9' },
-            grid: { color: '#1F1F1F', tickColor: '#fff' },
+            grid: { color: '#8C8C8C', tickColor: '#fff' },
             ticks: { autoSkip: true, maxTicksLimit: 20, color: '#D9D9D9' }
           }
         }
@@ -230,6 +239,12 @@ const GraficoC = ({ startDate, endDate }) => {
     }
   }, [chartData]);
 
+  const resetZoom = () => {
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.resetZoom();
+    }
+  };
+
   return (
     <div
       className="relative bg-black p-[20px] h-full w-full rounded-[15px] mt[10px]"
@@ -241,6 +256,12 @@ const GraficoC = ({ startDate, endDate }) => {
           <Spinner label="Cargando..." />
         </div>
       )}
+      <button
+        onClick={resetZoom}
+        className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
+      >
+        Reiniciar Zoom
+      </button>
     </div>
   );
 };

@@ -4,6 +4,17 @@ import { useState, useEffect } from "react";
 import style from "./Productividad.module.css";
 import FiltroPeriodo from "../filtroperiodo/FiltroPeriodo.jsx";
 
+const colors = [
+  '#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A6',
+  '#33FFF5', '#FF9A33', '#33FFBD', '#FF3333', '#A633FF',
+  '#FFD933', '#33FFD4', '#A6FF33', '#337BFF', '#33FF76',
+  '#FF3357', '#33FF8D', '#FF8633', '#FF33C5', '#33FFC5'
+];
+
+const getColorById = (id) => {
+  return colors[(id - 1) % colors.length];
+};
+
 const Productividad = () => {
     const today = new Date().toISOString().split("T")[0];
 
@@ -55,25 +66,18 @@ const Productividad = () => {
           ) },
     ];
 
-    const generarColorAleatorio = () => {
-        const letras = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-            color += letras[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    };
-
     const productos = data?.ProductosRealizados?.map((producto) => {
         const porcentaje = ((producto.pesoTotal * 100) / PesoTotalCiclos / 1000);
+        const pesoEnToneladas = (producto.pesoTotal / 1000).toFixed(1) + "Tn";
         return {
             nombre: producto.NombreProducto,
-            peso: producto.pesoTotal.toFixed(2) + "kg",
+            peso: pesoEnToneladas, 
             cantidadCiclos: producto.cantidadCiclos,
             porcentaje: porcentaje.toFixed(2),
-            color: generarColorAleatorio(),
+            color: getColorById(producto.id_recetario),
         };
     }) ?? [];
+    
 
     return (
         <div id="ProductividadSection" className={style.all}>

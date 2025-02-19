@@ -41,7 +41,7 @@ const FiltroPeriodo = () => {
                 
                 </div>
                 <div className={`${style.contenedor} FiltroPeriodoGraficos`}>
-                    <h2 className={style.titulo}>FILTRO POR PERIODO</h2>
+                    <h2 className={style.titulo}>FILTRADO DE FECHA GRAFICOS</h2>
                     <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                         <div className="flex flex-col items-center w-full">
                             <div className={style.datePickerGlobal}>
