@@ -87,7 +87,8 @@
 
 .seccion {
   width: 100%;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   border-radius: 15px;
   gap: 20px;
 }

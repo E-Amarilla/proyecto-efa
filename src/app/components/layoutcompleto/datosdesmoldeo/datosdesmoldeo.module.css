@@ -1,5 +1,6 @@
 .datosIndvRed {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     padding: 0.4vw 0.8vw;
     border-radius: 0.7vw;
     background-color: #581420;
@@ -11,7 +12,8 @@
 }
 
 .datosIndvGray {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     padding: 0.4vw 0.8vw;
     border-radius: 0.7vw;
     background-color: #5a5a5a;

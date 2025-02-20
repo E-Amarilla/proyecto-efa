@@ -1,5 +1,6 @@
 .datosIndvRed {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     border-radius: 0.7vw;
     border-radius: 1vw;
     background-color: #27a;
