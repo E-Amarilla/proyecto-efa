@@ -70,8 +70,8 @@ const GraficoC = ({ startDate, endDate }) => {
       const productos = await response.json();
       const datasets = productos.map((producto, index) => ({
         label: producto.NombreProducto,
-        backgroundColor: colores[index % colores.length],
-        borderColor: `${colores[index % colores.length]}80`,
+        backgroundColor: colores[(producto.id_recetario - 1) % colores.length],
+        borderColor: `${colores[(producto.id_recetario - 1) % colores.length]}80`,
         fill: false,
         data: groupByHour(producto.ListaDeCiclos)
       }));
@@ -98,8 +98,6 @@ const GraficoC = ({ startDate, endDate }) => {
   useEffect(() => {
     fetchData();
   }, [startDate, endDate]);
-
-  
 
   useEffect(() => {
     const ctx = chartRef.current?.getContext('2d');
