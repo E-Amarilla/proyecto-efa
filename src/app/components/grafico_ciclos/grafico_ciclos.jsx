@@ -101,6 +101,9 @@ const Grafico = ({ startDate, endDate }) => {
             labels: {
               usePointStyle: true,
               color: '#D9D9D9'
+            },
+            onHover: (event) => {
+              event.native.target.style.cursor = 'pointer';
             }
           },
           title: {
