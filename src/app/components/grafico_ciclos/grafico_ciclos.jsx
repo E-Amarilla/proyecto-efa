@@ -161,10 +161,9 @@ const Grafico = ({ startDate, endDate }) => {
         scales: {
           ciclos: {
             type: 'linear',
+            beginAtZero: false,
             display: true,
             position: 'left',
-            suggestedMin: 0,
-            suggestedMax: 10,
             title: {
               display: true,
               text: 'Ciclos Completados',
@@ -176,10 +175,9 @@ const Grafico = ({ startDate, endDate }) => {
           },
           pesoProducto: {
             type: 'linear',
+            beginAtZero: false,
             display: true,
             position: 'right',
-            suggestedMin: 0,
-            suggestedMax: 10,
             title: {
               display: true,
               text: 'Peso Producto (Tn)',
