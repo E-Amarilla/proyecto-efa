@@ -3,6 +3,7 @@ import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
 import { Spinner } from '@heroui/spinner';
+import { Button } from "@nextui-org/react";
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -257,12 +258,23 @@ const GraficoC = ({ startDate, endDate }) => {
           <Spinner label="Cargando..." />
         </div>
       )}
-      <button
-        onClick={resetZoom}
-        className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
+      <Button
+          style={{
+              backgroundColor: "#333",
+              border: "1px solid #CCC",
+              color: "#CCC",
+              width: "15%",
+              height: "35px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "17px",
+          }}
+          onClick={resetZoom}
+          className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
       >
-        Reiniciar Zoom
-      </button>
+          Reiniciar Zoom
+      </Button>
     </div>
   );
 };
