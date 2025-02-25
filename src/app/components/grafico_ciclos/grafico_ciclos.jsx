@@ -194,15 +194,11 @@ const Grafico = ({ startDate, endDate }) => {
             type: 'time',
             time: {
               parser: 'yyyy-MM-dd',
+              unit: 'day',
               tooltipFormat: 'yyyy-MM-dd',
               displayFormats: {
-                day: 'yyyy-MM-dd',
-                week: 'yyyy-MM-dd',
-                month: 'yyyy-MM',
-                quarter: 'yyyy-MM',
-                year: 'yyyy'
-              },
-              minUnit: 'day'
+                day: 'yyyy-MM-dd'
+              }
             },
             title: {
               display: true,
@@ -212,7 +208,7 @@ const Grafico = ({ startDate, endDate }) => {
             border: { color: '#D9D9D9' },
             grid: { color: '#8C8C8C', tickColor: '#fff' },
             ticks: { autoSkip: true, maxTicksLimit: 20, color: '#D9D9D9' }
-          }
+          },
         }
       }
     });
@@ -231,15 +227,23 @@ const Grafico = ({ startDate, endDate }) => {
       chartData.ciclos.length > 0 &&
       chartData.pesoProducto.length > 0
     ) {
-      const ciclosData = chartData.ciclos.map(item => ({
-        x: new Date(item.fecha_fin),
-        y: item.CiclosCompletados
-      }));
+      const ciclosData = chartData.ciclos.map(item => {
+        const date = new Date(item.fecha_fin);
+        date.setHours(0, 0, 0, 0);
+        return {
+          x: date,
+          y: item.CiclosCompletados
+        };
+      });
 
-      const pesoProductoData = chartData.pesoProducto.map(item => ({
-        x: new Date(item.fecha_fin),
-        y: item.PesoDiarioProducto / 1000
-      }));
+      const pesoProductoData = chartData.pesoProducto.map(item => {
+        const date = new Date(item.fecha_fin);
+        date.setHours(0, 0, 0, 0);
+        return {
+          x: date,
+          y: item.PesoDiarioProducto / 1000
+        };
+      });
 
       chartInstanceRef.current.data.datasets[0].data = ciclosData;
       chartInstanceRef.current.data.datasets[1].data = pesoProductoData;
