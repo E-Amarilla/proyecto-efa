@@ -1,6 +1,5 @@
-"use client";
-
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import AuthContext from '../../context/AuthContext';
 import { usePathname } from 'next/navigation';
 import Image from "next/image";
 import cremImg from "@/assets/img/creminox.png";
@@ -13,18 +12,13 @@ import style from './Header.module.css';
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
 import Link from "next/link";
 
-
 const ExeHeader = () => {
+  const { user } = useContext(AuthContext); // Se obtiene el usuario desde el contexto
+  const userRole = user?.role; // Se accede al rol directamente
   const pathname = usePathname();
-  const [logoutVisible, setLogoutVisible] = useState(false);
-  const [userRole, setUserRole] = useState(null);
-
-  const toggleLogout = () => {
-    setLogoutVisible(true);
-  };
 
   const opcionesIconos = [
-    { id: 1, icon: usuario, onClick: toggleLogout },
+    { id: 1, icon: usuario, onClick: () => {} },
     { id: 2, icon: alarmaImg, isDropdown: true },
     { id: 3, url: "/configuraciones", icon: confImg },
   ];
@@ -33,20 +27,6 @@ const ExeHeader = () => {
     { id: 1, url: "/camaras", text: "CAMARAS" },
     { id: 2, url: "/completo", text: "HOME" },
   ];
-
-  useEffect(() => {
-    // Recupera el objeto de usuario del localStorage
-    const userString = localStorage.getItem("user");
-    if (userString) {
-      const user = JSON.parse(userString);
-      console.log("User role:", user.role); // Log para depuración
-      setUserRole(user.role);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Sincroniza el estado con la ruta actual en la carga del cliente
-  }, [pathname]);
 
   return (
     <>
@@ -60,6 +40,7 @@ const ExeHeader = () => {
                 ) : onClick ? (
                     <Desloguear icon={icon} />
                 ) : (
+                  // Ejemplo de ocultar el enlace basado en el rol
                   userRole === "ADMIN" || id !== 3 ? (
                     <Link href={url}>
                       <Image
@@ -73,7 +54,6 @@ const ExeHeader = () => {
               </div>
             ))}
           </div>
-          {logoutVisible && <Desloguear />}
           <div className={style.centerText}>
             <p>MXEF-04 | CELDA DE DESMOLDEO</p>
           </div>

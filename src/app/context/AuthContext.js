@@ -71,16 +71,20 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/usuario/login`, formData, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             });
-
-            const token = response.data.access_token;
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            localStorage.setItem('user', JSON.stringify(response.data));
-            Cookies.set('token', token, { secure: false, sameSite: 'lax' });
-            setUser(response.data);
+        
+            const { role, access_token, token_type } = response.data;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+            
+            // Almacenar en localStorage solo el token y el token_type, excluyendo el role
+            localStorage.setItem('user', JSON.stringify({ access_token, token_type }));
+            
+            Cookies.set('token', access_token, { secure: false, sameSite: 'lax' });
+            
+            // Guardar el role únicamente en el estado del contexto
+            setUser({ access_token, token_type, role });
+            
             router.push('/completo');
-            // console.log('Login Authorized');
         } catch (error) {
-            // console.log('Login Failed:', error);
             throw new Error('Credenciales inválidas');
         }
     };
