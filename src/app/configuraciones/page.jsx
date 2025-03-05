@@ -2,11 +2,11 @@
 
 import style from './configuraciones.module.css';
 // Imagenes
-
 import Image from "next/image";
 import receta2 from '@/assets/img/RECETA2.png';
 
 import { useContext, useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation"; // Para redirección
 
 import AuthContext from "../context/AuthContext"
 
@@ -20,31 +20,53 @@ import SelectTorre from "../components/botones/selectTorre/selectTorre"
 import SelectNivel from "../components/botones/selectNivel/selectNivel"
 
 const Configuraciones = () => {
-    const { data } = useContext(AuthContext); // Obtiene datos del contexto
+    const router = useRouter();
 
+    // Estado para guardar el rol del usuario recuperado del localStorage
+    const [userRole, setUserRole] = useState("");
+
+    // Recupera el usuario del localStorage
+    useEffect(() => {
+        const userString = localStorage.getItem("user");
+        if (userString) {
+            const user = JSON.parse(userString);
+            console.log("User role:", user.role); // Log para depuración
+            setUserRole(user.role);
+        }
+    }, []);
+
+    // Redirige a /completo si el rol es CLIENTE
+    useEffect(() => {
+        if (userRole === "CLIENTE") {
+            router.push("/completo");
+        }
+    }, [userRole, router]);
+
+    // Se puede seguir utilizando el AuthContext para otros datos
+    const { data } = useContext(AuthContext);
     const { idRecetaActual } = data?.desmoldeo || {};
 
     const datosGeneralesIzq = [
-        { id: 1, texto: 'DATO 1', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 2, texto: 'DATO 2', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 3, texto: 'DATO 3', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 4, texto: 'DATO 4', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 5, texto: 'DATO 5', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 6, texto: 'DATO 6', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 7, texto: 'DATO 7', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 8, texto: 'DATO 8', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
+        { id: 1, texto: 'DATO 1', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 2, texto: 'DATO 2', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 3, texto: 'DATO 3', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 4, texto: 'DATO 4', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 5, texto: 'DATO 5', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 6, texto: 'DATO 6', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 7, texto: 'DATO 7', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 8, texto: 'DATO 8', dato: idRecetaActual ?? 'null', icono: receta2 },
     ];       
 
     const datosGeneralesDer = [
-        { id: 1, texto: 'DATO 9', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 2, texto: 'DATO 10', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 3, texto: 'DATO 11', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 4, texto: 'DATO 12', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 5, texto: 'DATO 13', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 6, texto: 'DATO 14', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 7, texto: 'DATO 15', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 8, texto: 'DATO 16', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 9, texto: 'DATO 17', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
+        { id: 1, texto: 'DATO 9', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 2, texto: 'DATO 10', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 3, texto: 'DATO 11', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 4, texto: 'DATO 12', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 5, texto: 'DATO 13', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 6, texto: 'DATO 14', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 7, texto: 'DATO 15', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 8, texto: 'DATO 16', dato: idRecetaActual ?? 'null', icono: receta2 },
+        { id: 9, texto: 'DATO 17', dato: idRecetaActual ?? 'null', icono: receta2 },
     ];
 
     const datosCorrecionesTorre = [
@@ -117,30 +139,23 @@ const Configuraciones = () => {
         { id: 2, nombre: 'NIVEL' },
     ];
 
-
     const inputRefs = useRef([]);
 
     const handleAplicarClick = (index) => {
         if (inputRefs.current[index]) {
-            // console.log(`Valor del input ${index + 1}:`, inputRefs.current[index].value);
             toast.success("El dato de la corrección fue ajustado con éxito", {
                 position: "bottom-center",
             });
         }
     };
 
-
     const [selectedOption, setSelectedOption] = useState(1);
 
     const handleOptionClick = (id) => {
         if (selectedOption !== id) {
-            setSelectedOption(prev => {
-            const newSelectedOption = prev === id ? null : id;
-            return newSelectedOption;
-            });
+            setSelectedOption(prev => (prev === id ? null : id));
         }
-      };
-
+    };
 
     const [selectedNivel, setSelectedNivel] = useState('CH');
 
@@ -149,9 +164,8 @@ const Configuraciones = () => {
     };
 
     useEffect(() => {
-        // console.log("CORRECCION NIVEL SELECCIONADA:", selectedNivel);
+        // Se observa el cambio en el nivel seleccionado
     }, [selectedNivel]);
-
 
     const [selectedTorre, setSelectedTorre] = useState('1');
 
@@ -160,22 +174,20 @@ const Configuraciones = () => {
     };
 
     useEffect(() => {
-        // console.log("TORRE SELECCIONADA: ", selectedTorre);
+        // Se observa el cambio en la torre seleccionada
     }, [selectedTorre]);
     
     const datosActuales = selectedOption === 1
-    ? datosCorrecionesTorre
-    : (selectedNivel === 'CH' 
-        ? datosCorrecionesNivelesCH 
-        : selectedNivel === 'CHb'
-        ? datosCorrecionesNivelesCHb
-        : selectedNivel === 'FA'
-        ? datosCorrecionesNivelesFA
-        : datosCorrecionesNivelesCHg);
+        ? datosCorrecionesTorre
+        : (selectedNivel === 'CH' 
+            ? datosCorrecionesNivelesCH 
+            : selectedNivel === 'CHb'
+            ? datosCorrecionesNivelesCHb
+            : selectedNivel === 'FA'
+            ? datosCorrecionesNivelesFA
+            : datosCorrecionesNivelesCHg);
 
-    // console.log("selectedOption: ", selectedOption, "selectedNivel: ", selectedNivel);
-
-    const [selectedReceta, setSelectedReceta] = useState("1"); // Estado para receta
+    const [selectedReceta, setSelectedReceta] = useState("1");
 
     return (
         <div className={style.all}>
@@ -234,13 +246,13 @@ const Configuraciones = () => {
                                     className={`${style.navLink} ${selectedOption === id ? style.active : ''}`}
                                     onClick={() => handleOptionClick(id)}
                                 >
-                                <div className={style.botonTorre}>
-                                    <span className={style.nombre}>{nombre}</span>
-                                    <div className={style.selectTorreWrapper}>
-                                        {id === 1 && <SelectTorre onChange={handleTorreChange}/>}
-                                        {id === 2 && <SelectNivel onChange={handleNivelChange}/>}
+                                    <div className={style.botonTorre}>
+                                        <span className={style.nombre}>{nombre}</span>
+                                        <div className={style.selectTorreWrapper}>
+                                            {id === 1 && <SelectTorre onChange={handleTorreChange}/>}
+                                            {id === 2 && <SelectNivel onChange={handleNivelChange}/>}
+                                        </div>
                                     </div>
-                                </div>
                                 </button>
                             </li>
                         ))}
@@ -250,51 +262,51 @@ const Configuraciones = () => {
                 <div className={style.contenedor}>
                     {selectedOption === 2 ? (
                         (selectedNivel === "CH" || selectedNivel === "CHg" || selectedNivel === "CHb") ? (
-                        <div className={style.datosGenNiveles}>
-                            <ul className={style.listaNiveles}>
-                            {datosActuales.map(({ id, texto, dato }, index) => (
-                                <li key={id} className={style.datoListNiveles}>
-                                <div className={style.detallesDatos}>
-                                    <div className={style.texto}>
-                                    <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                    <h4 className={textstyle.h4}>
-                                        {dato} - 
-                                        <input 
-                                        ref={(el) => (inputRefs.current[index] = el)}
-                                        className={style.inputCorreciones} 
-                                        />
-                                    </h4>
-                                    </div>
-                                    <BotonAplicar 
-                                    className={style.botonAplicar} 
-                                    onClick={() => handleAplicarClick(index)}
-                                    />
-                                </div>
-                                </li>
-                            ))}
-                            </ul>
-                        </div>
-                        ) : (
-                        <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>
-                            <ul className={selectedOption === 2 ? style.listaNiveles : style.lista}>
-                                {datosActuales.map(({ id, texto, dato }, index) => (
-                                    <li key={id} className={selectedOption === 2 ? style.datoListNivelesFallas : style.datoListCorreciones}>
-                                        <div className={style.detallesDatos}>
-                                            <div className={style.texto}>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <h4 className={textstyle.h4}>
-                                                    {dato}
-                                                </h4>
+                            <div className={style.datosGenNiveles}>
+                                <ul className={style.listaNiveles}>
+                                    {datosActuales.map(({ id, texto, dato }, index) => (
+                                        <li key={id} className={style.datoListNiveles}>
+                                            <div className={style.detallesDatos}>
+                                                <div className={style.texto}>
+                                                    <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                                    <h4 className={textstyle.h4}>
+                                                        {dato} - 
+                                                        <input 
+                                                            ref={(el) => (inputRefs.current[index] = el)}
+                                                            className={style.inputCorreciones} 
+                                                        />
+                                                    </h4>
+                                                </div>
+                                                <BotonAplicar 
+                                                    className={style.botonAplicar} 
+                                                    onClick={() => handleAplicarClick(index)}
+                                                />
                                             </div>
-                                            <BotonResetear 
-                                                className={style.botonAplicar} 
-                                                onClick={() => handleAplicarClick(index)}
-                                            />
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ) : (
+                            <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>
+                                <ul className={selectedOption === 2 ? style.listaNiveles : style.lista}>
+                                    {datosActuales.map(({ id, texto, dato }, index) => (
+                                        <li key={id} className={selectedOption === 2 ? style.datoListNivelesFallas : style.datoListCorreciones}>
+                                            <div className={style.detallesDatos}>
+                                                <div className={style.texto}>
+                                                    <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                                    <h4 className={textstyle.h4}>
+                                                        {dato}
+                                                    </h4>
+                                                </div>
+                                                <BotonResetear 
+                                                    className={style.botonAplicar} 
+                                                    onClick={() => handleAplicarClick(index)}
+                                                />
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         )
                     ) : (
                         <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>

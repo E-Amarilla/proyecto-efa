@@ -9,6 +9,7 @@
     color: #D9D9D9;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    flex: 1;
 }
 
 .contenedorDatos {
@@ -27,7 +28,6 @@
     border-radius: 15px;
     display: flex; /* Habilitar flexbox */
     flex-direction: column; /* Asegurar que los elementos internos estén en columna */
-    justify-content: center; /* Centrar contenido verticalmente */
 }
 
 .icon {

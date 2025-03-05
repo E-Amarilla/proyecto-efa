@@ -37,7 +37,7 @@ const Completo = () => {
       return;
     }
 
-    const filteredItems = data.alarmas.filter(alarmas => 
+    const filteredItems = data.alarmas.filter(alarmas =>
       alarmas.tipoAlarma === "Error" || alarmas.tipoAlarma === "Alerta"
     );
 
@@ -46,9 +46,12 @@ const Completo = () => {
       description: alarmas.descripcion,
       type: alarmas.tipoAlarma,
       state: alarmas.estadoAlarma,
-      time: alarmas.fechaRegistro,
+      // Se muestra siempre la fecha y hora actual
+      time: alarmas.fechaActual,
+      // Si la alarma está activa y posee fechaInicio, se asigna; de lo contrario, se deja vacío.
+      registerTime: alarmas.estadoAlarma === "Activo" && alarmas.fechaInicio ? alarmas.fechaInicio : "",
     })));
-
+    
     setIsLoading(false);
   }, [data]);
 
@@ -56,7 +59,8 @@ const Completo = () => {
     { key: "description", label: "DESCRIPCIÓN" },
     { key: "type", label: "TIPO" },
     { key: "state", label: "ESTADO" },
-    { key: "time", label: "HORA" },
+    { key: "time", label: "FECHA Y HORA ACTUAL" },
+    { key: "registerTime", label: "FECHA Y HORA DE INICIO" },
   ];
 
   const totalRows = items.length;

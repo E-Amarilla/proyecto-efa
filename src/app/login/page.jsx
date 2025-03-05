@@ -25,7 +25,12 @@ const Login = () => {
       await login(username, password);
       setMessage(''); // Limpiar el mensaje si el login es exitoso
     } catch (error) {
-      setMessage('Credenciales inválidas'); // Mostrar mensaje de error
+      console.error("Error:", error);
+      if (error.message === "Credenciales inválidas") {
+        setMessage('Credenciales inválidas'); // Mostrar mensaje de error de credenciales
+      } else {
+        setMessage('Ha ocurrido un error. Por favor, inténtalo de nuevo.'); // Mensaje genérico para otros errores
+      }
     } finally {
       setLoading(false); // Desactivar el spinner
     }

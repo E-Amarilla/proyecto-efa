@@ -17,6 +17,7 @@ import Link from "next/link";
 const ExeHeader = () => {
   const pathname = usePathname();
   const [logoutVisible, setLogoutVisible] = useState(false);
+  const [userRole, setUserRole] = useState(null);
 
   const toggleLogout = () => {
     setLogoutVisible(true);
@@ -34,6 +35,16 @@ const ExeHeader = () => {
   ];
 
   useEffect(() => {
+    // Recupera el objeto de usuario del localStorage
+    const userString = localStorage.getItem("user");
+    if (userString) {
+      const user = JSON.parse(userString);
+      console.log("User role:", user.role); // Log para depuración
+      setUserRole(user.role);
+    }
+  }, []);
+
+  useEffect(() => {
     // Sincroniza el estado con la ruta actual en la carga del cliente
   }, [pathname]);
 
@@ -49,13 +60,15 @@ const ExeHeader = () => {
                 ) : onClick ? (
                     <Desloguear icon={icon} />
                 ) : (
-                  <Link href={url}>
-                    <Image
-                      className={style.icon}
-                      src={icon}
-                      alt={`Icono ${id}`}
-                    />
-                  </Link>
+                  userRole === "ADMIN" || id !== 3 ? (
+                    <Link href={url}>
+                      <Image
+                        className={style.icon}
+                        src={icon}
+                        alt={`Icono ${id}`}
+                      />
+                    </Link>
+                  ) : null
                 )}
               </div>
             ))}

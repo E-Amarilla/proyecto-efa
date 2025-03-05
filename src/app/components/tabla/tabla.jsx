@@ -42,24 +42,25 @@ const Tabla = () => {
               const index = updatedItems.findIndex(
                 (item) => item.key === alerta.id_alarma.toString()
               );
+
+              const newItem = {
+                key: alerta.id_alarma.toString(),
+                description: alerta.descripcion,
+                type: alerta.tipoAlarma,
+                state: alerta.estadoAlarma,
+                time: alerta.fechaActual,
+                startDate:
+                  alerta.estadoAlarma === "Activo" && alerta.fechaInicio
+                    ? alerta.fechaInicio
+                    : "",
+              };
+
               if (index !== -1) {
                 // Actualizamos el item existente
-                updatedItems[index] = {
-                  key: alerta.id_alarma.toString(),
-                  description: alerta.descripcion,
-                  type: alerta.tipoAlarma,
-                  state: alerta.estadoAlarma,
-                  time: alerta.fechaRegistro,
-                };
+                updatedItems[index] = newItem;
               } else {
                 // Agregamos un nuevo item
-                updatedItems.push({
-                  key: alerta.id_alarma.toString(),
-                  description: alerta.descripcion,
-                  type: alerta.tipoAlarma,
-                  state: alerta.estadoAlarma,
-                  time: alerta.fechaRegistro,
-                });
+                updatedItems.push(newItem);
               }
             });
 
@@ -91,7 +92,8 @@ const Tabla = () => {
     { key: "description", label: "DESCRIPCIÓN" },
     { key: "type", label: "TIPO" },
     { key: "state", label: "ESTADO" },
-    { key: "time", label: "HORA" },
+    { key: "time", label: "FECHA Y HORA ACTUAL" },
+    { key: "startDate", label: "FECHA Y HORA DE INICIO" },
   ];
 
   const handleSort = (key) => {
@@ -177,10 +179,10 @@ const Tabla = () => {
       </Table>
       {error && (
         <div className="text-center mt-[4px] text-[#D9D9D9] h-[150px] flex flex-col justify-center items-center shadow-md rounded-[15px]">
-            <div className="mb-2">{error}</div>
-            <Button onClick={connectWebSocket} className="bg-[#761122]">
-                Reintentar
-            </Button>
+          <div className="mb-2">{error}</div>
+          <Button onClick={connectWebSocket} className="bg-[#761122]">
+            Reintentar
+          </Button>
         </div>
       )}
       <div className="flex justify-between items-center mt-5">

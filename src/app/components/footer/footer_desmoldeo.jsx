@@ -80,7 +80,7 @@ const Footer = () => {
             </div>
             <hr className={style.HR} />
             <div className={style.footerAbajo}>
-                <p>© 2025 All Rights Reserved Cremona Inoxidable</p>
+                <p>© 2025 All Rights Reserved Cremona Inoxidable v1.0.0-beta</p>
             </div>
         </footer>
     );
