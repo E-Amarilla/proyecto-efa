@@ -47,11 +47,8 @@ export const AuthProvider = ({ children }) => {
                     await fetch("/api/cleanup", { method: "POST" });
                     const response = await fetch("/api/stream");
                     const data = await response.json();
-                    // console.log(data.message);
                     setStreamInitialized(true);
-                } catch (error) {
-                    // console.error("Error al iniciar la transmisión:", error);
-                }
+                } finally {}
             }
         };
         initializeStream();

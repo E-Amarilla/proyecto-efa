@@ -37,8 +37,6 @@ const Grafico = ({ startDate, endDate }) => {
 
       const datos = await response.json();
       setChartData(datos);
-    } catch (error) {
-      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }

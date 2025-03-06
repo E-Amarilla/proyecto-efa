@@ -44,9 +44,8 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
             }
 
             const data = await response.json();
-            onDataUpdate(data, startDate, endDate); // Pasar fechas a onDataUpdate
+            onDataUpdate(data, startDate, endDate);
         } catch (error) {
-            // console.error("Error fetching initial data:", error);
         } finally {
             setLoading(false);
         }
@@ -75,9 +74,8 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
             }
 
             const data = await response.json();
-            onDataUpdate(data, startDate, endDate); // Pasar fechas a onDataUpdate
+            onDataUpdate(data, startDate, endDate);
         } catch (error) {
-            // console.error("Error fetching data:", error);
         } finally {
             setLoading(false);
         }
@@ -85,7 +83,7 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
 
     useEffect(() => {
         fetchInitialData();
-    }, []); // Ejecuta solo al montar el componente
+    }, []);
 
     return (
         <div className={`${style.contenedor} FiltroPeriodo`}>

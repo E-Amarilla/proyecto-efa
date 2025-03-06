@@ -35,7 +35,6 @@ const Login = () => {
       localStorage.setItem('username', username);
       setMessage(''); // Limpiar el mensaje si el login es exitoso
     } catch (error) {
-      console.error("Error:", error);
       if (error.message === "Credenciales inválidas") {
         setMessage('Credenciales inválidas'); // Mostrar mensaje de error de credenciales
       } else {

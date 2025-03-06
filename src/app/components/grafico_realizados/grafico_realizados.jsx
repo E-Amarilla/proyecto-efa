@@ -78,8 +78,6 @@ const GraficoC = ({ startDate, endDate }) => {
       }));
 
       setChartData({ datasets });
-    } catch (error) {
-      console.error("Error fetching data:", error);
     } finally {
       setLoading(false);
     }

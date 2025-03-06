@@ -33,7 +33,6 @@ export default function Notificaciones() {
 
                 // Detecta únicamente cambios de Inactivo/null a Activo
                 if ((!prevAlarma || prevAlarma.estadoAlarma !== "Activo") && alarmas.estadoAlarma === "Activo") {
-                    // console.log(`Alarma integrada: Cambio de estado de inactivo/null a activo. ID: ${alarmas.id_alarma}`);
 
                     const id = toast(
                         <div className={style.notification}>
@@ -59,8 +58,6 @@ export default function Notificaciones() {
 
                     // Actualiza el estado de las alarmas activas
                     setActiveToasts(prev => [...prev, alarmas.id_alarma]);
-                } else {
-                    // console.log(`Alarma descartada: Estado sin cambios, ya activa o cambio a inactivo. ID: ${alarmas.id_alarma}`);
                 }
             });
 
