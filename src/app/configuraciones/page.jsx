@@ -19,14 +19,16 @@ import SelectNivel from "../components/botones/selectNivel/selectNivel";
 
 const Configuraciones = () => {
     const router = useRouter();
-
-    const [setUserRole] = useState("");
+    const [userRole, setUserRole] = useState(""); // Asegúrate de que useState esté correctamente definido
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user_data');
+        const username = localStorage.getItem('username'); // Obtenemos el nombre de usuario desde otro objeto
         const token = storedUser ? JSON.parse(storedUser).access_token : null;
         console.log("Paso 1");
         console.log("Stored User:", storedUser);
+        console.log("Username:", username); // Verificamos el nombre de usuario
+        
         async function fetchUsers() {
             console.log("Paso 2");
             try {
@@ -43,20 +45,18 @@ const Configuraciones = () => {
                 );
     
                 if (!response.ok) {
-                    console.error("Error al obtener la lista de usuarios");
-                    return;
+                    throw new Error("Error al obtener la lista de usuarios");
                 }
     
                 const users = await response.json();
                 console.log("Users:", users);
     
-                if (storedUser) {
+                if (storedUser && username) {
                     console.log("Paso 4");
-                    const currentUser = JSON.parse(storedUser);
-                    console.log("Current User:", currentUser.name);
+                    console.log("Current User:", username);
                     console.log("User being compared:", users.map(u => u.name));
                     // Se busca el usuario actual en el array de usuarios
-                    const foundUser = users.find((u) => u.name === currentUser.name);
+                    const foundUser = users.find((u) => u.name === username);
                     if (foundUser) {
                         console.log("Paso 5");
                         setUserRole(foundUser.role);
@@ -65,19 +65,19 @@ const Configuraciones = () => {
                             console.log("Redirigiendo a /completo");
                             router.push("/completo");
                         }
+                    } else {
+                        throw new Error("Usuario no encontrado en la lista de usuarios");
                     }
+                } else {
+                    throw new Error("storedUser o username no están presentes");
                 }
             } catch (error) {
-                console.log("Error en fetch de usuarios:", error);
                 console.error("Error en fetch de usuarios:", error);
             }
         }
         fetchUsers();
     }, [router]);
-    
 
-
-    // Se puede seguir utilizando el AuthContext para otros datos
     const { data } = useContext(AuthContext);
     const { idRecetaActual } = data?.desmoldeo || {};
 
