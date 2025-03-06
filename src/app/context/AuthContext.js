@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const [streamInitialized, setStreamInitialized] = useState(false);
     const [user, setUser] = useState(() => {
         if (typeof window !== "undefined") {
-            const storedUser = localStorage.getItem('user');
+            const storedUser = localStorage.getItem('user_data');
             return storedUser ? JSON.parse(storedUser) : null;
         }
         return null;
@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
             
             // Almacenar en localStorage solo el token y el token_type, excluyendo el role
-            localStorage.setItem('user', JSON.stringify({ access_token, token_type }));
+            localStorage.setItem('user_data', JSON.stringify({ access_token, token_type }));
             
             Cookies.set('token', access_token, { secure: false, sameSite: 'lax' });
             
@@ -93,7 +93,8 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         delete axios.defaults.headers.common['Authorization'];
         localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        localStorage.removeItem('user_data');
+        localStorage.removeItem('username');
         router.push('/login');
     };
 

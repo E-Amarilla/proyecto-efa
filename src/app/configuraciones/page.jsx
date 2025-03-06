@@ -1,46 +1,81 @@
 "use client";
 
+import { useContext, useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation"; // Para redirección
+import axios from "axios";
 import style from './configuraciones.module.css';
 // Imagenes
 import Image from "next/image";
 import receta2 from '@/assets/img/RECETA2.png';
 
-import { useContext, useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation"; // Para redirección
-
 import AuthContext from "../context/AuthContext"
-
 import textstyle from './texto.module.css';
-
 import { toast } from "sonner";
 import BotonAplicar from '../components/botones/aplicarcorrecion/botonaplicar';
 import BotonResetear from '../components/botones/resetearfalla/botonresetear';
-import SelectConfiguracion from '../components/botones/selectConfiguracion/selectConfiguracion'
-import SelectTorre from "../components/botones/selectTorre/selectTorre"
-import SelectNivel from "../components/botones/selectNivel/selectNivel"
+import SelectConfiguracion from '../components/botones/selectConfiguracion/selectConfiguracion';
+import SelectTorre from "../components/botones/selectTorre/selectTorre";
+import SelectNivel from "../components/botones/selectNivel/selectNivel";
 
 const Configuraciones = () => {
     const router = useRouter();
 
-    // Estado para guardar el rol del usuario recuperado del localStorage
-    const [userRole, setUserRole] = useState("");
+    const [setUserRole] = useState("");
 
-    // Recupera el usuario del localStorage
     useEffect(() => {
-        const userString = localStorage.getItem("user");
-        if (userString) {
-            const user = JSON.parse(userString);
-            console.log("User role:", user.role); // Log para depuración
-            setUserRole(user.role);
+        const storedUser = localStorage.getItem('user_data');
+        const token = storedUser ? JSON.parse(storedUser).access_token : null;
+        console.log("Paso 1");
+        console.log("Stored User:", storedUser);
+        async function fetchUsers() {
+            console.log("Paso 2");
+            try {
+                console.log("Paso 3");
+                const response = await fetch(
+                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/usuario/lista-usuarios`,
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            Accept: "application/json",
+                        },
+                    }
+                );
+    
+                if (!response.ok) {
+                    console.error("Error al obtener la lista de usuarios");
+                    return;
+                }
+    
+                const users = await response.json();
+                console.log("Users:", users);
+    
+                if (storedUser) {
+                    console.log("Paso 4");
+                    const currentUser = JSON.parse(storedUser);
+                    console.log("Current User:", currentUser.name);
+                    console.log("User being compared:", users.map(u => u.name));
+                    // Se busca el usuario actual en el array de usuarios
+                    const foundUser = users.find((u) => u.name === currentUser.name);
+                    if (foundUser) {
+                        console.log("Paso 5");
+                        setUserRole(foundUser.role);
+                        // Si el rol no es "ADMIN", se redirige a "/completo"
+                        if (foundUser.role !== "ADMIN") {
+                            console.log("Redirigiendo a /completo");
+                            router.push("/completo");
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log("Error en fetch de usuarios:", error);
+                console.error("Error en fetch de usuarios:", error);
+            }
         }
-    }, []);
+        fetchUsers();
+    }, [router]);
+    
 
-    // Redirige a /completo si el rol es CLIENTE
-    useEffect(() => {
-        if (userRole === "CLIENTE") {
-            router.push("/completo");
-        }
-    }, [userRole, router]);
 
     // Se puede seguir utilizando el AuthContext para otros datos
     const { data } = useContext(AuthContext);

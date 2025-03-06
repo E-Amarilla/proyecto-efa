@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import style from "./Login.module.css";
 import Link from "next/link";
@@ -16,6 +16,14 @@ const Login = () => {
   const [message, setMessage] = useState(''); // Estado para el mensaje de error
   const [loading, setLoading] = useState(false); // Estado para el spinner
 
+  useEffect(() => {
+    // Retrieve username from local storage when component mounts
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Activar el spinner
@@ -23,6 +31,8 @@ const Login = () => {
 
     try {
       await login(username, password);
+      // Save username in local storage on successful login
+      localStorage.setItem('username', username);
       setMessage(''); // Limpiar el mensaje si el login es exitoso
     } catch (error) {
       console.error("Error:", error);

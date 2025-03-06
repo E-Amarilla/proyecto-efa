@@ -9,7 +9,7 @@ import webIcon from './webbase64'; // Importa la data URL de la imagen
 import mailIcon from './mailbase64'; // Importa la data URL de la imagen
 
 export default function BotonesDescarga({ startDate, endDate }) {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem('user_data');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
     
     const handlePdfDownload = async () => {
