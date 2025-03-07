@@ -2,32 +2,32 @@
 
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
-import BuscarIcon from "./IMG/SearchIcon.png";
+import ResetIcon from "./IMG/RefreshIcon.jpg";
 
-const BotonFiltro = ({ onClick, isDisabled}) => {
+const BotonFiltro = ({ onClick }) => {
     return (
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
             <Button
                 style={{
-                    backgroundColor: "#1F1F1F",
-                    border: "2px solid #555555",
-                    color: "#8c8c8c",
-                    width: "100%",
+                    backgroundColor: "rgba(0, 123, 255, 0.25)",
+                    border: "2px solid #007BFF",
+                    color: "#D9D9D9",
+                    width: "40px",
                     height: "30px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     fontSize: "15px",
                     boxShadow: "0 2px 5px rgba(217, 217, 217, 0.1)",
+                    marginTop: "10px",
+                    fontWeight: "bold"
                 }}
                 onClick={onClick}
-                isDisabled={isDisabled}
             >
-                Aplicar cambios
-                <Image src={BuscarIcon} alt="Buscar Icono" width={20} height={20} style={{ marginLeft: "5px" }} />
+                <Image src={ResetIcon} alt="Buscar Icono" width={16} height={16}/>
             </Button>
         </div>
     );
-}
+};
 
 export default BotonFiltro;

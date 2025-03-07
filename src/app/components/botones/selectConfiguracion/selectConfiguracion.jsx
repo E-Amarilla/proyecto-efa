@@ -1,50 +1,65 @@
-import { useState } from "react";
-import { Select, SelectItem } from "@heroui/react";
+"use client";
+
+import { useState, useEffect } from "react";
+import { Select, SelectItem } from "@nextui-org/react";
 import style from "./selectConfiguracion.module.css";
+import BotonRefresh from '../../../components/botones/aplicarreset/botonreset2'
 
-export const recetas = [
-  { key: "1", label: "RECETA 1" },
-  { key: "2", label: "RECETA 2" },
-  { key: "3", label: "RECETA 3" },
-  { key: "4", label: "RECETA 4" },
-  { key: "5", label: "RECETA 5" },
-  { key: "6", label: "RECETA 6" },
-  { key: "7", label: "RECETA 7" },
-  { key: "8", label: "RECETA 8" },
-  { key: "9", label: "RECETA 9" },
-  { key: "10", label: "RECETA 10" },
-  { key: "11", label: "RECETA 11" },
-  { key: "12", label: "RECETA 12" },
-  { key: "13", label: "RECETA 13" },
-  { key: "14", label: "RECETA 14" },
-  { key: "15", label: "RECETA 15" },
-  { key: "16", label: "RECETA 16" },
-  { key: "17", label: "RECETA 17" },
-  { key: "18", label: "RECETA 18" },
-  { key: "19", label: "RECETA 19" },
-  { key: "20", label: "RECETA 20" },
-];
+const SelectConfiguracion = ({ onChange, onClick}) => {
+  const [recetas, setRecetas] = useState([]);
+  const [selectedKey, setSelectedKey] = useState("loading"); // Iniciar con "loading"
+  const [loading, setLoading] = useState(true);
 
-const SelectConfiguracion = ({ onChange }) => {
-  const [selectedKey, setSelectedKey] = useState("1");
+  useEffect(() => {
+    const fetchRecetas = async () => {
+      setLoading(true);
+
+      try {
+        const response = await fetch(
+          `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/lista-recetas`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error en la petición: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        const recetasFormateadas = data.ListadoRecetas.map((receta) => ({
+          key: receta.id.toString(),
+          label: receta.codigoProducto,
+        }));
+
+        setRecetas(recetasFormateadas);
+        setSelectedKey(recetasFormateadas.length > 0 ? recetasFormateadas[0].key : ""); // Seleccionar la primera receta
+      } catch (error) {
+        console.error("Error al obtener recetas:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecetas();
+  }, []);
 
   const handleSelectionChange = (keys) => {
     if (keys.size > 0) {
       const newValue = Array.from(keys)[0];
       setSelectedKey(newValue);
-      onChange(newValue); // Enviar el valor a la página padre
+      onChange(newValue);
     }
   };
 
   return (
     <div className={style.customSelect}>
       <Select
+        isDisabled={loading}
         aria-label="Seleccionar receta"
         className="max-w"
         selectedKeys={[selectedKey]}
         onSelectionChange={handleSelectionChange}
         itemHeight={32.2}
-        maxListboxHeight={667}
+        maxListboxHeight={310}
         isVirtualized
         style={{
           gap: "8px",
@@ -56,7 +71,7 @@ const SelectConfiguracion = ({ onChange }) => {
           classNames: {
             base: "before:bg-default-200",
             content:
-              "p-[10px] border-small border-divider bg-[#131313] align-middle mb-[8px]",
+              "p-[10px] bg-[#131313] align-middle mb-[8px] shadow-lg shadow-white/20",
           },
         }}
         scrollShadowProps={{
@@ -84,10 +99,17 @@ const SelectConfiguracion = ({ onChange }) => {
           },
         }}
       >
-        {recetas.map((receta) => (
-          <SelectItem key={receta.key}>{receta.label}</SelectItem>
-        ))}
+        {loading ? (
+          <SelectItem key="loading"> Obteniendo datos de recetas...</SelectItem>
+        ) : (
+          recetas.map((receta) => (
+            <SelectItem key={receta.key}>{receta.label}</SelectItem>
+          ))
+        )}
       </Select>
+      <div className={style.Refresh}>
+        <BotonRefresh onClick={onClick} />
+      </div>
     </div>
   );
 };
