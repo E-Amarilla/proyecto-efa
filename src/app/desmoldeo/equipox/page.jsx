@@ -20,7 +20,7 @@ const EquipoX = () => {
         </div>
         
           <div className={style.Med}>
-            <span className={style.titulo}>DATOS DESMOLDEO</span>
+            <span className={style.titulo}>DEMOLDING DATA</span>
             <DatosRobot />
             <DatosSDDA />
             <DatosTorre />

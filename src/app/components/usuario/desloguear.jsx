@@ -33,7 +33,7 @@ const Desloguear = ({ icon }) => {
                     key="2"
                     onClick={logout} // Llama a la función logout aquí
                 >
-                    <span className={style.textCerrar}>Cerrar sesión</span>
+                    <span className={style.textCerrar}>Log out</span>
                 </DropdownItem>
             </DropdownMenu>
         </Dropdown>

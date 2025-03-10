@@ -13,19 +13,19 @@ const Dropdown = ({ onChange }) => {
   return (
     <div className={styles.dropdownContainer}>
       <select className={styles.dropdown} value={selectedNivel} onChange={handleChange}>
-        <option value="HN" className={styles.texto} title="CH - Correccion_h">
+        <option value="HN" className={styles.texto} title="CH - Correction_h">
           HN
         </option>
-        <option value="ChG" className={styles.texto} title="CHg - Correccion_hguardado">
+        <option value="ChG" className={styles.texto} title="CHg - Correction_hguardado">
           ChG
         </option>
-        <option value="ChB" className={styles.texto} title="CHb - Correccion_hbusqueda">
+        <option value="ChB" className={styles.texto} title="CHb - Correction_hsearch">
           ChB
         </option>
-        <option value="FA" className={styles.texto} title="FA - Fallas">
+        <option value="FA" className={styles.texto} title="FA - Fails">
           FA
         </option>
-        <option value="uHN" className={styles.texto} title="uHN - ultimo_hNivel">
+        <option value="uHN" className={styles.texto} title="uHN - last_hLevel">
           uHN
         </option>
       </select>

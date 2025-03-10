@@ -23,7 +23,7 @@ const BotonFiltro = ({ onClick, isDisabled}) => {
                 onClick={onClick}
                 isDisabled={isDisabled}
             >
-                Aplicar cambios
+                Apply Changes
                 <Image src={BuscarIcon} alt="Buscar Icono" width={20} height={20} style={{ marginLeft: "5px" }} />
             </Button>
         </div>

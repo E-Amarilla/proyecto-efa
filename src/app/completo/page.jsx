@@ -32,13 +32,13 @@ const Completo = () => {
     if (!data) return;
 
     if (!Array.isArray(data.alarmas)) {
-      setError("No se pudieron obtener los datos");
+      setError("Couldn't get the data");
       setIsLoading(false);
       return;
     }
 
     const filteredItems = data.alarmas.filter(alarmas =>
-      alarmas.tipoAlarma === "Error" || alarmas.tipoAlarma === "Alerta"
+      alarmas.tipoAlarma === "Error" || alarmas.tipoAlarma === "Alert"
     );
 
     setItems(filteredItems.map(alarmas => ({
@@ -49,18 +49,18 @@ const Completo = () => {
       // Se muestra siempre la fecha y hora actual
       time: alarmas.fechaActual,
       // Si la alarma está activa y posee fechaInicio, se asigna; de lo contrario, se deja vacío.
-      registerTime: alarmas.estadoAlarma === "Activo" && alarmas.fechaInicio ? alarmas.fechaInicio : "",
+      registerTime: alarmas.estadoAlarma === "Active" && alarmas.fechaInicio ? alarmas.fechaInicio : "",
     })));
     
     setIsLoading(false);
   }, [data]);
 
   const columns = [
-    { key: "description", label: "DESCRIPCIÓN" },
-    { key: "type", label: "TIPO" },
-    { key: "state", label: "ESTADO" },
-    { key: "time", label: "FECHA Y HORA ACTUAL" },
-    { key: "registerTime", label: "FECHA Y HORA DE INICIO" },
+    { key: "description", label: "DESCRIPTION" },
+    { key: "type", label: "TYPE" },
+    { key: "state", label: "STATE" },
+    { key: "time", label: "ACTUAL DATE & TIME" },
+    { key: "registerTime", label: "INITIAL DATE & TIME" },
   ];
 
   const totalRows = items.length;
@@ -79,9 +79,9 @@ const Completo = () => {
 
   const renderState = (state) => {
     if (state === "Activo") {
-      return <Image src={luzV} alt="Activo" width={15} height={15} />;
+      return <Image src={luzV} alt="Active" width={15} height={15} />;
     } else if (state === "Inactivo") {
-      return <Image src={luzR} alt="Inactivo" width={15} height={15} />;
+      return <Image src={luzR} alt="Inactive" width={15} height={15} />;
     }
     return state;
   };
@@ -95,10 +95,10 @@ const Completo = () => {
       </div>
 
       {/* Título */}
-      <h2 className={style.titulo}>LISTADO ALERTAS</h2>
+      <h2 className={style.titulo}>ALERTS LIST</h2>
 
       <div className="w-full bg-[#131313] text-[#D9D9D9] table-fixed p-[2px] rounded-[15px]">
-        <Table aria-label="Tabla de alertas">
+        <Table aria-label="ALERTS TABLE">
           <TableHeader columns={columns}>
             {(column) => (
               <TableColumn
@@ -112,7 +112,7 @@ const Completo = () => {
           <TableBody
             isLoading={isLoading}
             items={paginatedRows}
-            loadingContent={<Spinner label="Cargando..." />}
+            loadingContent={<Spinner label="Loading..." />}
           >
             {(item) => (
               <TableRow key={item.key}>
@@ -130,7 +130,7 @@ const Completo = () => {
           <div className="text-center mt-[4px] text-[#D9D9D9] h-[150px] flex flex-col justify-center items-center shadow-md rounded-[15px]">
             <div className="mb-2">{error}</div>
             <Button onClick={() => window.location.reload()} className="bg-[#761122]">
-              Reintentar
+              Retry
             </Button>
           </div>
         )}
@@ -153,7 +153,7 @@ const Completo = () => {
             radius="full"
             auto
           >
-            Ver más
+            See more
           </Button>
         </Link>
       </div>

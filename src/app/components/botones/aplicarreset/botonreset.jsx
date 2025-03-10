@@ -24,7 +24,7 @@ const BotonFiltro = ({ onClick }) => {
                 }}
                 onClick={onClick}
             >
-                Refrescar datos
+                Refresh Data
                 <Image src={ResetIcon} alt="Buscar Icono" width={16} height={16} style={{ marginLeft: "5px" }} />
             </Button>
         </div>

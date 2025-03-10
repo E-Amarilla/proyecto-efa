@@ -5,7 +5,7 @@ try {
     const { email } = await req.json();
 
     if (!email) {
-    return new Response(JSON.stringify({ error: "El email es requerido." }), {
+    return new Response(JSON.stringify({ error: "Email is required." }), {
         status: 400,
     });
     }

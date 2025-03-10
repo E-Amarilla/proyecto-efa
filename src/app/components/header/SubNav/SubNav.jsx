@@ -13,10 +13,10 @@ const SubNav = () => {
   const pathname = usePathname();
 
   const opcionesBotones = [
-    { id: 1, path: "/completo", text: "COMPLETO", styleClass: style.secciondesbloqueada },
-    { id: 2, path: ["/desmoldeo", "/desmoldeo/equipox"], text: "DESMOLDEO", styleClass: style.secciondesbloqueada },
-    { id: 3, path: "/encajonado", text: "ENCAJONADO", styleClass: style.seccionbloqueada },
-    { id: 4, path: "/paletizado", text: "PALETIZADO", styleClass: style.seccionbloqueada },
+    { id: 1, path: "/completo", text: "GENERAL", styleClass: style.secciondesbloqueada },
+    { id: 2, path: ["/desmoldeo", "/desmoldeo/equipox"], text: "DEMOLDING", styleClass: style.secciondesbloqueada },
+    { id: 3, path: "/encajonado", text: "PACKING", styleClass: style.seccionbloqueada },
+    { id: 4, path: "/paletizado", text: "PALETIZED", styleClass: style.seccionbloqueada },
   ];
 
   return (

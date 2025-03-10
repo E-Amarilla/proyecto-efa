@@ -61,9 +61,9 @@ const MenuAlarmas = ({ icon }) => {
                         <DropdownItem
                             className={style.items}
                             key="no-alerts"
-                            description="Sin actividad"
+                            description="No activity"
                         >
-                                No hay alarmas activas
+                            No active alarms
                         </DropdownItem>
                     )}
                 </DropdownSection>
@@ -78,7 +78,7 @@ const MenuAlarmas = ({ icon }) => {
                             radius="full"
                             auto
                         >
-                            Ver más
+                            See more
                         </Button>
                     </Link>
                 </DropdownItem>

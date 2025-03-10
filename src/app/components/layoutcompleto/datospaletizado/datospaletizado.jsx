@@ -21,9 +21,9 @@ const DatosPaletizado = () => {
     const estadoMaquina = "inactivo";
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Paletizado - N°1', dato: PalVariableNN !== undefined && PalVariableNN !== null ? PalVariableNN : '-' },
-        { id: 2, nombre: 'Paletizado - N°2', dato: PalVariableNN2 !== undefined && PalVariableNN2 !== null ? PalVariableNN2 : '-' },
-        { id: 3, nombre: 'Paletizado - N°3', dato: PalVariableNN3 !== undefined && PalVariableNN3 !== null ? PalVariableNN : '-' },
+        { id: 1, nombre: 'Paletized - N°1', dato: PalVariableNN !== undefined && PalVariableNN !== null ? PalVariableNN : '-' },
+        { id: 2, nombre: 'Paletized - N°2', dato: PalVariableNN2 !== undefined && PalVariableNN2 !== null ? PalVariableNN2 : '-' },
+        { id: 3, nombre: 'Paletized - N°3', dato: PalVariableNN3 !== undefined && PalVariableNN3 !== null ? PalVariableNN : '-' },
     ];
 
     return (

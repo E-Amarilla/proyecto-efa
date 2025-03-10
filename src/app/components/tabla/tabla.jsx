@@ -69,13 +69,13 @@ const Tabla = () => {
           setIsLoading(false);
         }
       } catch (err) {
-        setError("Error procesando datos del servidor.");
+        setError("Error processing data from server.");
         setIsLoading(false);
       }
     };
 
     socket.onerror = () => {
-      setError("No se pudieron obtener los datos");
+      setError("");
       setIsLoading(false);
     };
 
@@ -89,11 +89,11 @@ const Tabla = () => {
   }, [wsUrl]);
 
   const columns = [
-    { key: "description", label: "DESCRIPCIÓN" },
-    { key: "type", label: "TIPO" },
-    { key: "state", label: "ESTADO" },
-    { key: "time", label: "FECHA Y HORA ACTUAL" },
-    { key: "startDate", label: "FECHA Y HORA DE INICIO" },
+    { key: "description", label: "DESCRIPTION" },
+    { key: "type", label: "TYPE" },
+    { key: "state", label: "STATE" },
+    { key: "time", label: "ACTUAL DATE & TIME" },
+    { key: "startDate", label: "INITIAL DATE & TIME" },
   ];
 
   const handleSort = (key) => {
@@ -137,8 +137,8 @@ const Tabla = () => {
   return (
     <div className="w-full bg-[#131313] rounded-[15px] p-[20px] mt-[113px]">
       <div className="w-1/2 font-bold text-[#D9D9D9] mb-[15px]">
-        <h1 className="text-[25px]">HISTORIAL DE ALERTAS</h1>
-        <h2 className="text-[20px]">EXTENDIDO</h2>
+        <h1 className="text-[25px]">ALERT HISTORY</h1>
+        <h2 className="text-[20px]">EXTENDED</h2>
       </div>
       <Table
         aria-label="Tabla de alertas"
@@ -162,7 +162,7 @@ const Tabla = () => {
         <TableBody
           isLoading={isLoading && !error}
           items={!error ? paginatedRows : []}
-          loadingContent={<Spinner label="Cargando..." />}
+          loadingContent={<Spinner label="Loading..." />}
         >
           {!error
             ? (item) => (
@@ -181,13 +181,13 @@ const Tabla = () => {
         <div className="text-center mt-[4px] text-[#D9D9D9] h-[150px] flex flex-col justify-center items-center shadow-md rounded-[15px]">
           <div className="mb-2">{error}</div>
           <Button onClick={connectWebSocket} className="bg-[#761122]">
-            Reintentar
+            Retry
           </Button>
         </div>
       )}
       <div className="flex justify-between items-center mt-5">
         <div className="flex items-center gap-2 text-[#D9D9D9]">
-          <label htmlFor="rows-per-page">Filas por página:</label>
+          <label htmlFor="rows-per-page">Rows Per Page:</label>
           <select
             id="rows-per-page"
             value={rowsPerPage}

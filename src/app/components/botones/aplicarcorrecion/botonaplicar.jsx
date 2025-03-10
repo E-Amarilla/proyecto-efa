@@ -22,7 +22,7 @@ const BotonAplicar = ({ onClick }) => {
                 }}
                 onClick={onClick}
             >
-                Aplicar
+                Apply
             </Button>
         </div>
     );

@@ -42,10 +42,10 @@ const imageSets = {
   ],
   'Gripper': gripperImages,
   'Estación de grippers': gripperImages,
-  'Posicionador de torres': [
-    { src: ImgTorre3, alt: "Posicionador de torres | Imagen-3" },
-    { src: ImgTorre1, alt: "Posicionador de torres | Imagen-1" },
-    { src: ImgTorre2, alt: "Posicionador de torres | Imagen-2" },
+  'Tower Positioner': [
+    { src: ImgTorre3, alt: "Tower Positioner | Imagen-3" },
+    { src: ImgTorre1, alt: "Tower Positioner | Imagen-1" },
+    { src: ImgTorre2, alt: "Tower Positioner | Imagen-2" },
   ],
   'Robot': [
     { src: ImgRobot1, alt: "Robot | Imagen-1" },
@@ -87,7 +87,7 @@ const EquipoXImg = () => {
   return (
     <div className={style.all}>
       <h1 className={style.title}>
-      {["Default", "BandaA", "BandaB", null].includes(equipoSeleccionado) ? "CELDA DE DESMOLDEO" : equipoSeleccionado === "Estación de grippers" ? "GRIPPER" : equipoSeleccionado.toUpperCase()}
+      {["Default", "BandaA", "BandaB", null].includes(equipoSeleccionado) ? "DEMOLDING CELL" : equipoSeleccionado === "Estación de grippers" ? "GRIPPER" : equipoSeleccionado.toUpperCase()}
       </h1>
       <div className={style.carousel}>
         {totalImages > 0 ? (

@@ -87,12 +87,12 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
 
     return (
         <div className={`${style.contenedor} FiltroPeriodo`}>
-            <h2 className={style.titulo}>FILTRADO FECHA PRODUCTIVIDAD</h2>
+            <h2 className={style.titulo}>PRODUCTIVITY DATE FILTER</h2>
             <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                 <div className="flex flex-col items-center w-full">
                     <div className={style.datePickerGlobal}>
                         <DateRangePicker
-                            label="Selecciona el periodo"
+                            label="Select a period of time"
                             classNames={{
                                 base: style.customDateRangePicker,
                                 trigger: style.datePickerTrigger,

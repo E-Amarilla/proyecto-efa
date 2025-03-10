@@ -9,9 +9,9 @@ const DatosTorreComponent = () => {
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
 
   const initialDatosTorre = [
-    { id: 1, texto: "N° TORRE ACTUAL", dato: null },
-    { id: 2, texto: "N° TORRE PROXIMA", dato: null },
-    { id: 3, texto: "NIVEL DE TORRE ACTUAL", dato: null },
+    { id: 1, texto: "ACTUAL TOWER N°", dato: null },
+    { id: 2, texto: "NEXT TOWER N°", dato: null },
+    { id: 3, texto: "ACTUAL TOWER LEVEL", dato: null },
   ];
 
   const [datosTorre, setDatosTorre] = useState(initialDatosTorre);
@@ -28,17 +28,17 @@ const DatosTorreComponent = () => {
   }, [data]);
 
   const handleClick = () => {
-    setEquipoSeleccionado(equipoSeleccionado === "Posicionador de torres" ? null : "Posicionador de torres"); // Alterna la selección
+    setEquipoSeleccionado(equipoSeleccionado === "Tower Positioner" ? null : "Tower Positioner"); // Alterna la selección
   };
 
   return (
     <div
       className={`${style.datosGen} ${
-        equipoSeleccionado === "Posicionador de torres" ? style.selected : ""
+        equipoSeleccionado === "Tower Positioner" ? style.selected : ""
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS TORRE</h1>
+      <h1 className={textstyle.titulo}>TOWER DATA</h1>
       <div className={style.contenedorDatos}>
         {datosTorre.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>

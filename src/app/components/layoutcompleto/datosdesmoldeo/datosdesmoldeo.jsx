@@ -20,9 +20,9 @@ const DatosDesmoldeo = () => {
     const NombreActual = data?.desmoldeo ? (data?.desmoldeo["Nombre actual"]?.trim() || '-') : '-';
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Nombre receta', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : '-' },
-        { id: 2, nombre: 'Peso por fila', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
-        { id: 3, nombre: 'Total desmoldado', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado + " kg"  : '-'},
+        { id: 1, nombre: 'Recipe Name', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : '-' },
+        { id: 2, nombre: 'Weight Per Row', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
+        { id: 3, nombre: 'Demolding Total', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado + " kg"  : '-'},
     ];
 
     return (

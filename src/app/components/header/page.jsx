@@ -24,7 +24,7 @@ const ExeHeader = () => {
   ];
 
   const opcionesMenu = [
-    { id: 1, url: "/camaras", text: "CAMARAS" },
+    { id: 1, url: "/camaras", text: "CAMERAS" },
     { id: 2, url: "/completo", text: "HOME" },
   ];
 
@@ -55,7 +55,7 @@ const ExeHeader = () => {
             ))}
           </div>
           <div className={style.centerText}>
-            <p>MXEF-04 | CELDA DE DESMOLDEO</p>
+            <p>MXEF-04 | DEMOLDING CELL</p>
           </div>
           <div className={style.rightSection}>
             <ul className={style.navLinks}>

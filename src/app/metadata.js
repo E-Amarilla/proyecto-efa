@@ -1,9 +1,9 @@
 const metadata = {
   title: {
-    default: "MXEF-04 | Celda de desmoldeo",
-    template: `%s - MXEF-04 | Celda de desmoldeo`,
+    default: "MXEF-04 | Demolding cell",
+    template: `%s - MXEF-04 | Demolding cell`,
   },
-  description: "MXEF-04 | Celda de desmoldeo",
+  description: "MXEF-04 | Demolding cell",
   icons: {
     icon: "/favicon.ico"
   },

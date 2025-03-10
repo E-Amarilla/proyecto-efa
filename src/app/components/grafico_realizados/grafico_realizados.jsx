@@ -124,7 +124,7 @@ const GraficoC = ({ startDate, endDate }) => {
           title: {
             align: 'start',
             display: true,
-            text: 'PRODUCTOS REALIZADOS',
+            text: 'PRODUCTS MADE',
             color: '#D9D9D9',
             font: {
               size: 20,
@@ -177,8 +177,8 @@ const GraficoC = ({ startDate, endDate }) => {
                 }, 0);
                 return [
                   `${datasetLabel}: ${peso} kg`,
-                  `FECHA: ${date}`,
-                  `PRODUCCION POR HORA: ${totalStacked} kg`
+                  `DATE: ${date}`,
+                  `PRODUCTION PER HOUR: ${totalStacked} kg`
                 ];
               },
               title: () => ''
@@ -195,7 +195,7 @@ const GraficoC = ({ startDate, endDate }) => {
         scales: {
           y: {
             stacked: true,
-            title: { display: true, text: 'Peso producto (kg)', color: '#D9D9D9' },
+            title: { display: true, text: 'Product Weight (kg)', color: '#D9D9D9' },
             beginAtZero: true,
             border: { color: '#D9D9D9' },
             grid: { color: '#1F1F1F', tickColor: '#fff' },
@@ -216,7 +216,7 @@ const GraficoC = ({ startDate, endDate }) => {
                 year: 'yyyy'
               }
             },
-            title: { display: true, text: 'Tiempo', color: '#D9D9D9' },
+            title: { display: true, text: 'Time', color: '#D9D9D9' },
             border: { color: '#D9D9D9' },
             grid: { color: '#8C8C8C', tickColor: '#fff' },
             ticks: { autoSkip: true, maxTicksLimit: 20, color: '#D9D9D9' }
@@ -253,7 +253,7 @@ const GraficoC = ({ startDate, endDate }) => {
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-xl">
-          <Spinner label="Cargando..." />
+          <Spinner label="Loading..." />
         </div>
       )}
       <Button
@@ -271,7 +271,7 @@ const GraficoC = ({ startDate, endDate }) => {
           onClick={resetZoom}
           className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
       >
-          Reiniciar Zoom
+          Reset Zoom
       </Button>
     </div>
   );

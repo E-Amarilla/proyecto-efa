@@ -37,7 +37,7 @@ const DatosRobotComponent = () => {
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS ROBOT</h1>
+      <h1 className={textstyle.titulo}>ROBOT DATA</h1>
       <div className={style.contenedorDatos}>
         {datosRobot.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>

@@ -68,7 +68,7 @@ const Grafico = ({ startDate, endDate }) => {
     const initialData = {
       datasets: [
         {
-          label: 'Ciclos',
+          label: 'Cycles',
           data: [],
           borderColor: '#F828',
           backgroundColor: '#EF8225',
@@ -77,7 +77,7 @@ const Grafico = ({ startDate, endDate }) => {
           type: 'line'
         },
         {
-          label: 'Peso Producto (Tn)',
+          label: 'Product Weight (Tn)',
           data: [],
           borderColor: '#3AF8',
           backgroundColor: '#3AF',
@@ -108,7 +108,7 @@ const Grafico = ({ startDate, endDate }) => {
           title: {
             align: 'start',
             display: true,
-            text: 'CICLOS POR DIA',
+            text: 'CYCLES PER DAY',
             color: '#D9D9D9',
             font: {
               size: 20,
@@ -147,7 +147,7 @@ const Grafico = ({ startDate, endDate }) => {
                 const datasetLabel = context.dataset.label || 'Dato';
                 const value = context.raw.y;
                 const date = formatDate(context.raw.x);
-                return [`Fecha: ${date}`, `${datasetLabel}: ${value}`];
+                return [`DATE: ${date}`, `${datasetLabel}: ${value}`];
               },
               title: () => ''
             }
@@ -168,7 +168,7 @@ const Grafico = ({ startDate, endDate }) => {
             position: 'left',
             title: {
               display: true,
-              text: 'Ciclos Completados',
+              text: 'Completed Cycles',
               color: '#EF8225'
             },
             grid: { color: '#1F1F1F', tickColor: '#EF8225' },
@@ -182,7 +182,7 @@ const Grafico = ({ startDate, endDate }) => {
             position: 'right',
             title: {
               display: true,
-              text: 'Peso Producto (Tn)',
+              text: 'Product Weight (Tn)',
               color: '#3AF'
             },
             grid: { color: '#1F1F1F', tickColor: '#3AF' },
@@ -264,7 +264,7 @@ const Grafico = ({ startDate, endDate }) => {
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-xl">
-          <Spinner label="Cargando..." />
+          <Spinner label="Loading..." />
         </div>
       )}
       <Button
@@ -282,7 +282,7 @@ const Grafico = ({ startDate, endDate }) => {
         onClick={resetZoom}
         className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
     >
-        Reiniciar Zoom
+        Reset Zoom
     </Button>
     </div>
   );

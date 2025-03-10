@@ -10,8 +10,8 @@ const DatosGripperComponent = () => {
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
 
   const initialdatosGripper = [
-    { id: 1, texto: "N° GRIPPER ACTUAL", dato: null },
-    { id: 2, texto: "N° GRIPPER PROXIMO", dato: null },
+    { id: 1, texto: "ACTUAL GRIPPER N°", dato: null },
+    { id: 2, texto: "NEXT GRIPPER N°", dato: null },
   ];
 
   const [datosGripper, setdatosGripper] = useState(initialdatosGripper);
@@ -39,7 +39,7 @@ const DatosGripperComponent = () => {
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS GRIPPERS</h1>
+      <h1 className={textstyle.titulo}>GRIPPERS DATA</h1>
       <div className={style.contenedorDatos}>
         {datosGripper.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>

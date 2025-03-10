@@ -20,9 +20,9 @@ const DatosEncajonado = () => {
     const estadoMaquina = "inactivo";
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Encajonado - N°1', dato: EncVariableNN !== undefined && EncVariableNN !== null ? EncVariableNN : '-' },
-        { id: 2, nombre: 'Encajonado - N°2', dato: EncVariableNN2 !== undefined && EncVariableNN2 !== null ? EncVariableNN2 : '-' },
-        { id: 3, nombre: 'Encajonado - N°3', dato: EncVariableNN3 !== undefined && EncVariableNN3 !== null ? EncVariableNN : '-' },
+        { id: 1, nombre: 'Packing - N°1', dato: EncVariableNN !== undefined && EncVariableNN !== null ? EncVariableNN : '-' },
+        { id: 2, nombre: 'Packing - N°2', dato: EncVariableNN2 !== undefined && EncVariableNN2 !== null ? EncVariableNN2 : '-' },
+        { id: 3, nombre: 'Packing - N°3', dato: EncVariableNN3 !== undefined && EncVariableNN3 !== null ? EncVariableNN : '-' },
     ];
 
     return (

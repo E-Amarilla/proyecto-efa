@@ -53,7 +53,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
             // Añadir texto "EFA - Proyecto" debajo del logo
             pdf.setFontSize(12);
             pdf.text("EFA - MXEF-04", 253, logoMargin+17);
-            pdf.text("Celda de desmoldeo", 247, logoMargin+22);
+            pdf.text("Demolding cell", 247, logoMargin+22);
     
             pdf.addImage(webIcon, 'PNG', 240, logoMargin+40, 5, 5); // Icono de ubicación de 10x10 px
             pdf.text("creminox.com", 247, logoMargin+44); // Texto al lado del icono
@@ -117,7 +117,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
                 onClick={handlePdfDownload}
             >
                 <FaFilePdf style={{ marginRight: "8px" }} />
-                Descargar PDF
+                Download PDF
             </Button>
 
             <Button
@@ -135,7 +135,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
                 onClick={handleExcelDownload}
             >
                 <FaFileExcel style={{ marginRight: "8px" }} />
-                Descargar EXCEL
+                Download EXCEL
             </Button>
         </div>
     );

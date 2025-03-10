@@ -25,18 +25,18 @@ export default function ForgotPassword() {
 
       if (response.ok) {
         // Muestra una notificación de éxito
-        toast.success("Correo enviado con éxito.", {
+        toast.success("Mail sent successfully.", {
           position: "bottom-center",
         });
       } else {
         // Muestra una notificación de error con el mensaje del servidor
-        toast.error(data.error || "Hubo un error al enviar el correo.", {
+        toast.error(data.error || "There was a problem sending the mail.", {
           position: "bottom-center",
         });
       }
     } catch (error) {
       // Muestra una notificación de error si hay problemas con la conexión
-      toast.error("Error al conectar con el servidor.", {
+      toast.error("Error connecting to server.", {
         position: "bottom-center",
       });
     } finally {
@@ -66,12 +66,12 @@ export default function ForgotPassword() {
             {loading ? (
               <div className={style.spinner}></div> // Spinner
             ) : (
-              "Recuperar Contraseña" // Texto normal del botón
+              "Recover Password" // Texto normal del botón
             )}
           </button>
           <div>
             <Link className={style.signup} href="../login">
-              ¿Recordó su contraseña? Inicie sesión aquí
+              Did you remember it? Log in here
             </Link>
           </div>
         </div>

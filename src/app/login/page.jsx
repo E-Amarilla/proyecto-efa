@@ -75,7 +75,7 @@ const Login = () => {
             <label
               className={style.inputsTextos}
             >
-              Contraseña
+              Password
             </label>
             
             <input
@@ -103,7 +103,7 @@ const Login = () => {
         </form>
         
         <div>
-          <Link className={style.signup} href="/login/recuperacion">¿Olvidó su contraseña? Recupérela aquí</Link>
+          <Link className={style.signup} href="/login/recuperacion">Forgot password? Recover it here</Link>
         </div>
       </div>
     </div>

@@ -21,24 +21,24 @@ const DatosEstadoDesmoldeo = () => {
                     {estadoMaquina === 'Activo' || estadoMaquina === 'ACTIVO' || estadoMaquina === 'activo' ? (
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedorActivo}>
-                                <h1 className={style.area}>Desmoldeo</h1>
-                                <h3 className={style.estadoActivo}>{String(estadoMaquina).toUpperCase()}</h3>
+                                <h1 className={style.area}>Demolding</h1>
+                                <h3 className={style.estadoActivo}>ACTIVE</h3>
                                 <h4 className={style.tiempo}>{TiempoTrancurrido}</h4>
                             </div>
                         </li>
                     ) : estadoMaquina === 'Pausado' || estadoMaquina === 'PAUSADO' || estadoMaquina === 'pausado' ? (
                         <li className={style.datosIndvYellow}>
                             <div className={style.contenedorPausa}>
-                                <h1 className={style.area}>Desmoldeo</h1>
-                                <h3 className={style.estadoPausa}>{String(estadoMaquina).toUpperCase()}</h3>
+                                <h1 className={style.area}>Demolding</h1>
+                                <h3 className={style.estadoPausa}>PAUSED</h3>
                                 <h4 className={style.tiempo}>{TiempoTrancurrido}</h4>
                             </div>
                         </li>
                     ) : (
                         <li className={style.datosIndvGray}>
                             <div className={style.contenedorInactivo}>
-                                <h1 className={style.area}>Desmoldeo</h1>
-                                <h3 className={style.estadoInactivo}>{String(estadoMaquina).toUpperCase()}</h3>
+                                <h1 className={style.area}>Demolding</h1>
+                                <h3 className={style.estadoInactivo}>INACTIVE</h3>
                             </div>
                         </li>
                     )}

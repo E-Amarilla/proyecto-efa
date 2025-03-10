@@ -7,7 +7,7 @@ import AuthContext from "../../../context/AuthContext";
 
 const DatosSDDAComponent = () => {
   const initialdatosSdda = [
-    { id: 1, texto: 'TOTAL NIVELES', dato: null },
+    { id: 1, texto: 'TOTAL LEVELS', dato: null },
     { id: 2, texto: 'SDDA_LONG_MM', dato: null },
     { id: 3, texto: 'SDDA_VERTICAL_MM', dato: null },
   ];
@@ -38,7 +38,7 @@ const DatosSDDAComponent = () => {
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS SDDA - DESMOLDADORA</h1>
+      <h1 className={textstyle.titulo}>SDDA DATA - DEPANNER</h1>
       <div className={style.contenedorDatos}>
         {datosSdda.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>

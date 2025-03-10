@@ -41,12 +41,12 @@ const FiltroPeriodo = () => {
                 
                 </div>
                 <div className={`${style.contenedor} FiltroPeriodoGraficos`}>
-                    <h2 className={style.titulo}>FILTRADO DE FECHA GRAFICOS</h2>
+                    <h2 className={style.titulo}>GRAPH DATE FILTER</h2>
                     <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                         <div className="flex flex-col items-center w-full">
                             <div className={style.datePickerGlobal}>
                                 <DateRangePicker
-                                    label="Selecciona el periodo"
+                                    label="Select a period of time"
                                     classNames={{
                                         base: style.customDateRangePicker,
                                         trigger: style.datePickerTrigger,

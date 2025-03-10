@@ -16,8 +16,8 @@ import puntoB from '@/assets/img/puntoB.png';
 
 const SectorIOComponent = () => {
     const initialSectorIO = [
-        { id: 1, texto: 'ESTADO DEL CICLO', dato: 0, icono: puntoGris },
-        { id: 2, texto: 'BANDA DE DESMOLDEO', dato: 0, icono: puntoGris },
+        { id: 1, texto: 'CYCLE STATE', dato: 0, icono: puntoGris },
+        { id: 2, texto: 'DEMOLDING BAND', dato: 0, icono: puntoGris },
     ];
 
     const [sectorIO, setSectorIO] = useState(initialSectorIO);
@@ -60,7 +60,7 @@ const SectorIOComponent = () => {
 
     return (
         <div className={style.datoListContainer}>
-            <h1 className={textstyle.titulo}>SECTOR IO</h1>
+            <h1 className={textstyle.titulo}>IO SECTOR</h1>
             <div className={style.datosGen}>
                 {sectorIO.map(({ id, texto, dato, icono }) => (
                     <div key={id} className={style.datoList}>
