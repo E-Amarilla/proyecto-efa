@@ -19,7 +19,7 @@ const Grafico = ({ startDate, endDate }) => {
       return;
     }
     setLoading(true);
-    const storedUser = localStorage.getItem('user_data');
+    const storedUser = sessionStorage.getItem('user_data');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
 
     try {

@@ -17,8 +17,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false); // Estado para el spinner
 
   useEffect(() => {
-    // Retrieve username from local storage when component mounts
-    const storedUsername = localStorage.getItem('username');
+    // Recuperar el username desde sessionStorage al montar el componente
+    const storedUsername = sessionStorage.getItem('username');
     if (storedUsername) {
       setUsername(storedUsername);
     }
@@ -31,8 +31,8 @@ const Login = () => {
 
     try {
       await login(username, password);
-      // Save username in local storage on successful login
-      localStorage.setItem('username', username);
+      // Guardar el username en sessionStorage al iniciar sesión exitosamente
+      sessionStorage.setItem('username', username);
       setMessage(''); // Limpiar el mensaje si el login es exitoso
     } catch (error) {
       if (error.message === "Credenciales inválidas") {
@@ -55,35 +55,30 @@ const Login = () => {
         />
         <form className={style.formularioLogin} onSubmit={handleSubmit}>
           <div className={style.inlab}>
-            <label
-              htmlFor="username"
-              className={style.inputsTextos}
-            >
+            <label htmlFor="username" className={style.inputsTextos}>
               Username
             </label>
-            
             <input
               type="text" 
               className={style.inputs} 
               id="username"
               value={username}
-              onChange={(e) => setUsername(e.target.value)} required
+              onChange={(e) => setUsername(e.target.value)}
+              required
             />
           </div>
 
           <div className={style.inlab}>
-            <label
-              className={style.inputsTextos}
-            >
+            <label className={style.inputsTextos}>
               Contraseña
             </label>
-            
             <input
               type="password"
               className={style.inputs} 
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)} required
+              onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -103,7 +98,9 @@ const Login = () => {
         </form>
         
         <div>
-          <Link className={style.signup} href="/login/recuperacion">¿Olvidó su contraseña? Recupérela aquí</Link>
+          <Link className={style.signup} href="/login/recuperacion">
+            ¿Olvidó su contraseña? Recupérela aquí
+          </Link>
         </div>
       </div>
     </div>

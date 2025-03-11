@@ -39,8 +39,8 @@ const Configuraciones = () => {
     const [setUserRole] = useState(""); // Asegúrate de que useState esté correctamente definido
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user_data');
-        const username = localStorage.getItem('username'); // Obtenemos el nombre de usuario desde otro objeto
+        const storedUser = sessionStorage.getItem('user_data');
+        const username = sessionStorage.getItem('username'); // Obtenemos el nombre de usuario desde otro objeto
         const token = storedUser ? JSON.parse(storedUser).access_token : null;
         
         async function fetchUsers() {
