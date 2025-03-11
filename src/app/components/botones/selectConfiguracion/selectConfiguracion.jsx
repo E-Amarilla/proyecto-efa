@@ -100,7 +100,7 @@ const SelectConfiguracion = ({ onChange, onClick}) => {
         }}
       >
         {loading ? (
-          <SelectItem key="loading"> Obteniendo datos de recetas...</SelectItem>
+          <SelectItem key="loading"> Obtaining recipes data...</SelectItem>
         ) : (
           recetas.map((receta) => (
             <SelectItem key={receta.key}>{receta.label}</SelectItem>

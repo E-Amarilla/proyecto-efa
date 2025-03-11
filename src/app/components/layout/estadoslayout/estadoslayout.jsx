@@ -34,7 +34,7 @@ const EstadosLayout = () => {
                                     className={style.icon}
                                     alt={'Icono'}
                                 /> 
-                                <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoActivo}>ACTIVE</h3>
                             </div>
                         </li>
                     ) : estadoMaquina === ("Pausado" || "pausado") ? (
@@ -45,7 +45,7 @@ const EstadosLayout = () => {
                                     className={style.icon}
                                     alt={'Icono'}
                                 /> 
-                                <h3 className={style.estadoPausa}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoPausa}>PAUSADO</h3>
                             </div>
                         </li>
                     ) : estadoMaquina === ("Inactivo" || "inactivo")  ? (
@@ -56,7 +56,7 @@ const EstadosLayout = () => {
                                     className={style.icon}
                                     alt={'Icono'}
                                 /> 
-                                <h3 className={style.estadoInactivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoInactivo}></h3>
                             </div>
                         </li>
                     ) : (

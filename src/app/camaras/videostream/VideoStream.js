@@ -73,7 +73,7 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
       });
 
       player.on("error", () => {
-        setError("Error al cargar la transmisión. Intenta recargar la página.");
+        setError("Error loading the stream. Try reloading the page.");
       });
 
       return () => {
@@ -101,7 +101,7 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
       {isLoading && (
         <div style={styles.loadingContainer}>
           <div style={styles.spinner}></div>
-          <p>Conectando a la cámara...</p>
+          <p>Connecting with the camera...</p>
         </div>
       )}
       {showPlayer && (

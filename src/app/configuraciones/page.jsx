@@ -83,107 +83,107 @@ const Configuraciones = () => {
     }, [router]);
 
     const [datosGeneralesIzq, setDatosRecetas1] = useState([
-        { id: 1, texto: 'NUMERO DE GRIPPER ', dato: 'null', icono:NGripper  },
-        { id: 2, texto: 'TIPO DE MOLDE', dato: 'null', icono:TipoA  },
-        { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: 'null', icono:receta2  },
-        { id: 4, texto: 'ALTO DEL PRODUCTO', dato: 'null', icono:receta2  },
-        { id: 5, texto: 'LARGO DEL PRODUCTO', dato: 'null', icono:receta2  },
-        { id: 6, texto: 'PESO DEL PRODUCTO', dato: 'null', icono:Peso  },
-        { id: 7, texto: 'MOLDES POR NIVEL', dato: 'null', icono:Moldes  },
+        { id: 1, texto: 'GRIPPER NUMBER', dato: 'null', icono:NGripper  },
+        { id: 2, texto: 'MOULD TYPE', dato: 'null', icono:TipoA  },
+        { id: 3, texto: 'PRODUCT WIDTH', dato: 'null', icono:receta2  },
+        { id: 4, texto: 'PRODUCT HEIGHT', dato: 'null', icono:receta2  },
+        { id: 5, texto: 'PRODUCT LONG', dato: 'null', icono:receta2  },
+        { id: 6, texto: 'PRODUCT WEIGHT', dato: 'null', icono:Peso  },
+        { id: 7, texto: 'MOULDS PER LEVEL', dato: 'null', icono:Moldes  },
     ]);       
 
     const [datosGeneralesDer, setDatosRecetas2] = useState([
-        { id: 1, texto: 'ALTURA DE MOLDE', dato: 'null', icono:receta2  },
-        { id: 2, texto: 'LARGO DE MOLDE', dato: 'null', icono:receta2  },
-        { id: 3, texto: 'ALTURA AJUSTE', dato: 'null', icono:receta2  },
-        { id: 4, texto: 'NIVELES POR TORRE', dato: 'null', icono:Niveles  },
-        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: 'null', icono:receta2  },
-        { id: 6, texto: 'ALTURA N1', dato: 'null', icono:receta2  },
-        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: 'null', icono:receta2  },
-        { id: 8, texto: 'ALTURA AJUSTRE N1', dato: 'null', icono:receta2  },
+        { id: 1, texto: 'MOULD HEIGHT', dato: 'null', icono:receta2  },
+        { id: 2, texto: 'MOULD LONG', dato: 'null', icono:receta2  },
+        { id: 3, texto: 'HEIGHT ADJUSTMENT', dato: 'null', icono:receta2  },
+        { id: 4, texto: 'LEVELS PER TOWER', dato: 'null', icono:Niveles  },
+        { id: 5, texto: 'DELTA BETWEEN LEVELS', dato: 'null', icono:receta2  },
+        { id: 6, texto: 'HEIGHT N1', dato: 'null', icono:receta2  },
+        { id: 7, texto: 'FRAME HEIGHT', dato: 'null', icono:receta2  },
+        { id: 8, texto: 'HEIGHT ADJUSTMENT N1', dato: 'null', icono:receta2  },
     ]); 
 
     const [datosCorrecionesTorre, setDatosCorrecionesTorre] = useState([
-        { id: 1, texto: 'Coreccion_hBastidor', dato: 'null' },
-        { id: 2, texto: 'Coreccion_hAjuste', dato: 'null' },
-        { id: 3, texto: 'Coreccion_hAjusteN1', dato: 'null' },
-        { id: 4, texto: 'Coreccion_DisteNivel', dato: 'null' },
-        { id: 5, texto: 'ActualizarTAG', dato: 'null' },
+        { id: 1, texto: 'Correction_hFrame', dato: 'null' },
+        { id: 2, texto: 'Correction_hAdjustment', dato: 'null' },
+        { id: 3, texto: 'Correction_hAdjustmentN1', dato: 'null' },
+        { id: 4, texto: 'Correction_DisteLevel', dato: 'null' },
+        { id: 5, texto: 'UpdateTAG', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesHN, setDatosCorrecionesNivelesHN] = useState([
-        { id: 1, texto: 'Correcion_hN1', dato: 'null' },
-        { id: 2, texto: 'Correcion_hN2', dato: 'null' },
-        { id: 3, texto: 'Correcion_hN3', dato: 'null' },
-        { id: 4, texto: 'Correcion_hN4', dato: 'null' },
-        { id: 5, texto: 'Correcion_hN5', dato: 'null' },
-        { id: 6, texto: 'Correcion_hN6', dato: 'null' },
-        { id: 7, texto: 'Correcion_hN7', dato: 'null' },
-        { id: 8, texto: 'Correcion_hN8', dato: 'null' },
-        { id: 9, texto: 'Correcion_hN9', dato: 'null' },
-        { id: 10, texto: 'Correcion_hN10', dato: 'null' },
-        { id: 11, texto: 'Correcion_hN11', dato: 'null' },
+        { id: 1, texto: 'Correction_hN1', dato: 'null' },
+        { id: 2, texto: 'Correction_hN2', dato: 'null' },
+        { id: 3, texto: 'Correction_hN3', dato: 'null' },
+        { id: 4, texto: 'Correction_hN4', dato: 'null' },
+        { id: 5, texto: 'Correction_hN5', dato: 'null' },
+        { id: 6, texto: 'Correction_hN6', dato: 'null' },
+        { id: 7, texto: 'Correction_hN7', dato: 'null' },
+        { id: 8, texto: 'Correction_hN8', dato: 'null' },
+        { id: 9, texto: 'Correction_hN9', dato: 'null' },
+        { id: 10, texto: 'Correction_hN10', dato: 'null' },
+        { id: 11, texto: 'Correction_hN11', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesChG, setDatosCorrecionesNivelesChG] = useState([
-        { id: 1, texto: 'Correccion_hguardado_N1', dato: 'null' },
-        { id: 2, texto: 'Correccion_hguardado_N2', dato: 'null' },
-        { id: 3, texto: 'Correccion_hguardado_N3', dato: 'null' },
-        { id: 4, texto: 'Correccion_hguardado_N4', dato: 'null' },
-        { id: 5, texto: 'Correccion_hguardado_N5', dato: 'null' },
-        { id: 6, texto: 'Correccion_hguardado_N6', dato: 'null' },
-        { id: 7, texto: 'Correccion_hguardado_N7', dato: 'null' },
-        { id: 8, texto: 'Correccion_hguardado_N8', dato: 'null' },
-        { id: 9, texto: 'Correccion_hguardado_N9', dato: 'null' },
-        { id: 10, texto: 'Correccion_hguardado_N10', dato: 'null' },
-        { id: 11, texto: 'Correccion_hguardado_N11', dato: 'null' },
+        { id: 1, texto: 'Correction_hstowed_N1', dato: 'null' },
+        { id: 2, texto: 'Correction_hstowed_N2', dato: 'null' },
+        { id: 3, texto: 'Correction_hstowed_N3', dato: 'null' },
+        { id: 4, texto: 'Correction_hstowed_N4', dato: 'null' },
+        { id: 5, texto: 'Correction_hstowed_N5', dato: 'null' },
+        { id: 6, texto: 'Correction_hstowed_N6', dato: 'null' },
+        { id: 7, texto: 'Correction_hstowed_N7', dato: 'null' },
+        { id: 8, texto: 'Correction_hstowed_N8', dato: 'null' },
+        { id: 9, texto: 'Correction_hstowed_N9', dato: 'null' },
+        { id: 10, texto: 'Correction_hstowed_N10', dato: 'null' },
+        { id: 11, texto: 'Correction_hstowed_N11', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesChB, setDatosCorrecionesNivelesChB] = useState([
-        { id: 1, texto: 'Correccion_hbusqueda_N1', dato: 'null' },
-        { id: 2, texto: 'Correccion_hbusqueda_N2', dato: 'null' },
-        { id: 3, texto: 'Correccion_hbusqueda_N3', dato: 'null' },
-        { id: 4, texto: 'Correccion_hbusqueda_N4', dato: 'null' },
-        { id: 5, texto: 'Correccion_hbusqueda_N5', dato: 'null' },
-        { id: 6, texto: 'Correccion_hbusqueda_N6', dato: 'null' },
-        { id: 7, texto: 'Correccion_hbusqueda_N7', dato: 'null' },
-        { id: 8, texto: 'Correccion_hbusqueda_N8', dato: 'null' },
-        { id: 9, texto: 'Correccion_hbusqueda_N9', dato: 'null' },
-        { id: 10, texto: 'Correccion_hbusqueda_N10', dato: 'null' },
-        { id: 11, texto: 'Correccion_hbusqueda_N11', dato: 'null' },
+        { id: 1, texto: 'Correction_hsearch_N1', dato: 'null' },
+        { id: 2, texto: 'Correction_hsearch_N2', dato: 'null' },
+        { id: 3, texto: 'Correction_hsearch_N3', dato: 'null' },
+        { id: 4, texto: 'Correction_hsearch_N4', dato: 'null' },
+        { id: 5, texto: 'Correction_hsearch_N5', dato: 'null' },
+        { id: 6, texto: 'Correction_hsearch_N6', dato: 'null' },
+        { id: 7, texto: 'Correction_hsearch_N7', dato: 'null' },
+        { id: 8, texto: 'Correction_hsearch_N8', dato: 'null' },
+        { id: 9, texto: 'Correction_hsearch_N9', dato: 'null' },
+        { id: 10, texto: 'Correction_hsearch_N10', dato: 'null' },
+        { id: 11, texto: 'Correction_hsearch_N11', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesFA, setDatosCorrecionesNivelesFA] = useState([
-        { id: 1, texto: 'FallasN1', dato: 'null' },
-        { id: 2, texto: 'FallasN2', dato: 'null' },
-        { id: 3, texto: 'FallasN3', dato: 'null' },
-        { id: 4, texto: 'FallasN4', dato: 'null' },
-        { id: 5, texto: 'FallasN5', dato: 'null' },
-        { id: 6, texto: 'FallasN6', dato: 'null' },
-        { id: 7, texto: 'FallasN7', dato: 'null' },
-        { id: 8, texto: 'FallasN8', dato: 'null' },
-        { id: 9, texto: 'FallasN9', dato: 'null' },
-        { id: 10, texto: 'FallasN10', dato: 'null' },
-        { id: 11, texto: 'FallasN11', dato: 'null' },
+        { id: 1, texto: 'FailuresN1', dato: 'null' },
+        { id: 2, texto: 'FailuresN2', dato: 'null' },
+        { id: 3, texto: 'FailuresN3', dato: 'null' },
+        { id: 4, texto: 'FailuresN4', dato: 'null' },
+        { id: 5, texto: 'FailuresN5', dato: 'null' },
+        { id: 6, texto: 'FailuresN6', dato: 'null' },
+        { id: 7, texto: 'FailuresN7', dato: 'null' },
+        { id: 8, texto: 'FailuresN8', dato: 'null' },
+        { id: 9, texto: 'FailuresN9', dato: 'null' },
+        { id: 10, texto: 'FailuresN10', dato: 'null' },
+        { id: 11, texto: 'FailuresN11', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesuHN, setDatosCorrecionesNivelesuHN] = useState([
-        { id: 1, texto: 'ultimo_hNivel1', dato: 'null' },
-        { id: 2, texto: 'ultimo_hNivel2', dato: 'null' },
-        { id: 3, texto: 'ultimo_hNivel3', dato: 'null' },
-        { id: 4, texto: 'ultimo_hNivel4', dato: 'null' },
-        { id: 5, texto: 'ultimo_hNivel5', dato: 'null' },
-        { id: 6, texto: 'ultimo_hNivel6', dato: 'null' },
-        { id: 7, texto: 'ultimo_hNivel7', dato: 'null' },
-        { id: 8, texto: 'ultimo_hNivel8', dato: 'null' },
-        { id: 9, texto: 'ultimo_hNivel9', dato: 'null' },
-        { id: 10, texto: 'ultimo_hNivel10', dato: 'null' },
-        { id: 11, texto: 'ultimo_hNivel11', dato: 'null' },
+        { id: 1, texto: 'last_hLevel1', dato: 'null' },
+        { id: 2, texto: 'last_hLevel2', dato: 'null' },
+        { id: 3, texto: 'last_hLevel3', dato: 'null' },
+        { id: 4, texto: 'last_hLevel4', dato: 'null' },
+        { id: 5, texto: 'last_hLevel5', dato: 'null' },
+        { id: 6, texto: 'last_hLevel6', dato: 'null' },
+        { id: 7, texto: 'last_hLevel7', dato: 'null' },
+        { id: 8, texto: 'last_hLevel8', dato: 'null' },
+        { id: 9, texto: 'last_hLevel9', dato: 'null' },
+        { id: 10, texto: 'last_hLevel10', dato: 'null' },
+        { id: 11, texto: 'last_hLevel11', dato: 'null' },
     ]);
 
     const opcionesCorrecciones = [
-        { id: 1, nombre: 'TORRE' },
-        { id: 2, nombre: 'NIVEL' },
+        { id: 1, nombre: 'TOWER' },
+        { id: 2, nombre: 'LEVEL' },
     ];
 
     const inputRefs = useRef([]);
@@ -225,7 +225,7 @@ const Configuraciones = () => {
         .then(response => response.json())
         .then(data => {
             console.log('Respuesta de la API:', data);
-            toast.success("Datos de la torre corregidos exitosamente", {
+            toast.success("Tower data corrected correctly", {
                 position: "bottom-center",
             });
             handleAplicarNiveles();
@@ -290,7 +290,7 @@ const Configuraciones = () => {
         })
         .then(data => {
             console.log('Respuesta de la API:', data);
-            toast.success("Datos de la torre corregidos exitosamente", {
+            toast.success("Tower data corrected correctly", {
                 position: "bottom-center",
             });
             handleAplicarNiveles();
@@ -330,7 +330,7 @@ const Configuraciones = () => {
         })
         .then(data => {
             console.log('Respuesta de la API:', data);
-            toast.success("Datos de la torre corregidos exitosamente", {
+            toast.success("Tower data corrected correctly", {
                 position: "bottom-center",
             });
             handleAplicarNiveles();
@@ -361,7 +361,7 @@ const Configuraciones = () => {
     const [selectedTorre, setSelectedTorre] = useState(null);
 
     const handleTorreChange = (torre) => {
-      setSelectedTorre(torre);
+        setSelectedTorre(torre);
     };
 
     const handleTorresChange = (newTorres) => {
@@ -385,45 +385,44 @@ const Configuraciones = () => {
 
         const refreshTorres = (TAG) => {
             fetch(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/lista-torres?id_receta=${selectedReceta}`)
-              .then((response) => response.json())
-              .then((data) => {
+                .then((response) => response.json())
+                .then((data) => {
                 if (data.ListadoTorres) {
-                  setSelectedTorre(TAG || data.ListadoTorres[0]?.id);
+                    setSelectedTorre(TAG || data.ListadoTorres[0]?.id);
                 }
-              })
-              .catch((error) => console.error('Error al obtener torres:', error));
+            })
+            .catch((error) => console.error('Error al obtener torres:', error));
         };
 
         const refreshTorres2 = () => {
             const currentReceta = selectedReceta;
             const currentTorre = selectedTorre;
-          
+
             fetch(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/lista-torres?id_receta=${currentReceta}`)
-              .then((response) => response.json())
-              .then((data) => {
+                .then((response) => response.json())
+                .then((data) => {
                 if (data.ListadoTorres) {
-                  const torreSeleccionada = currentTorre || null;
-                  setSelectedTorre(torreSeleccionada);
-                  
-                  setSelectedReceta(currentReceta);
+                    const torreSeleccionada = currentTorre || null;
+                    setSelectedTorre(torreSeleccionada);
+                    setSelectedReceta(currentReceta);
                 }
-              })
-              .catch((error) => console.error('Error al obtener torres:', error));
-          };
+            })
+            .catch((error) => console.error('Error al obtener torres:', error));
+        };
 
         const handleAplicarNiveles = async () => {
             if (selectedTorre !== null && selectedReceta !== null) {
                 setDatosCorrecionesTorre([
-                    { id: 1, texto: 'Coreccion_hBastidor', dato: null },
-                    { id: 2, texto: 'Coreccion_hAjuste', dato: null },
-                    { id: 3, texto: 'Coreccion_hAjusteN1', dato: null },
-                    { id: 4, texto: 'Coreccion_DisteNivel', dato: null },
+                    { id: 1, texto: 'Correction_hBastidor', dato: null },
+                    { id: 2, texto: 'Correction_hAjuste', dato: null },
+                    { id: 3, texto: 'Correction_hAjusteN1', dato: null },
+                    { id: 4, texto: 'Correction_DisteNivel', dato: null },
                     { id: 5, texto: 'ActualizarTAG', dato: null },
                 ]);
         
                 setDatosCorrecionesNivelesHN(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correcion_hN${index + 1}`, dato: null })));
-                setDatosCorrecionesNivelesChG(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hguardado_N${index + 1}`, dato: null })));
-                setDatosCorrecionesNivelesChB(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hbusqueda_N${index + 1}`, dato: null })));
+                setDatosCorrecionesNivelesChG(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hstowed_N${index + 1}`, dato: null })));
+                setDatosCorrecionesNivelesChB(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hsearch_N${index + 1}`, dato: null })));
                 setDatosCorrecionesNivelesFA(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `FallasN${index + 1}`, dato: null })));
                 setDatosCorrecionesNivelesuHN(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `FallasN${index + 1}`, dato: null })));
         
@@ -436,10 +435,10 @@ const Configuraciones = () => {
                         const data = await response.json();
         
                         setDatosCorrecionesTorre([
-                            { id: 1, texto: 'Coreccion_hBastidor', dato: data.DatosTorre?.hBastidor ?? null },
-                            { id: 2, texto: 'Coreccion_hAjuste', dato: data.DatosTorre?.hAjuste ?? null },
-                            { id: 3, texto: 'Coreccion_hAjusteN1', dato: data.DatosTorre?.hAjusteN1 ?? null },
-                            { id: 4, texto: 'Coreccion_DisteNivel', dato: data.DatosTorre?.DisteNivel ?? null },
+                            { id: 1, texto: 'Correction_hz', dato: data.DatosTorre?.hBastidor ?? null },
+                            { id: 2, texto: 'Correction_hAjuste', dato: data.DatosTorre?.hAjuste ?? null },
+                            { id: 3, texto: 'Correction_hAjusteN1', dato: data.DatosTorre?.hAjusteN1 ?? null },
+                            { id: 4, texto: 'Correction_DisteNivel', dato: data.DatosTorre?.DisteNivel ?? null },
                             { id: 5, texto: 'ActualizarTAG', dato: data.DatosTorre?.ActualizarTAG ?? null },
                         ]);
         
@@ -460,7 +459,7 @@ const Configuraciones = () => {
                         setDatosCorrecionesNivelesChG(
                             [...nivelesChG, ...Array(11 - nivelesChG.length).fill(null)].map((dato, index) => ({
                                 id: index + 1,
-                                texto: `Correccion_hguardado_N${index + 1}`,
+                                texto: `Correction_hstowed_N${index + 1}`,
                                 dato: dato
                             }))
                         );
@@ -468,7 +467,7 @@ const Configuraciones = () => {
                         setDatosCorrecionesNivelesChB(
                             [...nivelesChB, ...Array(11 - nivelesChB.length).fill(null)].map((dato, index) => ({
                                 id: index + 1,
-                                texto: `Correccion_hbusqueda_N${index + 1}`,
+                                texto: `Correction_hsearch_N${index + 1}`,
                                 dato: dato
                             }))
                         );
@@ -476,7 +475,7 @@ const Configuraciones = () => {
                         setDatosCorrecionesNivelesFA(
                             [...nivelesFA, ...Array(11 - nivelesFA.length).fill(null)].map((dato, index) => ({
                                 id: index + 1,
-                                texto: `FallasN${index + 1}`,
+                                texto: `FailuresN${index + 1}`,
                                 dato: dato
                             }))
                         );
@@ -484,7 +483,7 @@ const Configuraciones = () => {
                         setDatosCorrecionesNivelesuHN(
                             [...nivelesuHN, ...Array(11 - nivelesuHN.length).fill(null)].map((dato, index) => ({
                                 id: index + 1,
-                                texto: `ultimo_hNivel${index + 1}`,
+                                texto: `last_hNivel${index + 1}`,
                                 dato: dato
                             }))
                         );
@@ -506,79 +505,72 @@ const Configuraciones = () => {
 
         const handleAplicarReceta = async () => {
             if (selectedReceta !== null) {
-              setDatosRecetas1([
-                { id: 1, texto: 'NUMERO DE GRIPPER', dato: null, icono: NGripper },
-                { id: 2, texto: 'TIPO DE MOLDE', dato: null, icono: TipoA },
-                { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 4, texto: 'ALTO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 5, texto: 'LARGO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 6, texto: 'PESO DEL PRODUCTO', dato: null, icono: Peso },
-                { id: 7, texto: 'MOLDES POR NIVEL', dato: null, icono: Moldes },
-              ]);
-          
-              setDatosRecetas2([
-                { id: 1, texto: 'ALTURA DE MOLDE', dato: null, icono: receta2 },
-                { id: 2, texto: 'LARGO DE MOLDE', dato: null, icono: receta2 },
-                { id: 3, texto: 'ALTURA AJUSTE', dato: null, icono: receta2 },
-                { id: 4, texto: 'NIVELES POR TORRE', dato: null, icono: Niveles },
-                { id: 5, texto: 'DELTA ENTRE NIVELES', dato: null, icono: receta2 },
-                { id: 6, texto: 'ALTURA N1', dato: null, icono: receta2 },
-                { id: 7, texto: 'ALTURA DE BASTIDOR', dato: null, icono: receta2 },
-                { id: 8, texto: 'ALTURA AJUSTE N1', dato: null, icono: receta2 },
-              ]);
-          
-              const fetchDatosReceta = async () => {
+                setDatosRecetas1([
+                    { id: 1, texto: 'GRIPPER NUMBER', dato: null, icono: NGripper },
+                    { id: 2, texto: 'MOULD TYPE', dato: null, icono: TipoA },
+                    { id: 3, texto: 'PRODUCT WIDTH', dato: null, icono: receta2 },
+                    { id: 4, texto: 'PRODUCT HEIGHT', dato: null, icono: receta2 },
+                    { id: 5, texto: 'PRODUCT LONG', dato: null, icono: receta2 },
+                    { id: 6, texto: 'PRODUCT WHEIGHT', dato: null, icono: Peso },
+                    { id: 7, texto: 'MOULDS PER LEVEL', dato: null, icono: Moldes },
+                ]);
+
+                setDatosRecetas2([
+                    { id: 1, texto: 'MOULD HEIGHT', dato: null, icono: receta2 },
+                    { id: 2, texto: 'MOULDE WIDTH', dato: null, icono: receta2 },
+                    { id: 3, texto: 'HEIGHT ADJUSTMENT', dato: null, icono: receta2 },
+                    { id: 4, texto: 'LEVELS PER TOWER', dato: null, icono: Niveles },
+                    { id: 5, texto: 'DELTA BETWEEN LEVELS', dato: null, icono: receta2 },
+                    { id: 6, texto: 'HEIGHT N1', dato: null, icono: receta2 },
+                    { id: 7, texto: 'FRAME HEIGHT', dato: null, icono: receta2 },
+                    { id: 8, texto: 'HEIGHT ADJUSTMENT N1', dato: null, icono: receta2 },
+                ]);
+
+            const fetchDatosReceta = async () => {
                 try {
-                  const url = `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/datos-recetas?id_receta=${selectedReceta}`;
-                  console.log("Llamando a la API:", url);
-          
-                  const response = await fetch(url);
-                  if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error("Error en la API:", errorText);
-                    throw new Error("Error en la solicitud");
-                  }
-          
-                  const data = await response.json();
-                  console.log("Datos recibidos:", data);
-          
-                  const receta = data.DatosRecetas[0];
-          
-                  setDatosRecetas1([
-                    { id: 1, texto: 'NUMERO DE GRIPPER', dato: receta.nroGripper ?? null, icono: NGripper },
-                    { id: 2, texto: 'TIPO DE MOLDE', dato: receta.tipoMolde ?? null, icono: TipoA },
-                    { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: receta.anchoProducto ? `${receta.anchoProducto} mm` : null, icono: receta2 },
-                    { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto ? `${receta.altoProducto} mm` : null, icono: receta2 },
-                    { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto ? `${receta.largoProducto} mm` : null, icono: receta2 },
-                    { id: 6, texto: 'PESO DEL PRODUCTO', dato: receta.pesoProducto ? `${receta.pesoProducto} kg` : null, icono: Peso },
-                    { id: 7, texto: 'MOLDES POR NIVEL', dato: receta.moldesNivel ?? null, icono: Moldes },
-                  ]);
-          
-                  setDatosRecetas2([
-                    { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde ? `${receta.altoMolde} mm` : null, icono: receta2 },
-                    { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde ? `${receta.largoMolde} mm` : null, icono: receta2 },
-                    { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura ? `${receta.ajusteAltura} mm` : null, icono: receta2 },
-                    { id: 4, texto: 'NIVELES POR TORRE', dato: receta.cantidadNiveles ?? null, icono: Niveles },
-                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles ? `${receta.deltaNiveles} mm` : null, icono: receta2 },
-                    { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura ? `${receta.n1Altura} mm` : null, icono: receta2 },
-                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura ? `${receta.bastidorAltura} mm` : null, icono: receta2 },
-                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura ? `${receta.ajusteN1Altura} mm` : null, icono: receta2 },
-                  ]);
+                    const url = `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/datos-recetas?id_receta=${selectedReceta}`;
+                    console.log("Llamando a la API:", url);
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error("Error en la API:", errorText);
+                        throw new Error("Error en la solicitud");
+                    }
+                    const data = await response.json();
+                    console.log("Datos recibidos:", data);          
+                    const receta = data.DatosRecetas[0];
+                    setDatosRecetas1([
+                        { id: 1, texto: 'GRIPPER NUMBER', dato: receta.nroGripper ?? null, icono: NGripper },
+                        { id: 2, texto: 'MOULD TYPE', dato: receta.tipoMolde ?? null, icono: TipoA },
+                        { id: 3, texto: 'PRODUCT WIDTH', dato: receta.anchoProducto ? `${receta.anchoProducto} mm` : null, icono: receta2 },
+                        { id: 4, texto: 'PRODUCTO HEIGHT', dato: receta.altoProducto ? `${receta.altoProducto} mm` : null, icono: receta2 },
+                        { id: 5, texto: 'PRODUCTO LONG', dato: receta.largoProducto ? `${receta.largoProducto} mm` : null, icono: receta2 },
+                        { id: 6, texto: 'PRODUCTO WHEIGHT', dato: receta.pesoProducto ? `${receta.pesoProducto} kg` : null, icono: Peso },
+                        { id: 7, texto: 'MOULDS PER LEVEL', dato: receta.moldesNivel ?? null, icono: Moldes },
+                    ]);
+
+                    setDatosRecetas2([
+                        { id: 1, texto: 'MOULD HEIGHT', dato: receta.altoMolde ? `${receta.altoMolde} mm` : null, icono: receta2 },
+                        { id: 2, texto: 'MOULD WIDTH', dato: receta.largoMolde ? `${receta.largoMolde} mm` : null, icono: receta2 },
+                        { id: 3, texto: 'HEIGHT ADJUSTMENT', dato: receta.ajusteAltura ? `${receta.ajusteAltura} mm` : null, icono: receta2 },
+                        { id: 4, texto: 'LEVELS PER TOWER', dato: receta.cantidadNiveles ?? null, icono: Niveles },
+                        { id: 5, texto: 'DELTA BETWEEN LEVELS', dato: receta.deltaNiveles ? `${receta.deltaNiveles} mm` : null, icono: receta2 },
+                        { id: 6, texto: 'HEIGHT N1', dato: receta.n1Altura ? `${receta.n1Altura} mm` : null, icono: receta2 },
+                        { id: 7, texto: 'FRAME HEIGHT', dato: receta.bastidorAltura ? `${receta.bastidorAltura} mm` : null, icono: receta2 },
+                        { id: 8, texto: 'HEIGHT ADJUSTMENT N1', dato: receta.ajusteN1Altura ? `${receta.ajusteN1Altura} mm` : null, icono: receta2 },
+                    ]);
                 } catch (error) {
-                  console.error("Error al obtener los datos de la receta:", error);
+                    console.error("Error al obtener los datos de la receta:", error);
                 }
-              };
-          
-              fetchDatosReceta();
-            }
-          };
-          
-          useEffect(() => {
+            };
+            fetchDatosReceta();
+        }
+    };
+        useEffect(() => {
             if (selectedReceta !== null) {
-              handleAplicarReceta();
+                handleAplicarReceta();
             }
-          }, [selectedReceta]);
-                   
+        }, [selectedReceta]);
 
     return (
         <div className={style.all}>
@@ -644,7 +636,7 @@ const Configuraciones = () => {
 
             <div className={style.Der}>
                 <div className={style.tituloCorreciones}>
-                    <h2 className={style.h2}>CORRECIONES</h2>
+                    <h2 className={style.h2}>CORRECTIONS</h2>
                 </div>
 
                 <div className={style.botonesCorreciones}>
