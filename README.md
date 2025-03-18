@@ -19,10 +19,10 @@ npm install js-cookie
 npm install html2canvas jspdf
 ```
 
-## Para los graficos se utilizo TradingView
-https://www.tradingview.com/lightweight-charts/
+## Para los graficos se utilizo ChartJS
+https://www.chartjs.org/docs/latest/
 Para poder utilizarlo necesitaremos ejecutar esta linea de comando
 
 ```bash
-npm install --save lightweight-charts
+npm install chart.js
 ```
