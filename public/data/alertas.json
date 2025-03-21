@@ -1,0 +1,212 @@
+[
+    {
+        "DescAlerta": "Actualización de software disponible",
+        "TipoAlerta": "Error",
+        "ID": 1,
+        "Estado": false,
+        "Hora": "2025-01-15 10:54:12"
+    },
+    {
+        "DescAlerta": "Error en la conexión del servidor",
+        "TipoAlerta": "Info",
+        "ID": 2,
+        "Estado": true,
+        "Hora": "2025-01-15 07:51:12"
+    },
+    {
+        "DescAlerta": "Batería baja",
+        "TipoAlerta": "Info",
+        "ID": 3,
+        "Estado": false,
+        "Hora": "2025-01-15 03:38:12"
+    },
+    {
+        "DescAlerta": "Uso de CPU elevado",
+        "TipoAlerta": "Error",
+        "ID": 4,
+        "Estado": false,
+        "Hora": "2025-01-14 21:54:12"
+    },
+    {
+        "DescAlerta": "Sistema operativo actualizado",
+        "TipoAlerta": "Warning",
+        "ID": 5,
+        "Estado": true,
+        "Hora": "2025-01-15 03:21:12"
+    },
+    {
+        "DescAlerta": "Actividad inusual detectada",
+        "TipoAlerta": "Critical",
+        "ID": 6,
+        "Estado": true,
+        "Hora": "2025-01-15 06:47:12"
+    },
+    {
+        "DescAlerta": "Sistema operativo actualizado",
+        "TipoAlerta": "Warning",
+        "ID": 7,
+        "Estado": true,
+        "Hora": "2025-01-15 01:09:12"
+    },
+    {
+        "DescAlerta": "Red no detectada",
+        "TipoAlerta": "Error",
+        "ID": 8,
+        "Estado": true,
+        "Hora": "2025-01-15 09:20:12"
+    },
+    {
+        "DescAlerta": "Batería baja",
+        "TipoAlerta": "Error",
+        "ID": 9,
+        "Estado": true,
+        "Hora": "2025-01-14 19:31:12"
+    },
+    {
+        "DescAlerta": "Error en la conexión del servidor",
+        "TipoAlerta": "Info",
+        "ID": 10,
+        "Estado": true,
+        "Hora": "2025-01-14 21:23:12"
+    },
+    {
+        "DescAlerta": "Actividad inusual detectada",
+        "TipoAlerta": "Info",
+        "ID": 11,
+        "Estado": true,
+        "Hora": "2025-01-15 02:43:12"
+    },
+    {
+        "DescAlerta": "Red no detectada",
+        "TipoAlerta": "Info",
+        "ID": 12,
+        "Estado": false,
+        "Hora": "2025-01-14 19:58:12"
+    },
+    {
+        "DescAlerta": "Batería baja",
+        "TipoAlerta": "Info",
+        "ID": 13,
+        "Estado": false,
+        "Hora": "2025-01-15 03:41:12"
+    },
+    {
+        "DescAlerta": "Error en la conexión del servidor",
+        "TipoAlerta": "Critical",
+        "ID": 14,
+        "Estado": false,
+        "Hora": "2025-01-14 15:08:12"
+    },
+    {
+        "DescAlerta": "Uso de CPU elevado",
+        "TipoAlerta": "Info",
+        "ID": 15,
+        "Estado": true,
+        "Hora": "2025-01-14 21:24:12"
+    },
+    {
+        "DescAlerta": "Sistema operativo actualizado",
+        "TipoAlerta": "Critical",
+        "ID": 16,
+        "Estado": true,
+        "Hora": "2025-01-14 20:16:12"
+    },
+    {
+        "DescAlerta": "Uso de CPU elevado",
+        "TipoAlerta": "Info",
+        "ID": 17,
+        "Estado": true,
+        "Hora": "2025-01-14 23:46:12"
+    },
+    {
+        "DescAlerta": "Red no detectada",
+        "TipoAlerta": "Error",
+        "ID": 18,
+        "Estado": false,
+        "Hora": "2025-01-14 18:32:12"
+    },
+    {
+        "DescAlerta": "Sistema operativo actualizado",
+        "TipoAlerta": "Warning",
+        "ID": 19,
+        "Estado": false,
+        "Hora": "2025-01-14 20:11:12"
+    },
+    {
+        "DescAlerta": "Sistema operativo actualizado",
+        "TipoAlerta": "Warning",
+        "ID": 20,
+        "Estado": false,
+        "Hora": "2025-01-14 13:56:12"
+    },
+    {
+        "DescAlerta": "Actualización de software disponible",
+        "TipoAlerta": "Info",
+        "ID": 21,
+        "Estado": true,
+        "Hora": "2025-01-14 22:00:12"
+    },
+    {
+        "DescAlerta": "Actividad inusual detectada",
+        "TipoAlerta": "Error",
+        "ID": 22,
+        "Estado": false,
+        "Hora": "2025-01-14 19:35:12"
+    },
+    {
+        "DescAlerta": "Actividad inusual detectada",
+        "TipoAlerta": "Critical",
+        "ID": 23,
+        "Estado": false,
+        "Hora": "2025-01-15 02:05:12"
+    },
+    {
+        "DescAlerta": "Uso de CPU elevado",
+        "TipoAlerta": "Info",
+        "ID": 24,
+        "Estado": false,
+        "Hora": "2025-01-15 04:06:12"
+    },
+    {
+        "DescAlerta": "Red no detectada",
+        "TipoAlerta": "Error",
+        "ID": 25,
+        "Estado": false,
+        "Hora": "2025-01-14 18:38:12"
+    },
+    {
+        "DescAlerta": "Sistema operativo actualizado",
+        "TipoAlerta": "Error",
+        "ID": 26,
+        "Estado": true,
+        "Hora": "2025-01-15 10:48:12"
+    },
+    {
+        "DescAlerta": "Batería baja",
+        "TipoAlerta": "Info",
+        "ID": 27,
+        "Estado": true,
+        "Hora": "2025-01-14 20:30:12"
+    },
+    {
+        "DescAlerta": "Red no detectada",
+        "TipoAlerta": "Error",
+        "ID": 28,
+        "Estado": true,
+        "Hora": "2025-01-15 06:58:12"
+    },
+    {
+        "DescAlerta": "Error en la conexión del servidor",
+        "TipoAlerta": "Critical",
+        "ID": 29,
+        "Estado": false,
+        "Hora": "2025-01-14 14:52:12"
+    },
+    {
+        "DescAlerta": "Red no detectada",
+        "TipoAlerta": "Error",
+        "ID": 30,
+        "Estado": false,
+        "Hora": "2025-01-15 00:37:12"
+    }
+]
