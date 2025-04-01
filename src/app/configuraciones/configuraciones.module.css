@@ -1,11 +1,19 @@
 .all {
     width: 100%;
-    padding: 113px 10px 20px 10px;
+    padding: 133px 20px 20px;
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    min-height: 100vh;
+    min-height: 940px;
+    max-height: 100vh;
     margin: 0;
+    gap: 20px;
+}
+
+.Izq,
+.Der {
+    width: 20%;
+    gap:20px;
 }
 
 .Izq,
@@ -17,21 +25,51 @@
     min-height: 100%;
 }
 
+.lista {
+    background-color: #131313;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.datoList {
+    padding: 17.7px 20px;
+    background-color: #1F1F1F;
+    border-radius: 15px;
+}
+
+.datoListIzq {
+    padding: 12.5px 20px;
+    background-color: #1F1F1F;
+    border-radius: 15px;
+}
+
 .contenedor {
     display: flex;
     flex-direction: column;
     background-color: #131313;
     border-radius: 15px;
-    margin: 20px 10px 0px 10px;
+    padding: 20px 10px 0px 10px;
     flex-grow: 1;
 }
 
 .h2 {
+    background-color: #131313;
+    border-radius: 15px;
     color: #D9D9D9;
     padding: 10px;
     font-size: 30px;
     font-weight: bold;
     text-align: center;
+}
+
+.datoListCorreciones {
+    padding: 28px 20px;
+    background-color: #1F1F1F;
+    border-radius: 15px;
 }
 
 .texto {
@@ -56,24 +94,11 @@
     gap: 10px; /* Espacio entre los elementos de las columnas */
 }
 
-.datoList {
-    padding: 17.7px 20px;
-    margin: 10px 0 0 0;
-    background-color: #1F1F1F;
-    border-radius: 15px;
-}
-
-.datoListIzq {
-    padding: 18.5px 20px;
-    margin: 10px 0 0 0;
-    background-color: #1F1F1F;
-    border-radius: 15px;
-}
-
 .detallesDatos {
     display: flex;
     flex-direction: row;
     align-items: center;
+    width: 100%;
 }
 
 .icon {
@@ -161,26 +186,8 @@
     color: #D9D9D9;
 }
 
-.datoListCorreciones {
-    height: 100%;
-    padding: 26.9px 20px;
-    margin: 10px 0 0 0;
-    background-color: #1F1F1F;
-    border-radius: 15px;
-}
-
 .botonAplicar {
     margin-left: auto;
-}
-
-.datoListNiveles {
-    padding: 27px 20px; /* Ajusta el padding para no sobrecargar el espacio */
-    background-color: #1F1F1F;
-    border-radius: 15px;
-    justify-content: space-between; /* Asegura que el contenido se distribuya bien */
-    align-items: center; /* Alinea el contenido de forma vertical */
-    flex: 1 1 calc(50% - 20px); /* Ocupar aproximadamente la mitad del ancho del contenedor, menos el espacio del gap */
-    box-sizing: border-box; /* Incluye padding y borde en el cálculo del ancho */
 }
 
 .datosGenNiveles {
@@ -188,11 +195,22 @@
     padding: 10px;
 }
 
-
 .listaNiveles {
+    background-color: #131313;
+    border-radius: 15px;
     display: flex;
     flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas si es necesario */
-    gap: 10px; /* Espacio entre los elementos */
+    padding: 20px;
+    gap: 10px;
+    flex: 1;
+}
+
+.datoListNiveles {
+    padding: 15px 20px; /* Ajusta el padding para no sobrecargar el espacio */
+    background-color: #1F1F1F;
+    border-radius: 15px;
+    align-items: center; /* Alinea el contenido de forma vertical */
+    flex: 1 1 calc(50% - 20px); /* Ocupar aproximadamente la mitad del ancho del contenedor, menos el espacio del gap */
 }
 
 .botonTorre {
@@ -213,25 +231,29 @@
 }
 
 .datoListNivelesFallas {
-    padding: 27px 20px; /* Ajusta el padding para no sobrecargar el espacio */
+    display: flex;
+    padding: 15px 20px; /* Ajusta el padding para no sobrecargar el espacio */
     background-color: #1F1F1F;
     border-radius: 15px;
-    justify-content: space-between; /* Asegura que el contenido se distribuya bien */
-    align-items: center; /* Alinea el contenido de forma vertical */
     flex: 1 1 calc(50% - 20px); /* Ocupar aproximadamente la mitad del ancho del contenedor, menos el espacio del gap */
-    box-sizing: border-box; /* Incluye padding y borde en el cálculo del ancho */
 }
 
 .botonesAbajoDiv2 {
-    width: 49%;
+    flex-direction: column;
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Opcional: centra horizontalmente */
+    width: 50%; /* El ancho fijo del contenedor */
+    height: 10%;
+}
+
+.botonesAbajo2 {
+
 }
 
 .botonesAbajoDiv {
-    margin-top: 10px;
-}
-
-.botonesAbajo {
-    margin-top: 10px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .Skeleton {

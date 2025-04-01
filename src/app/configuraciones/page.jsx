@@ -7,6 +7,9 @@ import NGripper from '@/assets/img/GRIPPER.png';
 import TipoA from '@/assets/img/TIPOA.png';
 import TipoB from '@/assets/img/TIPOB.png';
 import TipoC from '@/assets/img/TIPOC.png';
+import Ancho from '@/assets/img/ancho.png';
+import Alto from '@/assets/img/alto.png';
+import Largo from '@/assets/img/largo.png';
 import Peso from '@/assets/img/PESO.png';
 import Moldes from '@/assets/img/MOLDE.png';
 import Niveles from '@/assets/img/NIVELACTUAL.png';
@@ -50,11 +53,12 @@ const Configuraciones = () => {
     const [datosGeneralesIzq, setDatosRecetas1] = useState([
         { id: 1, texto: 'NUMERO DE GRIPPER ', dato: 'null', icono:NGripper  },
         { id: 2, texto: 'TIPO DE MOLDE', dato: 'null', icono:TipoA  },
-        { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: 'null', icono:receta2  },
-        { id: 4, texto: 'ALTO DEL PRODUCTO', dato: 'null', icono:receta2  },
-        { id: 5, texto: 'LARGO DEL PRODUCTO', dato: 'null', icono:receta2  },
+        { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: 'null', icono:Ancho  },
+        { id: 4, texto: 'ALTO DEL PRODUCTO', dato: 'null', icono:Alto  },
+        { id: 5, texto: 'LARGO DEL PRODUCTO', dato: 'null', icono:Largo  },
         { id: 6, texto: 'PESO DEL PRODUCTO', dato: 'null', icono:Peso  },
         { id: 7, texto: 'MOLDES POR NIVEL', dato: 'null', icono:Moldes  },
+        { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: 'null', icono:Moldes  },
     ]);       
 
     const [datosGeneralesDer, setDatosRecetas2] = useState([
@@ -464,208 +468,189 @@ const Configuraciones = () => {
         };
         
         useEffect(() => {
-        if (selectedTorre !== null && selectedReceta !== null) {
-            handleAplicarNiveles();
-        }
+            if (selectedTorre !== null && selectedReceta !== null) {
+                handleAplicarNiveles();
+            }
         }, [selectedReceta, selectedTorre]);
 
         const handleAplicarReceta = async () => {
             if (selectedReceta !== null) {
-              setDatosRecetas1([
-                { id: 1, texto: 'NUMERO DE GRIPPER', dato: null, icono: NGripper },
-                { id: 2, texto: 'TIPO DE MOLDE', dato: null, icono: TipoA },
-                { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 4, texto: 'ALTO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 5, texto: 'LARGO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 6, texto: 'PESO DEL PRODUCTO', dato: null, icono: Peso },
-                { id: 7, texto: 'MOLDES POR NIVEL', dato: null, icono: Moldes },
-              ]);
-          
-              setDatosRecetas2([
-                { id: 1, texto: 'ALTURA DE MOLDE', dato: null, icono: receta2 },
-                { id: 2, texto: 'LARGO DE MOLDE', dato: null, icono: receta2 },
-                { id: 3, texto: 'ALTURA AJUSTE', dato: null, icono: receta2 },
-                { id: 4, texto: 'NIVELES POR TORRE', dato: null, icono: Niveles },
-                { id: 5, texto: 'DELTA ENTRE NIVELES', dato: null, icono: receta2 },
-                { id: 6, texto: 'ALTURA N1', dato: null, icono: receta2 },
-                { id: 7, texto: 'ALTURA DE BASTIDOR', dato: null, icono: receta2 },
-                { id: 8, texto: 'ALTURA AJUSTE N1', dato: null, icono: receta2 },
-              ]);
-          
-              const fetchDatosReceta = async () => {
-                try {
-                  const url = `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/datos-recetas?id_receta=${selectedReceta}`;
-                  console.log("Llamando a la API:", url);
-          
-                  const response = await fetch(url);
-                  if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error("Error en la API:", errorText);
-                    throw new Error("Error en la solicitud");
-                  }
-          
-                  const data = await response.json();
-                  console.log("Datos recibidos:", data);
-          
-                  const receta = data.DatosRecetas[0];
-          
-                  setDatosRecetas1([
-                    { id: 1, texto: 'NUMERO DE GRIPPER', dato: receta.nroGripper ?? null, icono: NGripper },
-                    { id: 2, texto: 'TIPO DE MOLDE', dato: receta.tipoMolde ?? null, icono: TipoA },
-                    { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: receta.anchoProducto !== null && receta.anchoProducto !== undefined ? `${receta.anchoProducto} mm` : null, icono: receta2 },
-                    { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto !== null && receta.altoProducto !== undefined ? `${receta.altoProducto} mm` : null, icono: receta2 },
-                    { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto !== null && receta.largoProducto !== undefined ? `${receta.largoProducto} mm` : null, icono: receta2 },
-                    { id: 6, texto: 'PESO DEL PRODUCTO', dato: receta.pesoProducto !== null && receta.pesoProducto !== undefined ? `${receta.pesoProducto} kg` : null, icono: receta2 },
-                    { id: 7, texto: 'MOLDES POR NIVEL', dato: receta.moldesNivel ?? null, icono: Moldes },
-                  ]);
-          
-                  setDatosRecetas2([
-                    { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde !== null && receta.altoMolde !== undefined ? `${receta.altoMolde} mm` : null, icono: receta2 },
-                    { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde !== null && receta.largoMolde !== undefined ? `${receta.largoMolde} mm` : null, icono: receta2 },
-                    { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura !== null && receta.ajusteAltura !== undefined ? `${receta.ajusteAltura} mm` : null, icono: receta2 },
-                    { id: 4, texto: 'NIVELES POR TORRE', dato: receta.cantidadNiveles ?? null, icono: Niveles },
-                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles !== null && receta.deltaNiveles !== undefined ? `${receta.deltaNiveles} mm` : null, icono: receta2 },
-                    { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura !== null && receta.n1Altura !== undefined ? `${receta.n1Altura} mm` : null, icono: receta2 },
-                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura !== null && receta.bastidorAltura !== undefined ? `${receta.bastidorAltura} mm` : null, icono: receta2 },
-                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura !== null && receta.ajusteN1Altura !== undefined ? `${receta.ajusteN1Altura} mm` : null, icono: receta2 },
-                  ]);
-                } catch (error) {
-                  console.error("Error al obtener los datos de la receta:", error);
-                }
-              };
-          
-              fetchDatosReceta();
+                setDatosRecetas1([
+                    { id: 1, texto: 'NUMERO DE GRIPPER', dato: null, icono: NGripper },
+                    { id: 2, texto: 'TIPO DE MOLDE', dato: null, icono: TipoA },
+                    { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: null, icono: Ancho },
+                    { id: 4, texto: 'ALTO DEL PRODUCTO', dato: null, icono: Alto },
+                    { id: 5, texto: 'LARGO DEL PRODUCTO', dato: null, icono: Largo },
+                    { id: 6, texto: 'PESO DEL PRODUCTO', dato: null, icono: Peso },
+                    { id: 7, texto: 'MOLDES POR NIVEL', dato: null, icono: Moldes },
+                    { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: null, icono: Moldes},
+                ]);
+                setDatosRecetas2([
+                    { id: 1, texto: 'ALTURA DE MOLDE', dato: null, icono: receta2 },
+                    { id: 2, texto: 'LARGO DE MOLDE', dato: null, icono: receta2 },
+                    { id: 3, texto: 'ALTURA AJUSTE', dato: null, icono: receta2 },
+                    { id: 4, texto: 'NIVELES POR TORRE', dato: null, icono: Niveles },
+                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: null, icono: receta2 },
+                    { id: 6, texto: 'ALTURA N1', dato: null, icono: receta2 },
+                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: null, icono: receta2 },
+                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: null, icono: receta2 },
+                ]);
+                const fetchDatosReceta = async () => {
+                    try {
+                    const url = `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/datos-recetas?id_receta=${selectedReceta}`;
+                    console.log("Llamando a la API:", url);
+            
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error("Error en la API:", errorText);
+                        throw new Error("Error en la solicitud");
+                    }
+            
+                    const data = await response.json();
+                    console.log("Datos recibidos:", data);
+            
+                    const receta = data.DatosRecetas[0];
+            
+                    setDatosRecetas1([
+                        { id: 1, texto: 'NUMERO DE GRIPPER', dato: receta.nroGripper ?? null, icono: NGripper },
+                        { id: 2, texto: 'TIPO DE MOLDE', dato: receta.tipoMolde ?? null, icono: TipoA },
+                        { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: receta.anchoProducto !== null && receta.anchoProducto !== undefined ? `${receta.anchoProducto} mm` : null, icono: Ancho },
+                        { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto !== null && receta.altoProducto !== undefined ? `${receta.altoProducto} mm` : null, icono: Alto },
+                        { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto !== null && receta.largoProducto !== undefined ? `${receta.largoProducto} mm` : null, icono: Largo },
+                        { id: 6, texto: 'PESO DEL PRODUCTO', dato: receta.pesoProducto !== null && receta.pesoProducto !== undefined ? `${receta.pesoProducto} kg` : null, icono: receta2 },
+                        { id: 7, texto: 'MOLDES POR NIVEL', dato: receta.moldesNivel ?? null, icono: Moldes },
+                        { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: receta.productosMolde ?? null, icono: Moldes },
+                    ]);
+            
+                    setDatosRecetas2([
+                        { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde !== null && receta.altoMolde !== undefined ? `${receta.altoMolde} mm` : null, icono: receta2 },
+                        { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde !== null && receta.largoMolde !== undefined ? `${receta.largoMolde} mm` : null, icono: receta2 },
+                        { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura !== null && receta.ajusteAltura !== undefined ? `${receta.ajusteAltura} mm` : null, icono: receta2 },
+                        { id: 4, texto: 'NIVELES POR TORRE', dato: receta.cantidadNiveles ?? null, icono: Niveles },
+                        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles !== null && receta.deltaNiveles !== undefined ? `${receta.deltaNiveles} mm` : null, icono: receta2 },
+                        { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura !== null && receta.n1Altura !== undefined ? `${receta.n1Altura} mm` : null, icono: receta2 },
+                        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura !== null && receta.bastidorAltura !== undefined ? `${receta.bastidorAltura} mm` : null, icono: receta2 },
+                        { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura !== null && receta.ajusteN1Altura !== undefined ? `${receta.ajusteN1Altura} mm` : null, icono: receta2 },
+                    ]);
+                    } catch (error) {
+                        console.error("Error al obtener los datos de la receta:", error);
+                    }
+                };
+                fetchDatosReceta();
             }
-          };
-          
-          useEffect(() => {
+        };
+        
+        useEffect(() => {
             if (selectedReceta !== null) {
-              handleAplicarReceta();
+            handleAplicarReceta();
             }
-          }, [selectedReceta]);
-                   
+        }, [selectedReceta]);
 
     return (
         <div className={style.all}>
             <div className={style.Izq}>
-                <div className={style.selector}>
-                    <SelectConfiguracion onChange={setSelectedReceta} onClick={handleAplicarReceta} />
-                </div>
-                <div className={style.contenedor}>
-                    <div className={style.datosGen}>
-                        <ul className={style.lista}>
-                            {datosGeneralesIzq.map(({ id, texto, dato, icono }) => (
-                                <li key={id} className={style.datoListIzq}>
-                                    <div className={style.detallesDatos}>
-                                        <div className={style.texto}>
-                                            {(dato === 'null' || dato === undefined || dato === null) ? (
-                                            <>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <EjemploSkeleton2 />
-                                            </>
-                                            ) : (
-                                            <>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <h4 className={textstyle.h4}>{dato}</h4>
-                                            </>
-                                            )}
-                                        </div>
-                                        <Image src={icono} alt={`Estado: ${id}`} className={style.icon} />
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                <SelectConfiguracion onChange={setSelectedReceta} onClick={handleAplicarReceta} />
+                <ul className={style.lista}>
+                    {datosGeneralesIzq.map(({ id, texto, dato, icono }) => (
+                        <li key={id} className={style.datoListIzq}>
+                            <div className={style.detallesDatos}>
+                                <div className={style.texto}>
+                                    {(dato === 'null' || dato === undefined || dato === null) ? (
+                                    <>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <EjemploSkeleton2 />
+                                    </>
+                                    ) : (
+                                    <>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <h4 className={textstyle.h4}>{dato}</h4>
+                                    </>
+                                    )}
+                                </div>
+                                <Image src={icono} alt={`Estado: ${id}`} className={style.icon} />
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
             <div className={style.Med}>
-                <div className={style.contenedor}>
-                    <div className={style.datosGen}>
-                        <ul className={style.lista}>
-                            {datosGeneralesDer.map(({ id, texto, dato, icono }) => (
-                                <li key={id} className={style.datoList}>
-                                    <div className={style.detallesDatos}>
-                                        <div className={style.texto}>
-                                            {(dato === 'null' || dato === undefined || dato === null) ? (
-                                            <div className={style.Skeleton}>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <EjemploSkeleton2 />
-                                            </div>
-                                            ) : (
-                                            <>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <h4 className={textstyle.h4}>{dato}</h4>
-                                            </>
-                                            )}
-                                        </div>
-                                        <Image src={icono} alt={`Estado: ${id}`} className={style.icon} />
+                <ul className={style.lista}>
+                    {datosGeneralesDer.map(({ id, texto, dato, icono }) => (
+                        <li key={id} className={style.datoList}>
+                            <div className={style.detallesDatos}>
+                                <div className={style.texto}>
+                                    {(dato === 'null' || dato === undefined || dato === null) ? (
+                                    <div className={style.Skeleton}>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <EjemploSkeleton2 />
                                     </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                                    ) : (
+                                    <>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <h4 className={textstyle.h4}>{dato}</h4>
+                                    </>
+                                    )}
+                                </div>
+                                <Image src={icono} alt={`Estado: ${id}`} className={style.icon} />
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
 
             <div className={style.Der}>
-                <div className={style.tituloCorreciones}>
-                    <h2 className={style.h2}>CORRECCIONES</h2>
-                </div>
-
-                <div className={style.botonesCorreciones}>
-                    <ul className={style.navList}>
-                        {opcionesCorrecciones.map(({ id, nombre }) => (
-                            <li key={id} className={style.navItem}>
-                                <button
-                                    className={`${style.navLink} ${selectedOption === id ? style.active : ''}`}
-                                    onClick={() => handleOptionClick(id)}
-                                >
-                                <div className={style.botonTorre}>
-                                    <span className={style.nombre}>{nombre}</span>
-                                    <div className={style.selectTorreWrapper}>
-                                        {id === 1 && <SelectTorre onChange={handleTorreChange} onTorresChange={handleTorresChange} selectedReceta={selectedReceta} refreshTorres={refreshTorres} refreshTorres2={refreshTorres2} selectedTorre={selectedTorre}/>}
-                                        {id === 2 && <SelectNivel onChange={handleNivelChange}/>}
-                                    </div>
+                <h2 className={style.h2}>CORRECCIONES</h2>
+                <ul className={style.navList}>
+                    {opcionesCorrecciones.map(({ id, nombre }) => (
+                        <li key={id} className={style.navItem}>
+                            <button
+                                className={`${style.navLink} ${selectedOption === id ? style.active : ''}`}
+                                onClick={() => handleOptionClick(id)}
+                            >
+                            <div className={style.botonTorre}>
+                                <span className={style.nombre}>{nombre}</span>
+                                <div className={style.selectTorreWrapper}>
+                                    {id === 1 && <SelectTorre onChange={handleTorreChange} onTorresChange={handleTorresChange} selectedReceta={selectedReceta} refreshTorres={refreshTorres} refreshTorres2={refreshTorres2} selectedTorre={selectedTorre}/>}
+                                    {id === 2 && <SelectNivel onChange={handleNivelChange}/>}
                                 </div>
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                            </div>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
 
-                <div className={style.contenedor}>
-                    {selectedOption === 2 ? (
+                {selectedOption === 2 ? (
                         (selectedNivel === "HN" || selectedNivel === "ChG" || selectedNivel === "ChB") ? (
-                        <div className={style.datosGenNiveles}>
                             <ul className={style.listaNiveles}>
                             {datosActuales.map(({ id, texto, dato }, index) => (
                                 <li key={id} className={ (dato === 'null' || dato === undefined) ? style.datoListNivelesFallas : style.datoListNiveles }>
                                 <div className={style.detallesDatos}>
                                     <div className={style.texto}>
-                                    <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                    <h4 className={textstyle.h4}>
-                                        {(dato === 'null' || dato === undefined || dato === null) ? (
-                                            <EjemploSkeleton2 />
-                                        ) : (
-                                        <>
-                                            {dato}
-                                            <span> </span> 
-                                            -
-                                            <span> </span> 
-                                            <input
-                                            ref={(el) => (inputRefs.current[index] = el)}
-                                            className={style.inputCorreciones}
-                                            type="number"
-                                            onInput={(e) => {
-                                                if (e.target.value.includes('.')) {
-                                                e.target.value = e.target.value.split('.')[0];
-                                                }
-                                            }}
-                                            pattern="\d+"
-                                            />
-                                        </>
-                                        )}
-                                    </h4>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <h4 className={textstyle.h4}>
+                                            {(dato === 'null' || dato === undefined || dato === null) ? (
+                                                <EjemploSkeleton2 />
+                                            ) : (
+                                            <>
+                                                {dato}
+                                                <span> </span> 
+                                                -
+                                                <span> </span> 
+                                                <input
+                                                ref={(el) => (inputRefs.current[index] = el)}
+                                                className={style.inputCorreciones}
+                                                type="number"
+                                                onInput={(e) => {
+                                                    if (e.target.value.includes('.')) {
+                                                    e.target.value = e.target.value.split('.')[0];
+                                                    }
+                                                }}
+                                                pattern="\d+"
+                                                />
+                                            </>
+                                            )}
+                                        </h4>
                                     </div>
                                 </div>
                                 </li>
@@ -681,9 +666,7 @@ const Configuraciones = () => {
                                     />
                                 </div>
                             </ul>
-                        </div>
                         ) : selectedNivel === "FA" ? (
-                        <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>
                             <ul className={selectedOption === 2 ? style.listaNiveles : style.lista}>
                                 {datosActuales.map(({ id, texto, dato }, index) => (
                                     <li key={id} className={selectedOption === 2 ? style.datoListNivelesFallas : style.datoListCorreciones}>
@@ -717,9 +700,7 @@ const Configuraciones = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
                         ) : (
-                        <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>
                             <ul className={selectedOption === 2 ? style.listaNiveles : style.lista}>
                                 {datosActuales.map(({ id, texto, dato }) => (
                                     <li key={id} className={selectedOption === 2 ? style.datoListNivelesFallas : style.datoListNiveles}>
@@ -745,10 +726,8 @@ const Configuraciones = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
                         )
                     ) : (
-                        <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>
                         <ul className={selectedOption === 2 ? style.listaNiveles : style.lista}>
                             {datosActuales.map(({ id, texto, dato }, index) => (
                             <li key={id} className={selectedOption === 1 ? style.datoListCorreciones : style.datoListCorreciones}>
@@ -798,22 +777,20 @@ const Configuraciones = () => {
                             </li>
                             ))}
                             <div className={style.botonesAbajoDiv}>
-                            <BotonAplicar2 
-                                className={style.botonesAbajo} 
-                                onClick={() => handleAplicarClick2()}
-                                isDisabled={isButtonDisabled} // Usamos isDisabled en lugar de disabled
-                            />
-                            <BotonRefresh 
-                                className={style.botonesAbajo} 
-                                onClick={() => handleAplicarNiveles()}
-                            />
+                                <BotonAplicar2 
+                                    className={style.botonesAbajo} 
+                                    onClick={() => handleAplicarClick2()}
+                                    isDisabled={isButtonDisabled} // Usamos isDisabled en lugar de disabled
+                                />
+                                <BotonRefresh 
+                                    className={style.botonesAbajo} 
+                                    onClick={() => handleAplicarNiveles()}
+                                />
                             </div>
                         </ul>
-                        </div>
                     )}
                 </div>
             </div>
-        </div>
     );
 };
 
