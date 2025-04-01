@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
       
       // Almacenar en sessionStorage solo el token y el token_type, excluyendo el role
-      sessionStorage.setItem('user_data', JSON.stringify({ access_token, token_type }));
+      sessionStorage.setItem('user_data', JSON.stringify({ access_token, token_type, role }));
       
       Cookies.set('token', access_token, { secure: false, sameSite: 'lax' });
       

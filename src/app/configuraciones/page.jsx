@@ -1,7 +1,6 @@
 "use client";
 
 import style from './configuraciones.module.css';
-
 import Image from "next/image";
 import receta2 from '@/assets/img/RECETA2.png';
 import NGripper from '@/assets/img/GRIPPER.png';
@@ -11,14 +10,11 @@ import TipoC from '@/assets/img/TIPOC.png';
 import Peso from '@/assets/img/PESO.png';
 import Moldes from '@/assets/img/MOLDE.png';
 import Niveles from '@/assets/img/NIVELACTUAL.png';
-
 import { useContext, useState, useEffect, useRef } from "react";
 import EjemploSkeleton from "./skeleton"
 import EjemploSkeleton2 from "./skeleton2"
 import EjemploSkeleton3 from "./skeleton3"
-
 import AuthContext from "../context/AuthContext"
-
 import textstyle from './texto.module.css';
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -30,7 +26,7 @@ import SelectTorre from "../components/botones/selectTorre/selectTorre"
 import SelectNivel from "../components/botones/selectNivel/selectNivel"
 
 const Configuraciones = () => {
-    const { data } = useContext(AuthContext); // Obtiene datos del contexto
+    const { user, data } = useContext(AuthContext); // Obtiene datos del contexto y el usuario
     const [loading, setLoading] = useState(false); // Nuevo estado para controlar el Spinner
     const [refreshKey, setRefreshKey] = useState(0);
     const [torres, setTorres] = useState([]);
@@ -39,48 +35,17 @@ const Configuraciones = () => {
     const [setUserRole] = useState(""); // Asegúrate de que useState esté correctamente definido
 
     useEffect(() => {
-        const storedUser = sessionStorage.getItem('user_data');
-        const username = sessionStorage.getItem('username'); // Obtenemos el nombre de usuario desde otro objeto
-        const token = storedUser ? JSON.parse(storedUser).access_token : null;
-        
-        async function fetchUsers() {
-            try {
-                const response = await fetch(
-                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/usuario/lista-usuarios`,
-                    {
-                        method: "GET",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            Accept: "application/json",
-                        },
-                    }
-                );
-    
-                if (!response.ok) {
-                    throw new Error("Error al obtener la lista de usuarios");
-                }
-    
-                const users = await response.json();
-    
-                if (storedUser && username) {
-                    // Se busca el usuario actual en el array de usuarios
-                    const foundUser = users.find((u) => u.name === username);
-                    if (foundUser) {
-                        setUserRole(foundUser.role);
-                        // Si el rol no es "ADMIN", se redirige a "/completo"
-                        if (foundUser.role !== "ADMIN") {
-                            router.push("/completo");
-                        }
-                    } else {
-                        throw new Error("Usuario no encontrado en la lista de usuarios");
-                    }
-                } else {
-                    throw new Error("storedUser o username no están presentes");
-                }
-            } finally {}
+        // Redirigir al login si no hay usuario
+        if (!user) {
+            router.push('/login');
+            return;
         }
-        fetchUsers();
-    }, [router]);
+
+        // Si el rol no es "ADMIN", se redirige a "/completo"
+        if (user.role !== "ADMIN") {
+            router.push("/completo");
+        }
+    }, [user, router]);
 
     const [datosGeneralesIzq, setDatosRecetas1] = useState([
         { id: 1, texto: 'NUMERO DE GRIPPER ', dato: 'null', icono:NGripper  },
@@ -104,25 +69,25 @@ const Configuraciones = () => {
     ]); 
 
     const [datosCorrecionesTorre, setDatosCorrecionesTorre] = useState([
-        { id: 1, texto: 'Coreccion_hBastidor', dato: 'null' },
-        { id: 2, texto: 'Coreccion_hAjuste', dato: 'null' },
-        { id: 3, texto: 'Coreccion_hAjusteN1', dato: 'null' },
-        { id: 4, texto: 'Coreccion_DisteNivel', dato: 'null' },
+        { id: 1, texto: 'Correccion_hBastidor', dato: 'null' },
+        { id: 2, texto: 'Correccion_hAjuste', dato: 'null' },
+        { id: 3, texto: 'Correccion_hAjusteN1', dato: 'null' },
+        { id: 4, texto: 'Correccion_DisteNivel', dato: 'null' },
         { id: 5, texto: 'ActualizarTAG', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesHN, setDatosCorrecionesNivelesHN] = useState([
-        { id: 1, texto: 'Correcion_hN1', dato: 'null' },
-        { id: 2, texto: 'Correcion_hN2', dato: 'null' },
-        { id: 3, texto: 'Correcion_hN3', dato: 'null' },
-        { id: 4, texto: 'Correcion_hN4', dato: 'null' },
-        { id: 5, texto: 'Correcion_hN5', dato: 'null' },
-        { id: 6, texto: 'Correcion_hN6', dato: 'null' },
-        { id: 7, texto: 'Correcion_hN7', dato: 'null' },
-        { id: 8, texto: 'Correcion_hN8', dato: 'null' },
-        { id: 9, texto: 'Correcion_hN9', dato: 'null' },
-        { id: 10, texto: 'Correcion_hN10', dato: 'null' },
-        { id: 11, texto: 'Correcion_hN11', dato: 'null' },
+        { id: 1, texto: 'Correccion_hN1', dato: 'null' },
+        { id: 2, texto: 'Correccion_hN2', dato: 'null' },
+        { id: 3, texto: 'Correccion_hN3', dato: 'null' },
+        { id: 4, texto: 'Correccion_hN4', dato: 'null' },
+        { id: 5, texto: 'Correccion_hN5', dato: 'null' },
+        { id: 6, texto: 'Correccion_hN6', dato: 'null' },
+        { id: 7, texto: 'Correccion_hN7', dato: 'null' },
+        { id: 8, texto: 'Correccion_hN8', dato: 'null' },
+        { id: 9, texto: 'Correccion_hN9', dato: 'null' },
+        { id: 10, texto: 'Correccion_hN10', dato: 'null' },
+        { id: 11, texto: 'Correccion_hN11', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesChG, setDatosCorrecionesNivelesChG] = useState([
@@ -257,17 +222,17 @@ const Configuraciones = () => {
         const finalData = {
             id: selectedTorre,
             tipo: selectedNivel,
-            Correcion1: inputValues[0] !== undefined ? inputValues[0] : null,
-            Correcion2: inputValues[1] !== undefined ? inputValues[1] : null,
-            Correcion3: inputValues[2] !== undefined ? inputValues[2] : null,
-            Correcion4: inputValues[3] !== undefined ? inputValues[3] : null,
-            Correcion5: inputValues[4] !== undefined ? inputValues[4] : null,
-            Correcion6: inputValues[5] !== undefined ? inputValues[5] : null,
-            Correcion7: inputValues[6] !== undefined ? inputValues[6] : null,
-            Correcion8: inputValues[7] !== undefined ? inputValues[7] : null,
-            Correcion9: inputValues[8] !== undefined ? inputValues[8] : null,
-            Correcion10: inputValues[9] !== undefined ? inputValues[9] : null,
-            Correcion11: inputValues[10] !== undefined ? inputValues[10] : null,            
+            Correccion1: inputValues[0] !== undefined ? inputValues[0] : null,
+            Correccion2: inputValues[1] !== undefined ? inputValues[1] : null,
+            Correccion3: inputValues[2] !== undefined ? inputValues[2] : null,
+            Correccion4: inputValues[3] !== undefined ? inputValues[3] : null,
+            Correccion5: inputValues[4] !== undefined ? inputValues[4] : null,
+            Correccion6: inputValues[5] !== undefined ? inputValues[5] : null,
+            Correccion7: inputValues[6] !== undefined ? inputValues[6] : null,
+            Correccion8: inputValues[7] !== undefined ? inputValues[7] : null,
+            Correccion9: inputValues[8] !== undefined ? inputValues[8] : null,
+            Correccion10: inputValues[9] !== undefined ? inputValues[9] : null,
+            Correccion11: inputValues[10] !== undefined ? inputValues[10] : null,            
         };
     
         console.log('Datos enviados:', finalData);
@@ -414,14 +379,14 @@ const Configuraciones = () => {
         const handleAplicarNiveles = async () => {
             if (selectedTorre !== null && selectedReceta !== null) {
                 setDatosCorrecionesTorre([
-                    { id: 1, texto: 'Coreccion_hBastidor', dato: null },
-                    { id: 2, texto: 'Coreccion_hAjuste', dato: null },
-                    { id: 3, texto: 'Coreccion_hAjusteN1', dato: null },
-                    { id: 4, texto: 'Coreccion_DisteNivel', dato: null },
+                    { id: 1, texto: 'Correccion_hBastidor', dato: null },
+                    { id: 2, texto: 'Correccion_hAjuste', dato: null },
+                    { id: 3, texto: 'Correccion_hAjusteN1', dato: null },
+                    { id: 4, texto: 'Correccion_DisteNivel', dato: null },
                     { id: 5, texto: 'ActualizarTAG', dato: null },
                 ]);
         
-                setDatosCorrecionesNivelesHN(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correcion_hN${index + 1}`, dato: null })));
+                setDatosCorrecionesNivelesHN(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hN${index + 1}`, dato: null })));
                 setDatosCorrecionesNivelesChG(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hguardado_N${index + 1}`, dato: null })));
                 setDatosCorrecionesNivelesChB(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hbusqueda_N${index + 1}`, dato: null })));
                 setDatosCorrecionesNivelesFA(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `FallasN${index + 1}`, dato: null })));
@@ -436,10 +401,10 @@ const Configuraciones = () => {
                         const data = await response.json();
         
                         setDatosCorrecionesTorre([
-                            { id: 1, texto: 'Coreccion_hBastidor', dato: data.DatosTorre?.hBastidor ?? null },
-                            { id: 2, texto: 'Coreccion_hAjuste', dato: data.DatosTorre?.hAjuste ?? null },
-                            { id: 3, texto: 'Coreccion_hAjusteN1', dato: data.DatosTorre?.hAjusteN1 ?? null },
-                            { id: 4, texto: 'Coreccion_DisteNivel', dato: data.DatosTorre?.DisteNivel ?? null },
+                            { id: 1, texto: 'Correccion_hBastidor', dato: data.DatosTorre?.hBastidor ?? null },
+                            { id: 2, texto: 'Correccion_hAjuste', dato: data.DatosTorre?.hAjuste ?? null },
+                            { id: 3, texto: 'Correccion_hAjusteN1', dato: data.DatosTorre?.hAjusteN1 ?? null },
+                            { id: 4, texto: 'Correccion_DisteNivel', dato: data.DatosTorre?.DisteNivel ?? null },
                             { id: 5, texto: 'ActualizarTAG', dato: data.DatosTorre?.ActualizarTAG ?? null },
                         ]);
         
@@ -547,22 +512,22 @@ const Configuraciones = () => {
                   setDatosRecetas1([
                     { id: 1, texto: 'NUMERO DE GRIPPER', dato: receta.nroGripper ?? null, icono: NGripper },
                     { id: 2, texto: 'TIPO DE MOLDE', dato: receta.tipoMolde ?? null, icono: TipoA },
-                    { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: receta.anchoProducto ? `${receta.anchoProducto} mm` : null, icono: receta2 },
-                    { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto ? `${receta.altoProducto} mm` : null, icono: receta2 },
-                    { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto ? `${receta.largoProducto} mm` : null, icono: receta2 },
-                    { id: 6, texto: 'PESO DEL PRODUCTO', dato: receta.pesoProducto ? `${receta.pesoProducto} kg` : null, icono: Peso },
+                    { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: receta.anchoProducto !== null && receta.anchoProducto !== undefined ? `${receta.anchoProducto} mm` : null, icono: receta2 },
+                    { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto !== null && receta.altoProducto !== undefined ? `${receta.altoProducto} mm` : null, icono: receta2 },
+                    { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto !== null && receta.largoProducto !== undefined ? `${receta.largoProducto} mm` : null, icono: receta2 },
+                    { id: 6, texto: 'PESO DEL PRODUCTO', dato: receta.pesoProducto !== null && receta.pesoProducto !== undefined ? `${receta.pesoProducto} kg` : null, icono: receta2 },
                     { id: 7, texto: 'MOLDES POR NIVEL', dato: receta.moldesNivel ?? null, icono: Moldes },
                   ]);
           
                   setDatosRecetas2([
-                    { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde ? `${receta.altoMolde} mm` : null, icono: receta2 },
-                    { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde ? `${receta.largoMolde} mm` : null, icono: receta2 },
-                    { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura ? `${receta.ajusteAltura} mm` : null, icono: receta2 },
+                    { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde !== null && receta.altoMolde !== undefined ? `${receta.altoMolde} mm` : null, icono: receta2 },
+                    { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde !== null && receta.largoMolde !== undefined ? `${receta.largoMolde} mm` : null, icono: receta2 },
+                    { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura !== null && receta.ajusteAltura !== undefined ? `${receta.ajusteAltura} mm` : null, icono: receta2 },
                     { id: 4, texto: 'NIVELES POR TORRE', dato: receta.cantidadNiveles ?? null, icono: Niveles },
-                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles ? `${receta.deltaNiveles} mm` : null, icono: receta2 },
-                    { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura ? `${receta.n1Altura} mm` : null, icono: receta2 },
-                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura ? `${receta.bastidorAltura} mm` : null, icono: receta2 },
-                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura ? `${receta.ajusteN1Altura} mm` : null, icono: receta2 },
+                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles !== null && receta.deltaNiveles !== undefined ? `${receta.deltaNiveles} mm` : null, icono: receta2 },
+                    { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura !== null && receta.n1Altura !== undefined ? `${receta.n1Altura} mm` : null, icono: receta2 },
+                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura !== null && receta.bastidorAltura !== undefined ? `${receta.bastidorAltura} mm` : null, icono: receta2 },
+                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura !== null && receta.ajusteN1Altura !== undefined ? `${receta.ajusteN1Altura} mm` : null, icono: receta2 },
                   ]);
                 } catch (error) {
                   console.error("Error al obtener los datos de la receta:", error);
@@ -644,7 +609,7 @@ const Configuraciones = () => {
 
             <div className={style.Der}>
                 <div className={style.tituloCorreciones}>
-                    <h2 className={style.h2}>CORRECIONES</h2>
+                    <h2 className={style.h2}>CORRECCIONES</h2>
                 </div>
 
                 <div className={style.botonesCorreciones}>
