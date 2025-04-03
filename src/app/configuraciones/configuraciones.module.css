@@ -206,6 +206,7 @@
 }
 
 .datoListNiveles {
+    display: flex;
     padding: 15px 20px; /* Ajusta el padding para no sobrecargar el espacio */
     background-color: #1F1F1F;
     border-radius: 15px;

@@ -10,6 +10,18 @@ import TipoC from '@/assets/img/TIPOC.png';
 import Ancho from '@/assets/img/ancho.png';
 import Alto from '@/assets/img/alto.png';
 import Largo from '@/assets/img/largo.png';
+import ProductosMolde from '@/assets/img/PRODUCTOSMOLDE.png';
+import MoldesNivel from '@/assets/img/MOLDESNIVEL.png';
+import LargoMolde from '@/assets/img/LARGOMOLDE.png';
+
+import AlturaAjuste from '@/assets/img/ALTURAAJUSTE.png';
+import AlturaMolde from '@/assets/img/ALTURAMOLDE.png';
+import AlturaAjusteN1 from '@/assets/img/ALTURAN1.png';
+
+import AlturaN1 from '@/assets/img/AJUSTEN1.png';
+import AlturaBastidor from '@/assets/img/ALTURABASTIDOR.png';
+import DisteNivel from '@/assets/img/DISTENIVEL.png';
+
 import Peso from '@/assets/img/PESO.png';
 import Moldes from '@/assets/img/MOLDE.png';
 import Niveles from '@/assets/img/NIVELACTUAL.png';
@@ -57,19 +69,19 @@ const Configuraciones = () => {
         { id: 4, texto: 'ALTO DEL PRODUCTO', dato: 'null', icono:Alto  },
         { id: 5, texto: 'LARGO DEL PRODUCTO', dato: 'null', icono:Largo  },
         { id: 6, texto: 'PESO DEL PRODUCTO', dato: 'null', icono:Peso  },
-        { id: 7, texto: 'MOLDES POR NIVEL', dato: 'null', icono:Moldes  },
-        { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: 'null', icono:Moldes  },
+        { id: 7, texto: 'MOLDES POR NIVEL', dato: 'null', icono:MoldesNivel  },
+        { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: 'null', icono:ProductosMolde  },
     ]);       
 
     const [datosGeneralesDer, setDatosRecetas2] = useState([
-        { id: 1, texto: 'ALTURA DE MOLDE', dato: 'null', icono:receta2  },
-        { id: 2, texto: 'LARGO DE MOLDE', dato: 'null', icono:receta2  },
-        { id: 3, texto: 'ALTURA AJUSTE', dato: 'null', icono:receta2  },
+        { id: 1, texto: 'ALTURA DE MOLDE', dato: 'null', icono:AlturaMolde  },
+        { id: 2, texto: 'LARGO DE MOLDE', dato: 'null', icono:LargoMolde  },
+        { id: 3, texto: 'ALTURA AJUSTE', dato: 'null', icono:AlturaAjuste  },
         { id: 4, texto: 'NIVELES POR TORRE', dato: 'null', icono:Niveles  },
-        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: 'null', icono:receta2  },
-        { id: 6, texto: 'ALTURA N1', dato: 'null', icono:receta2  },
-        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: 'null', icono:receta2  },
-        { id: 8, texto: 'ALTURA AJUSTRE N1', dato: 'null', icono:receta2  },
+        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: 'null', icono:DisteNivel  },
+        { id: 6, texto: 'ALTURA N1', dato: 'null', icono:AlturaN1  },
+        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: 'null', icono:AlturaBastidor  },
+        { id: 8, texto: 'ALTURA AJUSTRE N1', dato: 'null', icono:AlturaAjusteN1  },
     ]); 
 
     const [datosCorrecionesTorre, setDatosCorrecionesTorre] = useState([
@@ -482,18 +494,18 @@ const Configuraciones = () => {
                     { id: 4, texto: 'ALTO DEL PRODUCTO', dato: null, icono: Alto },
                     { id: 5, texto: 'LARGO DEL PRODUCTO', dato: null, icono: Largo },
                     { id: 6, texto: 'PESO DEL PRODUCTO', dato: null, icono: Peso },
-                    { id: 7, texto: 'MOLDES POR NIVEL', dato: null, icono: Moldes },
-                    { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: null, icono: Moldes},
+                    { id: 7, texto: 'MOLDES POR NIVEL', dato: null, icono: MoldesNivel },
+                    { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: null, icono: ProductosMolde },
                 ]);
                 setDatosRecetas2([
-                    { id: 1, texto: 'ALTURA DE MOLDE', dato: null, icono: receta2 },
-                    { id: 2, texto: 'LARGO DE MOLDE', dato: null, icono: receta2 },
-                    { id: 3, texto: 'ALTURA AJUSTE', dato: null, icono: receta2 },
+                    { id: 1, texto: 'ALTURA DE MOLDE', dato: null, icono: AlturaMolde },
+                    { id: 2, texto: 'LARGO DE MOLDE', dato: null, icono: LargoMolde },
+                    { id: 3, texto: 'ALTURA AJUSTE', dato: null, icono: AlturaAjuste },
                     { id: 4, texto: 'NIVELES POR TORRE', dato: null, icono: Niveles },
-                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: null, icono: receta2 },
-                    { id: 6, texto: 'ALTURA N1', dato: null, icono: receta2 },
-                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: null, icono: receta2 },
-                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: null, icono: receta2 },
+                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: null, icono: DisteNivel },
+                    { id: 6, texto: 'ALTURA N1', dato: null, icono: AlturaN1 },
+                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: null, icono: AlturaBastidor },
+                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: null, icono: AlturaAjusteN1 },
                 ]);
                 const fetchDatosReceta = async () => {
                     try {
@@ -519,19 +531,19 @@ const Configuraciones = () => {
                         { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto !== null && receta.altoProducto !== undefined ? `${receta.altoProducto} mm` : null, icono: Alto },
                         { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto !== null && receta.largoProducto !== undefined ? `${receta.largoProducto} mm` : null, icono: Largo },
                         { id: 6, texto: 'PESO DEL PRODUCTO', dato: receta.pesoProducto !== null && receta.pesoProducto !== undefined ? `${receta.pesoProducto} kg` : null, icono: receta2 },
-                        { id: 7, texto: 'MOLDES POR NIVEL', dato: receta.moldesNivel ?? null, icono: Moldes },
-                        { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: receta.productosMolde ?? null, icono: Moldes },
+                        { id: 7, texto: 'MOLDES POR NIVEL', dato: receta.moldesNivel ?? null, icono: MoldesNivel },
+                        { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: receta.productosMolde ?? null, icono: ProductosMolde },
                     ]);
             
                     setDatosRecetas2([
-                        { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde !== null && receta.altoMolde !== undefined ? `${receta.altoMolde} mm` : null, icono: receta2 },
-                        { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde !== null && receta.largoMolde !== undefined ? `${receta.largoMolde} mm` : null, icono: receta2 },
-                        { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura !== null && receta.ajusteAltura !== undefined ? `${receta.ajusteAltura} mm` : null, icono: receta2 },
+                        { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde !== null && receta.altoMolde !== undefined ? `${receta.altoMolde} mm` : null, icono: AlturaMolde },
+                        { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde !== null && receta.largoMolde !== undefined ? `${receta.largoMolde} mm` : null, icono: LargoMolde },
+                        { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura !== null && receta.ajusteAltura !== undefined ? `${receta.ajusteAltura} mm` : null, icono: AlturaAjuste },
                         { id: 4, texto: 'NIVELES POR TORRE', dato: receta.cantidadNiveles ?? null, icono: Niveles },
-                        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles !== null && receta.deltaNiveles !== undefined ? `${receta.deltaNiveles} mm` : null, icono: receta2 },
-                        { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura !== null && receta.n1Altura !== undefined ? `${receta.n1Altura} mm` : null, icono: receta2 },
-                        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura !== null && receta.bastidorAltura !== undefined ? `${receta.bastidorAltura} mm` : null, icono: receta2 },
-                        { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura !== null && receta.ajusteN1Altura !== undefined ? `${receta.ajusteN1Altura} mm` : null, icono: receta2 },
+                        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles !== null && receta.deltaNiveles !== undefined ? `${receta.deltaNiveles} mm` : null, icono: DisteNivel },
+                        { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura !== null && receta.n1Altura !== undefined ? `${receta.n1Altura} mm` : null, icono: AlturaN1 },
+                        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura !== null && receta.bastidorAltura !== undefined ? `${receta.bastidorAltura} mm` : null, icono: AlturaBastidor },
+                        { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura !== null && receta.ajusteN1Altura !== undefined ? `${receta.ajusteN1Altura} mm` : null, icono: AlturaAjusteN1 },
                     ]);
                     } catch (error) {
                         console.error("Error al obtener los datos de la receta:", error);
