@@ -1,4 +1,6 @@
-import React, { useContext } from 'react';
+"use client";
+
+import React, { useContext, useState, useEffect } from 'react';
 import AuthContext from '../../context/AuthContext';
 import { usePathname } from 'next/navigation';
 import Image from "next/image";
@@ -13,9 +15,18 @@ import ExeSubNav from './SubNav/ExeSubNav.jsx';
 import Link from "next/link";
 
 const ExeHeader = () => {
-  const { user } = useContext(AuthContext); // Se obtiene el usuario desde el contexto
-  const userRole = user?.role; // Se accede al rol directamente
+  const { user } = useContext(AuthContext);
+  const userRole = user?.role;
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // No renderizar nada durante SSR
+  }
 
   const opcionesIconos = [
     { id: 1, icon: usuario, onClick: () => {} },
@@ -36,20 +47,23 @@ const ExeHeader = () => {
             {opcionesIconos.map(({ id, url, icon, onClick, isDropdown }) => (
               <div key={id} className={style.contenedorImg}>
                 {isDropdown ? (
-                    <MenuAlarmas icon={icon} />
+                  <MenuAlarmas icon={icon} />
                 ) : onClick ? (
-                    <Desloguear icon={icon} />
+                  <Desloguear icon={icon} />
                 ) : (
-                  // Ejemplo de ocultar el enlace basado en el rol
-                  userRole === "ADMIN" || id !== 3 ? (
-                    <Link href={url}>
-                      <Image
-                        className={style.icon}
-                        src={icon}
-                        alt={`Icono ${id}`}
-                      />
-                    </Link>
-                  ) : null
+                  (userRole === "ADMIN" || id !== 3) && (
+                    <div className={style.linkWrapper}>
+                      <Link href={url || '#'}>
+                        <Image
+                          className={style.icon}
+                          src={icon}
+                          alt={`Icono ${id}`}
+                          width={24}
+                          height={24}
+                        />
+                      </Link>
+                    </div>
+                  )
                 )}
               </div>
             ))}
@@ -72,7 +86,7 @@ const ExeHeader = () => {
             </ul>
             <div className={style.logo}>
               <Link href="https://creminox.com" target="_blank" rel="noopener noreferrer">
-              <Image className={style.imgCREM} src={cremImg} alt="Creminox" />
+                <Image className={style.imgCREM} src={cremImg} alt="Creminox" />
               </Link>
             </div>
           </div>

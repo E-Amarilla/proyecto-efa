@@ -1,15 +1,15 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { Spinner } from "@nextui-org/react";
 import styles from './selectTorre.module.css';
 
 const SelectTorre = ({ selectedReceta, onChange, refreshTorres, refreshTorres2, selectedTorre, onTorresChange }) => {
   const [torres, setTorres] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Cambiado a true inicialmente
 
   const fetchTorres = () => {
     if (selectedReceta) {
-      setLoading(true);
-
       fetch(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/lista-torres?id_receta=${selectedReceta}`)
         .then((response) => response.json())
         .then((data) => {
@@ -32,12 +32,15 @@ const SelectTorre = ({ selectedReceta, onChange, refreshTorres, refreshTorres2, 
         });
     } else {
       setTorres([]);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchTorres();
-  }, [selectedReceta, selectedTorre]);
+    if (selectedReceta) {
+      fetchTorres();
+    }
+  }, [selectedReceta]);
 
   const handleChange = (event) => {
     const newValue = event.target.value;
