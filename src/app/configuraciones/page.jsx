@@ -213,7 +213,7 @@ const Configuraciones = () => {
             refreshTorres(data.ActualizarTAG);
         })
         .catch(error => {
-            console.error('Error al enviar datos:', error);
+            //console.error('Error al enviar datos:', error);
         });
     };
 
@@ -278,7 +278,7 @@ const Configuraciones = () => {
             refreshTorres2();
         })
         .catch(error => {
-            console.error('Error al enviar datos:', error);
+            //console.error('Error al enviar datos:', error);
         });      
     };
     
@@ -318,7 +318,7 @@ const Configuraciones = () => {
             refreshTorres2();
         })
         .catch(error => {
-            console.error('Error al enviar datos:', error);
+            //console.error('Error al enviar datos:', error);
         });
     };         
 
@@ -372,7 +372,7 @@ const Configuraciones = () => {
                   setSelectedTorre(TAG || data.ListadoTorres[0]?.id);
                 }
               })
-              .catch((error) => console.error('Error al obtener torres:', error));
+              //.catch((error) => console.error('Error al obtener torres:', error));
         };
 
         const refreshTorres2 = () => {
@@ -389,7 +389,7 @@ const Configuraciones = () => {
                   setSelectedReceta(currentReceta);
                 }
               })
-              .catch((error) => console.error('Error al obtener torres:', error));
+              //.catch((error) => console.error('Error al obtener torres:', error));
           };
 
         const handleAplicarNiveles = async () => {
@@ -471,7 +471,7 @@ const Configuraciones = () => {
                         );
         
                     } catch (error) {
-                        console.error("Error al obtener los datos de la torre:", error);
+                        //console.error("Error al obtener los datos de la torre:", error);
                     }
                 };
         
@@ -515,7 +515,7 @@ const Configuraciones = () => {
                     const response = await fetch(url);
                     if (!response.ok) {
                         const errorText = await response.text();
-                        console.error("Error en la API:", errorText);
+                        //console.error("Error en la API:", errorText);
                         throw new Error("Error en la solicitud");
                     }
             
@@ -546,7 +546,7 @@ const Configuraciones = () => {
                         { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura !== null && receta.ajusteN1Altura !== undefined ? `${receta.ajusteN1Altura} mm` : null, icono: AlturaAjusteN1 },
                     ]);
                     } catch (error) {
-                        console.error("Error al obtener los datos de la receta:", error);
+                        //console.error("Error al obtener los datos de la receta:", error);
                     }
                 };
                 fetchDatosReceta();

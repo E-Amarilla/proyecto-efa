@@ -33,7 +33,7 @@ const SelectConfiguracion = ({ onChange, onClick}) => {
         setRecetas(recetasFormateadas);
         setSelectedKey(recetasFormateadas.length > 0 ? recetasFormateadas[0].key : ""); // Seleccionar la primera receta
       } catch (error) {
-        console.error("Error al obtener recetas:", error);
+        //console.error("Error al obtener recetas:", error);
       } finally {
         setLoading(false);
       }

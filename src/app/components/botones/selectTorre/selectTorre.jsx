@@ -24,7 +24,7 @@ const SelectTorre = ({ selectedReceta, onChange, refreshTorres, refreshTorres2, 
           }
         })
         .catch((error) => {
-          console.error('Error al obtener torres:', error);
+          //console.error('Error al obtener torres:', error);
           setTorres([]);
         })
         .finally(() => {
