@@ -6,23 +6,25 @@ import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from "../../../context/AuthContext";
 
 const DatosSDDAComponent = () => {
+  const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
+  const { data } = useContext(AuthContext); // Obtiene datos del contexto
+
   const initialdatosSdda = [
-    { id: 1, texto: 'TOTAL NIVELES', dato: null },
+    { id: 1, texto: 'NIVEL ACTUAL', dato: null },
     { id: 2, texto: 'SDDA_LONG_MM', dato: null },
     { id: 3, texto: 'SDDA_VERTICAL_MM', dato: null },
   ];
 
   const [datosSdda, setdatosSdda] = useState(initialdatosSdda);
-  const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
-
-  const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
   useEffect(() => {
-    if (data && data?.general?.datosSdda) {
-      const updateddatosSdda = initialdatosSdda.map((item, index) => ({
-        ...item,
-        dato: data?.general?.datosSdda[index] !== undefined ? data?.general?.datosSdda[index] : null,
-      }));
+    const datosSdda = data?.[2]?.datosSdda;
+    if (datosSdda) {
+      const updateddatosSdda = [
+        { id: 1, texto: 'NIVEL ACTUAL', dato: datosSdda.sdda_nivel_actual ?? null },
+        { id: 2, texto: 'SDDA_LONG_MM', dato: datosSdda.sdda_long_mm ?? null },
+        { id: 3, texto: 'SDDA_VERTICAL_MM', dato: datosSdda.sdda_vertical_mm ?? null },
+      ];
       setdatosSdda(updateddatosSdda);
     }
   }, [data]);

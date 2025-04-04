@@ -22,15 +22,21 @@ const DatosGenerales = () => {
     const {
         idRecetaActual,
         idRecetaProxima,
-        PesoActualDesmoldado,
+        CodigoProducto,
+        TotalNiveles,
+        TipoMolde,
         estadoMaquina,
-        TiempoTranscurrido
-    } = data?.desmoldeo|| {};
-
-    const NombreActual = data?.desmoldeo ? (data?.desmoldeo["Nombre actual"]?.trim() || '-') : '-';
+        desmoldeoBanda,
+        PesoProducto,
+        TiempoTranscurrido,
+        sdda_nivel_actual,
+        NGripperActual,
+        PesoActualDesmoldado,
+        TorreActual
+    } = data?.[0] || {};
 
     const datosGenerales = [
-        { id: 1, texto: 'NOMBRE RECETA', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1 },
+        { id: 1, texto: 'NOMBRE RECETA', dato: CodigoProducto !== undefined && CodigoProducto !== null ? CodigoProducto : 'null', icono:receta1 },
         { id: 2, texto: 'ID RECETA ACTUAL', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
         { id: 3, texto: 'ID PROXIMA RECETA', dato: idRecetaProxima !== undefined && idRecetaProxima !== null ? idRecetaProxima : 'null', icono:receta2 },
         { id: 4, texto: 'PESO TOTAL DESMOLDADO', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono:peso  },

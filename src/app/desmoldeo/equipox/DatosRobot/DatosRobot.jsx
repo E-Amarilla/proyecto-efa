@@ -5,6 +5,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from "../../../context/AuthContext";
 
 const DatosRobotComponent = () => {
+  const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
+  const { data } = useContext(AuthContext); // Obtiene datos del contexto
+
   const initialDatosRobot = [
     { id: 1, texto: 'POSICION X', dato: null, texto2: ' mm' },
     { id: 2, texto: 'POSICION Y', dato: null, texto2: ' mm' },
@@ -12,16 +15,15 @@ const DatosRobotComponent = () => {
   ];
 
   const [datosRobot, setDatosRobot] = useState(initialDatosRobot);
-  const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
-
-  const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
   useEffect(() => {
-    if (data && data?.general?.datosRobot) {
-      const updatedDatosRobot = initialDatosRobot.map((item, index) => ({
-        ...item,
-        dato: data?.general?.datosRobot[index] !== undefined ? data?.general?.datosRobot[index] : null,
-      }));
+    const robotData = data?.[2]?.datosRobot;
+    if (robotData) {
+      const updatedDatosRobot = [
+        { id: 1, texto: 'POSICION X', dato: robotData.posicionX ?? null, texto2: ' mm' },
+        { id: 2, texto: 'POSICION Y', dato: robotData.posicionY ?? null, texto2: ' mm' },
+        { id: 3, texto: 'POSICION Z', dato: robotData.posicionZ ?? null, texto2: ' mm' },
+      ];
       setDatosRobot(updatedDatosRobot);
     }
   }, [data]);

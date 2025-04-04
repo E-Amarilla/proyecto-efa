@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   // Conectar WebSocket con el pollId estático
-  const { data, isConnected } = useWebSocket("lista-datos-ws");
+  const { data, isConnected } = useWebSocket("datos");
 
   useEffect(() => {
     const publicRoutes = ['/login', '/signup', '/login/recuperacion'];

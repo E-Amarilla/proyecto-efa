@@ -8,7 +8,7 @@ import nivelactual from '@/assets/img/NIVELACTUAL.png';
 import molde from '@/assets/img/MOLDE.png';
 import peso from '@/assets/img/PESO.png';
 import tiempo from '@/assets/img/TIEMPO.png';
-import gripper from "@/assets/img/GRIPPER.png"
+import gripper from "@/assets/img/GRIPPER.png";
 
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
@@ -20,18 +20,20 @@ const NavDatos = () => {
     const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
     const {
+        idRecetaActual,
         idRecetaProxima,
-        NGripperActual,
-        PesoProducto,
-        sdda_nivel_actual,
+        CodigoProducto,
         TotalNiveles,
-        torreActual,
-        PesoActualDesmoldado,
         TipoMolde,
-        TiempoTranscurrido
-    } = data?.desmoldeo || {};
-
-    const NombreActual = data?.desmoldeo ? (data?.desmoldeo["Nombre actual"]?.trim() || '-') : '-';
+        estadoMaquina,
+        desmoldeoBanda,
+        PesoProducto,
+        TiempoTranscurrido,
+        sdda_nivel_actual,
+        NGripperActual,
+        PesoActualDesmoldado,
+        TorreActual
+    } = data?.[0] || {};
 
     const opcionesAlarma = [
         { id: 1, nombre: 'LAYOUT' },
@@ -40,24 +42,24 @@ const NavDatos = () => {
     ];
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Nombre receta', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1  },
-        { id: 2, nombre: 'ID Proxima receta', dato: idRecetaProxima !== undefined && idRecetaProxima !== null ? idRecetaProxima : 'null', icono:receta2  },
-        { id: 3, nombre: 'N° Gripper actual', dato: NGripperActual !== undefined && NGripperActual !== null ? NGripperActual : 'null', icono:gripper  },
-        { id: 4, nombre: 'Peso por fila', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto : 'null', icono:peso  },
-        { id: 5, nombre: 'Peso desmoldado', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono:peso  },
-        { id: 6, nombre: 'N° Torre actual', dato: torreActual !== undefined && torreActual !== null ? torreActual : 'null', icono:torre  },
-        { id: 7, nombre: 'Torre nivel actual', dato: (sdda_nivel_actual !== undefined && sdda_nivel_actual !== null ? sdda_nivel_actual : 'null') + "/" + (TotalNiveles !== undefined && TotalNiveles !== null ? TotalNiveles : 'null'), icono:nivelactual  },
-        { id: 8, nombre: 'N° Molde', dato: TipoMolde !== undefined && TipoMolde !== null ? TipoMolde : 'null', icono:molde  },
-        { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono:tiempo  },
+        { id: 1, nombre: 'Nombre receta', dato: CodigoProducto !== null ? CodigoProducto : 'null', icono: receta1 },
+        { id: 2, nombre: 'ID Proxima receta', dato: idRecetaProxima !== null ? idRecetaProxima : 'null', icono: receta2 },
+        { id: 3, nombre: 'N° Gripper actual', dato: NGripperActual !== null ? NGripperActual : 'null', icono: gripper },
+        { id: 4, nombre: 'Peso por fila', dato: PesoProducto !== null ? PesoProducto : 'null', icono: peso },
+        { id: 5, nombre: 'Peso desmoldado', dato: PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono: peso },
+        { id: 6, nombre: 'N° Torre actual', dato: TorreActual !== null ? TorreActual : 'null', icono: torre },
+        { id: 7, nombre: 'Torre nivel actual', dato: (sdda_nivel_actual !== null ? sdda_nivel_actual : 'null') + "/" + (TotalNiveles !== null ? TotalNiveles : 'null'), icono: nivelactual },
+        { id: 8, nombre: 'N° Molde', dato: TipoMolde !== null ? TipoMolde : 'null', icono: molde },
+        { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
     ];
 
-    const [activeSection, setActiveSection] = useState(1); // Inicializamos con la primera sección activa
-    const debounceTimeout = useRef(null); // Usamos un ref para manejar el timeout del debounce
+    const [activeSection, setActiveSection] = useState(1);
+    const debounceTimeout = useRef(null);
     
     useEffect(() => {
         const handleScroll = () => {
             if (debounceTimeout.current) {
-                clearTimeout(debounceTimeout.current); // Limpiamos el timeout anterior
+                clearTimeout(debounceTimeout.current);
             }
     
             debounceTimeout.current = setTimeout(() => {
@@ -71,13 +73,9 @@ const NavDatos = () => {
                         const sectionTop = rect.top;
                         const sectionBottom = rect.bottom;
     
-                        // Establecemos un margen adicional para que la sección se active
-                        const offsetMargin = 200; // Ajusta este valor según lo necesites
-    
-                        // Calculamos la distancia de la parte superior de la ventana a la sección
+                        const offsetMargin = 200;
                         const distanceFromTop = Math.abs(sectionTop);
     
-                        // Cambiar la lógica para que se active si la sección está cerca de la parte superior de la ventana + margen
                         if (sectionTop < window.innerHeight + offsetMargin && sectionBottom >= 0 - offsetMargin) {
                             if (distanceFromTop < closestDistance) {
                                 closestDistance = distanceFromTop;
@@ -87,20 +85,18 @@ const NavDatos = () => {
                     }
                 });
     
-                // Si encontramos una sección más cercana, la activamos
                 if (closestSection) {
                     setActiveSection(closestSection);
                 }
-            }, 50); // Retardo de 50ms para reducir las actualizaciones
+            }, 50);
         };
     
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            clearTimeout(debounceTimeout.current); // Limpiamos el timeout al desmontar
+            clearTimeout(debounceTimeout.current);
         };
     }, []);
-    
     
     const handleScrollClick = (id) => {
         const section = document.getElementById(`section${id}`);
