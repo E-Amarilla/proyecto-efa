@@ -7,6 +7,7 @@ import NGripper from '@/assets/img/GRIPPER.png';
 import TipoA from '@/assets/img/TIPOA.png';
 import TipoB from '@/assets/img/TIPOB.png';
 import TipoC from '@/assets/img/TIPOC.png';
+import puntoGris from '@/assets/img/puntoGris.png'
 import Ancho from '@/assets/img/ancho.png';
 import Alto from '@/assets/img/alto.png';
 import Largo from '@/assets/img/largo.png';
@@ -64,7 +65,7 @@ const Configuraciones = () => {
 
     const [datosGeneralesIzq, setDatosRecetas1] = useState([
         { id: 1, texto: 'NUMERO DE GRIPPER ', dato: 'null', icono:NGripper  },
-        { id: 2, texto: 'TIPO DE MOLDE', dato: 'null', icono:TipoA  },
+        { id: 2, texto: 'TIPO DE MOLDE', dato: 'null', icono: puntoGris },
         { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: 'null', icono:Ancho  },
         { id: 4, texto: 'ALTO DEL PRODUCTO', dato: 'null', icono:Alto  },
         { id: 5, texto: 'LARGO DEL PRODUCTO', dato: 'null', icono:Largo  },
@@ -172,50 +173,64 @@ const Configuraciones = () => {
     // Guarda datos de Torre en BDD
     const handleAplicarClick2 = () => {
         const inputValues = [];
-    
+      
         inputRefs.current.forEach(input => {
             if (input) {
-                const value = input.value.trim();  // Elimina espacios en blanco
+                const value = input.value.trim();
                 inputValues.push(value === "" ? null : value);
             }
         });
-    
+      
         while (inputValues.length < 5) {
             inputValues.push(null);
         }
-    
+      
         const finalData = {
             id: selectedTorre,
             hBastidor: inputValues[0] !== undefined && inputValues[0] !== "" ? parseInt(inputValues[0]) : null,
             hAjuste: inputValues[1] !== undefined && inputValues[1] !== "" ? parseInt(inputValues[1]) : null,
             hAjusteN1: inputValues[2] !== undefined && inputValues[2] !== "" ? parseInt(inputValues[2]) : null,
-            DisteNivel: inputValues[3] !== undefined && inputValues[3] !== "" ? parseInt(inputValues[3]) : null,            
+            DisteNivel: inputValues[3] !== undefined && inputValues[3] !== "" ? parseInt(inputValues[3]) : null,
             ActualizarTAG: inputValues[4] || "",
             id_recetario: selectedReceta,
         };
-    
-        console.log('Datos enviados:', finalData);
-    
-        fetch(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/tomar-datos-torre`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(finalData),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Respuesta de la API:', data);
-            toast.success("Datos de la torre corregidos exitosamente", {
-                position: "bottom-center",
-            });
-            handleAplicarNiveles();
-            refreshTorres(data.ActualizarTAG);
-        })
-        .catch(error => {
-            //console.error('Error al enviar datos:', error);
-        });
-    };
+      
+        console.log("Datos enviados:", finalData);
+      
+        const url = `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/tomar-datos-torre`;
+      
+        const intentarEnvio = async (reintentos = 5) => {
+            for (let i = 1; i <= reintentos; i++) {
+                try {
+                    const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(finalData),
+                });
+      
+                if (!response.ok) throw new Error(`Error en el intento ${i}`);
+      
+                const data = await response.json();
+                console.log("Respuesta de la API:", data);
+                toast.success("Datos de la torre corregidos exitosamente", {
+                    position: "bottom-center",
+                });
+                handleAplicarNiveles();
+                refreshTorres(data.ActualizarTAG);
+                break; // éxito → salimos del bucle
+            } catch (error) {
+                console.warn(`Intento ${i} fallido:`, error);
+                if (i === reintentos) {
+                    toast.error("Error al enviar los datos luego de 5 intentos.", {
+                        position: "bottom-center",
+                    });
+                }
+            }
+        }
+        };
+      
+        intentarEnvio();
+      };
 
     // Guarda datos de Niveles en BDD
     const handleAplicarClick = () => {
@@ -489,7 +504,7 @@ const Configuraciones = () => {
             if (selectedReceta !== null) {
                 setDatosRecetas1([
                     { id: 1, texto: 'NUMERO DE GRIPPER', dato: null, icono: NGripper },
-                    { id: 2, texto: 'TIPO DE MOLDE', dato: null, icono: TipoA },
+                    { id: 2, texto: 'TIPO DE MOLDE', dato: null, icono: puntoGris },
                     { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: null, icono: Ancho },
                     { id: 4, texto: 'ALTO DEL PRODUCTO', dato: null, icono: Alto },
                     { id: 5, texto: 'LARGO DEL PRODUCTO', dato: null, icono: Largo },
@@ -523,10 +538,23 @@ const Configuraciones = () => {
                     console.log("Datos recibidos:", data);
             
                     const receta = data.DatosRecetas[0];
-            
+                    
+                    const obtenerIconoTipoMolde = (tipo) => {
+                        switch (tipo) {
+                            case 'Molde A':
+                                return TipoA;
+                            case 'Molde B':
+                                return TipoB;
+                            case 'Molde C':
+                                return TipoC;
+                            default:
+                                return puntoGris;
+                        }
+                    };
+
                     setDatosRecetas1([
                         { id: 1, texto: 'NUMERO DE GRIPPER', dato: receta.nroGripper ?? null, icono: NGripper },
-                        { id: 2, texto: 'TIPO DE MOLDE', dato: receta.tipoMolde ?? null, icono: TipoA },
+                        { id: 2, texto: 'TIPO DE MOLDE', dato: receta.tipoMolde ?? null, icono: obtenerIconoTipoMolde(receta.tipoMolde) },
                         { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: receta.anchoProducto !== null && receta.anchoProducto !== undefined ? `${receta.anchoProducto} mm` : null, icono: Ancho },
                         { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto !== null && receta.altoProducto !== undefined ? `${receta.altoProducto} mm` : null, icono: Alto },
                         { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto !== null && receta.largoProducto !== undefined ? `${receta.largoProducto} mm` : null, icono: Largo },
