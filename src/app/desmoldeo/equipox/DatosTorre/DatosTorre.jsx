@@ -7,22 +7,24 @@ import React, { useState, useEffect, useContext } from "react";
 
 const DatosTorreComponent = () => {
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
+  const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
   const initialDatosTorre = [
     { id: 1, texto: "N° TORRE ACTUAL", dato: null },
     { id: 2, texto: "N° TORRE PROXIMA", dato: null },
-    { id: 3, texto: "NIVEL DE TORRE ACTUAL", dato: null },
+    { id: 3, texto: "TOTAL NIVELES", dato: null },
   ];
 
   const [datosTorre, setDatosTorre] = useState(initialDatosTorre);
-  const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
   useEffect(() => {
-    if (data && data?.general?.datosTorre) {
-      const updatedDatosTorre = initialDatosTorre.map((item, index) => ({
-        ...item,
-        dato: data?.general?.datosTorre[index] !== undefined ? data?.general?.datosTorre[index] : null,
-      }));
+    const datosTorre = data?.[2]?.datosTorre;
+    if (datosTorre) {
+      const updatedDatosTorre = [
+        { id: 1, texto: 'N° Torre actual', dato: datosTorre.N_torre_actual ?? null },
+        { id: 2, texto: 'Cant. de niveles', dato: datosTorre.TotalNiveles ?? null },
+        { id: 3, texto: 'N° Torre próximo', dato: datosTorre.N_torre_proxima ?? null },
+      ];
       setDatosTorre(updatedDatosTorre);
     }
   }, [data]);

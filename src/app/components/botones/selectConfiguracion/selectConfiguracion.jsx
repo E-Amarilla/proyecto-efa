@@ -28,12 +28,13 @@ const SelectConfiguracion = ({ onChange, onClick}) => {
         const recetasFormateadas = data.ListadoRecetas.map((receta) => ({
           key: receta.id.toString(),
           label: receta.codigoProducto,
+          label: `${receta.codigoProducto} [${receta.id}]`, 
         }));
 
         setRecetas(recetasFormateadas);
         setSelectedKey(recetasFormateadas.length > 0 ? recetasFormateadas[0].key : ""); // Seleccionar la primera receta
       } catch (error) {
-        console.error("Error al obtener recetas:", error);
+        //console.error("Error al obtener recetas:", error);
       } finally {
         setLoading(false);
       }
@@ -46,7 +47,7 @@ const SelectConfiguracion = ({ onChange, onClick}) => {
     if (keys.size > 0) {
       const newValue = Array.from(keys)[0];
       setSelectedKey(newValue);
-      onChange(newValue);
+      onChange(newValue, true);
     }
   };
 

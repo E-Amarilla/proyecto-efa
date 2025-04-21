@@ -19,27 +19,15 @@ const Footer = () => {
             icono: ubiImg,
             link: 'https://www.google.com/maps/place/Beron+de+Astrada+2745,+CABA,+Argentina',
             texto: 'Beron de Astrada 2745, CABA, Argentina'
-        },
-        {
-            id: 2,
-            icono: mailImg,
-            link: 'mailto:soporte@creminox.com',
-            texto: 'soporte@creminox.com'
         }
     ];
 
     const opcionesDer = [
         {
-            id: 3,
-            icono: fbImg,
-            link: 'https://facebook.com/creminox',
-            texto: '/creminox'
-        },
-        {
-            id: 4,
-            icono: linkImg,
-            link: 'https://ar.linkedin.com/company/creminox',
-            texto: 'Creminox'
+            id: 2,
+            icono: mailImg,
+            link: 'mailto:soporte@creminox.com',
+            texto: 'soporte@creminox.com'
         }
     ];
 

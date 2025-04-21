@@ -16,17 +16,16 @@ const EstadosLayout = () => {
     
     const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
-    const desmoldeoData = data?.celda?.Desmoldeo || {};
+    const desmoldeoData = data?.[1].Desmoldeo || {};
 
     const {
-        estadoMaquina = 'Inactivo',
+        estadoMaquina = "CICLO INACTIVO",
     } = desmoldeoData;
-
     return (
         <>
             <div className={style.contenedorDatos}>
                 <ul className={style.datosTods}>
-                    {estadoMaquina === ("Activo" || "activo")  ? (
+                    {estadoMaquina === ("CICLO ACTIVO" || "activo")  ? (
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedores}>
                                 <Image
@@ -37,7 +36,7 @@ const EstadosLayout = () => {
                                 <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
                             </div>
                         </li>
-                    ) : estadoMaquina === ("Pausado" || "pausado") ? (
+                    ) : estadoMaquina === ("CICLO PAUSADO" || "pausado") ? (
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedores}>
                                 <Image
@@ -48,7 +47,7 @@ const EstadosLayout = () => {
                                 <h3 className={style.estadoPausa}>{estadoMaquina.toUpperCase()}</h3>
                             </div>
                         </li>
-                    ) : estadoMaquina === ("Inactivo" || "inactivo")  ? (
+                    ) : estadoMaquina === ("CICLO INACTIVO" || "inactivo")  ? (
                         <li className={style.datosIndvGray}>
                             <div className={style.contenedores}>
                                 <Image

@@ -19,8 +19,8 @@ const BotonFiltro = ({ onClick }) => {
                     alignItems: "center",
                     fontSize: "15px",
                     boxShadow: "0 2px 5px rgba(217, 217, 217, 0.1)",
+                    fontWeight: "bold",
                     marginTop: "10px",
-                    fontWeight: "bold"
                 }}
                 onClick={onClick}
             >

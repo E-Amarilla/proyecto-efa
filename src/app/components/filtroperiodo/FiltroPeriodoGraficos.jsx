@@ -37,8 +37,7 @@ const FiltroPeriodo = () => {
         <div id="GraficosSection" className={style.seccion}>
             <div className={style.graph2}>
                 <div className={`${style.grafiproductos} ${style.fullWidth}`}>
-                <Grafico1 startDate={fechaInicio} endDate={fechaFin} />
-                
+                    <Grafico1 startDate={fechaInicio} endDate={fechaFin} />
                 </div>
                 <div className={`${style.contenedor} FiltroPeriodoGraficos`}>
                     <h2 className={style.titulo}>FILTRADO DE FECHA GRAFICOS</h2>

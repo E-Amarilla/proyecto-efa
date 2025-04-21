@@ -31,28 +31,28 @@ const Completo = () => {
   useEffect(() => {
     if (!data) return;
 
-    if (!Array.isArray(data.alarmas)) {
+    try {
+      // Las alarmas están en el índice 3 del array
+      const alarmasData = data[3];
+
+      if (Array.isArray(alarmasData) && alarmasData.length > 0) {
+        const filteredItems = alarmasData.map(alarma => ({
+          key: alarma.id_alarma.toString(),
+          description: alarma.descripcion || "Sin descripción",
+          type: alarma.tipoAlarma,
+          state: alarma.estadoAlarma ? "Activo" : "Inactivo",
+          time: alarma.fechaRegistro,
+          registerTime: alarma.fechaRegistro,
+        }));
+
+        setItems(filteredItems);
+        setIsLoading(false);
+      }
+    } catch (err) {
+      console.error('Error procesando datos:', err);
       setError("No se pudieron obtener los datos");
       setIsLoading(false);
-      return;
     }
-
-    const filteredItems = data.alarmas.filter(alarmas =>
-      alarmas.tipoAlarma === "Error" || alarmas.tipoAlarma === "Alerta"
-    );
-
-    setItems(filteredItems.map(alarmas => ({
-      key: alarmas.id_alarma.toString(),
-      description: alarmas.descripcion,
-      type: alarmas.tipoAlarma,
-      state: alarmas.estadoAlarma,
-      // Se muestra siempre la fecha y hora actual
-      time: alarmas.fechaActual,
-      // Si la alarma está activa y posee fechaInicio, se asigna; de lo contrario, se deja vacío.
-      registerTime: alarmas.estadoAlarma === "Activo" && alarmas.fechaInicio ? alarmas.fechaInicio : "",
-    })));
-    
-    setIsLoading(false);
   }, [data]);
 
   const columns = [

@@ -18,6 +18,7 @@ export default function Notificaciones() {
     const prevDataRef = useRef([]); // Referencia mutable para el estado anterior
     const { data } = useContext(AuthContext);
 
+    {/*
     useEffect(() => {
         if (data) {
             // Filtra las alarmas con ID válido
@@ -65,6 +66,7 @@ export default function Notificaciones() {
             prevDataRef.current = data;
         }
     }, [data]);
+    */}
 
     return (
         <Toaster richColors={true}/>

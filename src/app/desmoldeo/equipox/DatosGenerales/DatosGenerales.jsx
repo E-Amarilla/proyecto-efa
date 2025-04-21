@@ -7,6 +7,7 @@ import receta2 from '@/assets/img/RECETA2.png';
 import peso from '@/assets/img/PESO.png';
 import estado from '@/assets/img/ESTADO.png';
 import tiempo from '@/assets/img/TIEMPO.png';
+import molde from '@/assets/img/MOLDE.png';
 
 import { useContext } from "react";
 import AuthContext from "../../../context/AuthContext"
@@ -22,20 +23,26 @@ const DatosGenerales = () => {
     const {
         idRecetaActual,
         idRecetaProxima,
-        PesoActualDesmoldado,
+        CodigoProducto,
+        TotalNiveles,
+        TipoMolde,
         estadoMaquina,
-        TiempoTranscurrido
-    } = data?.desmoldeo|| {};
-
-    const NombreActual = data?.desmoldeo ? (data?.desmoldeo["Nombre actual"]?.trim() || '-') : '-';
+        desmoldeoBanda,
+        PesoProducto,
+        TiempoTranscurrido,
+        sdda_nivel_actual,
+        NGripperActual,
+        PesoActualDesmoldado,
+        TorreActual
+    } = data?.[0] || {};
 
     const datosGenerales = [
-        { id: 1, texto: 'NOMBRE RECETA', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : 'null', icono:receta1 },
-        { id: 2, texto: 'ID RECETA ACTUAL', dato: idRecetaActual !== undefined && idRecetaActual !== null ? idRecetaActual : 'null', icono:receta2  },
-        { id: 3, texto: 'ID PROXIMA RECETA', dato: idRecetaProxima !== undefined && idRecetaProxima !== null ? idRecetaProxima : 'null', icono:receta2 },
-        { id: 4, texto: 'PESO TOTAL DESMOLDADO', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono:peso  },
-        { id: 5, texto: 'ESTADO MAQUINA', dato: estadoMaquina !== undefined && estadoMaquina !== null ? estadoMaquina : 'null', icono:estado },
-        { id: 6, texto: 'TIEMPO TRANSCURRIDO', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
+        { id: 1, texto: 'Receta actual', dato: CodigoProducto !== undefined && CodigoProducto !== null ? CodigoProducto : 'null', icono:receta1 },
+        { id: 2, texto: 'N° Molde:', dato: TipoMolde !== null ? TipoMolde : 'null', icono: molde },
+        { id: 3, texto: 'Estado maquina', dato: estadoMaquina !== undefined && estadoMaquina !== null ? estadoMaquina : 'null', icono:estado },
+        { id: 4, texto: 'Peso desmoldado', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono:peso  },
+        { id: 5, texto: 'Tiempo transcurido', dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
+        { id: 6, texto: 'Receta próximo', dato: idRecetaProxima !== undefined && idRecetaProxima !== null ? idRecetaProxima : 'null', icono:receta2 },
     ];       
 
     return (
@@ -48,7 +55,9 @@ const DatosGenerales = () => {
                             <div className={style.detallesDatos} href='EquipoX'>
                                 <div className={style.texto}>
                                     <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                    <h4 className={textstyle.h4}>{dato}</h4>
+                                    <h4 className={textstyle.h4}>
+                                        {texto === 'Peso desmoldado' ? `${dato} kg` : dato}
+                                    </h4>
                                 </div>
                                 <Image 
                                     src={icono} 

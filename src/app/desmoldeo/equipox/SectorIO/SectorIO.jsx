@@ -15,54 +15,56 @@ import puntoA from '@/assets/img/puntoA.png';
 import puntoB from '@/assets/img/puntoB.png';
 
 const SectorIOComponent = () => {
+    const { data } = useContext(AuthContext); // Obtiene datos del contexto
+    
     const initialSectorIO = [
-        { id: 1, texto: 'ESTADO DEL CICLO', dato: 0, icono: puntoGris },
-        { id: 2, texto: 'BANDA DE DESMOLDEO', dato: 0, icono: puntoGris },
+        { id: 1, texto: 'Estado del ciclo', dato: 0, icono: puntoGris },
+        { id: 2, texto: 'Banda de desmoldeo', dato: 0, icono: puntoGris },
     ];
 
-    const [sectorIO, setSectorIO] = useState(initialSectorIO);
-
-    const { data } = useContext(AuthContext); // Obtiene datos del contexto
+    const [sector_IO, setSector_IO] = useState(initialSectorIO);
 
     useEffect(() => {
-        if (data && data?.general?.sectorIO) {
-            const updatedSectorIO = sectorIO.map((item, index) => {
-                // Asignamos los datos recibidos
-                let dato = data?.general?.sectorIO[index] !== undefined ? data?.general?.sectorIO[index] : 0;
-                let icono = puntoGris; // Default icon
-
-                // Comprobamos el índice y asignamos el icono adecuado
+        if (data?.[2]?.sector_IO) {
+            const estadoCiclo = data[2].sector_IO.estado_ciclo;
+            const bandaDesmoldeo = data[2].sector_IO.banda_desmoldeo;
+    
+            const updatedSectorIO = sector_IO.map((item, index) => {
+                let dato = 0;
+                let icono = puntoGris; // Icono por defecto
+    
                 if (index === 0) {
-                    // Lógica para el índice 0 (Estado del ciclo)
-                    if (dato === 0 || dato === null) {
-                        icono = puntoGris;
-                    } else if (dato === 1) {
-                        icono = puntoVerde;
-                    }
+                    dato = estadoCiclo === true ? 1 : 0;
+                    icono = estadoCiclo === true ? puntoVerde : puntoGris;
+    
                 } else if (index === 1) {
-                    // Lógica para el índice 1 (Banda de desmoldeo)
-                    if (dato === 1) {
+                    dato = bandaDesmoldeo;
+    
+                    if (dato === "CINTA A") {
                         icono = puntoA;
-                    } else if (dato === 2) {
+                    } else if (dato === "CINTA B") {
                         icono = puntoB;
+                    } else {
+                        icono = puntoGris;
                     }
                 }
-
+    
                 return {
                     ...item,
                     dato: dato,
                     icono: icono
                 };
             });
-            setSectorIO(updatedSectorIO);
+    
+            setSector_IO(updatedSectorIO);
         }
-    }, [data]);
+    }, [data]);    
 
     return (
         <div className={style.datoListContainer}>
             <h1 className={textstyle.titulo}>SECTOR IO</h1>
             <div className={style.datosGen}>
-                {sectorIO.map(({ id, texto, dato, icono }) => (
+                {sector_IO.map(({ id, texto, dato, icono }) => (
                     <div key={id} className={style.datoList}>
                         <div className={style.detallesDatos}>
                             <div className={style.texto}>

@@ -5,6 +5,7 @@
 :root {
   background-color: #1F1F1F;
 }
+
 body {
   height: 100%;
   width: 100%;
@@ -12,6 +13,11 @@ body {
   margin: 0;
   font-family: system-ui;
   overflow-x: hidden;
+}
+
+html {
+  scrollbar-width: none; /* Oculta la barra en Firefox */
+  -ms-overflow-style: none; /* Para IE/Edge */
 }
 
 ::-webkit-scrollbar {
@@ -106,4 +112,12 @@ body {
 
 .customSelect .text-foreground-500 {
   font-weight: bold; /* Aplica negrita solo a los labels dentro del Select */
+}
+
+.nextjs-toast-errors, 
+nextjs-portal,
+#__next-build-watcher {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
 }

@@ -1,24 +1,36 @@
 "use client";
 
 import style from './configuraciones.module.css';
-
 import Image from "next/image";
 import receta2 from '@/assets/img/RECETA2.png';
 import NGripper from '@/assets/img/GRIPPER.png';
 import TipoA from '@/assets/img/TIPOA.png';
 import TipoB from '@/assets/img/TIPOB.png';
 import TipoC from '@/assets/img/TIPOC.png';
+import puntoGris from '@/assets/img/puntoGris.png'
+import Ancho from '@/assets/img/ancho.png';
+import Alto from '@/assets/img/alto.png';
+import Largo from '@/assets/img/largo.png';
+import ProductosMolde from '@/assets/img/PRODUCTOSMOLDE.png';
+import MoldesNivel from '@/assets/img/MOLDESNIVEL.png';
+import LargoMolde from '@/assets/img/LARGOMOLDE.png';
+
+import AlturaAjuste from '@/assets/img/ALTURAAJUSTE.png';
+import AlturaMolde from '@/assets/img/ALTURAMOLDE.png';
+import AlturaAjusteN1 from '@/assets/img/ALTURAN1.png';
+
+import AlturaN1 from '@/assets/img/AJUSTEN1.png';
+import AlturaBastidor from '@/assets/img/ALTURABASTIDOR.png';
+import DisteNivel from '@/assets/img/DISTENIVEL.png';
+
 import Peso from '@/assets/img/PESO.png';
 import Moldes from '@/assets/img/MOLDE.png';
 import Niveles from '@/assets/img/NIVELACTUAL.png';
-
 import { useContext, useState, useEffect, useRef } from "react";
 import EjemploSkeleton from "./skeleton"
 import EjemploSkeleton2 from "./skeleton2"
 import EjemploSkeleton3 from "./skeleton3"
-
 import AuthContext from "../context/AuthContext"
-
 import textstyle from './texto.module.css';
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -30,7 +42,7 @@ import SelectTorre from "../components/botones/selectTorre/selectTorre"
 import SelectNivel from "../components/botones/selectNivel/selectNivel"
 
 const Configuraciones = () => {
-    const { data } = useContext(AuthContext); // Obtiene datos del contexto
+    const { user, data } = useContext(AuthContext); // Obtiene datos del contexto y el usuario
     const [loading, setLoading] = useState(false); // Nuevo estado para controlar el Spinner
     const [refreshKey, setRefreshKey] = useState(0);
     const [torres, setTorres] = useState([]);
@@ -39,90 +51,60 @@ const Configuraciones = () => {
     const [setUserRole] = useState(""); // Asegúrate de que useState esté correctamente definido
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user_data');
-        const username = localStorage.getItem('username'); // Obtenemos el nombre de usuario desde otro objeto
-        const token = storedUser ? JSON.parse(storedUser).access_token : null;
-        
-        async function fetchUsers() {
-            try {
-                const response = await fetch(
-                    `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/usuario/lista-usuarios`,
-                    {
-                        method: "GET",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                            Accept: "application/json",
-                        },
-                    }
-                );
-    
-                if (!response.ok) {
-                    throw new Error("Error al obtener la lista de usuarios");
-                }
-    
-                const users = await response.json();
-    
-                if (storedUser && username) {
-                    // Se busca el usuario actual en el array de usuarios
-                    const foundUser = users.find((u) => u.name === username);
-                    if (foundUser) {
-                        setUserRole(foundUser.role);
-                        // Si el rol no es "ADMIN", se redirige a "/completo"
-                        if (foundUser.role !== "ADMIN") {
-                            router.push("/completo");
-                        }
-                    } else {
-                        throw new Error("Usuario no encontrado en la lista de usuarios");
-                    }
-                } else {
-                    throw new Error("storedUser o username no están presentes");
-                }
-            } finally {}
+        // Redirigir al login si no hay usuario
+        if (!user) {
+            router.push('/login');
+            return;
         }
-        fetchUsers();
-    }, [router]);
+
+        // Si el rol no es "ADMIN", se redirige a "/completo"
+        if (user.role !== "ADMIN") {
+            router.push("/completo");
+        }
+    }, [user, router]);
 
     const [datosGeneralesIzq, setDatosRecetas1] = useState([
         { id: 1, texto: 'NUMERO DE GRIPPER ', dato: 'null', icono:NGripper  },
-        { id: 2, texto: 'TIPO DE MOLDE', dato: 'null', icono:TipoA  },
-        { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: 'null', icono:receta2  },
-        { id: 4, texto: 'ALTO DEL PRODUCTO', dato: 'null', icono:receta2  },
-        { id: 5, texto: 'LARGO DEL PRODUCTO', dato: 'null', icono:receta2  },
+        { id: 2, texto: 'TIPO DE MOLDE', dato: 'null', icono: puntoGris },
+        { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: 'null', icono:Ancho  },
+        { id: 4, texto: 'ALTO DEL PRODUCTO', dato: 'null', icono:Alto  },
+        { id: 5, texto: 'LARGO DEL PRODUCTO', dato: 'null', icono:Largo  },
         { id: 6, texto: 'PESO DEL PRODUCTO', dato: 'null', icono:Peso  },
-        { id: 7, texto: 'MOLDES POR NIVEL', dato: 'null', icono:Moldes  },
+        { id: 7, texto: 'MOLDES POR NIVEL', dato: 'null', icono:MoldesNivel  },
+        { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: 'null', icono:ProductosMolde  },
     ]);       
 
     const [datosGeneralesDer, setDatosRecetas2] = useState([
-        { id: 1, texto: 'ALTURA DE MOLDE', dato: 'null', icono:receta2  },
-        { id: 2, texto: 'LARGO DE MOLDE', dato: 'null', icono:receta2  },
-        { id: 3, texto: 'ALTURA AJUSTE', dato: 'null', icono:receta2  },
+        { id: 1, texto: 'ALTURA DE MOLDE', dato: 'null', icono:AlturaMolde  },
+        { id: 2, texto: 'LARGO DE MOLDE', dato: 'null', icono:LargoMolde  },
+        { id: 3, texto: 'ALTURA AJUSTE', dato: 'null', icono:AlturaAjuste  },
         { id: 4, texto: 'NIVELES POR TORRE', dato: 'null', icono:Niveles  },
-        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: 'null', icono:receta2  },
-        { id: 6, texto: 'ALTURA N1', dato: 'null', icono:receta2  },
-        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: 'null', icono:receta2  },
-        { id: 8, texto: 'ALTURA AJUSTRE N1', dato: 'null', icono:receta2  },
+        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: 'null', icono:DisteNivel  },
+        { id: 6, texto: 'ALTURA N1', dato: 'null', icono:AlturaN1  },
+        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: 'null', icono:AlturaBastidor  },
+        { id: 8, texto: 'ALTURA AJUSTRE N1', dato: 'null', icono:AlturaAjusteN1  },
     ]); 
 
     const [datosCorrecionesTorre, setDatosCorrecionesTorre] = useState([
-        { id: 1, texto: 'Coreccion_hBastidor', dato: 'null' },
-        { id: 2, texto: 'Coreccion_hAjuste', dato: 'null' },
-        { id: 3, texto: 'Coreccion_hAjusteN1', dato: 'null' },
-        { id: 4, texto: 'Coreccion_DisteNivel', dato: 'null' },
+        { id: 1, texto: 'Correccion_hBastidor', dato: 'null' },
+        { id: 2, texto: 'Correccion_hAjuste', dato: 'null' },
+        { id: 3, texto: 'Correccion_hAjusteN1', dato: 'null' },
+        { id: 4, texto: 'Correccion_DisteNivel', dato: 'null' },
         { id: 5, texto: 'ActualizarTAG', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesHN, setDatosCorrecionesNivelesHN] = useState([
-        { id: 1, texto: 'Correcion_hN1', dato: 'null' },
-        { id: 2, texto: 'Correcion_hN2', dato: 'null' },
-        { id: 3, texto: 'Correcion_hN3', dato: 'null' },
-        { id: 4, texto: 'Correcion_hN4', dato: 'null' },
-        { id: 5, texto: 'Correcion_hN5', dato: 'null' },
-        { id: 6, texto: 'Correcion_hN6', dato: 'null' },
-        { id: 7, texto: 'Correcion_hN7', dato: 'null' },
-        { id: 8, texto: 'Correcion_hN8', dato: 'null' },
-        { id: 9, texto: 'Correcion_hN9', dato: 'null' },
-        { id: 10, texto: 'Correcion_hN10', dato: 'null' },
-        { id: 11, texto: 'Correcion_hN11', dato: 'null' },
+        { id: 1, texto: 'Correccion_hN1', dato: 'null' },
+        { id: 2, texto: 'Correccion_hN2', dato: 'null' },
+        { id: 3, texto: 'Correccion_hN3', dato: 'null' },
+        { id: 4, texto: 'Correccion_hN4', dato: 'null' },
+        { id: 5, texto: 'Correccion_hN5', dato: 'null' },
+        { id: 6, texto: 'Correccion_hN6', dato: 'null' },
+        { id: 7, texto: 'Correccion_hN7', dato: 'null' },
+        { id: 8, texto: 'Correccion_hN8', dato: 'null' },
+        { id: 9, texto: 'Correccion_hN9', dato: 'null' },
+        { id: 10, texto: 'Correccion_hN10', dato: 'null' },
+        { id: 11, texto: 'Correccion_hN11', dato: 'null' },
     ]);
 
     const [datosCorrecionesNivelesChG, setDatosCorrecionesNivelesChG] = useState([
@@ -191,50 +173,64 @@ const Configuraciones = () => {
     // Guarda datos de Torre en BDD
     const handleAplicarClick2 = () => {
         const inputValues = [];
-    
+      
         inputRefs.current.forEach(input => {
             if (input) {
-                const value = input.value.trim();  // Elimina espacios en blanco
+                const value = input.value.trim();
                 inputValues.push(value === "" ? null : value);
             }
         });
-    
+      
         while (inputValues.length < 5) {
             inputValues.push(null);
         }
-    
+      
         const finalData = {
             id: selectedTorre,
             hBastidor: inputValues[0] !== undefined && inputValues[0] !== "" ? parseInt(inputValues[0]) : null,
             hAjuste: inputValues[1] !== undefined && inputValues[1] !== "" ? parseInt(inputValues[1]) : null,
             hAjusteN1: inputValues[2] !== undefined && inputValues[2] !== "" ? parseInt(inputValues[2]) : null,
-            DisteNivel: inputValues[3] !== undefined && inputValues[3] !== "" ? parseInt(inputValues[3]) : null,            
+            DisteNivel: inputValues[3] !== undefined && inputValues[3] !== "" ? parseInt(inputValues[3]) : null,
             ActualizarTAG: inputValues[4] || "",
             id_recetario: selectedReceta,
         };
-    
-        console.log('Datos enviados:', finalData);
-    
-        fetch(`http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/tomar-datos-torre`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(finalData),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Respuesta de la API:', data);
-            toast.success("Datos de la torre corregidos exitosamente", {
-                position: "bottom-center",
-            });
-            handleAplicarNiveles();
-            refreshTorres(data.ActualizarTAG);
-        })
-        .catch(error => {
-            console.error('Error al enviar datos:', error);
-        });
-    };
+      
+        console.log("Datos enviados:", finalData);
+      
+        const url = `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/tomar-datos-torre`;
+      
+        const intentarEnvio = async (reintentos = 5) => {
+            for (let i = 1; i <= reintentos; i++) {
+                try {
+                    const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(finalData),
+                });
+      
+                if (!response.ok) throw new Error(`Error en el intento ${i}`);
+      
+                const data = await response.json();
+                console.log("Respuesta de la API:", data);
+                toast.success("Datos de la torre corregidos exitosamente", {
+                    position: "bottom-center",
+                });
+                handleAplicarNiveles();
+                refreshTorres(data.ActualizarTAG);
+                break; // éxito → salimos del bucle
+            } catch (error) {
+                console.warn(`Intento ${i} fallido:`, error);
+                if (i === reintentos) {
+                    toast.error("Error al enviar los datos luego de 5 intentos.", {
+                        position: "bottom-center",
+                    });
+                }
+            }
+        }
+        };
+      
+        intentarEnvio();
+      };
 
     // Guarda datos de Niveles en BDD
     const handleAplicarClick = () => {
@@ -257,17 +253,17 @@ const Configuraciones = () => {
         const finalData = {
             id: selectedTorre,
             tipo: selectedNivel,
-            Correcion1: inputValues[0] !== undefined ? inputValues[0] : null,
-            Correcion2: inputValues[1] !== undefined ? inputValues[1] : null,
-            Correcion3: inputValues[2] !== undefined ? inputValues[2] : null,
-            Correcion4: inputValues[3] !== undefined ? inputValues[3] : null,
-            Correcion5: inputValues[4] !== undefined ? inputValues[4] : null,
-            Correcion6: inputValues[5] !== undefined ? inputValues[5] : null,
-            Correcion7: inputValues[6] !== undefined ? inputValues[6] : null,
-            Correcion8: inputValues[7] !== undefined ? inputValues[7] : null,
-            Correcion9: inputValues[8] !== undefined ? inputValues[8] : null,
-            Correcion10: inputValues[9] !== undefined ? inputValues[9] : null,
-            Correcion11: inputValues[10] !== undefined ? inputValues[10] : null,            
+            Correccion1: inputValues[0] !== undefined ? inputValues[0] : null,
+            Correccion2: inputValues[1] !== undefined ? inputValues[1] : null,
+            Correccion3: inputValues[2] !== undefined ? inputValues[2] : null,
+            Correccion4: inputValues[3] !== undefined ? inputValues[3] : null,
+            Correccion5: inputValues[4] !== undefined ? inputValues[4] : null,
+            Correccion6: inputValues[5] !== undefined ? inputValues[5] : null,
+            Correccion7: inputValues[6] !== undefined ? inputValues[6] : null,
+            Correccion8: inputValues[7] !== undefined ? inputValues[7] : null,
+            Correccion9: inputValues[8] !== undefined ? inputValues[8] : null,
+            Correccion10: inputValues[9] !== undefined ? inputValues[9] : null,
+            Correccion11: inputValues[10] !== undefined ? inputValues[10] : null,            
         };
     
         console.log('Datos enviados:', finalData);
@@ -297,7 +293,7 @@ const Configuraciones = () => {
             refreshTorres2();
         })
         .catch(error => {
-            console.error('Error al enviar datos:', error);
+            //console.error('Error al enviar datos:', error);
         });      
     };
     
@@ -337,7 +333,7 @@ const Configuraciones = () => {
             refreshTorres2();
         })
         .catch(error => {
-            console.error('Error al enviar datos:', error);
+            //console.error('Error al enviar datos:', error);
         });
     };         
 
@@ -391,7 +387,7 @@ const Configuraciones = () => {
                   setSelectedTorre(TAG || data.ListadoTorres[0]?.id);
                 }
               })
-              .catch((error) => console.error('Error al obtener torres:', error));
+              //.catch((error) => console.error('Error al obtener torres:', error));
         };
 
         const refreshTorres2 = () => {
@@ -408,20 +404,20 @@ const Configuraciones = () => {
                   setSelectedReceta(currentReceta);
                 }
               })
-              .catch((error) => console.error('Error al obtener torres:', error));
+              //.catch((error) => console.error('Error al obtener torres:', error));
           };
 
         const handleAplicarNiveles = async () => {
             if (selectedTorre !== null && selectedReceta !== null) {
                 setDatosCorrecionesTorre([
-                    { id: 1, texto: 'Coreccion_hBastidor', dato: null },
-                    { id: 2, texto: 'Coreccion_hAjuste', dato: null },
-                    { id: 3, texto: 'Coreccion_hAjusteN1', dato: null },
-                    { id: 4, texto: 'Coreccion_DisteNivel', dato: null },
+                    { id: 1, texto: 'Correccion_hBastidor', dato: null },
+                    { id: 2, texto: 'Correccion_hAjuste', dato: null },
+                    { id: 3, texto: 'Correccion_hAjusteN1', dato: null },
+                    { id: 4, texto: 'Correccion_DisteNivel', dato: null },
                     { id: 5, texto: 'ActualizarTAG', dato: null },
                 ]);
         
-                setDatosCorrecionesNivelesHN(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correcion_hN${index + 1}`, dato: null })));
+                setDatosCorrecionesNivelesHN(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hN${index + 1}`, dato: null })));
                 setDatosCorrecionesNivelesChG(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hguardado_N${index + 1}`, dato: null })));
                 setDatosCorrecionesNivelesChB(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `Correccion_hbusqueda_N${index + 1}`, dato: null })));
                 setDatosCorrecionesNivelesFA(Array(11).fill(null).map((_, index) => ({ id: index + 1, texto: `FallasN${index + 1}`, dato: null })));
@@ -436,10 +432,10 @@ const Configuraciones = () => {
                         const data = await response.json();
         
                         setDatosCorrecionesTorre([
-                            { id: 1, texto: 'Coreccion_hBastidor', dato: data.DatosTorre?.hBastidor ?? null },
-                            { id: 2, texto: 'Coreccion_hAjuste', dato: data.DatosTorre?.hAjuste ?? null },
-                            { id: 3, texto: 'Coreccion_hAjusteN1', dato: data.DatosTorre?.hAjusteN1 ?? null },
-                            { id: 4, texto: 'Coreccion_DisteNivel', dato: data.DatosTorre?.DisteNivel ?? null },
+                            { id: 1, texto: 'Correccion_hBastidor', dato: data.DatosTorre?.hBastidor ?? null },
+                            { id: 2, texto: 'Correccion_hAjuste', dato: data.DatosTorre?.hAjuste ?? null },
+                            { id: 3, texto: 'Correccion_hAjusteN1', dato: data.DatosTorre?.hAjusteN1 ?? null },
+                            { id: 4, texto: 'Correccion_DisteNivel', dato: data.DatosTorre?.DisteNivel ?? null },
                             { id: 5, texto: 'ActualizarTAG', dato: data.DatosTorre?.ActualizarTAG ?? null },
                         ]);
         
@@ -490,7 +486,7 @@ const Configuraciones = () => {
                         );
         
                     } catch (error) {
-                        console.error("Error al obtener los datos de la torre:", error);
+                        //console.error("Error al obtener los datos de la torre:", error);
                     }
                 };
         
@@ -499,208 +495,228 @@ const Configuraciones = () => {
         };
         
         useEffect(() => {
-        if (selectedTorre !== null && selectedReceta !== null) {
-            handleAplicarNiveles();
-        }
+            if (selectedTorre !== null && selectedReceta !== null) {
+                handleAplicarNiveles();
+            }
         }, [selectedReceta, selectedTorre]);
 
         const handleAplicarReceta = async () => {
             if (selectedReceta !== null) {
-              setDatosRecetas1([
-                { id: 1, texto: 'NUMERO DE GRIPPER', dato: null, icono: NGripper },
-                { id: 2, texto: 'TIPO DE MOLDE', dato: null, icono: TipoA },
-                { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 4, texto: 'ALTO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 5, texto: 'LARGO DEL PRODUCTO', dato: null, icono: receta2 },
-                { id: 6, texto: 'PESO DEL PRODUCTO', dato: null, icono: Peso },
-                { id: 7, texto: 'MOLDES POR NIVEL', dato: null, icono: Moldes },
-              ]);
-          
-              setDatosRecetas2([
-                { id: 1, texto: 'ALTURA DE MOLDE', dato: null, icono: receta2 },
-                { id: 2, texto: 'LARGO DE MOLDE', dato: null, icono: receta2 },
-                { id: 3, texto: 'ALTURA AJUSTE', dato: null, icono: receta2 },
-                { id: 4, texto: 'NIVELES POR TORRE', dato: null, icono: Niveles },
-                { id: 5, texto: 'DELTA ENTRE NIVELES', dato: null, icono: receta2 },
-                { id: 6, texto: 'ALTURA N1', dato: null, icono: receta2 },
-                { id: 7, texto: 'ALTURA DE BASTIDOR', dato: null, icono: receta2 },
-                { id: 8, texto: 'ALTURA AJUSTE N1', dato: null, icono: receta2 },
-              ]);
-          
-              const fetchDatosReceta = async () => {
-                try {
-                  const url = `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/datos-recetas?id_receta=${selectedReceta}`;
-                  console.log("Llamando a la API:", url);
-          
-                  const response = await fetch(url);
-                  if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error("Error en la API:", errorText);
-                    throw new Error("Error en la solicitud");
-                  }
-          
-                  const data = await response.json();
-                  console.log("Datos recibidos:", data);
-          
-                  const receta = data.DatosRecetas[0];
-          
-                  setDatosRecetas1([
-                    { id: 1, texto: 'NUMERO DE GRIPPER', dato: receta.nroGripper ?? null, icono: NGripper },
-                    { id: 2, texto: 'TIPO DE MOLDE', dato: receta.tipoMolde ?? null, icono: TipoA },
-                    { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: receta.anchoProducto ? `${receta.anchoProducto} mm` : null, icono: receta2 },
-                    { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto ? `${receta.altoProducto} mm` : null, icono: receta2 },
-                    { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto ? `${receta.largoProducto} mm` : null, icono: receta2 },
-                    { id: 6, texto: 'PESO DEL PRODUCTO', dato: receta.pesoProducto ? `${receta.pesoProducto} kg` : null, icono: Peso },
-                    { id: 7, texto: 'MOLDES POR NIVEL', dato: receta.moldesNivel ?? null, icono: Moldes },
-                  ]);
-          
-                  setDatosRecetas2([
-                    { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde ? `${receta.altoMolde} mm` : null, icono: receta2 },
-                    { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde ? `${receta.largoMolde} mm` : null, icono: receta2 },
-                    { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura ? `${receta.ajusteAltura} mm` : null, icono: receta2 },
-                    { id: 4, texto: 'NIVELES POR TORRE', dato: receta.cantidadNiveles ?? null, icono: Niveles },
-                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles ? `${receta.deltaNiveles} mm` : null, icono: receta2 },
-                    { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura ? `${receta.n1Altura} mm` : null, icono: receta2 },
-                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura ? `${receta.bastidorAltura} mm` : null, icono: receta2 },
-                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura ? `${receta.ajusteN1Altura} mm` : null, icono: receta2 },
-                  ]);
-                } catch (error) {
-                  console.error("Error al obtener los datos de la receta:", error);
+                setDatosRecetas1([
+                    { id: 1, texto: 'NUMERO DE GRIPPER', dato: null, icono: NGripper },
+                    { id: 2, texto: 'TIPO DE MOLDE', dato: null, icono: puntoGris },
+                    { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: null, icono: Ancho },
+                    { id: 4, texto: 'ALTO DEL PRODUCTO', dato: null, icono: Alto },
+                    { id: 5, texto: 'LARGO DEL PRODUCTO', dato: null, icono: Largo },
+                    { id: 6, texto: 'PESO DEL PRODUCTO', dato: null, icono: Peso },
+                    { id: 7, texto: 'MOLDES POR NIVEL', dato: null, icono: MoldesNivel },
+                    { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: null, icono: ProductosMolde },
+                ]);
+                setDatosRecetas2([
+                    { id: 1, texto: 'ALTURA DE MOLDE', dato: null, icono: AlturaMolde },
+                    { id: 2, texto: 'LARGO DE MOLDE', dato: null, icono: LargoMolde },
+                    { id: 3, texto: 'ALTURA AJUSTE', dato: null, icono: AlturaAjuste },
+                    { id: 4, texto: 'NIVELES POR TORRE', dato: null, icono: Niveles },
+                    { id: 5, texto: 'DELTA ENTRE NIVELES', dato: null, icono: DisteNivel },
+                    { id: 6, texto: 'ALTURA N1', dato: null, icono: AlturaN1 },
+                    { id: 7, texto: 'ALTURA DE BASTIDOR', dato: null, icono: AlturaBastidor },
+                    { id: 8, texto: 'ALTURA AJUSTE N1', dato: null, icono: AlturaAjusteN1 },
+                ]);
+                const fetchDatosReceta = async () => {
+                    try {
+                    const url = `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/datos-recetas?id_receta=${selectedReceta}`;
+                    console.log("Llamando a la API:", url);
+            
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        //console.error("Error en la API:", errorText);
+                        throw new Error("Error en la solicitud");
+                    }
+            
+                    const data = await response.json();
+                    console.log("Datos recibidos:", data);
+            
+                    const receta = data.DatosRecetas[0];
+                    
+                    const obtenerIconoTipoMolde = (tipo) => {
+                        switch (tipo) {
+                            case 'Molde A':
+                                return TipoA;
+                            case 'Molde B':
+                                return TipoB;
+                            case 'Molde C':
+                                return TipoC;
+                            default:
+                                return puntoGris;
+                        }
+                    };
+
+                    setDatosRecetas1([
+                        { id: 1, texto: 'NUMERO DE GRIPPER', dato: receta.nroGripper ?? null, icono: NGripper },
+                        { id: 2, texto: 'TIPO DE MOLDE', dato: receta.tipoMolde ?? null, icono: obtenerIconoTipoMolde(receta.tipoMolde) },
+                        { id: 3, texto: 'ANCHO DEL PRODUCTO', dato: receta.anchoProducto !== null && receta.anchoProducto !== undefined ? `${receta.anchoProducto} mm` : null, icono: Ancho },
+                        { id: 4, texto: 'ALTO DEL PRODUCTO', dato: receta.altoProducto !== null && receta.altoProducto !== undefined ? `${receta.altoProducto} mm` : null, icono: Alto },
+                        { id: 5, texto: 'LARGO DEL PRODUCTO', dato: receta.largoProducto !== null && receta.largoProducto !== undefined ? `${receta.largoProducto} mm` : null, icono: Largo },
+                        { id: 6, texto: 'PESO DEL PRODUCTO', dato: receta.pesoProducto !== null && receta.pesoProducto !== undefined ? `${receta.pesoProducto} kg` : null, icono: receta2 },
+                        { id: 7, texto: 'MOLDES POR NIVEL', dato: receta.moldesNivel ?? null, icono: MoldesNivel },
+                        { id: 8, texto: 'PRODUCTOS POR MOLDE', dato: receta.productosMolde ?? null, icono: ProductosMolde },
+                    ]);
+            
+                    setDatosRecetas2([
+                        { id: 1, texto: 'ALTURA DE MOLDE', dato: receta.altoMolde !== null && receta.altoMolde !== undefined ? `${receta.altoMolde} mm` : null, icono: AlturaMolde },
+                        { id: 2, texto: 'LARGO DE MOLDE', dato: receta.largoMolde !== null && receta.largoMolde !== undefined ? `${receta.largoMolde} mm` : null, icono: LargoMolde },
+                        { id: 3, texto: 'ALTURA AJUSTE', dato: receta.ajusteAltura !== null && receta.ajusteAltura !== undefined ? `${receta.ajusteAltura} mm` : null, icono: AlturaAjuste },
+                        { id: 4, texto: 'NIVELES POR TORRE', dato: receta.cantidadNiveles ?? null, icono: Niveles },
+                        { id: 5, texto: 'DELTA ENTRE NIVELES', dato: receta.deltaNiveles !== null && receta.deltaNiveles !== undefined ? `${receta.deltaNiveles} mm` : null, icono: DisteNivel },
+                        { id: 6, texto: 'ALTURA N1', dato: receta.n1Altura !== null && receta.n1Altura !== undefined ? `${receta.n1Altura} mm` : null, icono: AlturaN1 },
+                        { id: 7, texto: 'ALTURA DE BASTIDOR', dato: receta.bastidorAltura !== null && receta.bastidorAltura !== undefined ? `${receta.bastidorAltura} mm` : null, icono: AlturaBastidor },
+                        { id: 8, texto: 'ALTURA AJUSTE N1', dato: receta.ajusteN1Altura !== null && receta.ajusteN1Altura !== undefined ? `${receta.ajusteN1Altura} mm` : null, icono: AlturaAjusteN1 },
+                    ]);
+                    } catch (error) {
+                        //console.error("Error al obtener los datos de la receta:", error);
+                    }
+                };
+                fetchDatosReceta();
+            }
+        };
+
+        const handleRecetaChange = async (newReceta, isNewRecipe = false) => {
+            setSelectedReceta(newReceta);
+           
+            if (isNewRecipe) {
+              try {
+                // Obtener las torres para la nueva receta
+                const response = await fetch(
+                  `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/lista-torres?id_receta=${newReceta}`
+                );
+                const data = await response.json();
+               
+                if (data.ListadoTorres && data.ListadoTorres.length > 0) {
+                  // Seleccionar la primera torre de la nueva lista
+                  const firstTorre = data.ListadoTorres[0].id;
+                  setSelectedTorre(firstTorre);
+                  console.log('Nueva receta:', newReceta, 'Primera torre:', firstTorre);
+                } else {
+                  setSelectedTorre(null);
                 }
-              };
-          
-              fetchDatosReceta();
+              } catch (error) {
+                console.error('Error al obtener torres:', error);
+                setSelectedTorre(null);
+              }
             }
           };
-          
-          useEffect(() => {
+        
+        useEffect(() => {
             if (selectedReceta !== null) {
-              handleAplicarReceta();
+            handleAplicarReceta();
             }
-          }, [selectedReceta]);
-                   
+        }, [selectedReceta]);
 
     return (
         <div className={style.all}>
             <div className={style.Izq}>
-                <div className={style.selector}>
-                    <SelectConfiguracion onChange={setSelectedReceta} onClick={handleAplicarReceta} />
-                </div>
-                <div className={style.contenedor}>
-                    <div className={style.datosGen}>
-                        <ul className={style.lista}>
-                            {datosGeneralesIzq.map(({ id, texto, dato, icono }) => (
-                                <li key={id} className={style.datoListIzq}>
-                                    <div className={style.detallesDatos}>
-                                        <div className={style.texto}>
-                                            {(dato === 'null' || dato === undefined || dato === null) ? (
-                                            <>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <EjemploSkeleton2 />
-                                            </>
-                                            ) : (
-                                            <>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <h4 className={textstyle.h4}>{dato}</h4>
-                                            </>
-                                            )}
-                                        </div>
-                                        <Image src={icono} alt={`Estado: ${id}`} className={style.icon} />
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                <SelectConfiguracion onChange={handleRecetaChange} onClick={handleAplicarReceta} />
+                <ul className={style.lista}>
+                    {datosGeneralesIzq.map(({ id, texto, dato, icono }) => (
+                        <li key={id} className={style.datoListIzq}>
+                            <div className={style.detallesDatos}>
+                                <div className={style.texto}>
+                                    {(dato === 'null' || dato === undefined || dato === null) ? (
+                                    <>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <EjemploSkeleton2 />
+                                    </>
+                                    ) : (
+                                    <>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <h4 className={textstyle.h4}>{dato}</h4>
+                                    </>
+                                    )}
+                                </div>
+                                <Image src={icono} alt={`Estado: ${id}`} className={style.icon} />
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
             <div className={style.Med}>
-                <div className={style.contenedor}>
-                    <div className={style.datosGen}>
-                        <ul className={style.lista}>
-                            {datosGeneralesDer.map(({ id, texto, dato, icono }) => (
-                                <li key={id} className={style.datoList}>
-                                    <div className={style.detallesDatos}>
-                                        <div className={style.texto}>
-                                            {(dato === 'null' || dato === undefined || dato === null) ? (
-                                            <div className={style.Skeleton}>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <EjemploSkeleton2 />
-                                            </div>
-                                            ) : (
-                                            <>
-                                                <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                                <h4 className={textstyle.h4}>{dato}</h4>
-                                            </>
-                                            )}
-                                        </div>
-                                        <Image src={icono} alt={`Estado: ${id}`} className={style.icon} />
+                <ul className={style.lista}>
+                    {datosGeneralesDer.map(({ id, texto, dato, icono }) => (
+                        <li key={id} className={style.datoList}>
+                            <div className={style.detallesDatos}>
+                                <div className={style.texto}>
+                                    {(dato === 'null' || dato === undefined || dato === null) ? (
+                                    <div className={style.Skeleton}>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <EjemploSkeleton2 />
                                     </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                                    ) : (
+                                    <>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <h4 className={textstyle.h4}>{dato}</h4>
+                                    </>
+                                    )}
+                                </div>
+                                <Image src={icono} alt={`Estado: ${id}`} className={style.icon} />
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
 
             <div className={style.Der}>
-                <div className={style.tituloCorreciones}>
-                    <h2 className={style.h2}>CORRECIONES</h2>
-                </div>
-
-                <div className={style.botonesCorreciones}>
-                    <ul className={style.navList}>
-                        {opcionesCorrecciones.map(({ id, nombre }) => (
-                            <li key={id} className={style.navItem}>
-                                <button
-                                    className={`${style.navLink} ${selectedOption === id ? style.active : ''}`}
-                                    onClick={() => handleOptionClick(id)}
-                                >
-                                <div className={style.botonTorre}>
-                                    <span className={style.nombre}>{nombre}</span>
-                                    <div className={style.selectTorreWrapper}>
-                                        {id === 1 && <SelectTorre onChange={handleTorreChange} onTorresChange={handleTorresChange} selectedReceta={selectedReceta} refreshTorres={refreshTorres} refreshTorres2={refreshTorres2} selectedTorre={selectedTorre}/>}
-                                        {id === 2 && <SelectNivel onChange={handleNivelChange}/>}
-                                    </div>
+                <h2 className={style.h2}>CORRECCIONES</h2>
+                <ul className={style.navList}>
+                    {opcionesCorrecciones.map(({ id, nombre }) => (
+                        <li key={id} className={style.navItem}>
+                            <button
+                                className={`${style.navLink} ${selectedOption === id ? style.active : ''}`}
+                                onClick={() => handleOptionClick(id)}
+                            >
+                            <div className={style.botonTorre}>
+                                <span className={style.nombre}>{nombre}</span>
+                                <div className={style.selectTorreWrapper}>
+                                    {id === 1 && <SelectTorre onChange={handleTorreChange} onTorresChange={handleTorresChange} selectedReceta={selectedReceta} refreshTorres={refreshTorres} refreshTorres2={refreshTorres2} selectedTorre={selectedTorre}/>}
+                                    {id === 2 && <SelectNivel onChange={handleNivelChange}/>}
                                 </div>
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                            </div>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
 
-                <div className={style.contenedor}>
-                    {selectedOption === 2 ? (
+                {selectedOption === 2 ? (
                         (selectedNivel === "HN" || selectedNivel === "ChG" || selectedNivel === "ChB") ? (
-                        <div className={style.datosGenNiveles}>
                             <ul className={style.listaNiveles}>
                             {datosActuales.map(({ id, texto, dato }, index) => (
                                 <li key={id} className={ (dato === 'null' || dato === undefined) ? style.datoListNivelesFallas : style.datoListNiveles }>
                                 <div className={style.detallesDatos}>
                                     <div className={style.texto}>
-                                    <h3 className={textstyle.subtitulo}>{texto}</h3>
-                                    <h4 className={textstyle.h4}>
-                                        {(dato === 'null' || dato === undefined || dato === null) ? (
-                                            <EjemploSkeleton2 />
-                                        ) : (
-                                        <>
-                                            {dato}
-                                            <span> </span> 
-                                            -
-                                            <span> </span> 
-                                            <input
-                                            ref={(el) => (inputRefs.current[index] = el)}
-                                            className={style.inputCorreciones}
-                                            type="number"
-                                            onInput={(e) => {
-                                                if (e.target.value.includes('.')) {
-                                                e.target.value = e.target.value.split('.')[0];
-                                                }
-                                            }}
-                                            pattern="\d+"
-                                            />
-                                        </>
-                                        )}
-                                    </h4>
+                                        <h3 className={textstyle.subtitulo}>{texto}</h3>
+                                        <h4 className={textstyle.h4}>
+                                            {(dato === 'null' || dato === undefined || dato === null) ? (
+                                                <EjemploSkeleton2 />
+                                            ) : (
+                                            <>
+                                                {dato}
+                                                <span> </span> 
+                                                -
+                                                <span> </span> 
+                                                <input
+                                                ref={(el) => (inputRefs.current[index] = el)}
+                                                className={style.inputCorreciones}
+                                                type="number"
+                                                onInput={(e) => {
+                                                    if (e.target.value.includes('.')) {
+                                                    e.target.value = e.target.value.split('.')[0];
+                                                    }
+                                                }}
+                                                pattern="\d+"
+                                                />
+                                            </>
+                                            )}
+                                        </h4>
                                     </div>
                                 </div>
                                 </li>
@@ -716,9 +732,7 @@ const Configuraciones = () => {
                                     />
                                 </div>
                             </ul>
-                        </div>
                         ) : selectedNivel === "FA" ? (
-                        <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>
                             <ul className={selectedOption === 2 ? style.listaNiveles : style.lista}>
                                 {datosActuales.map(({ id, texto, dato }, index) => (
                                     <li key={id} className={selectedOption === 2 ? style.datoListNivelesFallas : style.datoListCorreciones}>
@@ -752,9 +766,7 @@ const Configuraciones = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
                         ) : (
-                        <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>
                             <ul className={selectedOption === 2 ? style.listaNiveles : style.lista}>
                                 {datosActuales.map(({ id, texto, dato }) => (
                                     <li key={id} className={selectedOption === 2 ? style.datoListNivelesFallas : style.datoListNiveles}>
@@ -780,10 +792,8 @@ const Configuraciones = () => {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
                         )
                     ) : (
-                        <div className={selectedOption === 2 ? style.datosGenNiveles : style.datosGenCorreciones}>
                         <ul className={selectedOption === 2 ? style.listaNiveles : style.lista}>
                             {datosActuales.map(({ id, texto, dato }, index) => (
                             <li key={id} className={selectedOption === 1 ? style.datoListCorreciones : style.datoListCorreciones}>
@@ -833,22 +843,20 @@ const Configuraciones = () => {
                             </li>
                             ))}
                             <div className={style.botonesAbajoDiv}>
-                            <BotonAplicar2 
-                                className={style.botonesAbajo} 
-                                onClick={() => handleAplicarClick2()}
-                                isDisabled={isButtonDisabled} // Usamos isDisabled en lugar de disabled
-                            />
-                            <BotonRefresh 
-                                className={style.botonesAbajo} 
-                                onClick={() => handleAplicarNiveles()}
-                            />
+                                <BotonAplicar2 
+                                    className={style.botonesAbajo} 
+                                    onClick={() => handleAplicarClick2()}
+                                    isDisabled={isButtonDisabled} // Usamos isDisabled en lugar de disabled
+                                />
+                                <BotonRefresh 
+                                    className={style.botonesAbajo} 
+                                    onClick={() => handleAplicarNiveles()}
+                                />
                             </div>
                         </ul>
-                        </div>
                     )}
                 </div>
             </div>
-        </div>
     );
 };
 
