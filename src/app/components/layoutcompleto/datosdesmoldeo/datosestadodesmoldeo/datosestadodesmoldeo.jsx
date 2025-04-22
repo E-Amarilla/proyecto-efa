@@ -11,7 +11,7 @@ const DatosEstadoDesmoldeo = () => {
 
     const {
         estadoMaquina = 'CICLO INACTIVO',
-        TiempoTrancurrido = '00:00 hs',
+        TiempoTranscurrido = '00:00 hs',
     } = desmoldeoData;
 
     return (
