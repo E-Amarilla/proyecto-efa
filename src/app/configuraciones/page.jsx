@@ -580,32 +580,6 @@ const Configuraciones = () => {
                 fetchDatosReceta();
             }
         };
-
-        const handleRecetaChange = async (newReceta, isNewRecipe = false) => {
-            setSelectedReceta(newReceta);
-           
-            if (isNewRecipe) {
-              try {
-                // Obtener las torres para la nueva receta
-                const response = await fetch(
-                  `http://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/configuraciones/lista-torres?id_receta=${newReceta}`
-                );
-                const data = await response.json();
-               
-                if (data.ListadoTorres && data.ListadoTorres.length > 0) {
-                  // Seleccionar la primera torre de la nueva lista
-                  const firstTorre = data.ListadoTorres[0].id;
-                  setSelectedTorre(firstTorre);
-                  console.log('Nueva receta:', newReceta, 'Primera torre:', firstTorre);
-                } else {
-                  setSelectedTorre(null);
-                }
-              } catch (error) {
-                console.error('Error al obtener torres:', error);
-                setSelectedTorre(null);
-              }
-            }
-          };
         
         useEffect(() => {
             if (selectedReceta !== null) {
@@ -616,7 +590,7 @@ const Configuraciones = () => {
     return (
         <div className={style.all}>
             <div className={style.Izq}>
-                <SelectConfiguracion onChange={handleRecetaChange} onClick={handleAplicarReceta} />
+                <SelectConfiguracion onChange={setSelectedReceta} onClick={handleAplicarReceta} />
                 <ul className={style.lista}>
                     {datosGeneralesIzq.map(({ id, texto, dato, icono }) => (
                         <li key={id} className={style.datoListIzq}>

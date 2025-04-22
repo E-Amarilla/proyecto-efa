@@ -42,15 +42,15 @@ const NavDatos = () => {
     ];
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Receta actual:', dato: CodigoProducto !== null ? CodigoProducto : 'null', icono: receta1 },
-        { id: 8, nombre: 'N° Molde:', dato: TipoMolde !== null ? TipoMolde : 'null', icono: molde },
-        { id: 3, nombre: 'N° Gripper actual:', dato: NGripperActual !== null ? NGripperActual : 'null', icono: gripper },
-        { id: 6, nombre: 'N° Torre actual:', dato: TorreActual !== null ? TorreActual : 'null', icono: torre },
-        { id: 4, nombre: 'Peso por fila:', dato: PesoProducto !== null ? PesoProducto : 'null', icono: peso },
-        { id: 5, nombre: 'Peso desmoldado:', dato: PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono: peso },
-        { id: 7, nombre: 'Nivel de desmoldeo:', dato: (sdda_nivel_actual !== null ? sdda_nivel_actual : 'null') + "/" + (TotalNiveles !== null ? TotalNiveles : 'null'), icono: nivelactual },
-        { id: 9, nombre: 'Tiempo transcurido:', dato: TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
-        { id: 2, nombre: 'Receta próximo:', dato: idRecetaProxima !== null ? idRecetaProxima : 'null', icono: receta2 },
+        { id: 1, nombre: 'Nombre receta', dato: CodigoProducto !== null ? CodigoProducto : 'null', icono: receta1 },
+        { id: 2, nombre: 'ID Proxima receta', dato: idRecetaProxima !== null ? idRecetaProxima : 'null', icono: receta2 },
+        { id: 3, nombre: 'N° Gripper actual', dato: NGripperActual !== null ? NGripperActual : 'null', icono: gripper },
+        { id: 4, nombre: 'Peso por fila', dato: PesoProducto !== null ? PesoProducto : 'null', icono: peso },
+        { id: 5, nombre: 'Peso desmoldado', dato: PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono: peso },
+        { id: 6, nombre: 'N° Torre actual', dato: TorreActual !== null ? TorreActual : 'null', icono: torre },
+        { id: 7, nombre: 'Torre nivel actual', dato: (sdda_nivel_actual !== null ? sdda_nivel_actual : 'null') + "/" + (TotalNiveles !== null ? TotalNiveles : 'null'), icono: nivelactual },
+        { id: 8, nombre: 'N° Molde', dato: TipoMolde !== null ? TipoMolde : 'null', icono: molde },
+        { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
     ];
 
     const [activeSection, setActiveSection] = useState(1);
