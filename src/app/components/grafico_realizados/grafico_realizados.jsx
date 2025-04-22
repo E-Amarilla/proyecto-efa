@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+"use client";
+
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
@@ -12,6 +14,7 @@ const GraficoC = ({ startDate, endDate }) => {
   const chartInstanceRef = useRef(null);
   const [chartData, setChartData] = useState({ datasets: [] });
   const [loading, setLoading] = useState(true);
+  const totalsRef = useRef(new Map());
 
   const colores = [
     '#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A6',
@@ -20,26 +23,21 @@ const GraficoC = ({ startDate, endDate }) => {
     '#FF3357', '#33FF8D', '#FF8633', '#FF33C5', '#33FFC5'
   ];  
 
-  // Función para agrupar los ciclos por hora y sumar el peso desmontado
+  // Optimizado: Usar Map para agrupación más rápida
   const groupByHour = (cycles) => {
-    const groups = {};
+    const groups = new Map();
     cycles.forEach(ciclo => {
       const date = new Date(ciclo.fecha_fin * 1000);
-      // Redondea la fecha al inicio de la hora
       const hour = new Date(
         date.getFullYear(),
         date.getMonth(),
         date.getDate(),
         date.getHours()
       ).getTime();
-      if (!groups[hour]) {
-        groups[hour] = 0;
-      }
-      groups[hour] += ciclo.pesoDesmontado;
+      groups.set(hour, (groups.get(hour) || 0) + ciclo.pesoDesmontado);
     });
-    // Convierte el objeto en un arreglo de { x: timestamp, y: valor } y lo ordena cronológicamente
-    return Object.entries(groups)
-      .map(([hour, value]) => ({ x: parseInt(hour, 10), y: value }))
+    return Array.from(groups.entries())
+      .map(([x, y]) => ({ x, y }))
       .sort((a, b) => a.x - b.x);
   };
 
@@ -64,9 +62,7 @@ const GraficoC = ({ startDate, endDate }) => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error(`Error fetching data: ${response.statusText}`);
-      }
+      if (!response.ok) throw new Error(`Error fetching data: ${response.statusText}`);
 
       const productos = await response.json();
       const datasets = productos.map((producto, index) => ({
@@ -74,7 +70,8 @@ const GraficoC = ({ startDate, endDate }) => {
         backgroundColor: colores[(producto.id_recetario - 1) % colores.length],
         borderColor: `${colores[(producto.id_recetario - 1) % colores.length]}80`,
         fill: false,
-        data: groupByHour(producto.ListaDeCiclos)
+        data: groupByHour(producto.ListaDeCiclos),
+        borderWidth: 0 // Simplifica el renderizado de barras
       }));
 
       setChartData({ datasets });
@@ -83,16 +80,25 @@ const GraficoC = ({ startDate, endDate }) => {
     }
   };
 
-  const formatDate = (date) => {
-    const d = new Date(date);
-    const year = d.getUTCFullYear();
-    const month = String(d.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(d.getUTCDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
+  // Precálculo de totales para tooltips
+  useEffect(() => {
+    const totals = new Map();
+    chartData.datasets.forEach(dataset => {
+      dataset.data.forEach(point => {
+        totals.set(point.x, (totals.get(point.x) || 0) + point.y);
+      });
+    });
+    totalsRef.current = totals;
+  }, [chartData]);
 
-  const formattedStartDate = formatDate(startDate);
-  const formattedEndDate = formatDate(endDate);
+  // Memoizar fechas formateadas
+  const formatDate = useMemo(() => (date) => {
+    const d = new Date(date);
+    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+  }, []);
+
+  const formattedStartDate = useMemo(() => formatDate(startDate), [startDate, formatDate]);
+  const formattedEndDate = useMemo(() => formatDate(endDate), [endDate, formatDate]);
 
   useEffect(() => {
     fetchData();
@@ -102,23 +108,20 @@ const GraficoC = ({ startDate, endDate }) => {
     const ctx = chartRef.current?.getContext('2d');
     if (!ctx) return;
 
-    // Destruir instancia previa, si existe
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
 
-    const initialData = {
-      datasets: []
-    };
-
     const newChart = new Chart(ctx, {
       type: 'bar',
-      data: initialData,
+      data: { datasets: [] },
       options: {
+        animations: false, // Deshabilita animaciones
         responsive: true,
         maintainAspectRatio: false,
         interaction: {
-          intersect: false,
+          mode: 'nearest',
+          intersect: false
         },
         plugins: {
           title: {
@@ -170,11 +173,7 @@ const GraficoC = ({ startDate, endDate }) => {
                 const datasetLabel = context.dataset.label || 'Peso';
                 const peso = context.raw.y;
                 const date = formatDate(context.raw.x);
-                // Calcula el total stackeado
-                const totalStacked = context.chart.data.datasets.reduce((total, dataset) => {
-                  const dataItem = dataset.data.find(item => item.x === context.raw.x);
-                  return total + (dataItem ? dataItem.y : 0);
-                }, 0);
+                const totalStacked = totalsRef.current.get(context.raw.x) || 0; // Acceso rápido
                 return [
                   `${datasetLabel}: ${peso} kg`,
                   `FECHA: ${date}`,
@@ -246,35 +245,21 @@ const GraficoC = ({ startDate, endDate }) => {
   };
 
   return (
-    <div
-      className="relative bg-black p-[20px] h-full w-full rounded-[15px] mt[10px]"
-      style={{ height: '500px', width: '100%' }}
-    >
-      <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
+    <div className="relative bg-black p-[20px] h-full w-full rounded-[15px] mt[10px]" style={{ height: '500px' }}>
+      <canvas ref={chartRef} />
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-xl">
           <Spinner label="Cargando..." />
         </div>
       )}
-      <Button
-          style={{
-              backgroundColor: "#333",
-              border: "1px solid #CCC",
-              color: "#CCC",
-              width: "15%",
-              height: "35px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "17px",
-          }}
-          onClick={resetZoom}
-          className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
+      <Button 
+        onClick={() => chartInstanceRef.current?.resetZoom()}
+        className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
       >
-          Reiniciar Zoom
+        Reiniciar Zoom
       </Button>
     </div>
   );
 };
 
-export default GraficoC;
+export default React.memo(GraficoC); // Evita rerenders innecesarios

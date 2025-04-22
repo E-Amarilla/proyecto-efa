@@ -22,7 +22,7 @@ const Tabla = () => {
   const [items, setItems] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
 
-  const wsUrl = `ws://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/ws/alarmas-logs`;
+  const wsUrl = `ws://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/ws/datos`;
 
   const connectWebSocket = () => {
     setIsLoading(true);
@@ -33,33 +33,30 @@ const Tabla = () => {
     socket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-
-        if (Array.isArray(data) && data.length > 0) {
+        
+        // Extraer solo el array de alarmas (último elemento del array principal)
+        const alarmas = Array.isArray(data) && data.length >= 4 ? data[3] : [];
+        
+        if (Array.isArray(alarmas) && alarmas.length > 0) {
           setItems((prevItems) => {
             const updatedItems = [...prevItems];
 
-            data.forEach((alerta) => {
+            alarmas.forEach((alarma) => {
               const index = updatedItems.findIndex(
-                (item) => item.key === alerta.id_alarma.toString()
+                (item) => item.key === alarma.id_alarma.toString()
               );
 
               const newItem = {
-                key: alerta.id_alarma.toString(),
-                description: alerta.descripcion,
-                type: alerta.tipoAlarma,
-                state: alerta.estadoAlarma,
-                time: alerta.fechaActual,
-                startDate:
-                  alerta.estadoAlarma === "Activo" && alerta.fechaInicio
-                    ? alerta.fechaInicio
-                    : "",
+                key: alarma.id_alarma.toString(),
+                description: alarma.descripcion,
+                type: alarma.tipoAlarma,
+                state: alarma.estadoAlarma ? "Activo" : "Inactivo",
+                time: alarma.fechaRegistro,
               };
 
               if (index !== -1) {
-                // Actualizamos el item existente
                 updatedItems[index] = newItem;
               } else {
-                // Agregamos un nuevo item
                 updatedItems.push(newItem);
               }
             });
@@ -92,8 +89,7 @@ const Tabla = () => {
     { key: "description", label: "DESCRIPCIÓN" },
     { key: "type", label: "TIPO" },
     { key: "state", label: "ESTADO" },
-    { key: "time", label: "FECHA Y HORA ACTUAL" },
-    { key: "startDate", label: "FECHA Y HORA DE INICIO" },
+    { key: "time", label: "FECHA Y HORA DE REGISTRO" },
   ];
 
   const handleSort = (key) => {

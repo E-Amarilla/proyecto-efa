@@ -68,7 +68,7 @@ const Grafico = ({ startDate, endDate }) => {
     const initialData = {
       datasets: [
         {
-          label: 'Ciclos',
+          label: 'Cantidad de ciclos',
           data: [],
           borderColor: '#F828',
           backgroundColor: '#EF8225',

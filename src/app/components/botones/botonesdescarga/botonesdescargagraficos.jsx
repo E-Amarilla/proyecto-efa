@@ -62,7 +62,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
             pdf.addImage(mailIcon, 'PNG', 240, 72, 5, 5); // Icono de teléfono de 10x10 px
             pdf.text("soporte@creminox.com", 247, 76); // Texto al lado del icono
     
-            pdf.save('graficos.pdf');
+            pdf.save(`Reporte_Graficos_CeldaDesmoldeo_${fechaLocal}.pdf`);
         }
     };       
     

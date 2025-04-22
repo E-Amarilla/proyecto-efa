@@ -12,6 +12,12 @@ export default function BotonesDescarga({ startDate, endDate }) {
     const storedUser = sessionStorage.getItem('user_data');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
 
+    const fechaLocal = new Intl.DateTimeFormat('es-CL', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(new Date()).replace(/\//g, '-');
+
     const handlePdfDownload = async () => {
         const productSection = document.getElementById('ProductividadSection');
     
@@ -66,7 +72,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
             pdf.addImage(mailIcon, 'PNG', 240, logoMargin+52, 5, 5); // Icono de teléfono de 10x10 px
             pdf.text("soporte@creminox.com", 247, logoMargin+56); // Texto al lado del icono
     
-            pdf.save('resumen_productividad.pdf');
+            pdf.save(`Reporte_Productividad_CeldaDesmoldeo_${fechaLocal}.pdf`);
         }
     };
     
@@ -91,7 +97,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
 
             const link = document.createElement("a");
             link.href = url;
-            link.setAttribute("download", `productividad_${startDate}_to_${endDate}.xlsx`);
+            link.setAttribute("download", `Productividad_${startDate}_to_${endDate}.xlsx`);
             document.body.appendChild(link);
             link.click();
             link.parentNode.removeChild(link);

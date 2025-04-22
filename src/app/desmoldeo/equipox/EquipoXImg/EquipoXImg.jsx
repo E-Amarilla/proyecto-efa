@@ -68,7 +68,6 @@ const EquipoXImg = () => {
     setCurrentIndex(0);
   }, [equipoSeleccionado]);
 
-  // Asegúrate de que 'images' tenga un valor por defecto si 'equipoSeleccionado' no está en 'imageSets'
   const images = imageSets[equipoSeleccionado] || imageSets["Default"];
   const totalImages = images.length;
 
@@ -87,14 +86,22 @@ const EquipoXImg = () => {
   return (
     <div className={style.all}>
       <h1 className={style.title}>
-      {["Default", "BandaA", "BandaB", null].includes(equipoSeleccionado) ? "CELDA DE DESMOLDEO" : equipoSeleccionado === "Estación de grippers" ? "GRIPPER" : equipoSeleccionado.toUpperCase()}
+        {["Default", "BandaA", "BandaB", null].includes(equipoSeleccionado)
+          ? "CELDA DE DESMOLDEO"
+          : equipoSeleccionado === "Estación de grippers"
+          ? "GRIPPER"
+          : equipoSeleccionado.toUpperCase()}
       </h1>
       <div className={style.carousel}>
         {totalImages > 0 ? (
           <>
-            <button onClick={prevImage} className={style.button}>
-              ❮
-            </button>
+            {/* Mostrar botones solo si hay más de 1 imagen */}
+            {totalImages > 1 && (
+              <button onClick={prevImage} className={style.button}>
+                ❮
+              </button>
+            )}
+
             <div className={style.sliderWrapper}>
               <div
                 className={style.slider}
@@ -112,23 +119,33 @@ const EquipoXImg = () => {
                 ))}
               </div>
             </div>
-            <button onClick={nextImage} className={style.button}>
-              ❯
-            </button>
+
+            {/* Mostrar botones solo si hay más de 1 imagen */}
+            {totalImages > 1 && (
+              <button onClick={nextImage} className={style.button}>
+                ❯
+              </button>
+            )}
           </>
         ) : (
           <p className={style.noImageText}>Selecciona un equipo para ver imágenes</p>
         )}
       </div>
-      <div className={style.indicators}>
-        {images.map((_, index) => (
-          <div
-            key={index}
-            className={`${style.indicator} ${index === currentIndex ? style.active : ""}`}
-            onClick={() => setCurrentIndex(index)}
-          ></div>
-        ))}
-      </div>
+
+      {/* Mostrar indicadores solo si hay más de 1 imagen */}
+      {totalImages > 1 && (
+        <div className={style.indicators}>
+          {images.map((_, index) => (
+            <div
+              key={index}
+              className={`${style.indicator} ${
+                index === currentIndex ? style.active : ""
+              }`}
+              onClick={() => setCurrentIndex(index)}
+            ></div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
