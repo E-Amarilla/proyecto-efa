@@ -1,22 +1,17 @@
 "use client";
-
 import React, { useContext } from 'react';
-import { useRouter } from 'next/navigation';
-import AuthContext from '../../context/AuthContext'; // Importa el AuthContext
+import AuthContext from '../../context/AuthContext';
 import {
     Dropdown,
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
 } from "@nextui-org/react";
-
 import style from './desloguear.module.css';
-
-//Imagenes
 import Image from "next/image";
 
 const Desloguear = ({ icon }) => {
-    const { logout } = useContext(AuthContext); // Obtén la función logout del contexto
+    const { logout } = useContext(AuthContext);
 
     return (
         <Dropdown className={style.contenedorDrop}>
@@ -31,7 +26,7 @@ const Desloguear = ({ icon }) => {
                 <DropdownItem
                     className={`${style.items} ${style.botonCerrar}`}
                     key="2"
-                    onClick={logout} // Llama a la función logout aquí
+                    onClick={logout}
                 >
                     <span className={style.textCerrar}>Cerrar sesión</span>
                 </DropdownItem>

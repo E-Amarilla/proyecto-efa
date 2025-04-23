@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useContext, useState, useEffect } from 'react';
-import AuthContext from '../../context/AuthContext';
 import { usePathname } from 'next/navigation';
 import Image from "next/image";
 import cremImg from "@/assets/img/creminox.png";
 import usuario from "@/assets/img/usuario.png";
-import confImg from "@/assets/img/configuracion.png";
 import alarmaImg from "@/assets/img/alarma.png";
 import MenuAlarmas from '../../components/dropdownalarmas/dropdown';
 import Desloguear from '../../components/usuario/desloguear';
@@ -15,8 +13,6 @@ import ExeSubNav from './SubNav/ExeSubNav.jsx';
 import Link from "next/link";
 
 const ExeHeader = () => {
-  const { user } = useContext(AuthContext);
-  const userRole = user?.role;
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
@@ -30,8 +26,7 @@ const ExeHeader = () => {
 
   const opcionesIconos = [
     { id: 1, icon: usuario, onClick: () => {} },
-    { id: 2, icon: alarmaImg, isDropdown: true },
-    { id: 3, url: "/configuraciones", icon: confImg },
+    { id: 2, icon: alarmaImg, isDropdown: true }
   ];
 
   const opcionesMenu = [
@@ -44,32 +39,19 @@ const ExeHeader = () => {
       <header className={style.contenedor}>
         <nav className={style.navbar}>
           <div className={style.icons}>
-            {opcionesIconos.map(({ id, url, icon, onClick, isDropdown }) => (
+            {opcionesIconos.map(({ id, icon, onClick, isDropdown }) => (
               <div key={id} className={style.contenedorImg}>
                 {isDropdown ? (
-                  <MenuAlarmas icon={icon} />
-                ) : onClick ? (
-                  <Desloguear icon={icon} />
-                ) : (
-                  (userRole === "ADMIN" || id !== 3) && (
-                    <div className={style.linkWrapper}>
-                      <Link href={url || '#'}>
-                        <Image
-                          className={style.icon}
-                          src={icon}
-                          alt={`Icono ${id}`}
-                          width={24}
-                          height={24}
-                        />
-                      </Link>
-                    </div>
+                    <MenuAlarmas icon={icon} />
+                  ) : (
+                    <Desloguear icon={icon} />
                   )
-                )}
+                }
               </div>
             ))}
           </div>
           <div className={style.centerText}>
-            <p>MXEF-04 | CELDA DE DESMOLDEO</p>
+            <p>FRANKFURT | IFFA ALEMANIA</p>
           </div>
           <div className={style.rightSection}>
             <ul className={style.navLinks}>

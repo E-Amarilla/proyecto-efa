@@ -1,7 +1,6 @@
 "use client";
 
 import { useContext } from 'react';
-import useWebSocket from '../../../utils/useWebSocket';
 import AuthContext from "../../../context/AuthContext";
 import style from './estadoslayout.module.css';
 
@@ -14,7 +13,7 @@ import puntoRojo from '@/assets/img/puntoRojo.png';
 
 const EstadosLayout = () => {
     
-    const { data } = useContext(AuthContext); // Obtiene datos del contexto
+    const { data } = useContext(AuthContext);
 
     const desmoldeoData = data?.[1].Desmoldeo || {};
 

@@ -4,7 +4,6 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
-import AuthContext from "../../context/AuthContext";
 import style from "../camaras.module.css";
 
 const VideoStream = ({ cameraId, isFullScreen = false }) => {
@@ -13,16 +12,13 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showPlayer, setShowPlayer] = useState(false);
   const [error, setError] = useState(null);
-  const { streamInitialized } = useContext(AuthContext);
 
   useEffect(() => {
     const checkHlsFiles = async () => {
       try {
-        // Verificar si el archivo .m3u8 existe
         const m3u8Response = await fetch(`/hls/${cameraId}.m3u8`, { method: "HEAD" });
 
         if (m3u8Response.ok) {
-          // Verificar si existe algún archivo .ts para esta cámara
           const tsFilesResponse = await fetch(`/hls/${cameraId}.m3u8`);
           const tsFilesText = await tsFilesResponse.text();
           const tsFiles = tsFilesText.split("\n").filter(line => line.endsWith(".ts"));
@@ -41,11 +37,8 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
         setTimeout(checkHlsFiles, 2000);
       }
     };
-
-    if (streamInitialized) {
       checkHlsFiles();
-    }
-  }, [streamInitialized, cameraId]);
+  }, [cameraId]);
 
   useEffect(() => {
     if (showPlayer && videoRef.current) {

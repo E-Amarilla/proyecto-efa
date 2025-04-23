@@ -11,7 +11,7 @@ import molde from '@/assets/img/MOLDE.png';
 
 import { useContext } from "react";
 import AuthContext from "../../../context/AuthContext"
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import style from './DatosGenerales.module.css';
 import textstyle from '../texto.module.css';
