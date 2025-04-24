@@ -40,8 +40,10 @@ import BotonRefresh from '../components/botones/aplicarreset/botonreset'
 import SelectConfiguracion from '../components/botones/selectConfiguracion/selectConfiguracion'
 import SelectTorre from "../components/botones/selectTorre/selectTorre"
 import SelectNivel from "../components/botones/selectNivel/selectNivel"
+import { useTranslation } from "react-i18next";
 
 const Configuraciones = () => {
+    const { t } = useTranslation('trad');
     const { user, data } = useContext(AuthContext); // Obtiene datos del contexto y el usuario
     const [loading, setLoading] = useState(false); // Nuevo estado para controlar el Spinner
     const [refreshKey, setRefreshKey] = useState(0);

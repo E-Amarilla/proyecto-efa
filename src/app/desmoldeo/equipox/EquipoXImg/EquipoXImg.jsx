@@ -4,6 +4,7 @@ import AuthContext from "../../../context/AuthContext";
 import { useState, useEffect, useContext } from "react";
 import style from "./EquipoXImg.module.css";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 import ImgCeldaGeneral1 from "@/assets/img/equipos/CELDAGENERAL.png";
 
@@ -61,6 +62,7 @@ const imageSets = {
 };
 
 const EquipoXImg = () => {
+  const { t } = useTranslation('trad');
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -87,7 +89,7 @@ const EquipoXImg = () => {
     <div className={style.all}>
       <h1 className={style.title}>
         {["Default", "BandaA", "BandaB", null].includes(equipoSeleccionado)
-          ? "CELDA DE DESMOLDEO"
+          ? t('mayus.celdaDesmoldeo')
           : equipoSeleccionado === "Estación de grippers"
           ? "GRIPPER"
           : equipoSeleccionado.toUpperCase()}

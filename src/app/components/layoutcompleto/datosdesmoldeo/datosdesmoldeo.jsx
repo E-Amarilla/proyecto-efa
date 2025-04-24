@@ -1,12 +1,14 @@
 "use client";
 
 import { useContext } from "react";
+import { useTranslation } from "react-i18next";
 import AuthContext from "../../../context/AuthContext";
 import style from '../texto.module.css';
 import cont from './datosdesmoldeo.module.css';
 import Link from "next/link";
 
 const DatosDesmoldeo = () => {
+    const { t } = useTranslation(); // o el namespace que corresponda: 'trad'
     const { data } = useContext(AuthContext); // Obtiene datos del contexto
     const desmoldeoData = data?.[1]?.Desmoldeo || {};
 
@@ -19,9 +21,9 @@ const DatosDesmoldeo = () => {
     const NombreActual = desmoldeoData["Nombre actual"]?.trim() || '-';
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Nombre receta', dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : '-' },
-        { id: 2, nombre: 'Peso por fila', dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
-        { id: 3, nombre: 'Total desmoldado', dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado + " kg"  : '-'},
+        { id: 1, nombre: t('min.nombreReceta'), dato: NombreActual !== undefined && NombreActual !== null ? NombreActual : '-' },
+        { id: 2, nombre: t('min.pesoFila'), dato: PesoProducto !== undefined && PesoProducto !== null ? PesoProducto + " kg"  : '-'},
+        { id: 3, nombre: t('min.totalDesmoldado'), dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado + " kg"  : '-'},
     ];
 
     return (

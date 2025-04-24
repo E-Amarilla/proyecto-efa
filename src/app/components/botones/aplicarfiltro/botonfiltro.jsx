@@ -3,8 +3,10 @@
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import BuscarIcon from "./IMG/SearchIcon.png";
+import { useTranslation } from "react-i18next";
 
 const BotonFiltro = ({ onClick, isDisabled}) => {
+    const { t } = useTranslation('trad');
     return (
         <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
             <Button
@@ -24,7 +26,7 @@ const BotonFiltro = ({ onClick, isDisabled}) => {
                 onClick={onClick}
                 isDisabled={isDisabled}
             >
-                Aplicar cambios
+                {t('min.aplicarCambios')}
                 <Image src={BuscarIcon} alt="Buscar Icono" width={20} height={20} style={{ marginLeft: "5px" }} />
             </Button>
         </div>

@@ -19,6 +19,7 @@ import luzV from '@/assets/img/puntoVerde.png';
 import LayoutCompleto from '../components/layoutcompleto/LayoutCompleto.jsx';
 import style from './Completo.module.css';
 import AuthContext from "../context/AuthContext.js";
+import { useTranslation } from "react-i18next";
 
 const Completo = () => {
   const { data } = useContext(AuthContext);
@@ -27,6 +28,7 @@ const Completo = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
+  const { t } = useTranslation('trad');
 
   useEffect(() => {
     if (!data) return;
@@ -112,7 +114,7 @@ const Completo = () => {
           <TableBody
             isLoading={isLoading}
             items={paginatedRows}
-            loadingContent={<Spinner label="Cargando..." />}
+            loadingContent={<Spinner label={t('min.cargando')} />}
           >
             {(item) => (
               <TableRow key={item.key}>

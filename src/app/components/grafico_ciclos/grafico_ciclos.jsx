@@ -4,10 +4,12 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
 import { Spinner } from "@heroui/spinner";
 import { Button } from "@nextui-org/react";
+import { useTranslation } from "react-i18next";
 
 Chart.register(...registerables, zoomPlugin);
 
 const Grafico = ({ startDate, endDate }) => {
+  const { t } = useTranslation('trad');
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [chartData, setChartData] = useState({ ciclos: [], pesoProducto: [] });
@@ -68,7 +70,7 @@ const Grafico = ({ startDate, endDate }) => {
     const initialData = {
       datasets: [
         {
-          label: 'Cantidad de ciclos',
+          label: t('min.cantidadCiclos'),
           data: [],
           borderColor: '#F828',
           backgroundColor: '#EF8225',
@@ -77,7 +79,7 @@ const Grafico = ({ startDate, endDate }) => {
           type: 'line'
         },
         {
-          label: 'Peso Producto (Tn)',
+          label: t('min.pesoProducto') + ' (Tn)',
           data: [],
           borderColor: '#3AF8',
           backgroundColor: '#3AF',
@@ -108,7 +110,7 @@ const Grafico = ({ startDate, endDate }) => {
           title: {
             align: 'start',
             display: true,
-            text: 'CICLOS POR DIA',
+            text: t('mayus.ciclosDia'),
             color: '#D9D9D9',
             font: {
               size: 20,
@@ -168,7 +170,7 @@ const Grafico = ({ startDate, endDate }) => {
             position: 'left',
             title: {
               display: true,
-              text: 'Ciclos Completados',
+              text: t('min.ciclosRealizados'),
               color: '#EF8225'
             },
             grid: { color: '#1F1F1F', tickColor: '#EF8225' },
@@ -182,7 +184,7 @@ const Grafico = ({ startDate, endDate }) => {
             position: 'right',
             title: {
               display: true,
-              text: 'Peso Producto (Tn)',
+              text: t('min.pesoProducto') + ' (Tn)',
               color: '#3AF'
             },
             grid: { color: '#1F1F1F', tickColor: '#3AF' },
@@ -201,7 +203,7 @@ const Grafico = ({ startDate, endDate }) => {
             },
             title: {
               display: true,
-              text: 'Tiempo',
+              text: t('min.tiempo'),
               color: '#D9D9D9'
             },
             border: { color: '#D9D9D9' },
@@ -264,26 +266,31 @@ const Grafico = ({ startDate, endDate }) => {
       <canvas ref={chartRef} className="block w-full h-full max-h-screen"></canvas>
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-xl">
-          <Spinner label="Cargando..." />
+          <Spinner label={t('min.cargando')} />
         </div>
       )}
       <Button
-        style={{
-            backgroundColor: "#333",
-            border: "1px solid #CCC",
-            color: "#CCC",
-            width: "15%",
-            height: "35px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "17px",
-        }}
-        onClick={resetZoom}
-        className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
-    >
-        Reiniciar Zoom
-    </Button>
+          style={{
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "17px",
+              transition: "all 0.3s ease-in-out", // Añadido transición suave
+          }}
+          onClick={resetZoom}
+          className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
+          onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = "#555";  // Color al hacer hover
+              e.currentTarget.style.color = "#FFF";  // Color del texto al hacer hover
+          }}
+          onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = "#333";  // Color original
+              e.currentTarget.style.color = "#CCC";  // Color del texto original
+          }}
+      >
+          {t('min.reiniciarZoom')}
+      </Button>
     </div>
   );
 };

@@ -1,6 +1,21 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import useOutsideClick from '../../hooks/useOutsideClick';
+
+// Definir el hook personalizado fuera del componente
+const useOutsideClick = (ref, callback) => {
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        callback();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref, callback]);
+};
 
 const DropdownBanderas = () => {
     const [isOpen, setIsOpen] = useState(false);

@@ -6,10 +6,12 @@ import zoomPlugin from 'chartjs-plugin-zoom';
 import 'chartjs-adapter-date-fns';
 import { Spinner } from '@heroui/spinner';
 import { Button } from "@nextui-org/react";
+import { useTranslation } from "react-i18next";
 
 Chart.register(...registerables, zoomPlugin);
 
 const GraficoC = ({ startDate, endDate }) => {
+  const { t } = useTranslation('trad');
   const chartRef = useRef(null);
   const chartInstanceRef = useRef(null);
   const [chartData, setChartData] = useState({ datasets: [] });
@@ -127,7 +129,7 @@ const GraficoC = ({ startDate, endDate }) => {
           title: {
             align: 'start',
             display: true,
-            text: 'PRODUCTOS REALIZADOS',
+            text: t('mayus.productosRealizados'),
             color: '#D9D9D9',
             font: {
               size: 20,
@@ -194,7 +196,7 @@ const GraficoC = ({ startDate, endDate }) => {
         scales: {
           y: {
             stacked: true,
-            title: { display: true, text: 'Peso producto (kg)', color: '#D9D9D9' },
+            title: { display: true, text: t('min.pesoProducto') + ' (Kg)', color: '#D9D9D9' },
             beginAtZero: true,
             border: { color: '#D9D9D9' },
             grid: { color: '#1F1F1F', tickColor: '#fff' },
@@ -215,7 +217,7 @@ const GraficoC = ({ startDate, endDate }) => {
                 year: 'yyyy'
               }
             },
-            title: { display: true, text: 'Tiempo', color: '#D9D9D9' },
+            title: { display: true, text: t('min.tiempo'), color: '#D9D9D9' },
             border: { color: '#D9D9D9' },
             grid: { color: '#8C8C8C', tickColor: '#fff' },
             ticks: { autoSkip: true, maxTicksLimit: 20, color: '#D9D9D9' }
@@ -249,14 +251,30 @@ const GraficoC = ({ startDate, endDate }) => {
       <canvas ref={chartRef} />
       {loading && (
         <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-xl">
-          <Spinner label="Cargando..." />
+          <Spinner label={t('min.cargando')} />
         </div>
       )}
-      <Button 
-        onClick={() => chartInstanceRef.current?.resetZoom()}
-        className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
+      <Button
+          style={{
+
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "17px",
+              transition: "all 0.3s ease-in-out", // Añadido transición suave
+          }}
+          onClick={() => chartInstanceRef.current?.resetZoom()}
+          className="absolute top-[20px] right-[20px] text-white bg-grey hover:text-black hover:bg-lightGrey px-3 rounded-md"
+          onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = "#555";  // Color al hacer hover
+              e.currentTarget.style.color = "#FFF";  // Color del texto al hacer hover
+          }}
+          onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = "#333";  // Color original
+              e.currentTarget.style.color = "#CCC";  // Color del texto original
+          }}
       >
-        Reiniciar Zoom
+          {t('min.reiniciarZoom')}
       </Button>
     </div>
   );

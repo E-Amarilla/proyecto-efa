@@ -15,9 +15,11 @@ import AuthContext from "../../context/AuthContext";
 import React, { useState, useEffect, useRef } from 'react';
 import style from './NavDatos.module.css';
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const NavDatos = () => {
     const { data } = useContext(AuthContext); // Obtiene datos del contexto
+    const { t } = useTranslation();
 
     const {
         idRecetaActual,
@@ -36,21 +38,21 @@ const NavDatos = () => {
     } = data?.[0] || {};
 
     const opcionesAlarma = [
-        { id: 1, nombre: 'LAYOUT' },
-        { id: 2, nombre: 'PRODUCTIVIDAD' },
-        { id: 3, nombre: 'GRAFICOS HISTORICOS' },
+        { id: 1, nombre: t('mayus.layout') },
+        { id: 2, nombre: t('mayus.productividad') },
+        { id: 3, nombre: t('mayus.graficosHistoricos') },
     ];
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Nombre receta', dato: CodigoProducto !== null ? CodigoProducto : 'null', icono: receta1 },
-        { id: 2, nombre: 'ID Proxima receta', dato: idRecetaProxima !== null ? idRecetaProxima : 'null', icono: receta2 },
-        { id: 3, nombre: 'N° Gripper actual', dato: NGripperActual !== null ? NGripperActual : 'null', icono: gripper },
-        { id: 4, nombre: 'Peso por fila', dato: PesoProducto !== null ? PesoProducto : 'null', icono: peso },
-        { id: 5, nombre: 'Peso desmoldado', dato: PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono: peso },
-        { id: 6, nombre: 'N° Torre actual', dato: TorreActual !== null ? TorreActual : 'null', icono: torre },
-        { id: 7, nombre: 'Torre nivel actual', dato: (sdda_nivel_actual !== null ? sdda_nivel_actual : 'null') + "/" + (TotalNiveles !== null ? TotalNiveles : 'null'), icono: nivelactual },
-        { id: 8, nombre: 'N° Molde', dato: TipoMolde !== null ? TipoMolde : 'null', icono: molde },
-        { id: 9, nombre: 'Tiempo transcurrido', dato: TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
+        { id: 1, nombre: t('min.recetaActual'), dato: CodigoProducto !== null ? CodigoProducto : 'null', icono: receta1 },
+        { id: 2, nombre: t('min.nroMolde'), dato: TipoMolde !== null ? TipoMolde : 'null', icono: receta2 },
+        { id: 3, nombre: t('min.nroGripperActual'), dato: NGripperActual !== null ? NGripperActual : 'null', icono: gripper },
+        { id: 4, nombre: t('min.nroTorreActual'), dato: TorreActual !== null ? TorreActual : 'null', icono: torre },
+        { id: 5, nombre: t('min.pesoFila'), dato: PesoProducto !== null ? PesoProducto : 'null', icono: peso },
+        { id: 6, nombre: t('min.pesoDesmoldado'), dato: PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono: peso },
+        { id: 7, nombre: t('min.torreNivelActual'), dato: (sdda_nivel_actual !== null ? sdda_nivel_actual : 'null') + "/" + (TotalNiveles !== null ? TotalNiveles : 'null'), icono: nivelactual },
+        { id: 8, nombre: t('min.tiempoTranscurrido'), dato: TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
+        { id: 9, nombre: t('min.idProxReceta'), dato: idRecetaProxima !== null ? idRecetaProxima : 'null', icono: receta2 },
     ];
 
     const [activeSection, setActiveSection] = useState(1);
@@ -139,7 +141,7 @@ const NavDatos = () => {
             <hr className={style.linea}></hr>
 
             <div className={style.contenedorDatos}>
-                <p className={style.datosGen}>DATOS GENERALES</p>
+                <p className={style.datosGen}>{t('mayus.datosGenerales')}</p>
                 <ul className={style.datosTods}>
                     {datosTiempoReal.map(({ id, nombre, dato, icono }) => (
                         <li key={id} className={style.datosIndv}>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import style from "./SubNav.module.css";
+import { useTranslation } from "react-i18next";
 
 // Imagenes
 import Image from "next/image";
@@ -11,12 +12,13 @@ import puntoGris from "@/assets/img/puntoGris.png";
 
 const SubNav = () => {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const opcionesBotones = [
-    { id: 1, path: "/completo", text: "COMPLETO", styleClass: style.secciondesbloqueada },
-    { id: 2, path: ["/desmoldeo", "/desmoldeo/equipox"], text: "DESMOLDEO", styleClass: style.secciondesbloqueada },
-    { id: 3, path: "/encajonado", text: "ENCAJONADO", styleClass: style.seccionbloqueada },
-    { id: 4, path: "/paletizado", text: "PALETIZADO", styleClass: style.seccionbloqueada },
+    { id: 1, path: "/completo", text: t('mayus.completo'), styleClass: style.secciondesbloqueada },
+    { id: 2, path: ["/desmoldeo", "/desmoldeo/equipox"], text: t('mayus.desmoldeo'), styleClass: style.secciondesbloqueada },
+    { id: 3, path: "/encajonado", text: t('mayus.encajonado'), styleClass: style.seccionbloqueada },
+    { id: 4, path: "/paletizado", text: t('mayus.paletizado'), styleClass: style.seccionbloqueada },
   ];
 
   return (

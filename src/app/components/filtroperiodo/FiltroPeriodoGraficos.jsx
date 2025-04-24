@@ -7,8 +7,10 @@ import BotonFiltro from "../botones/aplicarfiltro/botonfiltro.jsx";
 import style from "./FiltroPeriodoGraficos.module.css";
 import Grafico1 from "../grafico_ciclos/grafico_ciclos.jsx";
 import Grafico2 from "../grafico_realizados/grafico_realizados.jsx";
+import { useTranslation } from "react-i18next";
 
 const FiltroPeriodo = () => {
+    const { t } = useTranslation('trad');
     const today = new Date();
     const formattedToday = today.toISOString().split("T")[0];
 
@@ -40,12 +42,12 @@ const FiltroPeriodo = () => {
                     <Grafico1 startDate={fechaInicio} endDate={fechaFin} />
                 </div>
                 <div className={`${style.contenedor} FiltroPeriodoGraficos`}>
-                    <h2 className={style.titulo}>FILTRADO DE FECHA GRAFICOS</h2>
+                    <h2 className={style.titulo}>{t('mayus.filtradoFechaGraficos')}</h2>
                     <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                         <div className="flex flex-col items-center w-full">
                             <div className={style.datePickerGlobal}>
                                 <DateRangePicker
-                                    label="Selecciona el periodo"
+                                    label={t('min.seleccionaPeriodo')}
                                     classNames={{
                                         base: style.customDateRangePicker,
                                         trigger: style.datePickerTrigger,

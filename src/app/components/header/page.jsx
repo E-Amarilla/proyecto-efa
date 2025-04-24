@@ -1,18 +1,30 @@
 "use client";
 
-import React, { useContext, useState, useEffect } from 'react';
+//Next y React
+import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from "next/image";
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
+
+//IMG
 import cremImg from "@/assets/img/creminox.png";
 import usuario from "@/assets/img/usuario.png";
 import alarmaImg from "@/assets/img/alarma.png";
+
+//Componentes
 import MenuAlarmas from '../../components/dropdownalarmas/dropdown';
 import Desloguear from '../../components/usuario/desloguear';
-import style from './Header.module.css';
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
-import Link from "next/link";
+import DropdownBanderas from "../../components/traduccion/dropdownBanderas.jsx";
+
+//Estilos
+import style from './Header.module.css';
+
+
 
 const ExeHeader = () => {
+  const { t } = useTranslation();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
@@ -26,12 +38,13 @@ const ExeHeader = () => {
 
   const opcionesIconos = [
     { id: 1, icon: usuario, onClick: () => {} },
-    { id: 2, icon: alarmaImg, isDropdown: true }
+    { id: 2, icon: alarmaImg, isDropdown: true },
+    { id: 3, isIdioma: true },
   ];
 
   const opcionesMenu = [
-    { id: 1, url: "/camaras", text: "CAMARAS" },
-    { id: 2, url: "/completo", text: "HOME" },
+    { id: 1, url: "/camaras", text: t('mayus.camaras') },
+    { id: 2, url: "/completo", text: t('mayus.home') },
   ];
 
   return (
@@ -39,14 +52,15 @@ const ExeHeader = () => {
       <header className={style.contenedor}>
         <nav className={style.navbar}>
           <div className={style.icons}>
-            {opcionesIconos.map(({ id, icon, onClick, isDropdown }) => (
+            {opcionesIconos.map(({ id, icon, onClick, isDropdown, isIdioma }) => (
               <div key={id} className={style.contenedorImg}>
-                {isDropdown ? (
-                    <MenuAlarmas icon={icon} />
-                  ) : (
-                    <Desloguear icon={icon} />
-                  )
-                }
+                {isIdioma ? (
+                  <DropdownBanderas />
+                ) : isDropdown ? (
+                  <MenuAlarmas icon={icon} />
+                ) : (
+                  <Desloguear icon={icon} />
+                )}
               </div>
             ))}
           </div>

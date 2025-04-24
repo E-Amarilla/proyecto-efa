@@ -1,9 +1,9 @@
 const metadata = {
   title: {
-    default: "MXEF-04 | Celda de desmoldeo",
-    template: `%s - MXEF-04 | Celda de desmoldeo`,
+    default: "Creminox | CD",
+    template: `%s - Creminox | CD`,
   },
-  description: "MXEF-04 | Celda de desmoldeo",
+  description: "Creminox | CD",
   icons: {
     icon: "/favicon.ico"
   },

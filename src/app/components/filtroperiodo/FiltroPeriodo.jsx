@@ -5,8 +5,10 @@ import { DateRangePicker } from "@nextui-org/react";
 import Botones from "../botones/botonesdescarga/botonesdescarga.jsx";
 import BotonFiltro from "../botones/aplicarfiltro/botonfiltro.jsx";
 import style from "./FiltroPeriodo.module.css";
+import { useTranslation } from "react-i18next";
 
 const FiltroPeriodo = ({ onDataUpdate }) => {
+    const { t } = useTranslation('trad');
     const storedUser = sessionStorage.getItem('user_data');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
 
@@ -87,12 +89,12 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
 
     return (
         <div className={`${style.contenedor} FiltroPeriodo`}>
-            <h2 className={style.titulo}>FILTRADO FECHA PRODUCTIVIDAD</h2>
+            <h2 className={style.titulo}>{t('mayus.filtradoFechaProductividad')}</h2>
             <div className="h-full flex flex-col items-center gap-5 rounded-lg">
                 <div className="flex flex-col items-center w-full">
                     <div className={style.datePickerGlobal}>
                         <DateRangePicker
-                            label="Selecciona el periodo"
+                            label={t('min.seleccionaPeriodo')}
                             classNames={{
                                 base: style.customDateRangePicker,
                                 trigger: style.datePickerTrigger,

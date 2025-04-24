@@ -15,9 +15,11 @@ import React from 'react';
 
 import style from './DatosGenerales.module.css';
 import textstyle from '../texto.module.css';
+import { useTranslation } from "react-i18next";
 
 
 const DatosGenerales = () => {
+    const { t } = useTranslation('trad');
     const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
     const {
@@ -48,7 +50,7 @@ const DatosGenerales = () => {
     return (
         <>
             <div className={style.datosGen}>
-                <h1 className={textstyle.titulo}>DATOS GENERALES</h1>
+                <h1 className={textstyle.titulo}>{t('mayus.datosGenerales')}</h1>
                 <ul className={style.lista}>
                     {datosGenerales.map(({ id, texto, dato, icono }) => (
                         <li key={id} className={style.datoList}>

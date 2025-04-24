@@ -7,10 +7,12 @@ import logoDataURL from './cremonabase64'; // Importa la data URL de la imagen
 import telIcon from './telbase64'; // Importa la data URL de la imagen
 import webIcon from './webbase64'; // Importa la data URL de la imagen
 import mailIcon from './mailbase64'; // Importa la data URL de la imagen
+import { useTranslation } from "react-i18next";
 
 export default function BotonesDescarga({ startDate, endDate }) {
     const storedUser = sessionStorage.getItem('user_data');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
+    const { t } = useTranslation('trad');
 
     const fechaLocal = new Intl.DateTimeFormat('es-CL', {
         year: 'numeric',
@@ -123,7 +125,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
                 onClick={handlePdfDownload}
             >
                 <FaFilePdf style={{ marginRight: "8px" }} />
-                Descargar PDF
+                {t('min.descargarPDF')}
             </Button>
 
             <Button
@@ -141,7 +143,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
                 onClick={handleExcelDownload}
             >
                 <FaFileExcel style={{ marginRight: "8px" }} />
-                Descargar EXCEL
+                {t('min.descargarExcel')}
             </Button>
         </div>
     );
