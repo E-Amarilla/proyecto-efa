@@ -4,15 +4,17 @@ import AuthContext from "../../../context/AuthContext";
 import style from "./DatosTorre.module.css";
 import textstyle from "../texto.module.css";
 import React, { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 const DatosTorreComponent = () => {
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
   const { data } = useContext(AuthContext); // Obtiene datos del contexto
+  const { t } = useTranslation('trad');
 
   const initialDatosTorre = [
-    { id: 1, texto: "N° TORRE ACTUAL", dato: null },
-    { id: 2, texto: "N° TORRE PROXIMA", dato: null },
-    { id: 3, texto: "TOTAL NIVELES", dato: null },
+    { id: 1, texto: t('min.nroTorreActual'), dato: null },
+    { id: 2, texto: t('mayus.totalNiveles'), dato: null },
+    { id: 3, texto: t('min.nroTorreProxima'), dato: null },
   ];
 
   const [datosTorre, setDatosTorre] = useState(initialDatosTorre);
@@ -21,9 +23,9 @@ const DatosTorreComponent = () => {
     const datosTorre = data?.[2]?.datosTorre;
     if (datosTorre) {
       const updatedDatosTorre = [
-        { id: 1, texto: 'N° Torre actual', dato: datosTorre.N_torre_actual ?? null },
-        { id: 2, texto: 'Cant. de niveles', dato: datosTorre.TotalNiveles ?? null },
-        { id: 3, texto: 'N° Torre próximo', dato: datosTorre.N_torre_proxima ?? null },
+        { id: 1, texto: t('min.nroTorreActual'), dato: datosTorre.N_torre_actual ?? null },
+        { id: 2, texto: t('mayus.totalNiveles'), dato: datosTorre.TotalNiveles ?? null },
+        { id: 3, texto: t('min.nroTorreProxima'), dato: datosTorre.N_torre_proxima ?? null },
       ];
       setDatosTorre(updatedDatosTorre);
     }
@@ -40,7 +42,7 @@ const DatosTorreComponent = () => {
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS TORRE</h1>
+      <h1 className={textstyle.titulo}>{t('mayus.datosTorre')}</h1>
       <div className={style.contenedorDatos}>
         {datosTorre.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>

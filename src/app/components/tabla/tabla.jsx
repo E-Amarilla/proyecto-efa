@@ -13,9 +13,11 @@ import {
   Spinner,
   Button,
 } from "@nextui-org/react";
+import { useTranslation } from "react-i18next";
 
 const Tabla = () => {
   const [page, setPage] = useState(1);
+  const { t } = useTranslation('trad');
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -86,10 +88,10 @@ const Tabla = () => {
   }, [wsUrl]);
 
   const columns = [
-    { key: "description", label: "DESCRIPCIÓN" },
-    { key: "type", label: "TIPO" },
-    { key: "state", label: "ESTADO" },
-    { key: "time", label: "FECHA Y HORA DE REGISTRO" },
+    { key: "description", label: t('mayus.descripcion') },
+    { key: "type", label: t('mayus.tipo') },
+    { key: "state", label: t('mayus.estado') },
+    { key: "time", label: t('mayus.fechaRegistro') },
   ];
 
   const handleSort = (key) => {
@@ -133,8 +135,8 @@ const Tabla = () => {
   return (
     <div className="w-full bg-[#131313] rounded-[15px] p-[20px] mt-[113px]">
       <div className="w-1/2 font-bold text-[#D9D9D9] mb-[15px]">
-        <h1 className="text-[25px]">HISTORIAL DE ALERTAS</h1>
-        <h2 className="text-[20px]">EXTENDIDO</h2>
+        <h1 className="text-[25px]">{t('mayus.historialDeAlertas')}</h1>
+        <h2 className="text-[20px]">{t('mayus.extendido')}</h2>
       </div>
       <Table
         aria-label="Tabla de alertas"
@@ -183,7 +185,7 @@ const Tabla = () => {
       )}
       <div className="flex justify-between items-center mt-5">
         <div className="flex items-center gap-2 text-[#D9D9D9]">
-          <label htmlFor="rows-per-page">Filas por página:</label>
+          <label htmlFor="rows-per-page">{t('min.filasPorPagina')}:</label>
           <select
             id="rows-per-page"
             value={rowsPerPage}

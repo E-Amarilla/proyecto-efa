@@ -25,18 +25,17 @@ const GraficoC = ({ startDate, endDate }) => {
     '#FF3357', '#33FF8D', '#FF8633', '#FF33C5', '#33FFC5'
   ];  
 
-  // Optimizado: Usar Map para agrupación más rápida
-  const groupByHour = (cycles) => {
+  const groupByDay = (cycles) => {
     const groups = new Map();
     cycles.forEach(ciclo => {
       const date = new Date(ciclo.fecha_fin * 1000);
-      const hour = new Date(
+      // Agrupar por día en lugar de por hora
+      const day = new Date(
         date.getFullYear(),
         date.getMonth(),
-        date.getDate(),
-        date.getHours()
+        date.getDate()
       ).getTime();
-      groups.set(hour, (groups.get(hour) || 0) + ciclo.pesoDesmontado);
+      groups.set(day, (groups.get(day) || 0) + ciclo.pesoDesmontado);
     });
     return Array.from(groups.entries())
       .map(([x, y]) => ({ x, y }))
@@ -72,8 +71,8 @@ const GraficoC = ({ startDate, endDate }) => {
         backgroundColor: colores[(producto.id_recetario - 1) % colores.length],
         borderColor: `${colores[(producto.id_recetario - 1) % colores.length]}80`,
         fill: false,
-        data: groupByHour(producto.ListaDeCiclos),
-        borderWidth: 0 // Simplifica el renderizado de barras
+        data: groupByDay(producto.ListaDeCiclos), // Usamos groupByDay en lugar de groupByHour
+        borderWidth: 0
       }));
 
       setChartData({ datasets });
@@ -96,7 +95,10 @@ const GraficoC = ({ startDate, endDate }) => {
   // Memoizar fechas formateadas
   const formatDate = useMemo(() => (date) => {
     const d = new Date(date);
-    return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}-${String(d.getUTCDate()).padStart(2, '0')}`;
+    const year = d.getUTCFullYear();
+    const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(d.getUTCDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }, []);
 
   const formattedStartDate = useMemo(() => formatDate(startDate), [startDate, formatDate]);
@@ -173,13 +175,14 @@ const GraficoC = ({ startDate, endDate }) => {
             callbacks: {
               label: (context) => {
                 const datasetLabel = context.dataset.label || 'Peso';
-                const peso = context.raw.y;
+                const peso = parseFloat(context.raw.y).toFixed(2);
                 const date = formatDate(context.raw.x);
-                const totalStacked = totalsRef.current.get(context.raw.x) || 0; // Acceso rápido
+                const totalStacked = totalsRef.current.get(context.raw.x) || 0;
+                const totalStackedTn = (totalStacked / 1000).toFixed(2);
                 return [
-                  `${datasetLabel}: ${peso} kg`,
-                  `FECHA: ${date}`,
-                  `PRODUCCION POR HORA: ${totalStacked} kg`
+                  `${t('min.peso')}: ${peso} kg`,
+                  `${t('min.fecha')}: ${date}`,
+                  `${t('min.prodDiaria')}: ${totalStackedTn} Tn`
                 ];
               },
               title: () => ''
@@ -206,15 +209,12 @@ const GraficoC = ({ startDate, endDate }) => {
             stacked: true,
             type: 'time',
             time: {
-              unit: 'hour',
-              tooltipFormat: 'yyyy-MM-dd HH:mm:ss',
+              // Modificación para hacer que coincida con grafico_ciclos
+              parser: 'yyyy-MM-dd',
+              unit: 'day',
+              tooltipFormat: 'yyyy-MM-dd',
               displayFormats: {
-                hour: 'HH:mm',
-                day: 'dd MMM',
-                week: 'dd MMM',
-                month: 'MMM yyyy',
-                quarter: 'MMM yyyy',
-                year: 'yyyy'
+                day: 'yyyy-MM-dd'
               }
             },
             title: { display: true, text: t('min.tiempo'), color: '#D9D9D9' },

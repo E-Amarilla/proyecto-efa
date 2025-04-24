@@ -58,11 +58,11 @@ const Completo = () => {
   }, [data]);
 
   const columns = [
-    { key: "description", label: "DESCRIPCIÓN" },
-    { key: "type", label: "TIPO" },
-    { key: "state", label: "ESTADO" },
-    { key: "time", label: "FECHA Y HORA ACTUAL" },
-    { key: "registerTime", label: "FECHA Y HORA DE INICIO" },
+    { key: "description", label: t('mayus.descripcion') },
+    { key: "type", label: t('mayus.tipo')  },
+    { key: "state", label: t('mayus.estado')  },
+    { key: "time", label: t('mayus.fechaHoraActual')  },
+    { key: "registerTime", label: t('mayus.fechaHoraInicio')  },
   ];
 
   const totalRows = items.length;
@@ -97,7 +97,7 @@ const Completo = () => {
       </div>
 
       {/* Título */}
-      <h2 className={style.titulo}>LISTADO ALERTAS</h2>
+      <h2 className={style.titulo}>{t('mayus.listadoAlertas')}</h2>
 
       <div className="w-full bg-[#131313] text-[#D9D9D9] table-fixed p-[2px] rounded-[15px]">
         <Table aria-label="Tabla de alertas">

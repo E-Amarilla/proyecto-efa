@@ -3,15 +3,17 @@ import style from './DatosRobot.module.css';
 import textstyle from '../texto.module.css';
 import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from "../../../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const DatosRobotComponent = () => {
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
   const { data } = useContext(AuthContext); // Obtiene datos del contexto
+  const { t } = useTranslation('trad');
 
   const initialDatosRobot = [
-    { id: 1, texto: 'POSICION X', dato: null, texto2: ' mm' },
-    { id: 2, texto: 'POSICION Y', dato: null, texto2: ' mm' },
-    { id: 3, texto: 'POSICION Z', dato: null, texto2: ' mm' },
+    { id: 1, texto: t('mayus.posicionX'), dato: null, texto2: ' mm' },
+    { id: 2, texto: t('mayus.posicionY'), dato: null, texto2: ' mm' },
+    { id: 3, texto: t('mayus.posicionZ'), dato: null, texto2: ' mm' },
   ];
 
   const [datosRobot, setDatosRobot] = useState(initialDatosRobot);
@@ -20,9 +22,9 @@ const DatosRobotComponent = () => {
     const robotData = data?.[2]?.datosRobot;
     if (robotData) {
       const updatedDatosRobot = [
-        { id: 1, texto: 'Posición X', dato: robotData.posicionX ?? null, texto2: ' mm' },
-        { id: 2, texto: 'Posición Y', dato: robotData.posicionY ?? null, texto2: ' mm' },
-        { id: 3, texto: 'Posición Z', dato: robotData.posicionZ ?? null, texto2: ' mm' },
+        { id: 1, texto: t('mayus.posicionX'), dato: robotData.posicionX ?? null, texto2: ' mm' },
+        { id: 2, texto: t('mayus.posicionY'), dato: robotData.posicionY ?? null, texto2: ' mm' },
+        { id: 3, texto: t('mayus.posicionZ'), dato: robotData.posicionZ ?? null, texto2: ' mm' },
       ];
       setDatosRobot(updatedDatosRobot);
     }
@@ -39,7 +41,7 @@ const DatosRobotComponent = () => {
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS ROBOT</h1>
+      <h1 className={textstyle.titulo}>{t('mayus.datosRobot')}</h1>
       <div className={style.contenedorDatos}>
         {datosRobot.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>

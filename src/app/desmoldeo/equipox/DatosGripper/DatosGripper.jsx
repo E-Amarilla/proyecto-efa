@@ -3,16 +3,18 @@
 import style from "./DatosGripper.module.css";
 import textstyle from "../texto.module.css";
 import React, { useState, useEffect, useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 import AuthContext from "../../../context/AuthContext";
 
 const DatosGripperComponent = () => {
   const { equipoSeleccionado, setEquipoSeleccionado } = useContext(AuthContext);
   const { data } = useContext(AuthContext); // Obtiene datos del contexto
+  const { t } = useTranslation('trad');
 
   const initialdatosGripper = [
-    { id: 1, texto: "N° GRIPPER ACTUAL", dato: null },
-    { id: 2, texto: "N° GRIPPER PRÓXIMO", dato: null },
+    { id: 1, texto: t('min.nroGripperActual'), dato: null },
+    { id: 2, texto: t('min.nroGripperProximo'), dato: null },
   ];
 
   const [datosGripper, setdatosGripper] = useState(initialdatosGripper);
@@ -21,8 +23,8 @@ const DatosGripperComponent = () => {
     const gripperData = data?.[2]?.datosGripper;
     if (gripperData) {
       const updateddatosGripper = [
-        { id: 1, texto: "N° Gripper actual", dato: gripperData.NGripperActual ?? null },
-        { id: 2, texto: "N° Gripper próximo", dato: gripperData.NGripperProximo ?? null }
+        { id: 1, texto: t('min.nroGripperActual'), dato: gripperData.NGripperActual ?? null },
+        { id: 2, texto: t('min.nroGripperProximo'), dato: gripperData.NGripperProximo ?? null }
       ];
       setdatosGripper(updateddatosGripper);
     }
@@ -45,7 +47,7 @@ const DatosGripperComponent = () => {
       }`}
       onClick={handleClick}
     >
-      <h1 className={textstyle.titulo}>DATOS GRIPPERS</h1>
+      <h1 className={textstyle.titulo}>{t('mayus.datosGripper')}</h1>
       <div className={style.contenedorDatos}>
         {datosGripper.map(({ id, texto, dato }) => (
           <div key={id} className={style.datoList}>

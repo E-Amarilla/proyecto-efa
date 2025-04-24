@@ -14,12 +14,15 @@ import puntoVerde from '@/assets/img/puntoVerde.png';
 import puntoA from '@/assets/img/puntoA.png';
 import puntoB from '@/assets/img/puntoB.png';
 
+import { useTranslation } from "react-i18next";
+
 const SectorIOComponent = () => {
+    const { t } = useTranslation('trad');
     const { data } = useContext(AuthContext); // Obtiene datos del contexto
     
     const initialSectorIO = [
-        { id: 1, texto: 'Estado del ciclo', dato: 0, icono: puntoGris },
-        { id: 2, texto: 'Banda de desmoldeo', dato: 0, icono: puntoGris },
+        { id: 1, texto: t('min.estadoCiclo'), dato: 0, icono: puntoGris },
+        { id: 2, texto: t('min.bandaDesmoldeo'), dato: 0, icono: puntoGris },
     ];
 
     const [sector_IO, setSector_IO] = useState(initialSectorIO);
@@ -62,7 +65,7 @@ const SectorIOComponent = () => {
 
     return (
         <div className={style.datoListContainer}>
-            <h1 className={textstyle.titulo}>SECTOR IO</h1>
+            <h1 className={textstyle.titulo}>{t('mayus.sectorIO')}</h1>
             <div className={style.datosGen}>
                 {sector_IO.map(({ id, texto, dato, icono }) => (
                     <div key={id} className={style.datoList}>

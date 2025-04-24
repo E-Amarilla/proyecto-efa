@@ -15,25 +15,28 @@ import DatosEstadoPaletizado from "./datospaletizado/datosestadopaletizado/datos
 import Image from "next/image";
 import LayoutIMG from '@/assets/img/layoutcompleto.png';
 
+import { useTranslation } from "react-i18next";
+
 const LayoutCompleto = () => {
+  const { t } = useTranslation('trad');
   const sections = [
     {
       id: 1,
-      name: "Desmoldeo",
+      name: t('min.desmoldeo'),
       path: "/desmoldeo",
       position: { top: "36.2%", left: "0%", width: "35.3%", height: "63.8%" },
       styleClass: "secciondesbloqueada",
     },
     {
       id: 2,
-      name: "Encajonado",
+      name: t('min.encajonado'),
       path: "/encajonado",
       position: { top: "0.3%", left: "35.3%", width: "59.5%", height: "48%" },
       styleClass: "seccionbloqueada",
     },
     {
       id: 3,
-      name: "Paletizado",
+      name: t('min.paletizado'),
       path: "/paletizado",
       position: { top: "32.8%", left: "62.8%", width: "37.2%", height: "34%" },
       styleClass: "seccionbloqueada",
