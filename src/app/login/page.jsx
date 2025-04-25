@@ -23,7 +23,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-[95vh] w-full items-center justify-center">
+    <div className="flex min-h-[100vh] w-full items-center justify-center">
       <div className="w-auto h-[55vh] gap-[15px] flex flex-col items-center justify-between p-[3rem_4rem_2rem_4rem] max-w-[1920px] text-[#D9D9D9] bg-[#131313] rounded-[15px]">
         <Image
           src={crem}
