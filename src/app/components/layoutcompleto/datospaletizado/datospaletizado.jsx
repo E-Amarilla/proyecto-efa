@@ -3,10 +3,12 @@
 import useWebSocket from '../../../utils/useWebSocket';
 import style from '../texto.module.css';
 import cont from './datospaletizado.module.css';
+import { useTranslation } from "react-i18next";
 
 import Link from "next/link";
 
 const DatosPaletizado = () => {
+    const { t } = useTranslation('trad');
     const pollId = "celda-completo";
     const { data, error, isConnected } = useWebSocket(pollId);
 
@@ -21,9 +23,9 @@ const DatosPaletizado = () => {
     const estadoMaquina = "inactivo";
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Paletizado - N°1', dato: PalVariableNN !== undefined && PalVariableNN !== null ? PalVariableNN : '-' },
-        { id: 2, nombre: 'Paletizado - N°2', dato: PalVariableNN2 !== undefined && PalVariableNN2 !== null ? PalVariableNN2 : '-' },
-        { id: 3, nombre: 'Paletizado - N°3', dato: PalVariableNN3 !== undefined && PalVariableNN3 !== null ? PalVariableNN : '-' },
+        { id: 1, nombre: `${t('min.paletizado')} - N°1`, dato: PalVariableNN !== undefined && PalVariableNN !== null ? PalVariableNN : '-' },
+        { id: 2, nombre: `${t('min.paletizado')} - N°2`, dato: PalVariableNN2 !== undefined && PalVariableNN2 !== null ? PalVariableNN2 : '-' },
+        { id: 3, nombre: `${t('min.paletizado')} - N°3`, dato: PalVariableNN3 !== undefined && PalVariableNN3 !== null ? PalVariableNN : '-' },
     ];
 
     return (

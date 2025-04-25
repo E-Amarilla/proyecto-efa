@@ -24,7 +24,7 @@ const DatosEstadoDesmoldeo = () => {
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedorActivo}>
                                 <h1 className={style.area}>{t('min.desmoldeo')}</h1>
-                                <h3 className={style.estadoActivo}>{String(estadoMaquina).toUpperCase()}</h3>
+                                <h3 className={style.estadoActivo}>{t('mayus.cicloActivo')}</h3>
                                 <h4 className={style.tiempo}>{TiempoTranscurrido}</h4>
                             </div>
                         </li>
@@ -32,7 +32,7 @@ const DatosEstadoDesmoldeo = () => {
                         <li className={style.datosIndvYellow}>
                             <div className={style.contenedorPausa}>
                                 <h1 className={style.area}>{t('min.desmoldeo')}</h1>
-                                <h3 className={style.estadoPausa}>{String(estadoMaquina).toUpperCase()}</h3>
+                                <h3 className={style.estadoPausa}>{t('mayus.cicloPausado')}</h3>
                                 <h4 className={style.tiempo}>{TiempoTranscurrido}</h4>
                             </div>
                         </li>
@@ -40,7 +40,7 @@ const DatosEstadoDesmoldeo = () => {
                         <li className={style.datosIndvGray}>
                             <div className={style.contenedorInactivo}>
                                 <h1 className={style.area}>{t('min.desmoldeo')}</h1>
-                                <h3 className={style.estadoInactivo}>{String(estadoMaquina).toUpperCase()}</h3>
+                                <h3 className={style.estadoInactivo}>{t('mayus.cicloInactivo')}</h3>
                             </div>
                         </li>
                     )}

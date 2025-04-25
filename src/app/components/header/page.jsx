@@ -16,7 +16,7 @@ import alarmaImg from "@/assets/img/alarma.png";
 import MenuAlarmas from '../../components/dropdownalarmas/dropdown';
 import Desloguear from '../../components/usuario/desloguear';
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
-import DropdownBanderas from "../../components/traduccion/DropdownBanderas.jsx";
+import DropdownBanderas from "../../components/traduccion/dropdownBanderas.jsx";
 
 //Estilos
 import style from './Header.module.css';

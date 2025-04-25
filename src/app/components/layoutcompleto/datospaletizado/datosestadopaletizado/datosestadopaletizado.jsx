@@ -25,7 +25,7 @@ const DatosEstadoPaletizado = () => {
                         <li className={style.datosIndvRed}>
                             <div className={style.contenedorActivo}>
                                 <h1 className={style.area}>{t('min.paletizado')}</h1>
-                                <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoActivo}>{t('mayus.cicloActivo')}</h3>
                                 <h4 className={style.tiempo}>Hace: {TiempoTranscurrido}</h4>
                             </div>
                         </li>
@@ -33,7 +33,7 @@ const DatosEstadoPaletizado = () => {
                         <li className={style.datosIndvYellow}>
                             <div className={style.contenedorPausa}>
                                 <h1 className={style.area}>{t('min.paletizado')}</h1>
-                                <h3 className={style.estadoPausa}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoPausa}>{t('mayus.cicloPausado')}</h3>
                                 <h4 className={style.tiempo}>Hace: {TiempoTranscurrido}</h4>
                             </div>
                         </li>
@@ -41,7 +41,7 @@ const DatosEstadoPaletizado = () => {
                         <li className={style.datosIndvGray}>
                             <div className={style.contenedorInactivo}>
                                 <h1 className={style.area}>{t('min.paletizado')}</h1>
-                                <h3 className={style.estadoInactivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoInactivo}>{t('mayus.cicloInactivo')}</h3>
                             </div>
                         </li>
                     )}

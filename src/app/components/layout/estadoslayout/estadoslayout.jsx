@@ -1,6 +1,7 @@
 "use client";
 
 import { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import AuthContext from "../../../context/AuthContext";
 import style from './estadoslayout.module.css';
 
@@ -12,7 +13,8 @@ import puntoRojo from '@/assets/img/puntoRojo.png';
 
 
 const EstadosLayout = () => {
-    
+    // Añadimos el hook de traducción
+    const { t } = useTranslation('trad');
     const { data } = useContext(AuthContext);
 
     const desmoldeoData = data?.[1].Desmoldeo || {};
@@ -20,6 +22,7 @@ const EstadosLayout = () => {
     const {
         estadoMaquina = "CICLO INACTIVO",
     } = desmoldeoData;
+    
     return (
         <>
             <div className={style.contenedorDatos}>
@@ -30,9 +33,9 @@ const EstadosLayout = () => {
                                 <Image
                                     src={puntoVerde} 
                                     className={style.icon}
-                                    alt={'Icono'}
+                                    alt={t('min.estadoMaquina')}
                                 /> 
-                                <h3 className={style.estadoActivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoActivo}>{t('mayus.cicloActivo')}</h3>
                             </div>
                         </li>
                     ) : estadoMaquina === ("CICLO PAUSADO" || "pausado") ? (
@@ -41,9 +44,9 @@ const EstadosLayout = () => {
                                 <Image
                                     src={puntoGris} 
                                     className={style.icon}
-                                    alt={'Icono'}
+                                    alt={t('min.estadoMaquina')}
                                 /> 
-                                <h3 className={style.estadoPausa}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoPausa}>{t('mayus.cicloPausado')}</h3>
                             </div>
                         </li>
                     ) : estadoMaquina === ("CICLO INACTIVO" || "inactivo")  ? (
@@ -52,15 +55,15 @@ const EstadosLayout = () => {
                                 <Image
                                     src={puntoRojo} 
                                     className={style.icon}
-                                    alt={'Icono'}
+                                    alt={t('min.estadoMaquina')}
                                 /> 
-                                <h3 className={style.estadoInactivo}>{estadoMaquina.toUpperCase()}</h3>
+                                <h3 className={style.estadoInactivo}>{t('mayus.cicloInactivo')}</h3>
                             </div>
                         </li>
                     ) : (
                         <li className={style.datosIndvGray}>
                             <div className={style.contenedorEspera}>
-                                <h3 className={style.estadoEspera}>{'Loading...'}</h3>
+                                <h3 className={style.estadoEspera}>{t('min.cargando')}</h3>
                             </div>
                         </li>
                     )}

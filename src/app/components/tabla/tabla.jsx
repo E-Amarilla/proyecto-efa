@@ -74,7 +74,7 @@ const Tabla = () => {
     };
 
     socket.onerror = () => {
-      setError("No se pudieron obtener los datos");
+      setError(t('min.noSePudieronObtenerDatos')); // Usando la traducción aquí
       setIsLoading(false);
     };
 
@@ -160,7 +160,7 @@ const Tabla = () => {
         <TableBody
           isLoading={isLoading && !error}
           items={!error ? paginatedRows : []}
-          loadingContent={<Spinner label="Cargando..." />}
+          loadingContent={<Spinner label={t('min.cargando')} />} // En vez de "Cargando..."
         >
           {!error
             ? (item) => (
@@ -179,7 +179,7 @@ const Tabla = () => {
         <div className="text-center mt-[4px] text-[#D9D9D9] h-[150px] flex flex-col justify-center items-center shadow-md rounded-[15px]">
           <div className="mb-2">{error}</div>
           <Button onClick={connectWebSocket} className="bg-[#761122]">
-            Reintentar
+            {t('min.reintentar')} {/* Traducción para el botón también */}
           </Button>
         </div>
       )}

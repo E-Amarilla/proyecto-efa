@@ -42,7 +42,9 @@
         "nroGripperActual": "N° GRIPPER ACTUAL",
         "nroGripperProximo": "N° GRIPPER PRÓXIMO",
         "historialDeAlertas": "HISTORIAL DE ALERTAS",
-        "extendido": "EXTENDIDO"
+        "extendido": "EXTENDIDO",
+        "cicloActivo": "CICLO ACTIVO",
+        "cicloPausado": "CICLO PAUSADO"
     },
     "min":
     {

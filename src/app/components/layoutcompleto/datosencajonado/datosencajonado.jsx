@@ -4,8 +4,10 @@ import useWebSocket from '../../../utils/useWebSocket';
 import style from '../texto.module.css';
 import cont from './datosencajonado.module.css';
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const DatosEncajonado = () => {
+    const { t } = useTranslation('trad');
     const pollId = "celda-completo";
     const { data, error, isConnected } = useWebSocket(pollId);
 
@@ -20,9 +22,21 @@ const DatosEncajonado = () => {
     const estadoMaquina = "inactivo";
 
     const datosTiempoReal = [
-        { id: 1, nombre: 'Encajonado - N°1', dato: EncVariableNN !== undefined && EncVariableNN !== null ? EncVariableNN : '-' },
-        { id: 2, nombre: 'Encajonado - N°2', dato: EncVariableNN2 !== undefined && EncVariableNN2 !== null ? EncVariableNN2 : '-' },
-        { id: 3, nombre: 'Encajonado - N°3', dato: EncVariableNN3 !== undefined && EncVariableNN3 !== null ? EncVariableNN : '-' },
+        { 
+            id: 1, 
+            nombre: `${t('min.encajonado')} - N°1`, 
+            dato: EncVariableNN !== undefined && EncVariableNN !== null ? EncVariableNN : '-' 
+        },
+        { 
+            id: 2, 
+            nombre: `${t('min.encajonado')} - N°2`, 
+            dato: EncVariableNN2 !== undefined && EncVariableNN2 !== null ? EncVariableNN2 : '-' 
+        },
+        { 
+            id: 3, 
+            nombre: `${t('min.encajonado')} - N°3`, 
+            dato: EncVariableNN3 !== undefined && EncVariableNN3 !== null ? EncVariableNN3 : '-' 
+        },
     ];
 
     return (
