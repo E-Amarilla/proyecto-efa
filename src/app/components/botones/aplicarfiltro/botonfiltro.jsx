@@ -15,13 +15,12 @@ const BotonFiltro = ({ onClick, isDisabled}) => {
                     border: "2px solid #555555",
                     color: "#8c8c8c",
                     width: "100%",
-                    height: "30px",
+                    height: "50px",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    fontSize: "15px",
+                    fontSize: "17px",
                     boxShadow: "0 2px 5px rgba(217, 217, 217, 0.1)",
-                    marginTop: "5px",
                 }}
                 onClick={onClick}
                 isDisabled={isDisabled}

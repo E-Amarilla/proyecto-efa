@@ -97,7 +97,7 @@ export default function BotonesDescarga({ startDate, endDate }) {
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px", alignItems: "center", width: "100%" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px", alignItems: "center", width: "100%" }}>
             <Button
                 style={{
                     backgroundColor: "rgba(243, 18, 96, 0.3)",
