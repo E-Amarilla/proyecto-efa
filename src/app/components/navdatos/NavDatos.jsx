@@ -144,19 +144,21 @@ const NavDatos = () => {
                 <p className={style.datosGen}>{t('mayus.datosGenerales')}</p>
                 <ul className={style.datosTods}>
                     {datosTiempoReal.map(({ id, nombre, dato, icono }) => (
-                        <li key={id} className={style.datosIndv}>
-                            <Link className={style.detallesDatos} href='/desmoldeo/equipox'>
-                                <h3 className={style.h3}>{nombre}</h3>
-                                <h4 className={style.h4}>
-                                    {(nombre === 'Peso desmoldado:' || nombre === 'Peso por fila:') ? `${dato} kg` : dato}
-                                </h4>
-                            </Link>
-                            <Image 
-                                src={icono} 
-                                alt={`Estado: ${id}`} 
-                                className={style.icon} 
-                            />
-                        </li>
+                        <Link href='/desmoldeo/equipox'>
+                            <li key={id} className={style.datosIndv}>
+                                <div className={style.detallesDatos}>
+                                    <h3 className={style.h3}>{nombre}</h3>
+                                    <h4 className={style.h4}>
+                                        {(nombre === 'Peso desmoldado:' || nombre === 'Peso por fila:') ? `${dato} kg` : dato}
+                                    </h4>
+                                </div>
+                                <Image 
+                                    src={icono} 
+                                    alt={`Estado: ${id}`} 
+                                    className={style.icon} 
+                                />
+                            </li>
+                        </Link>
                     ))}
                 </ul>
             </div>

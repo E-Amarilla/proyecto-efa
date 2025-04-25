@@ -162,7 +162,9 @@ const GraficoC = ({ startDate, endDate }) => {
           zoom: {
             pan: { enabled: true, mode: 'x' },
             zoom: {
-              wheel: { enabled: true },
+              wheel: { enabled: true, 
+                modifierKey: 'ctrl'
+              },
               pinch: { enabled: true },
               mode: 'x'
             },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import DropdownBanderas from "../components/traduccion/dropdownBanderas.jsx";
+import DropdownBanderas from "../components/traduccion/DropdownBanderas.jsx";
 
 function Test() {
     const { t } = useTranslation('trad');

@@ -1,5 +1,12 @@
+"use client";
+
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import Image from 'next/image';
+
+// Importar las imágenes de banderas
+import esFlag from '../../../assets/img/es.png';
+import usFlag from '../../../assets/img/us.png';
 
 // Definir el hook personalizado fuera del componente
 const useOutsideClick = (ref, callback) => {
@@ -27,8 +34,8 @@ const DropdownBanderas = () => {
     });
 
     const options = [
-        { value: 'es', flag: '🇪🇸' },
-        { value: 'en', flag: '🇺🇸' }
+        { value: 'es', flag: esFlag },
+        { value: 'en', flag: usFlag }
     ];
 
     const handleLanguageChange = (value) => {
@@ -46,7 +53,13 @@ const DropdownBanderas = () => {
                 className="flex items-center justify-between w-[100%] py-[2px] px-[4px] bg-[#BBB5] border border-[#AAA] rounded-md shadow-sm z-[1000]"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                {currentLanguage.flag}
+                <Image 
+                    src={currentLanguage.flag}
+                    alt={`${currentLanguage.value} flag`}
+                    width={20}
+                    height={15}
+                    className="inline-block"
+                />
                 <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     className={`ml-[2px] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} inline-block w-[8px] h-[8px]`} 
@@ -69,7 +82,13 @@ const DropdownBanderas = () => {
                                     className="block w-[100%] text-left px-[4px] py-[2px] text-sm text-gray-700 z-[999]"
                                     role="menuitem"
                                 >
-                                    {option.flag}
+                                    <Image 
+                                        src={option.flag}
+                                        alt={`${option.value} flag`}
+                                        width={20}
+                                        height={15}
+                                        className="inline-block"
+                                    />
                                 </button>
                             ))}
                     </div>

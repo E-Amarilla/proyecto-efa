@@ -14,13 +14,27 @@ export default function BotonesDescarga({ startDate, endDate }) {
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
     const { t } = useTranslation('trad');
     
+    const fechaLocal = new Intl.DateTimeFormat('es-CL', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).format(new Date()).replace(/\//g, '-');
+
     const handlePdfDownload = async () => {
         const graphSection = document.getElementById('GraficosSection');
     
         if (graphSection) {
             const canvasProduct = await html2canvas(graphSection, {
                 scale: 3,
-                ignoreElements: (element) => element.classList && element.classList.contains('FiltroPeriodoGraficos'),
+                ignoreElements: (element) => {
+                    return (
+                        element.classList && 
+                        (element.classList.contains('FiltroPeriodoGraficos') || 
+                        (element.tagName === 'BUTTON' && 
+                            (element.textContent.includes('Reiniciar zoom') || 
+                            element.textContent.includes('Reset zoom'))))
+                      );
+                },
             });
             
             const imgDataProduct = canvasProduct.toDataURL('image/png');

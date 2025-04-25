@@ -135,7 +135,8 @@ const Grafico = ({ startDate, endDate }) => {
             pan: { enabled: true, mode: 'x' },
             zoom: {
               wheel: {
-                enabled: true 
+                enabled: true,
+                modifierKey: 'ctrl' 
               },
               pinch: { 
                 enabled: true
