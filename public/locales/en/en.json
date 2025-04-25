@@ -32,19 +32,21 @@
         "datosSDDA": "SDDA DATA - DEMOLDER",
         "datosTorre": "TOWER DATA",
         "datosGripper": "GRIPPERS DATA",
-        "posicionX": "X Position",
-        "posicionY": "Y Position",
-        "posicionZ": "Z Position",
-        "nivelActual": "Current Level",
+        "posicionX": "X POSITION",
+        "posicionY": "Y POSITION",
+        "posicionZ": "Z POSITION",
+        "nivelActual": "CURRENT LEVEL",
         "nroTorreActual": "CURRENT TOWER N°",
         "nroTorreProxima": "NEXT TOWER N°",
-        "totalNiveles": "Total levels",
+        "totalNiveles": "TOTAL LEVELS",
         "nroGripperActual": "CURRENT GRIPPER N°",
         "nroGripperProximo": "NEXT GRIPPER N°",
         "historialDeAlertas": "ALERT HISTORY",
         "extendido": "EXTENDED",
         "cicloActivo": "ACTIVE CYCLE",
-        "cicloPausado": "PAUSED CYCLE"
+        "cicloPausado": "PAUSED CYCLE",
+        "descargarTodasPDF": "EXPORT ALL ROWS",
+        "descargarVisiblesPDF": "EXPORT VISIBLE ROWS"
     },
 
     "min":

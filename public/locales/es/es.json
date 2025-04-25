@@ -44,7 +44,9 @@
         "historialDeAlertas": "HISTORIAL DE ALERTAS",
         "extendido": "EXTENDIDO",
         "cicloActivo": "CICLO ACTIVO",
-        "cicloPausado": "CICLO PAUSADO"
+        "cicloPausado": "CICLO PAUSADO",
+        "descargarTodasPDF": "EXPORTAR TODAS LAS FILAS",
+        "descargarVisiblesPDF": "EXPORTAR FILAS VISIBLES"
     },
     "min":
     {

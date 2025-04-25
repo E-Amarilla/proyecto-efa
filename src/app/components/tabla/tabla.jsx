@@ -1,24 +1,18 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  getKeyValue,
-  Pagination,
-  Spinner,
-  Button,
-} from "@nextui-org/react";
+import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
+import { createTheme, ThemeProvider } from '@mui/material';
+import { Box, Button, Typography } from "@mui/material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
 import { useTranslation } from "react-i18next";
 
 const Tabla = () => {
   const [page, setPage] = useState(1);
   const { t } = useTranslation('trad');
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Cambiado de 5 a 10
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
@@ -44,37 +38,41 @@ const Tabla = () => {
             const updatedItems = [...prevItems];
 
             alarmas.forEach((alarma) => {
-              const index = updatedItems.findIndex(
-                (item) => item.key === alarma.id_alarma.toString()
-              );
+              // Verificamos que la descripción no esté vacía
+              if (alarma.descripcion && alarma.descripcion.trim() !== "") {
+                const index = updatedItems.findIndex(
+                  (item) => item.key === alarma.id_alarma.toString()
+                );
 
-              const newItem = {
-                key: alarma.id_alarma.toString(),
-                description: alarma.descripcion,
-                type: alarma.tipoAlarma,
-                state: alarma.estadoAlarma ? "Activo" : "Inactivo",
-                time: alarma.fechaRegistro,
-              };
+                const newItem = {
+                  key: alarma.id_alarma.toString(),
+                  description: alarma.descripcion,
+                  type: alarma.tipoAlarma,
+                  state: alarma.estadoAlarma ? "Activo" : "Inactivo",
+                  time: alarma.fechaRegistro,
+                };
 
-              if (index !== -1) {
-                updatedItems[index] = newItem;
-              } else {
-                updatedItems.push(newItem);
+                if (index !== -1) {
+                  updatedItems[index] = newItem;
+                } else {
+                  updatedItems.push(newItem);
+                }
               }
             });
 
-            return updatedItems;
+            // También podemos filtrar los items existentes para eliminar los que tengan descripción vacía
+            return updatedItems.filter(item => item.description && item.description.trim() !== "");
           });
           setIsLoading(false);
         }
       } catch (err) {
-        setError("Error procesando datos del servidor.");
+        setError(t('min.noSePudieronObtenerDatos'));
         setIsLoading(false);
       }
     };
 
     socket.onerror = () => {
-      setError(t('min.noSePudieronObtenerDatos')); // Usando la traducción aquí
+      setError(t('min.noSePudieronObtenerDatos'));
       setIsLoading(false);
     };
 
@@ -87,21 +85,31 @@ const Tabla = () => {
     connectWebSocket();
   }, [wsUrl]);
 
-  const columns = [
-    { key: "description", label: t('mayus.descripcion') },
-    { key: "type", label: t('mayus.tipo') },
-    { key: "state", label: t('mayus.estado') },
-    { key: "time", label: t('mayus.fechaRegistro') },
-  ];
+  // Convertir el formato de columnas al formato esperado por MaterialReactTable
+  const columns = useMemo(() => [
+    {
+      accessorKey: 'description',
+      header: t('mayus.descripcion'),
+      size: 300,
+    },
+    {
+      accessorKey: 'type',
+      header: t('mayus.tipo'),
+      size: 150,
+    },
+    {
+      accessorKey: 'state',
+      header: t('mayus.estado'),
+      size: 150,
+    },
+    {
+      accessorKey: 'time',
+      header: t('mayus.fechaRegistro'),
+      size: 200,
+    },
+  ], [t]);
 
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
+  // Función para ordenar manualmente (mantenemos la lógica existente)
   const sortedItems = useMemo(() => {
     let sortedData = [...items];
     if (sortConfig.key) {
@@ -118,6 +126,7 @@ const Tabla = () => {
     return sortedData;
   }, [items, sortConfig]);
 
+  // Paginación manual (mantenemos la lógica existente)
   const totalRows = sortedItems.length;
   const totalPages = Math.ceil(totalRows / rowsPerPage);
   const paginatedRows = useMemo(
@@ -125,93 +134,358 @@ const Tabla = () => {
     [sortedItems, page, rowsPerPage]
   );
 
-  const handlePageChange = (newPage) => setPage(newPage);
+  // Función mejorada para exportar filas a PDF con soporte para UTF-8
+  const handleExportRowsToPDF = (rows) => {
+    // Configurar PDF con fuente que soporte UTF-8
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'pt',
+      format: 'a4'
+    });
+    
+    // Usar una fuente que soporte caracteres especiales
+    doc.setFont("helvetica", "normal");
+    
+    // Extraer datos para la tabla
+    const tableData = rows.map((row) => {
+      return columns.map(col => {
+        const value = row.original[col.accessorKey] || '';
+        return String(value); // Asegurar que todos los valores son cadenas
+      });
+    });
+    
+    const tableHeaders = columns.map(c => c.header);
 
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(Number(event.target.value));
-    setPage(1);
+    // Configurar autoTable con opciones para caracteres especiales
+    autoTable(doc, {
+      head: [tableHeaders],
+      body: tableData,
+      theme: 'grid',
+      styles: { 
+        fillColor: [41, 41, 41],
+        textColor: [255, 255, 255],
+        font: 'helvetica', 
+        fontSize: 8,
+        overflow: 'linebreak',
+        cellPadding: 3
+      },
+      headStyles: { 
+        fillColor: [25, 25, 25],
+        textColor: [255, 255, 255],
+        fontSize: 9,
+        fontStyle: 'bold' 
+      },
+      // Definir anchos de columnas proporcionales
+      columnStyles: {
+        0: { cellWidth: 'auto' }, // Descripción
+        1: { cellWidth: 60 },     // Tipo
+        2: { cellWidth: 60 },     // Estado
+        3: { cellWidth: 90 }      // Fecha
+      },
+    });
+
+    // Añadir título
+    doc.setFontSize(14);
+    doc.text(t('mayus.historialDeAlertas'), doc.internal.pageSize.getWidth() / 2, 30, { align: 'center' });
+    
+    const date = new Date();
+    const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+    doc.setFontSize(10);
+    doc.text(`${t('mayus.fechaHoraActual')}: ${formattedDate}`, doc.internal.pageSize.getWidth() / 2, 50, { align: 'center' });
+
+    doc.save("Alertas.pdf");
   };
+
+  // Tema personalizado para Material-UI
+  const customTheme = createTheme({
+    palette: {
+      mode: 'dark',
+      primary: {
+        main: '#761122',
+      },
+      background: {
+        paper: '#131313',
+        default: '#131313',
+      },
+      text: {
+        primary: '#D9D9D9',
+        secondary: '#AAAAAA',
+      },
+    },
+    components: {
+      MuiMenu: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: '#131313',
+          },
+        },
+      },
+      MuiTablePagination: {
+        styleOverrides: {
+          selectLabel: { color: '#ffffff' },
+          selectRoot: { color: '#ffffff' },
+          selectIcon: { color: '#ffffff' },
+          displayedRows: { color: '#ffffff' },
+        },
+      },
+      MuiMenuItem: {
+        styleOverrides: {
+          root: {
+            color: '#d9d9d9',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+            },
+            '&.Mui-selected': {
+              backgroundColor: 'rgba(255, 255, 255, 0.12)',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+              }
+            },
+          },
+        },
+      },
+    },
+  });
+
+  // Configuración para MaterialReactTable
+  const table = useMaterialReactTable({
+    columns,
+    data: paginatedRows,
+    state: { 
+      isLoading,
+      pagination: {
+        pageIndex: page - 1,
+        pageSize: rowsPerPage, // Esto usará el nuevo valor por defecto (10)
+      },
+    },
+    manualPagination: true,
+    rowCount: totalRows,
+    onPaginationChange: (updater) => {
+      if (typeof updater === 'function') {
+        const currentPagination = {
+          pageIndex: page - 1,
+          pageSize: rowsPerPage
+        };
+        const newPagination = updater(currentPagination);
+        setPage(newPagination.pageIndex + 1);
+        setRowsPerPage(newPagination.pageSize);
+      }
+    },
+    enableSorting: true,
+    enableColumnResizing: true,
+    columnResizeMode: "onChange",
+    layoutMode: "grid",
+    initialState: {
+      density: 'spacious',
+      pagination: {
+        pageSize: 10, // Asegúrate de que este valor coincida con el valor inicial del estado
+      }
+    },
+
+    // Estilo para la cabecera de la tabla
+    muiTableHeadCellProps: {
+      sx: {
+        backgroundColor: "#1F1F1F",
+        color: "#d9d9d9",
+        fontWeight: "bold",
+        '& .MuiDivider-root': {
+          backgroundColor: '#FFF5 !important',
+          height: '20px',
+          '&:hover': {
+            backgroundColor: 'rgb(129, 129, 129) !important',
+          },
+        },
+      },
+    },
+
+    muiTableHeadRowProps: {
+      sx: {
+        backgroundColor: "#1F1F1F",
+      },
+    },
+
+    // Estilo para la barra de herramientas superior
+    muiTopToolbarProps: {
+      sx: {
+        backgroundColor: "#131313",
+        position: 'relative',
+        '& .MuiInputBase-root': {
+          color: '#d9d9d9',
+        },
+        '& .MuiInputBase-input': {
+          color: '#d9d9d9',
+        },
+        '& .MuiSvgIcon-root': {
+          color: '#d9d9d9',
+        },
+      },
+    },
+
+    // Estilos para el cuerpo de la tabla y otros elementos
+    muiTableBodyCellProps: {
+      sx: {
+        backgroundColor: "#131313",
+        color: "#d9d9d9",
+      },
+    },
+    muiTableBodyRowProps: {
+      sx: {
+        backgroundColor: "#131313",
+        "&:nth-of-type(odd)": {
+          backgroundColor: "#131313",
+        }
+      },
+    },
+    muiTableFooterProps: {
+      sx : {
+        '& .MuiInputLabel-root': {
+          color: '#d9d9d9',
+        },
+        '& .MuiFormLabel-root': {
+          color: '#d9d9d9',
+        }
+      },
+    },
+    muiBottomToolbarProps: {
+      sx: {
+        backgroundColor: "#131313",
+        color: "#d9d9d9",
+        '& .MuiTablePagination-root': {
+          color: '#d9d9d9',
+        },
+        '& .MuiSelect-icon': {
+          color: '#d9d9d9',
+        },
+        '& .MuiInputBase-input': {
+          color: '#d9d9d9',
+        },
+        '& .MuiSvgIcon-root': {
+          color: '#d9d9d9',
+        },
+        '& .MuiInputLabel-root': {
+          color: '#d9d9d9 !important',
+        },
+        '& .MuiFormLabel-root': {
+          color: '#d9d9d9 !important',
+        }
+      },
+    },
+    muiTableProps: {
+      sx: {
+        '& .MuiInputLabel-root': {
+          color: '#d9d9d9 !important',
+        },
+        '& .MuiSelect-select, & .MuiSelect-icon': {
+          color: '#d9d9d9',
+        }
+      },
+    },
+    muiTablePaperProps: {
+      elevation: 0,
+      sx: {
+        backgroundColor: '#1e1e1e',
+        borderRadius: '8px',
+      },
+    },
+    muiTableContainerProps: {
+      sx: {
+        backgroundColor: "#131313",
+      },
+    },
+    muiSkeletonProps: {
+      sx: {
+        backgroundColor: "#131313",
+      },
+    },
+    muiColumnActionsButtonProps: {
+      sx: {
+        color: '#d9d9d9',
+        '&:hover': {
+          backgroundColor: 'rgba(255, 255, 255, 0.1)'
+        }
+      }
+    },
+
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box sx={{
+        display: 'grid',
+        gridTemplateColumns: '1fr auto 1fr',
+        width: '100%',
+        alignItems: 'center',
+        position: 'relative',
+        gap: 1,
+      }}>
+        {/* Botones de exportación a PDF */}
+        <Box sx={{
+          display: 'flex',
+          gap: 1,
+          gridColumn: 1,
+          justifyContent: 'flex-start',
+        }}>
+          <Button
+            onClick={() => handleExportRowsToPDF(table.getPrePaginationRowModel().rows)}
+            startIcon={<FileDownloadIcon />}
+            variant="contained"
+            color="primary"
+            disabled={error || isLoading}
+          >
+            {t('mayus.descargarTodasPDF')}
+          </Button>
+          <Button
+            onClick={() => handleExportRowsToPDF(table.getRowModel().rows)}
+            startIcon={<FileDownloadIcon />}
+            variant="outlined"
+            color="primary"
+            disabled={error || isLoading}
+          >
+            {t('mayus.descargarVisiblesPDF')}
+          </Button>
+        </Box>
+
+        {/* Título de la tabla */}
+        <Box sx={{
+          gridColumn: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          pointerEvents: 'none',
+          justifyContent: 'center',
+        }}>
+          <Typography variant="h4" sx={{
+            color: '#d9d9d9',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            marginBottom: '-5px'
+          }}>
+            {t('mayus.historialDeAlertas')}
+          </Typography>
+          <Typography variant="subtitle1" sx={{ color: '#d9d9d9' }}>
+            {t('mayus.extendido')}
+          </Typography>
+        </Box>
+      </Box>
+    ),
+  });
 
   return (
     <div className="w-full bg-[#131313] rounded-[15px] p-[20px] mt-[113px]">
-      <div className="w-1/2 font-bold text-[#D9D9D9] mb-[15px]">
-        <h1 className="text-[25px]">{t('mayus.historialDeAlertas')}</h1>
-        <h2 className="text-[20px]">{t('mayus.extendido')}</h2>
-      </div>
-      <Table
-        aria-label="Tabla de alertas"
-        className="w-full bg-[#131313] text-[#D9D9D9] table-fixed"
-      >
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn
-              key={column.key}
-              allowsSorting
-              className="bg-[#1F1F1F] text-[#D9D9D9] font-medium"
-              onClick={() => handleSort(column.key)}
-            >
-              {column.label}
-              {sortConfig.key === column.key && (
-                <span>{sortConfig.direction === "asc" ? "↑" : "↓"}</span>
-              )}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          isLoading={isLoading && !error}
-          items={!error ? paginatedRows : []}
-          loadingContent={<Spinner label={t('min.cargando')} />} // En vez de "Cargando..."
-        >
-          {!error
-            ? (item) => (
-                <TableRow key={item.key}>
-                  {(columnKey) => (
-                    <TableCell className="bg-[#131313] text-[#D9D9D9]">
-                      {getKeyValue(item, columnKey)}
-                    </TableCell>
-                  )}
-                </TableRow>
-              )
-            : null}
-        </TableBody>
-      </Table>
-      {error && (
+      {error ? (
         <div className="text-center mt-[4px] text-[#D9D9D9] h-[150px] flex flex-col justify-center items-center shadow-md rounded-[15px]">
           <div className="mb-2">{error}</div>
-          <Button onClick={connectWebSocket} className="bg-[#761122]">
-            {t('min.reintentar')} {/* Traducción para el botón también */}
+          <Button 
+            onClick={connectWebSocket} 
+            variant="contained" 
+            color="error" 
+            sx={{backgroundColor: "#761122"}}
+          >
+            {t('min.reintentar')}
           </Button>
         </div>
+      ) : (
+        <ThemeProvider theme={customTheme}>
+          <MaterialReactTable table={table} />
+        </ThemeProvider>
       )}
-      <div className="flex justify-between items-center mt-5">
-        <div className="flex items-center gap-2 text-[#D9D9D9]">
-          <label htmlFor="rows-per-page">{t('min.filasPorPagina')}:</label>
-          <select
-            id="rows-per-page"
-            value={rowsPerPage}
-            onChange={handleRowsPerPageChange}
-            className="bg-[#2C2C2C] text-[#D9D9D9] rounded-md p-[5px]"
-            disabled={!!error}
-          >
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={15}>15</option>
-          </select>
-        </div>
-        <Pagination
-          className="flex flex-wrap gap-4 items-center overflow-hidden"
-          showControls
-          isCompact
-          color="white"
-          variant="light"
-          size="lg"
-          initialPage={1}
-          total={totalPages}
-          page={page}
-          onChange={handlePageChange}
-          disabled={!!error}
-        />
-      </div>
     </div>
   );
 };

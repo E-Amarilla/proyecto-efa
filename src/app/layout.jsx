@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
       <html lang={initialLanguage}>
         <head>
           <title>{metadata.title.default}</title>
-          <meta name="description" content={metadata.description} />
+          <meta name="description" content={metadata.description} charset="UTF-8"/>
           <link rel="icon" href={metadata.icons.icon} sizes="any" />
         </head>
         <body>
