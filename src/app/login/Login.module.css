@@ -42,8 +42,8 @@
 
 .imagen {
     display: flex;
-    width: 60%;
-    margin: auto;
+    width: 65%;
+    margin: 0;
     padding: 0;
     height: auto;
 }

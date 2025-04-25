@@ -101,6 +101,10 @@
         "cerrarSesion": "Log out",
         "peso": "Weight",
         "fecha": "Date",
-        "prodDiaria": "Production per day"
+        "prodDiaria": "Production per day",
+        "recuperar": "Forgot your password? Recover it here.",
+        "acceder": "Login",
+        "usuario": "Username",
+        "contra": "Password"
     }
 }

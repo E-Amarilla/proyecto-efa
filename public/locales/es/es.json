@@ -32,13 +32,13 @@
         "datosSDDA": "DATOS SDDA - DESMOLDADORA",
         "datosTorre": "DATOS TORRE",
         "datosGripper": "DATOS GRIPPERS",
-        "posicionX": "Posición X",
-        "posicionY": "Posición Y",
-        "posicionZ": "Posición Z",
-        "nivelActual": "Nivel actual",
+        "posicionX": "POSICIÓN X",
+        "posicionY": "POSICIÓN Y",
+        "posicionZ": "POSICIÓN Z",
+        "nivelActual": "NIVEL ACTUAL",
         "nroTorreActual": "N° TORRE ACTUAL",
         "nroTorreProxima": "N° TORRE PRÓXIMA",
-        "totalNiveles": "Total niveles",
+        "totalNiveles": "TOTAL NIVELES",
         "nroGripperActual": "N° GRIPPER ACTUAL",
         "nroGripperProximo": "N° GRIPPER PRÓXIMO",
         "historialDeAlertas": "HISTORIAL DE ALERTAS",
@@ -100,6 +100,10 @@
         "cerrarSesion": "Cerrar sesión",
         "peso": "Peso",
         "fecha": "Fecha",
-        "prodDiaria": "Producción por día"
+        "prodDiaria": "Producción por día",
+        "recuperar": "¿Olvido su contraseña? Recuperela aquí",
+        "acceder": "Acceder",
+        "usuario": "Usuario",
+        "contra": "Contraseña"
     }
 }
