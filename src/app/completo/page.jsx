@@ -152,10 +152,10 @@ const Completo = () => {
         <Link href="/alertas" className="flex justify-end">
           <Button
             className="hoverEffect flex justify-self-left font-bold bg-[#131313]"
-            radius="full"
+            radius="md"
             auto
           >
-            Ver más
+            {t('min.verMas')}
           </Button>
         </Link>
       </div>

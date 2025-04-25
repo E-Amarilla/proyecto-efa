@@ -134,66 +134,91 @@ const Tabla = () => {
     [sortedItems, page, rowsPerPage]
   );
 
-  // Función mejorada para exportar filas a PDF con soporte para UTF-8
   const handleExportRowsToPDF = (rows) => {
-    // Configurar PDF con fuente que soporte UTF-8
-    const doc = new jsPDF({
-      orientation: 'portrait',
-      unit: 'pt',
-      format: 'a4'
-    });
-    
-    // Usar una fuente que soporte caracteres especiales
-    doc.setFont("helvetica", "normal");
-    
-    // Extraer datos para la tabla
-    const tableData = rows.map((row) => {
-      return columns.map(col => {
-        const value = row.original[col.accessorKey] || '';
-        return String(value); // Asegurar que todos los valores son cadenas
+    try {
+      // Configurar PDF con fuente que soporte UTF-8
+      const doc = new jsPDF({
+        orientation: 'portrait',
+        unit: 'pt',
+        format: 'A4'
       });
-    });
+      
+      const pageWidth = doc.internal.pageSize.getWidth();
+      
+      // Extraer datos para la tabla
+      const tableData = rows.map((row) => {
+        return columns.map(col => {
+          const value = row.original[col.accessorKey] || '';
+          if (col.accessorKey === 'time' && typeof value === 'string') {
+            // Formatear fecha si es posible
+            try {
+              const date = new Date(value);
+              return date.toISOString().slice(0, 16).replace("T", " ");
+            } catch (e) {
+              return String(value); 
+            }
+          }
+          return String(value);
+        });
+      });
+      
+      const tableHeaders = columns.map(c => c.header);
+      const totalTexto = `Total de registros: ${rows.length}`;
+      const exportDate = new Date().toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+  
+      // CABECERA personalizada
+      const headerHeight = 70;
+      doc.setFillColor(19, 19, 19); // Fondo oscuro
+      doc.rect(0, 0, pageWidth, headerHeight, 'F');
     
-    const tableHeaders = columns.map(c => c.header);
-
-    // Configurar autoTable con opciones para caracteres especiales
-    autoTable(doc, {
-      head: [tableHeaders],
-      body: tableData,
-      theme: 'grid',
-      styles: { 
-        fillColor: [41, 41, 41],
-        textColor: [255, 255, 255],
-        font: 'helvetica', 
-        fontSize: 8,
-        overflow: 'linebreak',
-        cellPadding: 3
-      },
-      headStyles: { 
-        fillColor: [25, 25, 25],
-        textColor: [255, 255, 255],
-        fontSize: 9,
-        fontStyle: 'bold' 
-      },
-      // Definir anchos de columnas proporcionales
-      columnStyles: {
-        0: { cellWidth: 'auto' }, // Descripción
-        1: { cellWidth: 60 },     // Tipo
-        2: { cellWidth: 60 },     // Estado
-        3: { cellWidth: 90 }      // Fecha
-      },
-    });
-
-    // Añadir título
-    doc.setFontSize(14);
-    doc.text(t('mayus.historialDeAlertas'), doc.internal.pageSize.getWidth() / 2, 30, { align: 'center' });
+      doc.setTextColor(255, 255, 255);
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10);
     
-    const date = new Date();
-    const formattedDate = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-    doc.setFontSize(10);
-    doc.text(`${t('mayus.fechaHoraActual')}: ${formattedDate}`, doc.internal.pageSize.getWidth() / 2, 50, { align: 'center' });
-
-    doc.save("Alertas.pdf");
+      doc.text('Fecha de exportación:', 20, 25);
+      doc.text('Contacto: soporte@creminox.com', 20, 40);
+      doc.text(totalTexto, 20, 55);
+    
+      doc.setFont('helvetica', 'normal');
+      doc.text(exportDate, 130, 25);
+      
+      // Si deseas agregar un logo, necesitarías importarlo primero
+  
+      // Configurar autoTable con opciones mejoradas
+      autoTable(doc, {
+        head: [tableHeaders],
+        body: tableData,
+        theme: 'grid',
+        margin: { top: headerHeight + 10 },
+        styles: { 
+          fillColor: [41, 41, 41],
+          textColor: [255, 255, 255],
+          fontSize: 9,
+          overflow: 'linebreak',
+          cellPadding: 3
+        },
+        headStyles: { 
+          fillColor: [25, 25, 25],
+          textColor: [255, 255, 255],
+          fontSize: 9,
+          fontStyle: 'bold' 
+        },
+        alternateRowStyles: {
+          fillColor: [30, 30, 30],
+        },
+        tableLineColor: [100, 100, 100],
+        tableLineWidth: 0.1,
+      });
+  
+      doc.save("Alertas.pdf");
+    } catch (error) {
+      console.error("Error al generar PDF:", error);
+      // Podrías agregar un toast de error aquí
+    }
   };
 
   // Tema personalizado para Material-UI
@@ -213,6 +238,13 @@ const Tabla = () => {
       },
     },
     components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundColor: '#131313 !important',
+          }
+        },
+      },
       MuiMenu: {
         styleOverrides: {
           paper: {
@@ -241,6 +273,13 @@ const Tabla = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
               }
             },
+          },
+        },
+      },
+      MuiMenu: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: '#131313 !important',
           },
         },
       },
@@ -285,7 +324,7 @@ const Tabla = () => {
     // Estilo para la cabecera de la tabla
     muiTableHeadCellProps: {
       sx: {
-        backgroundColor: "#1F1F1F",
+        backgroundColor: "#131313",
         color: "#d9d9d9",
         fontWeight: "bold",
         '& .MuiDivider-root': {
@@ -300,7 +339,7 @@ const Tabla = () => {
 
     muiTableHeadRowProps: {
       sx: {
-        backgroundColor: "#1F1F1F",
+        backgroundColor: "#131313",
       },
     },
 
@@ -383,7 +422,7 @@ const Tabla = () => {
     muiTablePaperProps: {
       elevation: 0,
       sx: {
-        backgroundColor: '#1e1e1e',
+        backgroundColor: '#131313 !important',
         borderRadius: '8px',
       },
     },
@@ -423,7 +462,13 @@ const Tabla = () => {
           justifyContent: 'flex-start',
         }}>
           <Button
-            onClick={() => handleExportRowsToPDF(table.getPrePaginationRowModel().rows)}
+            onClick={() => {
+              // Usamos directamente el arreglo sortedItems que contiene TODAS las filas
+              const allRows = sortedItems.map(item => ({
+                original: item
+              }));
+              handleExportRowsToPDF(allRows);
+            }}
             startIcon={<FileDownloadIcon />}
             variant="contained"
             color="primary"
@@ -432,7 +477,11 @@ const Tabla = () => {
             {t('mayus.descargarTodasPDF')}
           </Button>
           <Button
-            onClick={() => handleExportRowsToPDF(table.getRowModel().rows)}
+            onClick={() => {
+              // Usar getRowModel() para filas solo de la página actual
+              const visibleRows = table.getRowModel().rows;
+              handleExportRowsToPDF(visibleRows);
+            }}
             startIcon={<FileDownloadIcon />}
             variant="outlined"
             color="primary"
@@ -450,6 +499,7 @@ const Tabla = () => {
           alignItems: 'center',
           pointerEvents: 'none',
           justifyContent: 'center',
+          marginLeft: '185px'
         }}>
           <Typography variant="h4" sx={{
             color: '#d9d9d9',
@@ -468,7 +518,7 @@ const Tabla = () => {
   });
 
   return (
-    <div className="w-full bg-[#131313] rounded-[15px] p-[20px] mt-[113px]">
+    <div className="w-full bg-[#131313] rounded-[15px] p-[20px] mx-[10px] my-[10px] mt-[123px]">
       {error ? (
         <div className="text-center mt-[4px] text-[#D9D9D9] h-[150px] flex flex-col justify-center items-center shadow-md rounded-[15px]">
           <div className="mb-2">{error}</div>
