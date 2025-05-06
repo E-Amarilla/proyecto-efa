@@ -1,0 +1,120 @@
+import ffmpeg from 'fluent-ffmpeg';
+import path from 'path';
+import fs from 'fs';
+
+const RTSP_URLS = [
+  "rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/102",
+  "rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/202",
+  "rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/302",
+].filter(Boolean);
+
+const HLS_DIR = path.join(process.cwd(), 'public', 'hls');
+
+const ffmpegProcesses = [];
+let isStreaming = false;
+
+const clearHlsDirectory = () => {
+  if (fs.existsSync(HLS_DIR)) {
+    const files = fs.readdirSync(HLS_DIR);
+    files.forEach((file) => {
+      const filePath = path.join(HLS_DIR, file);
+      try {
+        fs.unlinkSync(filePath);
+      }
+      finally {
+      }
+    });
+  }
+};
+
+if (!fs.existsSync(HLS_DIR)) {
+  fs.mkdirSync(HLS_DIR, { recursive: true });
+} else {
+  clearHlsDirectory();
+}
+
+const killFfmpegProcesses = () => {
+  ffmpegProcesses.forEach((process) => {
+    try {
+      process.kill('SIGKILL');
+    }
+    finally {}
+  });
+  ffmpegProcesses.length = 0;
+};
+
+const startStream = (rtspUrl, outputFile) => {
+  return new Promise((resolve, reject) => {
+    const command = ffmpeg(rtspUrl)
+      .output(path.join(HLS_DIR, outputFile))
+      .outputOptions([
+        '-hls_time 5',
+        '-hls_list_size 4',
+        '-hls_flags delete_segments+append_list',
+        '-force_key_frames expr:gte(t,n_forced*5)',
+        '-g 5',
+        '-keyint_min 5',
+        '-f hls',
+        '-c:v libx264',
+        '-c:a aac',
+      ])
+      .on('start', (cmdline) => {
+        resolve(command);
+      })
+      .on('progress', (progress) => {
+      })
+      .on('error', (err) => {
+        reject(err);
+      })
+      .on('end', () => {
+      });
+
+    ffmpegProcesses.push(command);
+    command.run();
+  });
+};
+
+export default async function handler(req, res) {
+  if (isStreaming) {
+    return res.status(200).json({ message: 'Las transmisiones ya están en curso' });
+  }
+
+  isStreaming = true;
+
+  try {
+    const filesExist = RTSP_URLS.every((_, index) => {
+      const outputFile = `cam${index + 1}.m3u8`;
+      return fs.existsSync(path.join(HLS_DIR, outputFile));
+    });
+
+    if (!filesExist) {
+      killFfmpegProcesses();
+
+      for (let i = 0; i < RTSP_URLS.length; i++) {
+        const outputFile = `cam${i + 1}.m3u8`;
+        await startStream(RTSP_URLS[i], outputFile);
+      }
+    }
+
+    res.status(200).json({ message: 'Transmisiones iniciadas para todas las cámaras' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al iniciar las transmisiones' });
+  }
+}
+
+export const cleanupHandler = (req, res) => {
+  killFfmpegProcesses();
+  clearHlsDirectory();
+  isStreaming = false;
+  res.status(200).json({ message: 'Recursos limpiados correctamente' });
+};
+
+process.on('SIGTERM', () => {
+  killFfmpegProcesses();
+  process.exit();
+});
+
+process.on('SIGINT', () => {
+  killFfmpegProcesses();
+  process.exit();
+});

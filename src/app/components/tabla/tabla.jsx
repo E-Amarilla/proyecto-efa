@@ -1,13 +1,15 @@
 "use client";
 
+import { toast } from "sonner";
 import { useState, useEffect, useMemo } from "react";
 import { MaterialReactTable, useMaterialReactTable } from "material-react-table";
 import { createTheme, ThemeProvider } from '@mui/material';
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Menu, MenuItem, Tooltip, IconButton } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useTranslation } from "react-i18next";
+import * as XLSX from 'xlsx';
 
 const Tabla = () => {
   const [page, setPage] = useState(1);
@@ -18,6 +20,18 @@ const Tabla = () => {
   const [items, setItems] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "", direction: "asc" });
 
+  // Estado para el menú de exportación
+  const [exportMenuAnchorEl, setExportMenuAnchorEl] = useState(null);
+  const exportMenuOpen = Boolean(exportMenuAnchorEl);
+
+  const handleExportMenuClick = (event) => {
+    setExportMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleExportMenuClose = () => {
+    setExportMenuAnchorEl(null);
+  };
+  
   const wsUrl = `ws://${process.env.NEXT_PUBLIC_IP}:${process.env.NEXT_PUBLIC_PORT}/ws/datos`;
 
   const connectWebSocket = () => {
@@ -90,7 +104,7 @@ const Tabla = () => {
     {
       accessorKey: 'description',
       header: t('mayus.descripcion'),
-      size: 300,
+      size: 400,
     },
     {
       accessorKey: 'type',
@@ -106,6 +120,27 @@ const Tabla = () => {
       accessorKey: 'time',
       header: t('mayus.fechaRegistro'),
       size: 200,
+      filterFn: (row, columnId, filterValue) => {
+        // Si no hay valor de filtro, mostrar todas las filas
+        if (!filterValue) return true;
+        
+        const rowValue = row.original.time;
+        if (!rowValue) return false;
+        
+        try {
+          // Convertir el filtro a minúsculas para hacerlo insensible a mayúsculas/minúsculas
+          const filterText = String(filterValue).toLowerCase().trim();
+          
+          // Usar el valor completo (fecha y hora) para la comparación
+          const fullValue = rowValue.toLowerCase();
+          
+          // Verificar si la fecha/hora completa contiene el texto del filtro
+          return fullValue.includes(filterText);
+        } catch (e) {
+          console.error('Error al filtrar por fecha/hora:', e);
+          return false;
+        }
+      }
     },
   ], [t]);
 
@@ -221,6 +256,55 @@ const Tabla = () => {
     }
   };
 
+  const handleExportExcel = (rows, fileName) => {
+    try {
+      // Preparar los datos para Excel
+      const excelData = rows.map(row => {
+        const rowData = {};
+        
+        columns.forEach(column => {
+          const key = column.accessorKey;
+          let value = row.original[key];
+          
+          // Formatear la fecha si es la columna de tiempo
+          if (key === 'time' && typeof value === 'string') {
+            try {
+              const date = new Date(value);
+              value = date.toISOString().slice(0, 16).replace("T", " ");
+            } catch (e) {
+              // Si hay un error al formatear la fecha, mantener el valor original
+            }
+          }
+          
+          // Usar el header traducido como nombre de columna
+          const headerName = column.header;
+          rowData[headerName] = value;
+        });
+        
+        return rowData;
+      });
+      
+      // Crear una hoja de cálculo
+      const workSheet = XLSX.utils.json_to_sheet(excelData);
+      const workBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBook, workSheet, "Alertas");
+      
+      // Generar y descargar el archivo
+      XLSX.writeFile(workBook, `${fileName}.xlsx`);
+      
+      toast.success('Éxito', {
+        description: 'Excel descargado correctamente',
+        position: 'bottom-right'
+      });
+    } catch (error) {
+      toast.error('Error', {
+        description: error instanceof Error ? error.message : 'Error al generar el Excel',
+        position: 'bottom-right'
+});
+    }
+    
+    handleExportMenuClose();
+  };
   // Tema personalizado para Material-UI
   const customTheme = createTheme({
     palette: {
@@ -310,6 +394,17 @@ const Tabla = () => {
         setRowsPerPage(newPagination.pageSize);
       }
     },
+    renderEmptyRowsFallback: () => (
+      <Box
+        sx={{
+          textAlign: 'center',
+          padding: '2rem',
+          color: '#d9d9d9'
+        }}
+      >
+        {t('min.noExistenDatosParaLaFechaIndicada')}
+      </Box>
+    ),
     enableSorting: true,
     enableColumnResizing: true,
     columnResizeMode: "onChange",
@@ -318,7 +413,8 @@ const Tabla = () => {
       density: 'spacious',
       pagination: {
         pageSize: 10, // Asegúrate de que este valor coincida con el valor inicial del estado
-      }
+      },
+      showColumnFilters: true,
     },
 
     // Estilo para la cabecera de la tabla
@@ -462,33 +558,48 @@ const Tabla = () => {
           justifyContent: 'flex-start',
         }}>
           <Button
-            onClick={() => {
-              // Usamos directamente el arreglo sortedItems que contiene TODAS las filas
-              const allRows = sortedItems.map(item => ({
-                original: item
-              }));
-              handleExportRowsToPDF(allRows);
-            }}
+            id="export-button"
+            aria-controls={exportMenuOpen ? 'export-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={exportMenuOpen ? 'true' : undefined}
+            onClick={handleExportMenuClick}
             startIcon={<FileDownloadIcon />}
             variant="contained"
             color="primary"
-            disabled={error || isLoading}
-          >
-            {t('mayus.descargarTodasPDF')}
-          </Button>
-          <Button
-            onClick={() => {
-              // Usar getRowModel() para filas solo de la página actual
-              const visibleRows = table.getRowModel().rows;
-              handleExportRowsToPDF(visibleRows);
+            sx={{
+              backgroundColor: "#761122",
+              width: "319px", // Ancho fijo que coincida con el menú
+              '&:hover': {
+                backgroundColor: '#761122',
+              },
+              paddingLeft: "16px" // Espacio para que no esté pegado al borde
             }}
-            startIcon={<FileDownloadIcon />}
-            variant="outlined"
-            color="primary"
-            disabled={error || isLoading}
           >
-            {t('mayus.descargarVisiblesPDF')}
+            {t('mayus.exportar')}
           </Button>
+          
+          <Menu
+            id="export-menu"
+            anchorEl={exportMenuAnchorEl}
+            open={exportMenuOpen}
+            onClose={handleExportMenuClose}
+            MenuListProps={{
+              'aria-labelledby': 'export-button',
+            }}
+          >
+            <MenuItem onClick={() => handleExportRowsToPDF(sortedItems.map(item => ({ original: item })))}>
+              {t('mayus.exptodaspdf')}
+            </MenuItem>
+            <MenuItem onClick={() => handleExportRowsToPDF(table.getRowModel().rows)}>
+              {t('mayus.expvisiblespdf')}
+            </MenuItem>
+            <MenuItem onClick={() => handleExportExcel(sortedItems.map(item => ({ original: item })), "Todas_Alertas")}>
+              {t('mayus.exptodasexcel')}
+            </MenuItem>
+            <MenuItem onClick={() => handleExportExcel(table.getRowModel().rows, "Alertas_Visibles")}>
+              {t('mayus.expvisiblesexcel')}
+            </MenuItem>
+          </Menu>
         </Box>
 
         {/* Título de la tabla */}

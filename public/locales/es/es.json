@@ -1,6 +1,11 @@
 {
     "mayus":
     {
+        "exportar": "OPCIONES DE EXPORTACION",
+        "exptodaspdf": "EXPORTAR TODO A PDF",
+        "exptodasexcel": "EXPORTAR TODO A EXCEL",
+        "expvisiblespdf": "EXPORTAR FILAS VISIBLES A PDF",
+        "expvisiblesexcel": "EXPORTAR FILAS VISIBLES A EXCEL",
         "descripcion": "DESCRIPCIÓN",
         "listadoAlertas": "LISTADO ALERTAS",
         "tipo": "TIPO",
@@ -50,6 +55,7 @@
     },
     "min":
     {
+        "noExistenDatosParaLaFechaIndicada": "No existen datos para la fecha indicada", 
         "desmoldeo": "Desmoldeo",
         "encajonado": "Encajonado",
         "paletizado": "Paletizado",

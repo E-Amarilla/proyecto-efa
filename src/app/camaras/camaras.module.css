@@ -1,15 +1,10 @@
 .contenedores {    
-    margin-top: 103px;
+    margin-top: 133px;
     display: flex;
     flex-direction: row;
-    justify-content: center; /* Centrar horizontalmente */
-    align-items: center; /* Centrar verticalmente */
+    justify-content: center; 
     height: 73vh;
-    width: 90%; /* Limitamos el ancho para mejor control */
-    max-width: 1920px; /* Ancho máximo para pantallas grandes */
-    margin-left: auto;
-    margin-right: auto;
-    gap: 20px; /* Espacio entre cámaras */
+    width: auto;
 }
 
 .contenedor {
@@ -17,30 +12,20 @@
     background-color: #131313;
     border-radius: 20px;
     padding: 20px;
-    width: 45vw; /* Ancho escalado */
-    height: 30vw; /* Mantener proporción igual a las individuales */
-    max-height: 600px; /* Limitar altura máxima */
+    width: 100%;
+    height: 27.8vw;
+    margin-top: 6vh;
+    min-height: 250px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform: scale(0.9); /* Mismo escalado que las individuales */
-    overflow: hidden;
+    transform: scale(0.9);
 }
 
-.cam {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.contenedor:hover {
-    transform: scale(0.98);
+.contenedor:hover
+{
+    transform: scale(0.92);
     opacity: 1;
-    background-color: rgba(75, 75, 75, 0.8);
+    background-color: rgba(75, 75, 75, 0.8); /* Fondo más opaco */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }

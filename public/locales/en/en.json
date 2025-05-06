@@ -1,6 +1,11 @@
 {
     "mayus":
     {
+        "exportar": "EXPORT OPTIONS",
+        "exptodaspdf": "EXPORT ALL TO PDF",
+        "exptodasexcel": "EXPORT ALL TO EXCEL",
+        "expvisiblespdf": "EXPORT VISIBLE ROWS TO PDF",
+        "expvisiblesexcel": "EXPORT VISIBLE ROWS TO EXCEL",
         "descripcion": "DESCRIPTION",
         "camaras": "CAMERAS",
         "home": "HOME",
@@ -51,6 +56,7 @@
 
     "min":
     {   
+        "noExistenDatosParaLaFechaIndicada": "No data available for the selected date", 
         "desmoldeo": "Demolding",
         "encajonado": "Boxing",
         "paletizado": "Palletizing",

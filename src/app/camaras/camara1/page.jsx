@@ -15,7 +15,7 @@ const Camara1 = () => {
             >
                 ❮
             </button>
-            <div className={style.contenedor} style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div className={style.contenedor}>
                 <VideoStream cameraId="cam1" />
             </div>
         </div>
