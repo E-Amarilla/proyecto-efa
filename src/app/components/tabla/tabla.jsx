@@ -250,10 +250,17 @@ const Tabla = () => {
       });
   
       doc.save("Alertas.pdf");
+      toast.success('Éxito', {
+        description: 'PDF descargado correctamente',
+        position: 'bottom-right'
+      });
     } catch (error) {
-      console.error("Error al generar PDF:", error);
-      // Podrías agregar un toast de error aquí
+      toast.error('Error', {
+        description: error instanceof Error ? error.message : 'Error al generar el PDF',
+        position: 'bottom-right'
+      });
     }
+    handleExportMenuClose();
   };
 
   const handleExportExcel = (rows, fileName) => {
@@ -300,7 +307,7 @@ const Tabla = () => {
       toast.error('Error', {
         description: error instanceof Error ? error.message : 'Error al generar el Excel',
         position: 'bottom-right'
-});
+      });
     }
     
     handleExportMenuClose();

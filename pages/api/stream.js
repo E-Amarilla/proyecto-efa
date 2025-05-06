@@ -3,9 +3,9 @@ import path from 'path';
 import fs from 'fs';
 
 const RTSP_URLS = [
-  "rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/102",
-  "rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/202",
-  "rtsp://admin:Marcelo2022@192.168.0.181:554/Streaming/Channels/302",
+  "rtsp://admin:Beron2745@192.168.10.160:554/Streaming/Channels/102",
+  "rtsp://admin:Beron2745@192.168.10.160:554/Streaming/Channels/202",
+  "rtsp://admin:Beron2745@192.168.10.160:554/Streaming/Channels/302",
 ].filter(Boolean);
 
 const HLS_DIR = path.join(process.cwd(), 'public', 'hls');

@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import AuthContext from "../context/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -7,20 +8,42 @@ import crem from "@/assets/img/creminox.png";
 import { useTranslation } from 'react-i18next';
 
 const Login = () => {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const { t } = useTranslation('trad');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      sessionStorage.setItem('acceso', 'true');
-      router.push('/completo');
+   const { t } = useTranslation();
+   const { user, login } = useContext(AuthContext);
+   const [username, setUsername] = useState('');
+   const [password, setPassword] = useState('');
+   const [message, setMessage] = useState(''); // Estado para el mensaje de error
+   const [loading, setLoading] = useState(false); // Estado para el spinner
+ 
+   useEffect(() => {
+     // Recuperar el username desde sessionStorage al montar el componente
+     const storedUsername = sessionStorage.getItem('username');
+     if (storedUsername) {
+       setUsername(storedUsername);
+     }
+   }, []);
+ 
+   const handleSubmit = async (e) => {
+     e.preventDefault();
+     setLoading(true); // Activar el spinner
+     setMessage(''); // Limpiar mensajes de error anteriores
+     try {
+      await login(username, password);
+      // Guardar el username en sessionStorage al iniciar sesión exitosamente
+      sessionStorage.setItem('username', username);
+      sessionStorage.setItem('acceso', 'true'); // Agrega esta línea
+      setMessage(''); // Limpiar el mensaje si el login es exitoso
+    } catch (error) {
+      if (error.message === "Credenciales inválidas") {
+        setMessage('Credenciales inválidas'); // Mostrar mensaje de error de credenciales
+      } else {
+        setMessage('Ha ocurrido un error. Por favor, inténtalo de nuevo.'); // Mensaje genérico para otros errores
+      }
     } finally {
       setLoading(false);
     }
   };
+    
 
   return (
     <div className="flex min-h-[100vh] w-full items-center justify-center">
@@ -38,6 +61,8 @@ const Login = () => {
             </label>
             <input
               type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="bg-[#1f1f1f] p-[4px] rounded-[10px] w-[100%] h-[60%] flex items-center justify-center border-none"
             />
           </div>
@@ -48,15 +73,22 @@ const Login = () => {
             </label>
             <input
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="bg-[#1f1f1f] p-[4px] rounded-[10px] w-[100%] h-[60%] flex items-center justify-center border-none"
             />
           </div>
 
+          {message && (
+            <div className="text-[#e82a31] text-sm mt-1">{message}</div>
+          )}
+
           <button 
             type="submit"
+            disabled={loading}
             className="bg-[#e82a31] mt-[5px] p-[4px] rounded-[10px] w-[100%] h-1/5 flex items-center justify-center border-none text-[#D9D9D9] font-bold cursor-pointer disabled:bg-[#a82328] disabled:cursor-not-allowed"
           >
-            {t('min.acceder')}
+            {loading ? t('min.cargando') : t('min.acceder')}
           </button>
         </form>
 

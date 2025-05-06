@@ -16,7 +16,7 @@ const CustomFooter = dynamic(() => import('./components/footer/footer_desmoldeo'
 export default function RootLayout({ children }) {
   const pathname = usePathname();
   const esDesmoldeo = pathname === '/desmoldeo';
-  const esLogin = pathname === '/login';
+  const esLogin = ['/signup', '/login', '/login/recuperacion'].includes(pathname);
   const [initialLanguage, setInitialLanguage] = useState('es');
   
   useEffect(() => {

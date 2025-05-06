@@ -1,16 +1,18 @@
 "use client";
 
 //Next y React
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { usePathname } from 'next/navigation';
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import AuthContext from '../../context/AuthContext';
 
 //IMG
 import cremImg from "@/assets/img/creminox.png";
 import usuario from "@/assets/img/usuario.png";
 import alarmaImg from "@/assets/img/alarma.png";
+import confImg from "@/assets/img/configuracion.png";
 
 //Componentes
 import MenuAlarmas from '../../components/dropdownalarmas/dropdown';
@@ -21,10 +23,10 @@ import DropdownBanderas from "../../components/traduccion/DropdownBanderas.jsx";
 //Estilos
 import style from './Header.module.css';
 
-
-
 const ExeHeader = () => {
   const { t } = useTranslation();
+  const { user } = useContext(AuthContext);
+  const userRole = user?.role;
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
@@ -39,7 +41,8 @@ const ExeHeader = () => {
   const opcionesIconos = [
     { id: 1, icon: usuario, onClick: () => {} },
     { id: 2, icon: alarmaImg, isDropdown: true },
-    { id: 3, isIdioma: true },
+    { id: 3, url: "/configuraciones", icon: confImg },
+    { id: 4, isIdioma: true },
   ];
 
   const opcionesMenu = [
@@ -47,25 +50,41 @@ const ExeHeader = () => {
     { id: 2, url: "/completo", text: t('mayus.home') },
   ];
 
+  const iconosFiltrados = opcionesIconos.filter(opcion => 
+    opcion.id !== 3 || userRole === "ADMIN"
+  );
+
   return (
     <>
       <header className={style.contenedor}>
         <nav className={style.navbar}>
-          <div className={style.icons}>
-            {opcionesIconos.map(({ id, icon, onClick, isDropdown, isIdioma }) => (
-              <div key={id} className={style.contenedorImg}>
-                {isIdioma ? (
+        <div className={style.icons}>
+            {iconosFiltrados.map((opcion, index) => (
+              <div key={opcion.id} className={style.contenedorImg}>
+                {opcion.isIdioma ? (
                   <DropdownBanderas />
-                ) : isDropdown ? (
-                  <MenuAlarmas icon={icon} />
+                ) : opcion.isDropdown ? (
+                  <MenuAlarmas icon={opcion.icon} />
+                ) : opcion.onClick ? (
+                  <Desloguear icon={opcion.icon} />
                 ) : (
-                  <Desloguear icon={icon} />
+                  <div className={style.linkWrapper}>
+                    <Link href={opcion.url || '#'}>
+                      <Image
+                        className={style.icon}
+                        src={opcion.icon}
+                        alt={`Icono ${index + 1}`}
+                        width={24}
+                        height={24}
+                      />
+                    </Link>
+                  </div>
                 )}
               </div>
             ))}
           </div>
           <div className={style.centerText}>
-            <p>FRANKFURT | IFFA ALEMANIA</p>
+            <p>MXEF-04 | CELDA DE DESMOLDEO</p>
           </div>
           <div className={style.rightSection}>
             <ul className={style.navLinks}>

@@ -1,5 +1,6 @@
 "use client";
 import React, { useContext } from 'react';
+import { useRouter } from 'next/navigation';
 import AuthContext from '../../context/AuthContext';
 import {
     Dropdown,
@@ -28,7 +29,7 @@ const Desloguear = ({ icon }) => {
                     key="2"
                     onClick={logout}
                 >
-                    <span className={style.textCerrar}>Cerrar sesión</span>
+                    <span className={style.textCerrar}>{t('min.cerrarSesion')}</span>
                 </DropdownItem>
             </DropdownMenu>
         </Dropdown>
