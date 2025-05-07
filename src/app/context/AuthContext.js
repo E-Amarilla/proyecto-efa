@@ -23,21 +23,7 @@ export const AuthProvider = ({ children }) => {
 
   const { data, isConnected } = useWebSocket("datos");
 
-  useEffect(() => {
-    const publicRoutes = ['/login', '/signup', '/login/recuperacion'];
-    const blockedRoutes = ['/encajonado', '/paletizado'];
-    
-    if (typeof window !== "undefined") {
-      // Redirigir al login si no hay usuario y la ruta no es pública
-      if (!user && !publicRoutes.includes(pathname)) {
-        router.push('/login');
-      }
-      // Bloquear rutas sin importar si el usuario está autenticado o no
-      if (blockedRoutes.includes(pathname)) {
-        router.push('/error'); // O cualquier otra página que indique acceso denegado
-      }
-    }
-  }, [user, pathname]);
+
 
   useEffect(() => {
     const initializeStream = async () => {
@@ -54,7 +40,8 @@ export const AuthProvider = ({ children }) => {
   }, [streamInitialized, pathname]);
 
   useEffect(() => {
-    const publicRoutes = ['/login', '/'];
+    const publicRoutes = ['/login', '/', '/login/recuperacion']; // Añadir esta ruta
+    const blockedRoutes = ['/encajonado', '/paletizado'];
     const acceso = sessionStorage.getItem('acceso');
     
     if (!publicRoutes.includes(pathname) && !acceso) {
@@ -62,6 +49,9 @@ export const AuthProvider = ({ children }) => {
     }
     if (publicRoutes.includes(pathname) && acceso) {
       router.push('/completo');
+    }
+    if (blockedRoutes.includes(pathname)) {
+      router.push('/error');
     }
   }, [pathname]);
 

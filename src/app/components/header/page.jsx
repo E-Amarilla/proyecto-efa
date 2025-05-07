@@ -10,13 +10,13 @@ import AuthContext from '../../context/AuthContext';
 
 //IMG
 import cremImg from "@/assets/img/creminox.png";
-import usuario from "@/assets/img/usuario.png";
+
 import alarmaImg from "@/assets/img/alarma.png";
 import confImg from "@/assets/img/configuracion.png";
 
 //Componentes
 import MenuAlarmas from '../../components/dropdownalarmas/dropdown';
-import Desloguear from '../../components/usuario/desloguear';
+import Desloguear from './desloguear.jsx';
 import ExeSubNav from './SubNav/ExeSubNav.jsx';
 import DropdownBanderas from "../../components/traduccion/DropdownBanderas.jsx";
 
@@ -39,7 +39,7 @@ const ExeHeader = () => {
   }
 
   const opcionesIconos = [
-    { id: 1, icon: usuario, onClick: () => {} },
+    { id: 1, isUsuario: true }, // Cambiar esta línea
     { id: 2, icon: alarmaImg, isDropdown: true },
     { id: 3, url: "/configuraciones", icon: confImg },
     { id: 4, isIdioma: true },
@@ -59,29 +59,29 @@ const ExeHeader = () => {
       <header className={style.contenedor}>
         <nav className={style.navbar}>
         <div className={style.icons}>
-            {iconosFiltrados.map((opcion, index) => (
-              <div key={opcion.id} className={style.contenedorImg}>
-                {opcion.isIdioma ? (
-                  <DropdownBanderas />
-                ) : opcion.isDropdown ? (
-                  <MenuAlarmas icon={opcion.icon} />
-                ) : opcion.onClick ? (
-                  <Desloguear icon={opcion.icon} />
-                ) : (
-                  <div className={style.linkWrapper}>
-                    <Link href={opcion.url || '#'}>
-                      <Image
-                        className={style.icon}
-                        src={opcion.icon}
-                        alt={`Icono ${index + 1}`}
-                        width={24}
-                        height={24}
-                      />
-                    </Link>
-                  </div>
-                )}
-              </div>
-            ))}
+          {iconosFiltrados.map((opcion, index) => (
+            <div key={opcion.id} className={style.contenedorImg}>
+              {opcion.isIdioma ? (
+                <DropdownBanderas />
+              ) : opcion.isDropdown ? (
+                <MenuAlarmas icon={opcion.icon} />
+              ) : opcion.isUsuario ? ( // Cambiar esta condición
+                <Desloguear />
+              ) : (
+                <div className={style.linkWrapper}>
+                  <Link href={opcion.url || '#'}>
+                    <Image
+                      className={style.icon}
+                      src={opcion.icon}
+                      alt={`Icono ${index + 1}`}
+                      width={24}
+                      height={24}
+                    />
+                  </Link>
+                </div>
+              )}
+            </div>
+          ))}
           </div>
           <div className={style.centerText}>
             <p>MXEF-04 | CELDA DE DESMOLDEO</p>

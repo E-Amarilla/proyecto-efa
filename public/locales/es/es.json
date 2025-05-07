@@ -55,6 +55,8 @@
     },
     "min":
     {
+        "credencialesInvalidas": "Credenciales inválidas",
+        "errorCredenciales": "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
         "noExistenDatosParaLaFechaIndicada": "No existen datos para la fecha indicada", 
         "desmoldeo": "Desmoldeo",
         "encajonado": "Encajonado",
@@ -110,6 +112,10 @@
         "recuperar": "¿Olvido su contraseña? Recuperela aquí",
         "acceder": "Acceder",
         "usuario": "Usuario",
-        "contra": "Contraseña"
+        "contra": "Contraseña",
+        "estadosesion": "Sesión activa",
+        "botonsesion": "Cerrar sesión",
+        "recuperarcontra": "Recuperar contraseña",
+        "recordo": "¿Recordó su contraseña? Inicie sesión aquí"  
     }
 }

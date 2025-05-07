@@ -575,7 +575,7 @@ const Tabla = () => {
             color="primary"
             sx={{
               backgroundColor: "#761122",
-              width: "319px", // Ancho fijo que coincida con el menú
+              width: "305px", // Ancho fijo que coincida con el menú
               '&:hover': {
                 backgroundColor: '#761122',
               },

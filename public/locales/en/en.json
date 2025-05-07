@@ -56,6 +56,8 @@
 
     "min":
     {   
+        "credencialesInvalidas": "Invalid credentials",
+        "errorCredenciales": "An error occurred. Please try again.",
         "noExistenDatosParaLaFechaIndicada": "No data available for the selected date", 
         "desmoldeo": "Demolding",
         "encajonado": "Boxing",
@@ -111,6 +113,10 @@
         "recuperar": "Forgot your password? Recover it here.",
         "acceder": "Login",
         "usuario": "Username",
-        "contra": "Password"
+        "contra": "Password",
+        "estadosesion": "Active session",
+        "botonsesion": "Logout",
+        "recuperarcontra": "Recover password",
+        "recordo": "Did you remember your password? Log in here."
     }
 }

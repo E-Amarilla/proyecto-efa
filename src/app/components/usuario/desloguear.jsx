@@ -10,8 +10,10 @@ import {
 } from "@nextui-org/react";
 import style from './desloguear.module.css';
 import Image from "next/image";
+import { useTranslation } from 'react-i18next';
 
 const Desloguear = ({ icon }) => {
+    const { t } = useTranslation();
     const { logout } = useContext(AuthContext);
 
     return (
