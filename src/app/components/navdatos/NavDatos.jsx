@@ -13,12 +13,11 @@ import gripper from "@/assets/img/GRIPPER.png";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import React, { useState, useEffect, useRef } from 'react';
-import style from './NavDatos.module.css';
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 const NavDatos = () => {
-    const { data } = useContext(AuthContext); // Obtiene datos del contexto
+    const { data } = useContext(AuthContext);
     const { t } = useTranslation();
 
     const {
@@ -117,12 +116,12 @@ const NavDatos = () => {
     };       
 
     return (
-        <div className={style.nav}>
-            <ul className={style.navList}>
+        <div className="fixed top-[65px] left-0 w-[270px] bottom-0 bg-black pt-[50px] px-[20px] pb-[20px] z-[998] flex flex-col">
+            <ul className="flex flex-col gap-2 p-0 m-0 list-none">
                 {opcionesAlarma.map(({ id, nombre }) => (
                     <li
                         key={id}
-                        className={`${style.navItem} ${activeSection === id ? style.active : ''}`}
+                        className="m-0 gap-[10px]"
                     >
                         <Link
                             href={`#section${id}`}
@@ -130,7 +129,11 @@ const NavDatos = () => {
                                 e.preventDefault();
                                 handleScrollClick(id);
                             }}
-                            className={style.navLink}
+                            className={`m-0 p-0 block py-[6px] text-center text-white no-underline rounded-[15px] text-base font-bold border border-[#555555] transition-colors ${
+                                activeSection === id 
+                                    ? 'bg-[#007bff] border-[#0056b3]' 
+                                    : 'bg-[#1c1c1c] hover:bg-[#2b2b2b]'
+                            }`}
                         >
                             {nombre}
                         </Link>
@@ -138,25 +141,30 @@ const NavDatos = () => {
                 ))}
             </ul>
 
-            <hr className={style.linea}></hr>
+            <hr className="w-[98%] flex mx-auto mt-[20px] mb-[10px] text-white"></hr>
 
-            <div className={style.contenedorDatos}>
-                <p className={style.datosGen}>{t('mayus.datosGenerales')}</p>
-                <ul className={style.datosTods}>
+            <div className="overflow-auto">
+                <p className="m-0 mb-[10px] font-bold text-white block text-center">{t('mayus.datosGenerales')}</p>
+                
+                <ul className="list-none p-0 m-0 flex flex-col gap-2" lang="es">
                     {datosTiempoReal.map(({ id, nombre, dato, icono }) => (
-                        <Link href='/desmoldeo/equipox'>
-                            <li key={id} className={style.datosIndv}>
-                                <div className={style.detallesDatos}>
-                                    <h3 className={style.h3}>{nombre}</h3>
-                                    <h4 className={style.h4}>
+                        <Link href='/desmoldeo/equipox' key={id} className="block">
+                            <li className="flex items-start justify-between py-[10px] px-[15px] gap-2 border-2 border-[#555555] rounded-[15px] bg-[#1C1C1C] min-h-[55px] 
+                                        max-w-[1432px]:flex max-w-[1432px]:items-start max-w-[1432px]:justify-between
+                                        min-w-[1432px]:flex min-w-[1432px]:items-start min-w-[1432px]:justify-between">
+                                <div className="w-[90%] flex flex-col no-underline text-white">
+                                    <h3 className="w-full text-base p-0 m-0 font-semibold">{nombre}</h3>
+                                    <h4 className="w-full text-sm p-0 m-0 break-words whitespace-normal hyphens-auto overflow-wrap-anywhere">
                                         {(nombre === 'Peso desmoldado:' || nombre === 'Peso por fila:') ? `${dato} kg` : dato}
                                     </h4>
                                 </div>
-                                <Image 
-                                    src={icono} 
-                                    alt={`Estado: ${id}`} 
-                                    className={style.icon} 
-                                />
+                                <div className="w-[10%] flex items-start justify-center">
+                                    <Image 
+                                        src={icono} 
+                                        alt={`Estado: ${id}`} 
+                                        className="max-w-[25px] max-h-[25px] flex-shrink-0 mt-[3px]" 
+                                    />
+                                </div>
                             </li>
                         </Link>
                     ))}
