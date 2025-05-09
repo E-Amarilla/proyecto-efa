@@ -21,31 +21,52 @@ const Productividad = () => {
     const today = new Date().toISOString().split("T")[0];
 
     const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
     const [dateRange, setDateRange] = useState({
         start: today,
         end: today,
     });
 
     const handleDataUpdate = (newData, startDate, endDate) => {
+        setIsLoading(false);
         setData(newData);
         setDateRange({ start: startDate, end: endDate });
+    };
+
+    // Función para iniciar una nueva consulta
+    const handleStartLoading = () => {
+        setIsLoading(true);
     };
 
     const Cant_Dias = Math.ceil(
         (new Date(dateRange.end).getTime() - new Date(dateRange.start).getTime()) / (1000 * 3600 * 24) + 1
     );
 
-    const cantidadCiclosF = data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
-    ? data.ProductosRealizados.reduce((total, producto) => total + producto.cantidadCiclos, 0)
-    : t('min.cargando');
-    const PesoTotalCiclos = data?.PesoTotalCiclos.toFixed(2) ?? t('min.cargando');
-    const Horas_Uso =
-        data?.ProductosRealizados && Array.isArray(data.ProductosRealizados)
+    // Utiliza isLoading para determinar si mostrar "cargando" o el valor real
+    const cantidadCiclosF = isLoading 
+        ? t('min.cargando')
+        : Array.isArray(data?.ProductosRealizados)
+            ? data.ProductosRealizados.reduce((total, producto) => total + producto.cantidadCiclos, 0)
+            : 0;
+            
+    const PesoTotalCiclos = isLoading 
+        ? t('min.cargando') 
+        : data?.PesoTotalCiclos !== undefined && data?.PesoTotalCiclos !== null
+            ? data.PesoTotalCiclos.toFixed(2)
+            : "0.00";
+        
+    const Horas_Uso = isLoading
+        ? t('min.cargando')
+        : Array.isArray(data?.ProductosRealizados)
             ? data.ProductosRealizados.reduce((acc, prod) => acc + prod.tiempoTotal, 0)
-            : t('min.cargando');
+            : 0;
 
     const Promedio_Horas = (Horas_Uso, Cant_Dias) =>
-        Horas_Uso !== t('min.cargando') ? ((Horas_Uso/60) / (Cant_Dias)).toFixed(2) : t('min.cargando');
+        isLoading 
+            ? t('min.cargando') 
+            : Horas_Uso !== t('min.cargando') 
+                ? ((Horas_Uso/60) / (Cant_Dias)).toFixed(2) 
+                : "0.00";
 
     const datos = [
         { id: 1, titulo: t('min.ciclosRealizados'), dato: cantidadCiclosF },
@@ -121,7 +142,10 @@ const Productividad = () => {
                 </div>
             </div>
             <div className={`${style.filtro} ocultar-en-pdf`}>
-                <FiltroPeriodo onDataUpdate={handleDataUpdate} />
+                <FiltroPeriodo 
+                    onDataUpdate={handleDataUpdate} 
+                    onStartLoading={handleStartLoading} 
+                />
             </div>
         </div>
     );

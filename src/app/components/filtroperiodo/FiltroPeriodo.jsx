@@ -7,7 +7,7 @@ import BotonFiltro from "../botones/aplicarfiltro/botonfiltro.jsx";
 import style from "./FiltroPeriodo.module.css";
 import { useTranslation } from "react-i18next";
 
-const FiltroPeriodo = ({ onDataUpdate }) => {
+const FiltroPeriodo = ({ onDataUpdate, onStartLoading }) => {
     const { t } = useTranslation('trad');
     const storedUser = sessionStorage.getItem('user_data');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
@@ -60,6 +60,8 @@ const FiltroPeriodo = ({ onDataUpdate }) => {
     const handleButtonClick = async () => {
         const startDate = formatDate(dateRange.start) || formattedToday;
         const endDate = formatDate(dateRange.end) || formattedToday;
+
+        onStartLoading();
 
         setLoading(true);
         try {
