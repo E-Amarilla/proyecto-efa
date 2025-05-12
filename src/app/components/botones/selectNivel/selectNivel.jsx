@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './selectNivel.module.css';
 
-const Dropdown = ({ onChange }) => {
+const Dropdown = ({ onChange, disabled = false }) => {
   const [selectedNivel, setSelectedNivel] = useState('HN');
 
   const handleChange = (event) => {
@@ -12,21 +12,26 @@ const Dropdown = ({ onChange }) => {
 
   return (
     <div className={styles.dropdownContainer}>
-      <select className={styles.dropdown} value={selectedNivel} onChange={handleChange}>
-        <option value="HN" className={styles.texto} title="CH - Correccion_h">
-          HN
+      <select 
+        className={`${styles.dropdown} ${disabled ? styles.disabled : ''}`} 
+        value={selectedNivel} 
+        onChange={handleChange}
+        disabled={disabled}
+      >
+        <option value="HN" className={styles.texto} title="HN - Correccion_h">
+          HN | hNivel
         </option>
         <option value="ChG" className={styles.texto} title="CHg - Correccion_hguardado">
-          ChG
+          ChG | Guardado
         </option>
         <option value="ChB" className={styles.texto} title="CHb - Correccion_hbusqueda">
-          ChB
+          ChB | Busqueda
         </option>
         <option value="FA" className={styles.texto} title="FA - Fallas">
-          FA
+          FA | Fallas
         </option>
         <option value="uHN" className={styles.texto} title="uHN - ultimo_hNivel">
-          uHN
+          uHN | uhNivel
         </option>
       </select>
     </div>

@@ -5,7 +5,7 @@ import { Select, SelectItem } from "@nextui-org/react";
 import style from "./selectConfiguracion.module.css";
 import BotonRefresh from '../../../components/botones/aplicarreset/botonreset2'
 
-const SelectConfiguracion = ({ onChange, onClick}) => {
+const SelectConfiguracion = ({ onChange, onClick, disabled = false }) => {
   const [recetas, setRecetas] = useState([]);
   const [selectedKey, setSelectedKey] = useState("loading"); // Iniciar con "loading"
   const [loading, setLoading] = useState(true);
@@ -54,7 +54,7 @@ const SelectConfiguracion = ({ onChange, onClick}) => {
   return (
     <div className={style.customSelect}>
       <Select
-        isDisabled={loading}
+        isDisabled={loading || disabled}
         aria-label="Seleccionar receta"
         className="max-w"
         selectedKeys={[selectedKey]}
@@ -109,7 +109,7 @@ const SelectConfiguracion = ({ onChange, onClick}) => {
         )}
       </Select>
       <div className={style.Refresh}>
-        <BotonRefresh onClick={onClick} />
+        <BotonRefresh onClick={onClick} disabled={disabled || loading} />
       </div>
     </div>
   );

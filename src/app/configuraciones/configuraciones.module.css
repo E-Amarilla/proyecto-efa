@@ -223,12 +223,13 @@
 
 .nombre {
     flex: 1;
+    padding-left: 90px;
     text-align: center; /* Centra horizontalmente el texto */
 }
 
 .selectTorreWrapper {
     position: absolute; /* Posiciona de forma absoluta dentro del contenedor relativo */
-    left: -6.2vw;
+    left: -3vw;
 }
 
 .datoListNivelesFallas {

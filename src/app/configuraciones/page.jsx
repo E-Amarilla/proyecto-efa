@@ -24,12 +24,9 @@ import AlturaBastidor from '@/assets/img/ALTURABASTIDOR.png';
 import DisteNivel from '@/assets/img/DISTENIVEL.png';
 
 import Peso from '@/assets/img/PESO.png';
-import Moldes from '@/assets/img/MOLDE.png';
 import Niveles from '@/assets/img/NIVELACTUAL.png';
 import { useContext, useState, useEffect, useRef } from "react";
-import EjemploSkeleton from "./skeleton"
 import EjemploSkeleton2 from "./skeleton2"
-import EjemploSkeleton3 from "./skeleton3"
 import AuthContext from "../context/AuthContext"
 import textstyle from './texto.module.css';
 import { useRouter } from "next/navigation";
@@ -411,6 +408,7 @@ const Configuraciones = () => {
 
         const handleAplicarNiveles = async () => {
             if (selectedTorre !== null && selectedReceta !== null) {
+                setLoading(true);
                 setDatosCorrecionesTorre([
                     { id: 1, texto: 'Correccion_hBastidor', dato: null },
                     { id: 2, texto: 'Correccion_hAjuste', dato: null },
@@ -489,9 +487,11 @@ const Configuraciones = () => {
         
                     } catch (error) {
                         //console.error("Error al obtener los datos de la torre:", error);
+                    } finally {
+                        setLoading(false); // Desactivar loading
                     }
                 };
-        
+
                 fetchDatosTorre();
             }
         };
@@ -504,6 +504,7 @@ const Configuraciones = () => {
 
         const handleAplicarReceta = async () => {
             if (selectedReceta !== null) {
+                setLoading(true);
                 setDatosRecetas1([
                     { id: 1, texto: 'NUMERO DE GRIPPER', dato: null, icono: NGripper },
                     { id: 2, texto: 'TIPO DE MOLDE', dato: null, icono: puntoGris },
@@ -577,6 +578,8 @@ const Configuraciones = () => {
                     ]);
                     } catch (error) {
                         //console.error("Error al obtener los datos de la receta:", error);
+                    } finally {
+                        setLoading(false); // Desactivar loading después de la carga
                     }
                 };
                 fetchDatosReceta();
@@ -592,7 +595,7 @@ const Configuraciones = () => {
     return (
         <div className={style.all}>
             <div className={style.Izq}>
-                <SelectConfiguracion onChange={setSelectedReceta} onClick={handleAplicarReceta} />
+                <SelectConfiguracion onChange={setSelectedReceta} onClick={handleAplicarReceta} disabled={loading}/>
                 <ul className={style.lista}>
                     {datosGeneralesIzq.map(({ id, texto, dato, icono }) => (
                         <li key={id} className={style.datoListIzq}>
@@ -643,24 +646,35 @@ const Configuraciones = () => {
 
             <div className={style.Der}>
                 <h2 className={style.h2}>CORRECCIONES</h2>
-                <ul className={style.navList}>
-                    {opcionesCorrecciones.map(({ id, nombre }) => (
-                        <li key={id} className={style.navItem}>
-                            <button
-                                className={`${style.navLink} ${selectedOption === id ? style.active : ''}`}
-                                onClick={() => handleOptionClick(id)}
-                            >
-                            <div className={style.botonTorre}>
-                                <span className={style.nombre}>{nombre}</span>
-                                <div className={style.selectTorreWrapper}>
-                                    {id === 1 && <SelectTorre onChange={handleTorreChange} onTorresChange={handleTorresChange} selectedReceta={selectedReceta} refreshTorres={refreshTorres} refreshTorres2={refreshTorres2} selectedTorre={selectedTorre}/>}
-                                    {id === 2 && <SelectNivel onChange={handleNivelChange}/>}
-                                </div>
-                            </div>
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                    <ul className={style.navList}>
+                        {opcionesCorrecciones.map(({ id, nombre }) => (
+                            <li key={id} className={style.navItem}>
+                                <button
+                                    className={`${style.navLink} ${selectedOption === id ? style.active : ''}`}
+                                    onClick={() => handleOptionClick(id)}
+                                >
+                                    <div className={style.botonTorre}>
+                                        <span className={style.nombre}>{nombre}</span>
+                                        <div className={style.selectTorreWrapper}>
+                                            {id === 1 && <SelectTorre 
+                                                onChange={handleTorreChange} 
+                                                onTorresChange={handleTorresChange} 
+                                                selectedReceta={selectedReceta} 
+                                                refreshTorres={refreshTorres} 
+                                                refreshTorres2={refreshTorres2} 
+                                                selectedTorre={selectedTorre}
+                                                disabled={loading || datosGeneralesIzq[0].dato === 'null'}
+                                            />}
+                                            {id === 2 && <SelectNivel 
+                                                onChange={handleNivelChange}
+                                                disabled={loading || datosGeneralesIzq[0].dato === 'null'}
+                                            />}
+                                        </div>
+                                    </div>
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
 
                 {selectedOption === 2 ? (
                         (selectedNivel === "HN" || selectedNivel === "ChG" || selectedNivel === "ChB") ? (

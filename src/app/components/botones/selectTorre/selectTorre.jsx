@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Spinner } from "@nextui-org/react";
 import styles from './selectTorre.module.css';
 
-const SelectTorre = ({ selectedReceta, onChange, refreshTorres, refreshTorres2, selectedTorre, onTorresChange }) => {
+const SelectTorre = ({ selectedReceta, onChange, refreshTorres, refreshTorres2, selectedTorre, onTorresChange, disabled = false }) => {
   const [torres, setTorres] = useState([]);
   const [loading, setLoading] = useState(true); // Cambiado a true inicialmente
 
@@ -52,7 +52,12 @@ const SelectTorre = ({ selectedReceta, onChange, refreshTorres, refreshTorres2, 
       {loading ? (
         <div className={styles.Cargando}><Spinner /></div>
       ) : (
-        <select className={styles.dropdown} onChange={handleChange} value={selectedTorre || ''}>
+        <select 
+          className={`${styles.dropdown} ${disabled ? styles.disabled : ''}`} 
+          onChange={handleChange} 
+          value={selectedTorre || ''}
+          disabled={disabled || loading}
+        >
           {torres.map((torre, index) => (
             <option key={torre.id} value={torre.id}>
               {torre.id} [{index + 1}]

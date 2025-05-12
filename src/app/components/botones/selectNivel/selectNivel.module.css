@@ -6,7 +6,7 @@
   background-color: #f7f7f7;
   border-radius: 8px;
   margin: 10px;
-  width: 50px;
+  width: 105px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -23,4 +23,11 @@
 
 .dropdown:hover {
   border-color: #007bff;
+}
+
+.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #2a2a2a;
+  border: 1px solid #444;
 }
