@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import style from "./Productividad.module.css";
 import FiltroPeriodo from "../filtroperiodo/FiltroPeriodo.jsx";
 import { useTranslation } from "react-i18next";
+import { Spinner } from "@heroui/spinner";
 
 const colors = [
   '#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A6',
@@ -84,7 +85,7 @@ const Productividad = () => {
 
     const productos = data?.ProductosRealizados?.map((producto) => {
         const porcentaje = ((producto.pesoTotal * 100) / PesoTotalCiclos / 1000);
-        const pesoEnToneladas = (producto.pesoTotal / 1000).toFixed(1) + "Tn";
+        const pesoEnToneladas = (producto.pesoTotal / 1000).toFixed(1) + " Tn";
         return {
             nombre: producto.NombreProducto,
             peso: pesoEnToneladas, 
@@ -98,6 +99,11 @@ const Productividad = () => {
     return (
         <div id="ProductividadSection" className={style.all}>
             <div className={style.productividad}>
+                {isLoading && (
+                    <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-[15px] z-10">
+                        <Spinner label={t('min.cargando')} />
+                    </div>
+                )}
                 <h2 className={style.titulo}>{t('mayus.productividad')}</h2>
                 <div className={style.fechaContainer}>
                     <span className={style.fecha}>{dateRange.start}</span>
@@ -135,7 +141,9 @@ const Productividad = () => {
                                     className={style.colorMuestra}
                                     style={{ backgroundColor: producto.color }}
                                 ></span>
-                                <p className={style.prods}>{`${producto.nombre} - ${producto.porcentaje}% (${producto.peso})`}</p>
+                                <p className={style.prods}>
+                                    {`${producto.nombre} - ${producto.porcentaje}%`} ({isLoading ? "NaN Tn" : producto.peso})
+                                </p>
                             </div>
                         ))}
                     </div>

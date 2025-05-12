@@ -13,54 +13,96 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showPlayer, setShowPlayer] = useState(false);
   const [error, setError] = useState(null);
-  const { streamInitialized } = useContext(AuthContext);
+  const { streamInitialized, streamRestartSequence } = useContext(AuthContext);
 
+  // Efecto para reiniciar el stream cuando cambia la secuencia de reinicio
+  useEffect(() => {
+    if (streamRestartSequence > 0) {
+      console.log(`[Cámara ${cameraId}] Reiniciando reproductor debido a reinicio de streams (secuencia: ${streamRestartSequence})`);
+      reloadStream();
+    }
+  }, [streamRestartSequence, cameraId]);
+  
+  // En el useEffect de verificación de archivos
   useEffect(() => {
     const checkHlsFiles = async () => {
       try {
+        console.log(`[Cámara ${cameraId}] Verificando archivos...`);
+        
         // Verificar si el archivo .m3u8 existe
-        const m3u8Response = await fetch(`/hls/${cameraId}.m3u8`, { method: "HEAD" });
-
+        const m3u8Response = await fetch(`/hls/${cameraId}.m3u8`, { 
+          method: "HEAD",
+          cache: "no-cache",
+          headers: {
+            'Pragma': 'no-cache',
+            'Cache-Control': 'no-cache, no-store, must-revalidate'
+          }
+        });
+  
         if (m3u8Response.ok) {
           // Verificar si existe algún archivo .ts para esta cámara
-          const tsFilesResponse = await fetch(`/hls/${cameraId}.m3u8`);
+          const tsFilesResponse = await fetch(`/hls/${cameraId}.m3u8`, {
+            cache: "no-cache",
+            headers: {
+              'Pragma': 'no-cache',
+              'Cache-Control': 'no-cache, no-store, must-revalidate'
+            }
+          });
+          
           const tsFilesText = await tsFilesResponse.text();
           const tsFiles = tsFilesText.split("\n").filter(line => line.endsWith(".ts"));
-
+  
+          console.log(`[Cámara ${cameraId}] Archivos TS encontrados: ${tsFiles.length}`);
+  
           if (tsFiles.length > 0) {
             setIsLoading(false);
             setShowPlayer(true);
             setError(null);
           } else {
+            console.log(`[Cámara ${cameraId}] No hay archivos TS, reintentando...`);
             setTimeout(checkHlsFiles, 2000);
           }
         } else {
+          console.log(`[Cámara ${cameraId}] M3U8 no encontrado (${m3u8Response.status}), reintentando...`);
           setTimeout(checkHlsFiles, 2000);
         }
       } catch (error) {
+        console.error(`[Cámara ${cameraId}] Error:`, error);
         setTimeout(checkHlsFiles, 2000);
       }
     };
-
+  
     if (streamInitialized) {
-      checkHlsFiles();
+      // Iniciar la verificación después de un breve retraso cuando sea por reinicio
+      const delay = streamRestartSequence > 0 ? 2000 : 0;
+      setTimeout(checkHlsFiles, delay);
     }
-  }, [streamInitialized, cameraId]);
+  }, [streamInitialized, cameraId, streamRestartSequence]); // Añadir streamRestartSequence como dependencia
 
   useEffect(() => {
     if (showPlayer && videoRef.current) {
+      // Limpiar el reproductor anterior si existe
+      if (playerRef.current) {
+        playerRef.current.dispose();
+        playerRef.current = null;
+      }
+
       const player = videojs(videoRef.current, {
         controls: false,
         autoplay: true,
         muted: true,
         sources: [
           {
-            src: `/hls/${cameraId}.m3u8`,
+            // Añadir parámetro para evitar caché
+            src: `/hls/${cameraId}.m3u8?v=${streamRestartSequence || 0}`,
             type: "application/x-mpegURL",
           },
         ],
         liveui: false,
       });
+      
+      // Guardar la referencia al reproductor
+      playerRef.current = player;
 
       player.on("bufferupdate", () => {
         const bufferEnd = player.bufferedEnd();
@@ -77,12 +119,27 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
       });
 
       return () => {
-        player.dispose();
+        if (playerRef.current) {
+          playerRef.current.dispose();
+          playerRef.current = null;
+        }
       };
     }
-  }, [showPlayer, cameraId]);
+  }, [showPlayer, cameraId, streamRestartSequence]);
 
   const reloadStream = () => {
+    console.log(`[Cámara ${cameraId}] Reiniciando reproductor...`);
+    
+    // Si hay un reproductor activo, limpiarlo primero
+    if (playerRef.current) {
+      try {
+        playerRef.current.dispose();
+        playerRef.current = null;
+      } catch (error) {
+        console.error(`[Cámara ${cameraId}] Error al destruir reproductor:`, error);
+      }
+    }
+    
     setIsLoading(true);
     setError(null);
     setShowPlayer(false);

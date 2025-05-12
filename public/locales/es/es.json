@@ -37,13 +37,8 @@
         "datosSDDA": "DATOS SDDA - DESMOLDADORA",
         "datosTorre": "DATOS TORRE",
         "datosGripper": "DATOS GRIPPERS",
-        "posicionX": "POSICIÓN X",
-        "posicionY": "POSICIÓN Y",
-        "posicionZ": "POSICIÓN Z",
-        "nivelActual": "NIVEL ACTUAL",
         "nroTorreActual": "N° TORRE ACTUAL",
         "nroTorreProxima": "N° TORRE PRÓXIMA",
-        "totalNiveles": "TOTAL NIVELES",
         "nroGripperActual": "N° GRIPPER ACTUAL",
         "nroGripperProximo": "N° GRIPPER PRÓXIMO",
         "historialDeAlertas": "HISTORIAL DE ALERTAS",
@@ -54,7 +49,12 @@
         "descargarVisiblesPDF": "EXPORTAR FILAS VISIBLES"
     },
     "min":
-    {
+    {   
+        "totalNiveles": "Niveles totales",
+        "posicionX": "Posición X",
+        "posicionY": "Posición Y",
+        "posicionZ": "Posición Z",    
+        "nivelActual": "Nivel actual",
         "credencialesInvalidas": "Credenciales inválidas",
         "errorCredenciales": "Ha ocurrido un error. Por favor, inténtalo de nuevo.",
         "noExistenDatosParaLaFechaIndicada": "No existen datos para la fecha indicada", 

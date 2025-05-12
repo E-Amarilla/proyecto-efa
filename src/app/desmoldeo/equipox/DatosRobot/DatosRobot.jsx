@@ -11,9 +11,9 @@ const DatosRobotComponent = () => {
   const { t } = useTranslation('trad');
 
   const initialDatosRobot = [
-    { id: 1, texto: t('mayus.posicionX'), dato: null, texto2: ' mm' },
-    { id: 2, texto: t('mayus.posicionY'), dato: null, texto2: ' mm' },
-    { id: 3, texto: t('mayus.posicionZ'), dato: null, texto2: ' mm' },
+    { id: 1, texto: t('min.posicionX'), dato: null, texto2: ' mm' },
+    { id: 2, texto: t('min.posicionY'), dato: null, texto2: ' mm' },
+    { id: 3, texto: t('min.posicionZ'), dato: null, texto2: ' mm' },
   ];
 
   const [datosRobot, setDatosRobot] = useState(initialDatosRobot);
@@ -22,9 +22,9 @@ const DatosRobotComponent = () => {
     const robotData = data?.[2]?.datosRobot;
     if (robotData) {
       const updatedDatosRobot = [
-        { id: 1, texto: t('mayus.posicionX'), dato: robotData.posicionX ?? null, texto2: ' mm' },
-        { id: 2, texto: t('mayus.posicionY'), dato: robotData.posicionY ?? null, texto2: ' mm' },
-        { id: 3, texto: t('mayus.posicionZ'), dato: robotData.posicionZ ?? null, texto2: ' mm' },
+        { id: 1, texto: t('min.posicionX'), dato: robotData.posicionX ?? null, texto2: ' mm' },
+        { id: 2, texto: t('min.posicionY'), dato: robotData.posicionY ?? null, texto2: ' mm' },
+        { id: 3, texto: t('min.posicionZ'), dato: robotData.posicionZ ?? null, texto2: ' mm' },
       ];
       setDatosRobot(updatedDatosRobot);
     }

@@ -13,6 +13,8 @@
     background-color: #131313;
     border-radius: 15px;
     padding: 20px;
+    position: relative;
+    min-height: 300px;
 }
 
 .titulo {
@@ -71,7 +73,6 @@
 }
 
 .barraContainer {
-    margin-top: 20px;
     position: relative;
 }
 

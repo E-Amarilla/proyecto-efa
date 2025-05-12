@@ -24,7 +24,7 @@ const DatosTorreComponent = () => {
     if (datosTorre) {
       const updatedDatosTorre = [
         { id: 1, texto: t('min.nroTorreActual'), dato: datosTorre.N_torre_actual ?? null },
-        { id: 2, texto: t('mayus.totalNiveles'), dato: datosTorre.TotalNiveles ?? null },
+        { id: 2, texto: t('min.totalNiveles'), dato: datosTorre.TotalNiveles ?? null },
         { id: 3, texto: t('min.nroTorreProxima'), dato: datosTorre.N_torre_proxima ?? null },
       ];
       setDatosTorre(updatedDatosTorre);

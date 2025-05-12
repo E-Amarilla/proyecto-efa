@@ -13,6 +13,8 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
   const [streamInitialized, setStreamInitialized] = useState(false);
+  const [streamRestartSequence, setStreamRestartSequence] = useState(0);
+  const [streamInitializationAttempted, setStreamInitializationAttempted] = useState(false); // Nueva variable
   const [user, setUser] = useState(() => {
     if (typeof window !== "undefined") {
       const storedUser = sessionStorage.getItem('user_data');
@@ -23,21 +25,105 @@ export const AuthProvider = ({ children }) => {
 
   const { data, isConnected } = useWebSocket("datos");
 
+  useEffect(() => {
+    // Solo intentar inicializar una vez para evitar múltiples intentos
+    if (!streamInitializationAttempted) {
+      setStreamInitializationAttempted(true);
+      
+      const initializeStreamOnStartup = async () => {
+        try {
+          console.log("[Cámaras] Iniciando limpieza inicial...");
+          await fetch("/api/cleanup", { method: "POST" });
+          
+          // Esperar un poco después de la limpieza
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
+          console.log("[Cámaras] Iniciando streams...");
+          const response = await fetch("/api/stream");
+          const data = await response.json();
+          
+          // Verificar que los archivos se hayan creado realmente antes de considerar inicializado
+          console.log("[Cámaras] Esperando a que los archivos se generen...");
+          
+          // Esperar un tiempo razonable para que FFmpeg genere los archivos
+          await new Promise(resolve => setTimeout(resolve, 5000)); 
+          
+          // Ahora sí, marcar como inicializado
+          setStreamInitialized(true);
+          console.log("[Cámaras] Streams inicializados correctamente");
+        } catch (error) {
+          console.error("[Cámaras] Error al inicializar streams:", error);
+          // Reintentar inicialización después de un tiempo
+          setTimeout(() => {
+            setStreamInitializationAttempted(false); // Permitir un nuevo intento
+          }, 10000);
+        }
+      };
+      
+      initializeStreamOnStartup();
+    }
+  }, [streamInitializationAttempted]);
 
+  // Añade efecto para consultar la secuencia de reinicio
+  useEffect(() => {
+    // Solo si ya se han inicializado los streams
+    if (streamInitialized) {
+      // Verificar la secuencia de reinicio cada 5 segundos
+      const checkRestartSequence = async () => {
+        try {
+          const response = await fetch("/api/check-restart-sequence");
+          const data = await response.json();
+          
+          if (data.restartSequence !== undefined && data.restartSequence !== streamRestartSequence) {
+            console.log("[Cámaras] Nueva secuencia de reinicio detectada:", data.restartSequence);
+            
+            setTimeout(() => {
+              setStreamRestartSequence(data.restartSequence);
+              console.log("[Cámaras] Actualizando secuencia de reinicio para los reproductores");
+            }, 10000);
+          }
+        } catch (error) {
+          console.error("[Cámaras] Error al verificar secuencia de reinicio:", error);
+        }
+      };
+      
+      // Verificar inmediatamente y luego cada 5 segundos
+      checkRestartSequence();
+      const interval = setInterval(checkRestartSequence, 5000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [streamInitialized, streamRestartSequence]);
 
   useEffect(() => {
     const initializeStream = async () => {
-      if (!streamInitialized) {
+      if (!streamInitialized && !streamInitializationAttempted) {
+        setStreamInitializationAttempted(true);
         try {
+          console.log("[Cámaras] Iniciando limpieza inicial (respaldo)...");
           await fetch("/api/cleanup", { method: "POST" });
+          
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
+          console.log("[Cámaras] Iniciando streams (respaldo)...");
           const response = await fetch("/api/stream");
           const data = await response.json();
+          
+          await new Promise(resolve => setTimeout(resolve, 5000)); 
+          
           setStreamInitialized(true);
-        } finally {}
+          console.log("[Cámaras] Streams inicializados correctamente (respaldo)");
+        } catch (error) {
+          console.error("[Cámaras] Error al inicializar streams (respaldo):", error);
+          setTimeout(() => {
+            setStreamInitializationAttempted(false);
+          }, 10000);
+        }
       }
     };
+    
     initializeStream();
-  }, [streamInitialized, pathname]);
+  }, [streamInitialized, pathname, streamInitializationAttempted]);
 
   useEffect(() => {
     const publicRoutes = ['/login', '/', '/login/recuperacion']; // Añadir esta ruta
@@ -103,6 +189,7 @@ export const AuthProvider = ({ children }) => {
     equipoSeleccionado,
     setEquipoSeleccionado,
     streamInitialized,
+    streamRestartSequence,
     data,
     isConnected
   };

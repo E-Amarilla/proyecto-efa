@@ -37,13 +37,8 @@
         "datosSDDA": "SDDA DATA - DEMOLDER",
         "datosTorre": "TOWER DATA",
         "datosGripper": "GRIPPERS DATA",
-        "posicionX": "X POSITION",
-        "posicionY": "Y POSITION",
-        "posicionZ": "Z POSITION",
-        "nivelActual": "CURRENT LEVEL",
         "nroTorreActual": "CURRENT TOWER N°",
         "nroTorreProxima": "NEXT TOWER N°",
-        "totalNiveles": "TOTAL LEVELS",
         "nroGripperActual": "CURRENT GRIPPER N°",
         "nroGripperProximo": "NEXT GRIPPER N°",
         "historialDeAlertas": "ALERT HISTORY",
@@ -56,6 +51,11 @@
 
     "min":
     {   
+        "totalNiveles": "Total leves",
+        "posicionX": "X Position",
+        "posicionY": "Y Position",
+        "posicionZ": "Z Position",  
+        "nivelActual": "Current level",
         "credencialesInvalidas": "Invalid credentials",
         "errorCredenciales": "An error occurred. Please try again.",
         "noExistenDatosParaLaFechaIndicada": "No data available for the selected date", 
