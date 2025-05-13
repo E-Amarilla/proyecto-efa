@@ -8,6 +8,6 @@ export const updateRemainingTime = (seconds) => {
 };
 
 export default function handler(req, res) {
-  console.log(`[API] Enviando tiempo: ${global.secondsRemainingGlobal}`);
+  // console.log(`[API] Enviando tiempo: ${global.secondsRemainingGlobal}`);
   res.status(200).json({ timeRemaining: global.secondsRemainingGlobal });
 }

@@ -24,7 +24,7 @@ let restartSequence = 0;
 
 // Función para mostrar el contador de tiempo
 const logTimeRemaining = (totalSeconds) => {
-  console.log(`[Cámaras] Reinicio automático en ${totalSeconds} segundos. (${Math.floor(totalSeconds/60)}:${String(totalSeconds % 60).padStart(2, '0')})`);
+  // console.log(`[Cámaras] Reinicio automático en ${totalSeconds} segundos. (${Math.floor(totalSeconds/60)}:${String(totalSeconds % 60).padStart(2, '0')})`);
 };
 
 const clearHlsDirectory = async () => {
@@ -128,14 +128,29 @@ const restartStreaming = async () => {
   }
 };
 
+// Asegurarnos de que las variables globales estén correctamente definidas
+global.isStreaming = global.isStreaming || false;
+global.restartSequence = global.restartSequence || 0;
+global.isRestartTimerActive = global.isRestartTimerActive || false;
+
+// Modificar la función startRestartTimer
 const startRestartTimer = () => {
-  if (isRestartTimerActive) {
-    console.log('[Cámaras] Cancelando temporizador de reinicio existente');
-    clearInterval(restartTimer);
-    restartTimer = null;
+  // Detener cualquier temporizador existente a nivel global
+  if (global.restartTimer) {
+    console.log('[Cámaras] Cancelando temporizador global existente');
+    clearInterval(global.restartTimer);
+    global.restartTimer = null;
+    global.isRestartTimerActive = false;
   }
 
-  const restartInterval = 59 * 60;
+  if (restartTimer) {
+    console.log('[Cámaras] Cancelando temporizador local existente');
+    clearInterval(restartTimer);
+    restartTimer = null;
+    isRestartTimerActive = false;
+  }
+
+  const restartInterval = 120 * 60;
   let secondsRemaining = restartInterval;
   
   // Actualizar la variable global
@@ -148,25 +163,29 @@ const startRestartTimer = () => {
   // Log inicial
   logTimeRemaining(secondsRemaining);
   
-  // Configurar el temporizador para actualizar cada segundo
-  restartTimer = setInterval(() => {
+  // Configurar el temporizador
+  global.restartTimer = setInterval(() => {
     secondsRemaining -= 1;
     
     // Actualizar la variable global en cada segundo
     updateRemainingTime(secondsRemaining);
     
     if (secondsRemaining <= 0) {
-      clearInterval(restartTimer);
-      restartTimer = null;
+      clearInterval(global.restartTimer);
+      global.restartTimer = null;
+      global.isRestartTimerActive = false;
       isRestartTimerActive = false;
+      restartTimer = null;
       restartStreaming();
     } else if (secondsRemaining % 15 === 0) {
-      // Solo mostrar el log cada 15 segundos para no saturar la consola
       logTimeRemaining(secondsRemaining);
     }
-  }, 1000); // Actualizar cada segundo en lugar de cada 15 segundos
+  }, 1000);
   
+  // Sincronizar las variables locales y globales
+  restartTimer = global.restartTimer;
   isRestartTimerActive = true;
+  global.isRestartTimerActive = true;
 };
 
 const startStream = (rtspUrl, outputFile) => {
@@ -203,8 +222,13 @@ const startStream = (rtspUrl, outputFile) => {
 };
 
 const startStreaming = async () => {
+  if (global.isStreaming) {
+    console.log('[Cámaras] Las transmisiones ya están en curso (global)');
+    return { message: 'Las transmisiones ya están en curso' };
+  }
+  
   if (isStreaming) {
-    console.log('[Cámaras] Las transmisiones ya están en curso');
+    console.log('[Cámaras] Las transmisiones ya están en curso (local)');
     return { message: 'Las transmisiones ya están en curso' };
   }
 
@@ -245,6 +269,7 @@ const startStreaming = async () => {
     }
 
     isStreaming = true;
+    global.isStreaming = true;
     
     console.log('[Cámaras] Todas las cámaras iniciadas, configurando temporizador...');
     startRestartTimer();
@@ -269,16 +294,21 @@ export default async function handler(req, res) {
 }
 
 export const cleanupHandler = (req, res) => {
-  // Cancelar temporizador si existe
-  if (restartTimer) {
-    clearInterval(restartTimer);
+  // Cancelar temporizador si existe (tanto local como global)
+  if (restartTimer || global.restartTimer) {
+    if (restartTimer) clearInterval(restartTimer);
+    if (global.restartTimer) clearInterval(global.restartTimer);
+    
     restartTimer = null;
+    global.restartTimer = null;
     isRestartTimerActive = false;
+    global.isRestartTimerActive = false;
   }
   
   killFfmpegProcesses();
   clearHlsDirectory();
   isStreaming = false;
+  global.isStreaming = false;
   console.log('[Cámaras] Recursos limpiados correctamente');
   
   if (res) {

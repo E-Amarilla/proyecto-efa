@@ -1,6 +1,5 @@
 "use client";
 import Cookies from 'js-cookie';
-
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter, usePathname } from "next/navigation";
@@ -12,9 +11,15 @@ export const AuthProvider = ({ children }) => {
   const [equipoSeleccionado, setEquipoSeleccionado] = useState("Default");
   const router = useRouter();
   const pathname = usePathname();
-  const [streamInitialized, setStreamInitialized] = useState(false);
+  const [streamInitialized, setStreamInitialized] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem('stream_initialized') === 'true';
+    }
+    return false;
+  });
+  
   const [streamRestartSequence, setStreamRestartSequence] = useState(0);
-  const [streamInitializationAttempted, setStreamInitializationAttempted] = useState(false); // Nueva variable
+  const [streamInitializationAttempted, setStreamInitializationAttempted] = useState(false);
   const [user, setUser] = useState(() => {
     if (typeof window !== "undefined") {
       const storedUser = sessionStorage.getItem('user_data');
@@ -26,49 +31,53 @@ export const AuthProvider = ({ children }) => {
   const { data, isConnected } = useWebSocket("datos");
 
   useEffect(() => {
-    // Solo intentar inicializar una vez para evitar múltiples intentos
-    if (!streamInitializationAttempted) {
+    if (!streamInitializationAttempted && !streamInitialized) {
       setStreamInitializationAttempted(true);
       
       const initializeStreamOnStartup = async () => {
         try {
+          console.log("[Cámaras] Verificando estado actual antes de iniciar...");
+          // Verificar primero si hay streams activos
+          const checkResponse = await fetch("/api/stream-status");
+          const checkData = await checkResponse.json();
+          
+          if (checkData.isStreaming) {
+            console.log("[Cámaras] Los streams ya están activos, no es necesario reiniciar");
+            setStreamInitialized(true);
+            sessionStorage.setItem('stream_initialized', 'true');
+            return;
+          }
+          
           console.log("[Cámaras] Iniciando limpieza inicial...");
           await fetch("/api/cleanup", { method: "POST" });
-          
-          // Esperar un poco después de la limpieza
+
           await new Promise(resolve => setTimeout(resolve, 2000));
           
           console.log("[Cámaras] Iniciando streams...");
           const response = await fetch("/api/stream");
           const data = await response.json();
           
-          // Verificar que los archivos se hayan creado realmente antes de considerar inicializado
           console.log("[Cámaras] Esperando a que los archivos se generen...");
           
-          // Esperar un tiempo razonable para que FFmpeg genere los archivos
           await new Promise(resolve => setTimeout(resolve, 5000)); 
           
-          // Ahora sí, marcar como inicializado
           setStreamInitialized(true);
+          sessionStorage.setItem('stream_initialized', 'true');
           console.log("[Cámaras] Streams inicializados correctamente");
         } catch (error) {
           console.error("[Cámaras] Error al inicializar streams:", error);
-          // Reintentar inicialización después de un tiempo
           setTimeout(() => {
-            setStreamInitializationAttempted(false); // Permitir un nuevo intento
+            setStreamInitializationAttempted(false);
           }, 10000);
         }
       };
       
       initializeStreamOnStartup();
     }
-  }, [streamInitializationAttempted]);
+  }, [streamInitializationAttempted, streamInitialized]);
 
-  // Añade efecto para consultar la secuencia de reinicio
   useEffect(() => {
-    // Solo si ya se han inicializado los streams
     if (streamInitialized) {
-      // Verificar la secuencia de reinicio cada 5 segundos
       const checkRestartSequence = async () => {
         try {
           const response = await fetch("/api/check-restart-sequence");
@@ -87,43 +96,12 @@ export const AuthProvider = ({ children }) => {
         }
       };
       
-      // Verificar inmediatamente y luego cada 5 segundos
       checkRestartSequence();
       const interval = setInterval(checkRestartSequence, 5000);
       
       return () => clearInterval(interval);
     }
   }, [streamInitialized, streamRestartSequence]);
-
-  useEffect(() => {
-    const initializeStream = async () => {
-      if (!streamInitialized && !streamInitializationAttempted) {
-        setStreamInitializationAttempted(true);
-        try {
-          console.log("[Cámaras] Iniciando limpieza inicial (respaldo)...");
-          await fetch("/api/cleanup", { method: "POST" });
-          
-          await new Promise(resolve => setTimeout(resolve, 2000));
-          
-          console.log("[Cámaras] Iniciando streams (respaldo)...");
-          const response = await fetch("/api/stream");
-          const data = await response.json();
-          
-          await new Promise(resolve => setTimeout(resolve, 5000)); 
-          
-          setStreamInitialized(true);
-          console.log("[Cámaras] Streams inicializados correctamente (respaldo)");
-        } catch (error) {
-          console.error("[Cámaras] Error al inicializar streams (respaldo):", error);
-          setTimeout(() => {
-            setStreamInitializationAttempted(false);
-          }, 10000);
-        }
-      }
-    };
-    
-    initializeStream();
-  }, [streamInitialized, pathname, streamInitializationAttempted]);
 
   useEffect(() => {
     const publicRoutes = ['/login', '/', '/login/recuperacion']; // Añadir esta ruta
@@ -155,12 +133,10 @@ export const AuthProvider = ({ children }) => {
       const { role, access_token, token_type } = response.data;
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
       
-      // Almacenar en sessionStorage solo el token y el token_type, excluyendo el role
       sessionStorage.setItem('user_data', JSON.stringify({ access_token, token_type, role }));
       
       Cookies.set('token', access_token, { secure: false, sameSite: 'lax' });
       
-      // Guardar el role únicamente en el estado del contexto
       setUser({ access_token, token_type, role });
       
       router.push('/completo');
