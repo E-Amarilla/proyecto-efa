@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 
 const NavDatos = () => {
     const { data } = useContext(AuthContext);
-    const { t } = useTranslation();
+    const { t } = useTranslation('trad');
 
     const {
         idRecetaActual,
@@ -43,15 +43,15 @@ const NavDatos = () => {
     ];
 
     const datosTiempoReal = [
-        { id: 1, nombre: t('min.recetaActual'), dato: CodigoProducto !== null ? CodigoProducto : 'null', icono: receta1 },
-        { id: 2, nombre: t('min.nroMolde'), dato: TipoMolde !== null ? TipoMolde : 'null', icono: receta2 },
-        { id: 3, nombre: t('min.nroGripperActual'), dato: NGripperActual !== null ? NGripperActual : 'null', icono: gripper },
-        { id: 4, nombre: t('min.nroTorreActual'), dato: TorreActual !== null ? TorreActual : 'null', icono: torre },
-        { id: 5, nombre: t('min.pesoFila'), dato: PesoProducto !== null ? PesoProducto : 'null', icono: peso },
-        { id: 6, nombre: t('min.pesoDesmoldado'), dato: PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono: peso },
-        { id: 7, nombre: t('min.torreNivelActual'), dato: (sdda_nivel_actual !== null ? sdda_nivel_actual : 'null') + "/" + (TotalNiveles !== null ? TotalNiveles : 'null'), icono: nivelactual },
-        { id: 8, nombre: t('min.tiempoTranscurrido'), dato: TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
-        { id: 9, nombre: t('min.idProxReceta'), dato: idRecetaProxima !== null ? idRecetaProxima : 'null', icono: receta2 },
+        { id: 1, nombre: t('min.recetaActual'), dato: CodigoProducto || '', icono: receta1 },
+        { id: 2, nombre: t('min.nroMolde'), dato: TipoMolde || '', icono: receta2 },
+        { id: 3, nombre: t('min.nroGripperActual'), dato: NGripperActual || '', icono: gripper },
+        { id: 4, nombre: t('min.nroTorreActual'), dato: TorreActual || '', icono: torre },
+        { id: 5, nombre: t('min.pesoFila'), dato: PesoProducto || '', icono: peso },
+        { id: 6, nombre: t('min.pesoDesmoldado'), dato: PesoActualDesmoldado != null ? PesoActualDesmoldado : '', icono: peso },
+        { id: 7, nombre: t('min.torreNivelActual'), dato: (sdda_nivel_actual != null && TotalNiveles != null) ? `${sdda_nivel_actual}/${TotalNiveles}` : '', icono: nivelactual },
+        { id: 8, nombre: t('min.tiempoTranscurrido'), dato: TiempoTranscurrido != null ? (TiempoTranscurrido === 0 ? '00:00 mm:ss' : TiempoTranscurrido) : '', icono: tiempo },
+        { id: 9, nombre: t('min.idProxReceta'), dato: idRecetaProxima || '', icono: receta2 },
     ];
 
     const [activeSection, setActiveSection] = useState(1);
@@ -153,8 +153,8 @@ const NavDatos = () => {
                                         max-w-[1432px]:flex max-w-[1432px]:items-start max-w-[1432px]:justify-between
                                         min-w-[1432px]:flex min-w-[1432px]:items-start min-w-[1432px]:justify-between">
                                 <div className="w-[90%] flex flex-col no-underline text-white">
-                                    <h3 className="w-full text-base p-0 m-0 font-semibold">{nombre}</h3>
-                                    <h4 className="w-full text-sm p-0 m-0 break-words whitespace-normal hyphens-auto overflow-wrap-anywhere">
+                                    <h3 className="w-full text-base p-0 m-0 font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{nombre}</h3>
+                                    <h4 className="w-full text-sm p-0 m-0 overflow-hidden text-ellipsis whitespace-nowrap">
                                         {(nombre === 'Peso desmoldado:' || nombre === 'Peso por fila:') ? `${dato} kg` : dato}
                                     </h4>
                                 </div>

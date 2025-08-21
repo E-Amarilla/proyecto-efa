@@ -28,6 +28,26 @@ const Productividad = () => {
         end: today,
     });
 
+    // Función para convertir tiempo "hh:mm" a horas decimales
+    const convertirTiempoAHoras = (tiempoString) => {
+        if (!tiempoString || typeof tiempoString !== 'string') return 0;
+        
+        const [horas, minutos] = tiempoString.split(':').map(Number);
+        if (isNaN(horas) || isNaN(minutos)) return 0;
+        
+        return horas + (minutos / 60);
+    };
+
+    // Función para convertir horas decimales a formato "hh:mm"
+    const convertirHorasAFormato = (horasDecimales) => {
+        if (typeof horasDecimales !== 'number' || isNaN(horasDecimales)) return "00:00";
+        
+        const horas = Math.floor(horasDecimales);
+        const minutos = Math.round((horasDecimales - horas) * 60);
+        
+        return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+    };
+
     const handleDataUpdate = (newData, startDate, endDate) => {
         setIsLoading(false);
         setData(newData);
@@ -59,15 +79,33 @@ const Productividad = () => {
     const Horas_Uso = isLoading
         ? t('min.cargando')
         : Array.isArray(data?.ProductosRealizados)
-            ? data.ProductosRealizados.reduce((acc, prod) => acc + prod.tiempoTotal, 0)
-            : 0;
+            ? (() => {        
+                const totalHoras = data.ProductosRealizados.reduce((acc, prod) => {
+                    const horasDecimales = convertirTiempoAHoras(prod.tiempoTotal);
+                    return acc + horasDecimales;
+                }, 0);
+                
+                return convertirHorasAFormato(totalHoras);
+            })()
+            : "00:00";
 
-    const Promedio_Horas = (Horas_Uso, Cant_Dias) =>
-        isLoading 
-            ? t('min.cargando') 
-            : Horas_Uso !== t('min.cargando') 
-                ? ((Horas_Uso/60) / (Cant_Dias)).toFixed(2) 
-                : "0.00";
+    const Promedio_Horas = (Horas_Uso, Cant_Dias) => {
+        if (isLoading) return t('min.cargando');
+        if (Horas_Uso === t('min.cargando') || typeof Horas_Uso !== 'string') return "00:00";
+        
+        // Convertir el formato hh:mm de vuelta a horas decimales para hacer el cálculo
+        const horasDecimales = convertirTiempoAHoras(Horas_Uso);
+        const promedio = horasDecimales / Cant_Dias;
+        
+        console.log('Cálculo promedio:', {
+            totalHoras: Horas_Uso,
+            cantidadDias: Cant_Dias,
+            promedioDecimal: promedio,
+            promedioFormato: convertirHorasAFormato(promedio)
+        });
+        
+        return convertirHorasAFormato(promedio);
+    };
 
     const datos = [
         { id: 1, titulo: t('min.ciclosRealizados'), dato: cantidadCiclosF },

@@ -20,6 +20,9 @@ const Grafico = ({ startDate, endDate }) => {
       setLoading(false);
       return;
     }
+    console.log('Fechas recibidas en grafico_ciclos:');
+    console.log('startDate:', startDate);
+    console.log('endDate:', endDate);
     setLoading(true);
     const storedUser = sessionStorage.getItem('user_data');
     const token = storedUser ? JSON.parse(storedUser).access_token : null;
@@ -230,8 +233,8 @@ const Grafico = ({ startDate, endDate }) => {
       chartData.pesoProducto.length > 0
     ) {
       const ciclosData = chartData.ciclos.map(item => {
-        const date = new Date(item.fecha_fin);
-        date.setHours(0, 0, 0, 0);
+        const [year, month, day] = item.fecha_fin.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
         return {
           x: date,
           y: item.CiclosCompletados
@@ -239,8 +242,8 @@ const Grafico = ({ startDate, endDate }) => {
       });
 
       const pesoProductoData = chartData.pesoProducto.map(item => {
-        const date = new Date(item.fecha_fin);
-        date.setHours(0, 0, 0, 0);
+        const [year, month, day] = item.fecha_fin.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
         return {
           x: date,
           y: item.PesoDiarioProducto / 1000
