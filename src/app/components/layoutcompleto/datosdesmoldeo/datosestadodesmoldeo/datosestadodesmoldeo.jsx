@@ -9,12 +9,10 @@ const DatosEstadoDesmoldeo = () => {
     const { t } = useTranslation('trad');
     const { data } = useContext(AuthContext); // Obtiene datos del contexto
 
-    const desmoldeoData = data?.[1]?.Desmoldeo || {};
-
     const {
         estadoMaquina = 'CICLO INACTIVO',
-        TiempoTranscurrido = '00:00 hs',
-    } = desmoldeoData;
+        TiempoTranscurrido = '00:00 mm:ss',
+    } = data?.[0] || {};
 
     return (
         <>

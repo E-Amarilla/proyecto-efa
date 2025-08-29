@@ -4,9 +4,10 @@ import fs from 'fs';
 import { updateRemainingTime } from './restart-time';
 
 const RTSP_URLS = [
-  "rtsp://admin:Beron2745@192.168.10.160:554/Streaming/Channels/102",
-  "rtsp://admin:Beron2745@192.168.10.160:554/Streaming/Channels/202",
-  "rtsp://admin:Beron2745@192.168.10.160:554/Streaming/Channels/302",
+  process.env.NEXT_PUBLIC_CAM1,
+  process.env.NEXT_PUBLIC_CAM2,
+  process.env.NEXT_PUBLIC_CAM3,
+  process.env.NEXT_PUBLIC_CAM4,
 ].filter(Boolean);
 
 const { promisify } = require('util');
@@ -202,6 +203,7 @@ const startStream = (rtspUrl, outputFile) => {
         '-f hls',
         '-c:v libx264',
         '-c:a aac',
+        '-vf', 'scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,setsar=1:1',
       ])
       .on('start', (cmdline) => {
         console.log(`[Cámaras] Comando FFmpeg iniciado: ${outputFile}`);

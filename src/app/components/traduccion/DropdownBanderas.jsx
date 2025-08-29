@@ -4,11 +4,9 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Image from 'next/image';
 
-// Importar las imágenes de banderas
 import esFlag from '../../../assets/img/es.png';
 import usFlag from '../../../assets/img/us.png';
 
-// Definir el hook personalizado fuera del componente
 const useOutsideClick = (ref, callback) => {
   useEffect(() => {
     const handleClickOutside = (event) => {

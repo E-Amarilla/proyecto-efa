@@ -1,10 +1,14 @@
 .contenedores {    
-    margin-top: 133px;
+    margin-top: 193px;
     display: flex;
-    flex-direction: row;
-    justify-content: center; 
-    height: 73vh;
-    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 70%;
+    max-width: 1800px;
+    gap:10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10px;
 }
 
 .contenedor {
@@ -12,24 +16,49 @@
     background-color: #131313;
     border-radius: 20px;
     padding: 20px;
-    width: 100%;
-    height: 27.8vw;
-    margin-top: 6vh;
-    min-height: 250px;
+    width: calc(50% - 10px);
+    aspect-ratio: 10.8/9;
+    min-height: 200px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform: scale(0.9);
+    transform: scale(0.95);
+    margin: 0;
+    flex-basis: calc(50% - 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.contenedorVideo {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex; /* Añadido */
+    align-items: center; /* Añadido */
+    justify-content: center; /* Añadido */
+    background-color: #000; /* Fondo negro */
+}
+
+.cam {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mantenemos el hover igual */
 .contenedor:hover
 {
-    transform: scale(0.92);
+    transform: scale(0.97);
     opacity: 1;
-    background-color: rgba(75, 75, 75, 0.8); /* Fondo más opaco */
+    background-color: rgba(75, 75, 75, 0.8);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
+/* Ajuste para el h2 */
 .h2 {
     margin: 50 0 0 0;
     color: white;

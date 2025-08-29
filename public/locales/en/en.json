@@ -117,6 +117,8 @@
         "estadosesion": "Active session",
         "botonsesion": "Logout",
         "recuperarcontra": "Recover password",
-        "recordo": "Did you remember your password? Log in here."
+        "recordo": "Did you remember your password? Log in here.",
+        "reinicio": "Automatic restart of the cameras in:",
+        "forzar": "Force restart"
     }
 }

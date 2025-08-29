@@ -27,6 +27,12 @@ const Camaras = () => {
                         <VideoStream cameraId="cam3" />
                     </div>
                 </Link>
+
+                <Link href="camaras/camara4" className={style.contenedor}>
+                    <div className={style.cam}>
+                        <VideoStream cameraId="cam4" />
+                    </div>
+                </Link>
             </div>
         </>
     );

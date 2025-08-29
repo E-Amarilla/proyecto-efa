@@ -145,8 +145,15 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
     setShowPlayer(false);
   };
 
-  return (
-    <div style={{ flex: '1 1 30%', minWidth: isFullScreen ? '100%' : '300px', pointerEvents: 'none' }}>
+return (
+    <div style={{ 
+      width: '100%', 
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      pointerEvents: 'none' 
+    }}>
       {error && (
         <div style={styles.errorContainer}>
           <p>{error}</p>
@@ -163,11 +170,21 @@ const VideoStream = ({ cameraId, isFullScreen = false }) => {
       )}
       {showPlayer && (
         <div className={style.contenedorVideo}>
-          <div data-vjs-player>
+          <div data-vjs-player style={{ 
+            width: '100%', 
+            height: '100%',
+            overflow: 'hidden' // Añadido para evitar que se vea contenido fuera del área
+          }}>
             <video
               ref={videoRef}
               className="video-js vjs-default-skin"
-              style={{ width: "100%", height: isFullScreen ? "90vh" : "auto", backgroundColor: "transparent", borderRadius: "15px" }}
+              style={{ 
+                width: "100%", 
+                height: isFullScreen ? "90vh" : "100%", 
+                objectFit: "cover", // Volvemos a "cover" para eliminar los bordes negros
+                backgroundColor: "#131313", // Mismo color que el fondo
+                borderRadius: "10px"
+              }}
             >
               <p>Tu navegador no soporta el elemento de video.</p>
             </video>
@@ -201,7 +218,7 @@ const styles = {
   },
   loadingContainer: {
     display: "flex",
-    marginTop: "15vh",
+    marginTop: "10vh",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",

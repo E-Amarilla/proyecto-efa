@@ -42,7 +42,7 @@ const DatosGenerales = () => {
         { id: 1, texto: t('min.recetaActual'), dato: CodigoProducto !== undefined && CodigoProducto !== null ? CodigoProducto : 'null', icono:receta1 },
         { id: 2, texto: t('min.nroMolde'), dato: TipoMolde !== null ? TipoMolde : 'null', icono: molde },
         { id: 3, texto: t('min.estadoMaquina'), dato: estadoMaquina !== undefined && estadoMaquina !== null ? estadoMaquina : 'null', icono:estado },
-        { id: 4, texto: t('min.pesoDesmoldado'), dato: PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null', icono:peso  },
+        { id: 4, texto: t('min.pesoDesmoldado'), dato: estadoMaquina === 'CICLO INACTIVO' ? '0' : (PesoActualDesmoldado !== undefined && PesoActualDesmoldado !== null ? PesoActualDesmoldado : 'null'), icono:peso  },
         { id: 5, texto: t('min.tiempoTranscurrido'), dato: TiempoTranscurrido !== undefined && TiempoTranscurrido !== null ? TiempoTranscurrido : '00:00 mm:ss', icono: tiempo },
         { id: 6, texto: t('min.recetaProxima'), dato: idRecetaProxima !== undefined && idRecetaProxima !== null ? idRecetaProxima : 'null', icono:receta2 },
     ];       

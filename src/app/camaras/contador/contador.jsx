@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { useContext } from 'react';
+import { useTranslation } from "react-i18next";
 import AuthContext from '../../context/AuthContext';
 
 export default function RestartCountdown() {
   const [timeRemaining, setTimeRemaining] = useState(60);
   const [isRestarting, setIsRestarting] = useState(false);
   const { streamRestartSequence } = useContext(AuthContext);
+  const { t } = useTranslation('trad');
 
   useEffect(() => {
     const fetchRestartTime = async () => {
@@ -96,7 +98,7 @@ export default function RestartCountdown() {
       zIndex: '10',
       gap: '5px',
     }}>
-      <div>Reinicio automático de las cámaras en: {timeDisplay}</div>
+      <div>{t('min.reinicio')} {timeDisplay}</div>
       <button 
         onClick={handleForceRestart}
         disabled={isRestarting}
@@ -129,7 +131,7 @@ export default function RestartCountdown() {
             Reiniciando...
           </>
         ) : (
-          'Forzar reinicio'
+          t('min.forzar')
         )}
       </button>
       <style jsx>{`

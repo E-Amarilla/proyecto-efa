@@ -48,7 +48,7 @@ const NavDatos = () => {
         { id: 3, nombre: t('min.nroGripperActual'), dato: NGripperActual || '', icono: gripper },
         { id: 4, nombre: t('min.nroTorreActual'), dato: TorreActual || '', icono: torre },
         { id: 5, nombre: t('min.pesoFila'), dato: PesoProducto || '', icono: peso },
-        { id: 6, nombre: t('min.pesoDesmoldado'), dato: PesoActualDesmoldado != null ? PesoActualDesmoldado : '', icono: peso },
+        { id: 6, nombre: t('min.pesoDesmoldado'), dato: estadoMaquina === 'CICLO INACTIVO' ? '0' : (PesoActualDesmoldado != null ? PesoActualDesmoldado : ''), icono: peso },
         { id: 7, nombre: t('min.torreNivelActual'), dato: (sdda_nivel_actual != null && TotalNiveles != null) ? `${sdda_nivel_actual}/${TotalNiveles}` : '', icono: nivelactual },
         { id: 8, nombre: t('min.tiempoTranscurrido'), dato: TiempoTranscurrido != null ? (TiempoTranscurrido === 0 ? '00:00 mm:ss' : TiempoTranscurrido) : '', icono: tiempo },
         { id: 9, nombre: t('min.idProxReceta'), dato: idRecetaProxima || '', icono: receta2 },

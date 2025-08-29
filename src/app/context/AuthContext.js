@@ -80,7 +80,8 @@ export const AuthProvider = ({ children }) => {
     if (streamInitialized) {
       const checkRestartSequence = async () => {
         try {
-          const response = await fetch("/api/check-restart-sequence");
+          // Usar el endpoint existente en lugar del que no existe
+          const response = await fetch("/api/stream-status");
           const data = await response.json();
           
           if (data.restartSequence !== undefined && data.restartSequence !== streamRestartSequence) {
